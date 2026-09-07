@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ছাত্র লগইন - JTQ মাদ্রাসা</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+
+  <div class="container">
+    <div class="login-box">
+      <div class="text-center mb-4">
+        <i class="fa-solid fa-mosque fa-3x text-success mb-2"></i>
+        <h4 class="fw-bold">স্টুডেন্ট পোর্টাল</h4>
+        <p class="text-muted small">জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা</p>
+      </div>
+
+      <form id="studentLoginForm">
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Student ID</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa-solid fa-id-card"></i></span>
+            <input type="text" class="form-control" id="studentId" placeholder="যেমন: JTQ-2026-0001" required>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Password</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+            <input type="password" class="form-control" id="studentPass" placeholder="পাসওয়ার্ড দিন" required>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-madrasa w-100 py-2 fw-semibold" id="loginBtn">
+          লগইন করুন <i class="fa-solid fa-arrow-right-to-bracket ms-1"></i>
+        </button>
+      </form>
+
+      <div class="text-center mt-4 border-top pt-3">
+        <a href="index.html" class="text-decoration-none small text-secondary">
+          <i class="fa-solid fa-house me-1"></i> মূল ওয়েবসাইটে ফিরে যান
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+
+  <script>
+    document.getElementById('studentLoginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const loginBtn = document.getElementById('loginBtn');
+      loginBtn.innerText = "যাচাই করা হচ্ছে...";
+      loginBtn.disabled = true;
+
+      const id = document.getElementById('studentId').value.trim();
+      const pass = document.getElementById('studentPass').value;
+
+      db.collection("students").doc(id).get()
+        .then((doc) => {
+          if (doc.exists && doc.data().password === pass) {
+            localStorage.setItem('studentSession', id);
+            window.location.href = 'student-dashboard.html';
+          } else {
+            alert("ভুল Student ID অথবা Password!");
+          }
+        })
+        .catch((err) => {
+          alert("সার্ভার ত্রুটি: " + err.message);
+        })
+        .finally(() => {
+          loginBtn.innerText = "লগইন করুন";
+          loginBtn.disabled = false;
+        });
+    });
+  </script>
+</body>
+</html>

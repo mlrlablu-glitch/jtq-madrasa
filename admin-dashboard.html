@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>অ্যাডমিন কন্ট্রোল - JTQ মাদ্রাসা</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#">
+        <i class="fa-solid fa-gauge-high me-2"></i>JTQ মাদ্রাসা অ্যাডমিন কন্ট্রোল
+      </a>
+      <button class="btn btn-outline-light btn-sm" id="adminLogout">
+        <i class="fa-solid fa-right-from-bracket me-1"></i> লগআউট
+      </button>
+    </div>
+  </nav>
+
+  <div class="container py-4">
+    <div class="row g-4">
+      
+      <!-- বাম পাশ: ছাত্র যোগ ও রেজাল্ট আপডেট -->
+      <div class="col-lg-5">
+        <!-- নতুন ছাত্র যোগ -->
+        <div class="card border-0 shadow-sm p-4 bg-white mb-4">
+          <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-user-plus me-2 text-success"></i>নতুন ছাত্র যোগ</h5>
+          <form id="addStudentForm">
+            <div class="mb-2">
+              <input type="text" class="form-control form-control-sm" id="name" placeholder="ছাত্রের নাম" required>
+            </div>
+            <div class="mb-2">
+              <input type="text" class="form-control form-control-sm" id="sId" placeholder="Student ID (যেমন: JTQ-2026-0002)" required>
+            </div>
+            <div class="mb-2">
+              <input type="text" class="form-control form-control-sm" id="sPass" value="jtq@12345" required>
+            </div>
+            <div class="row g-2 mb-2">
+              <div class="col">
+                <select class="form-select form-select-sm" id="dept">
+                  <option value="হিফজুল কুরআন">হিফজুল কুরআন</option>
+                  <option value="কিতাব বিভাগ">কিতাব বিভাগ</option>
+                </select>
+              </div>
+              <div class="col">
+                <input type="number" class="form-control form-control-sm" id="roll" placeholder="রোল" required>
+              </div>
+            </div>
+            <div class="mb-3">
+              <input type="text" class="form-control form-control-sm" id="father" placeholder="পিতার নাম" required>
+            </div>
+            <button type="submit" class="btn btn-success btn-sm w-100 fw-semibold">ছাত্র যোগ করুন</button>
+          </form>
+        </div>
+
+        <!-- রেজাল্ট ও ফি আপডেট -->
+        <div class="card border-0 shadow-sm p-4 bg-white">
+          <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-pen-to-square me-2 text-primary"></i>রেজাল্ট ও ফি আপডেট</h5>
+          <form id="updateDataForm">
+            <div class="mb-2">
+              <input type="text" class="form-control form-control-sm" id="updateId" placeholder="টার্গেট Student ID" required>
+            </div>
+            <div class="mb-2">
+              <input type="text" class="form-control form-control-sm" id="updateRes" placeholder="রেজাল্ট (যেমন: মুমতাজ / A+)" required>
+            </div>
+            <div class="mb-2">
+              <input type="text" class="form-control form-control-sm" id="updateDue" placeholder="বকেয়া ফি (যেমন: ৫০০ ৳ বা ০ ৳)" required>
+            </div>
+            <div class="mb-3">
+              <input type="text" class="form-control form-control-sm" id="updateAtt" placeholder="হাজিরা (যেমন: ৯৫%)" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm w-100 fw-semibold">আপডেট সংরক্ষণ করুন</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- ডান পাশ: ছাত্র তালিকা -->
+      <div class="col-lg-7">
+        <div class="card border-0 shadow-sm p-4 bg-white">
+          <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-users me-2 text-primary"></i>ছাত্রদের সার্বিক তথ্য</h5>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle small">
+              <thead class="table-light">
+                <tr>
+                  <th>আইডি</th>
+                  <th>নাম</th>
+                  <th>রেজাল্ট</th>
+                  <th>বকেয়া ফি</th>
+                  <th>হাজিরা</th>
+                </tr>
+              </thead>
+              <tbody id="studentTableBody">
+                <tr><td colspan="5" class="text-center text-muted">লোড হচ্ছে...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+
+  <script>
+    if (localStorage.getItem('adminSession') !== 'active') {
+      window.location.href = 'admin-login.html';
+    }
+
+    document.getElementById('adminLogout').addEventListener('click', function() {
+      localStorage.removeItem('adminSession');
+      window.location.href = 'admin-login.html';
+    });
+
+    // রিয়েল-টাইম তালিকা লোড
+    db.collection("students").onSnapshot((snapshot) => {
+      const tbody = document.getElementById('studentTableBody');
+      tbody.innerHTML = "";
+      if (snapshot.empty) {
+        tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted">কোনো রেকর্ড নেই</td></tr>`;
+        return;
+      }
+      snapshot.forEach((doc) => {
+        const d = doc.data();
+        tbody.innerHTML += `
+          <tr>
+            <td><strong>${d.studentId}</strong></td>
+            <td>${d.name}</td>
+            <td><span class="badge bg-primary">${d.result || 'অপেক্ষমান'}</span></td>
+            <td><span class="badge bg-danger">${d.due || '০ ৳'}</span></td>
+            <td>${d.attendance || '১০০%'}</td>
+          </tr>
+        `;
+      });
+    });
+
+    // ছাত্র যোগ
+    document.getElementById('addStudentForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const id = document.getElementById('sId').value.trim();
+      db.collection("students").doc(id).set({
+        studentId: id,
+        password: document.getElementById('sPass').value,
+        name: document.getElementById('name').value.trim(),
+        department: document.getElementById('dept').value,
+        roll: document.getElementById('roll').value,
+        father: document.getElementById('father').value.trim(),
+        attendance: "১০০%",
+        result: "অপেক্ষমান",
+        due: "০.০০ ৳"
+      }).then(() => {
+        alert("ছাত্র যুক্ত হয়েছে!");
+        this.reset();
+        document.getElementById('sPass').value = "jtq@12345";
+      });
+    });
+
+    // রেজাল্ট ও ফি আপডেট
+    document.getElementById('updateDataForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const id = document.getElementById('updateId').value.trim();
+      const res = document.getElementById('updateRes').value.trim();
+      const due = document.getElementById('updateDue').value.trim();
+      const att = document.getElementById('updateAtt').value.trim();
+
+      db.collection("students").doc(id).update({
+        result: res,
+        due: due,
+        attendance: att
+      }).then(() => {
+        alert("তথ্য আপডেট হয়েছে!");
+        this.reset();
+      }).catch((err) => {
+        alert("আইডি খুঁজে পাওয়া যায়নি: " + err.message);
+      });
+    });
+  </script>
+</body>
+</html>

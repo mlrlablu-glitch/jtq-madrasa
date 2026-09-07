@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ছাত্র ড্যাশবোর্ড - JTQ মাদ্রাসা</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  
+  <style>
+    /* A4 সাইজের জন্য নিখুঁত প্রিন্ট স্টাইল */
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 12mm;
+      }
+
+      html, body {
+        width: 210mm;
+        height: 297mm;
+        background: #fff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      /* পেজের বাকি সবকিছু হাইড থাকবে */
+      body * {
+        visibility: hidden;
+      }
+
+      /* শুধু A4 শিটটি প্রিন্ট হবে */
+      #printableA4, #printableA4 * {
+        visibility: visible;
+      }
+
+      #printableA4 {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100% !important;
+        min-height: 260mm;
+        padding: 30px !important;
+        border: 2px solid #0f5132 !important;
+        border-radius: 6px;
+        box-sizing: border-box;
+        display: block !important;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-light">
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm no-print">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#">
+        <i class="fa-solid fa-mosque me-2"></i>JTQ মাদ্রাসা পোর্টাল
+      </a>
+      <div class="d-flex align-items-center">
+        <span class="text-white me-3 d-none d-md-inline" id="navName">লোড হচ্ছে...</span>
+        <button class="btn btn-outline-light btn-sm" id="logoutBtn">
+          <i class="fa-solid fa-right-from-bracket me-1"></i> লগআউট
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-4">
+    <!-- প্রিন্ট বাটন (স্ক্রিনে দৃশ্যমান) -->
+    <div class="d-flex justify-content-end mb-3 no-print">
+      <button class="btn btn-success fw-semibold shadow-sm" onclick="window.print()">
+        <i class="fa-solid fa-file-pdf me-2"></i>A4 সাইজে প্রিন্ট / PDF ডাউনলোড
+      </button>
+    </div>
+
+    <!-- মূল A4 ডকুমেন্ট (স্ক্রিন ও প্রিন্ট উভয় স্থানে সুন্দরভাবে দেখাবে) -->
+    <div class="card border-0 shadow-sm p-4 mx-auto bg-white" id="printableA4" style="max-width: 800px;">
+      
+      <!-- মাদ্রাসার হেডার -->
+      <div class="text-center border-bottom border-success border-2 pb-3 mb-4">
+        <h3 class="fw-bold text-success mb-1">জামিয়া তাসলিমুল কুরআন ইসলামিয়া</h3>
+        <p class="text-muted small mb-1">ঠিকানা: মাদ্রাসার মূল শাখা, ঢাকা, বাংলাদেশ</p>
+        <span class="badge bg-success px-3 py-2 fs-6">শিক্ষার্থী বিবরণী ও প্রত্যয়ন পত্র</span>
+      </div>
+
+      <!-- ছাত্রের বিস্তারিত তথ্য টেবিল -->
+      <div class="row g-4 align-items-center mb-4">
+        <div class="col-8">
+          <table class="table table-bordered table-sm mb-0">
+            <tbody>
+              <tr>
+                <th class="bg-light w-40 text-secondary">শিক্ষার্থীর নাম:</th>
+                <td class="fw-bold fs-6" id="dashName">...</td>
+              </tr>
+              <tr>
+                <th class="bg-light text-secondary">Student ID:</th>
+                <td class="fw-bold text-success" id="dashId">...</td>
+              </tr>
+              <tr>
+                <th class="bg-light text-secondary">বিভাগ:</th>
+                <td id="dashDept">...</td>
+              </tr>
+              <tr>
+                <th class="bg-light text-secondary">শ্রেণি রোল:</th>
+                <td id="dashRoll">...</td>
+              </tr>
+              <tr>
+                <th class="bg-light text-secondary">পিতার নাম:</th>
+                <td id="dashFather">...</td>
+              </tr>
+              <tr>
+                <th class="bg-light text-secondary">সেশন:</th>
+                <td>২০২৬</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-4 text-center">
+          <img src="https://via.placeholder.com/130" class="img-thumbnail border-success" alt="Student Photo" style="width: 130px; height: 140px; object-fit: cover;">
+          <div class="small text-muted mt-1">শিক্ষার্থীর ছবি</div>
+        </div>
+      </div>
+
+      <!-- একাডেমিক ও ফি স্ট্যাটাস কার্ড -->
+      <h6 class="fw-bold text-dark border-bottom pb-2 mb-3">প্রাতিষ্ঠানিক অগ্রগতি ও ফি সংক্রান্ত তথ্য</h6>
+      <div class="row g-3 mb-4">
+        <div class="col-4">
+          <div class="p-3 border rounded text-center bg-light">
+            <small class="text-muted d-block">মোট উপস্থিতি</small>
+            <h4 class="fw-bold text-success my-1" id="dashAtt">১০০%</h4>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="p-3 border rounded text-center bg-light">
+            <small class="text-muted d-block">পরীক্ষার ফলাফল / মান</small>
+            <h4 class="fw-bold text-primary my-1" id="dashRes">...</h4>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="p-3 border rounded text-center bg-light">
+            <small class="text-muted d-block">বকেয়া ফি স্ট্যাটাস</small>
+            <h4 class="fw-bold text-danger my-1" id="dashDue">০.০০ ৳</h4>
+          </div>
+        </div>
+      </div>
+
+      <!-- প্রাতিষ্ঠানিক প্রত্যয়ন -->
+      <div class="border rounded p-3 mb-5 bg-light small text-secondary lh-lg">
+        এই মর্মে প্রত্যয়ন করা যাচ্ছে যে, উপরোক্ত শিক্ষার্থী অত্র জামিয়া তাসলিমুল কুরআন ইসলামিয়ার একজন নিয়মিত ও মনোযোগী ছাত্র। প্রতিষ্ঠানের নিয়ম-শৃঙ্খলা বজায় রেখে সে নিয়মিত পাঠ কার্যক্রমে অংশগ্রহণ করছে।
+      </div>
+
+      <!-- সাক্ষর সেকশন (A4 পাতার নিচে) -->
+      <div class="row text-center mt-5 pt-4">
+        <div class="col-4">
+          <div class="border-top border-dark pt-1 small fw-semibold">হিসাব শাখা</div>
+        </div>
+        <div class="col-4">
+          <div class="border-top border-dark pt-1 small fw-semibold">নাজেমে তা'লীমাত (শিক্ষা সচিব)</div>
+        </div>
+        <div class="col-4">
+          <div class="border-top border-dark pt-1 small fw-semibold">মুহতামিম / প্রিন্সিপাল</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+
+  <script>
+    const currentId = localStorage.getItem('studentSession');
+    if (!currentId) {
+      window.location.href = 'student-login.html';
+    }
+
+    db.collection("students").doc(currentId).get().then((doc) => {
+      if (doc.exists) {
+        const s = doc.data();
+        document.getElementById('navName').innerText = "ছাত্র: " + s.name;
+        document.getElementById('dashName').innerText = s.name;
+        document.getElementById('dashId').innerText = s.studentId;
+        document.getElementById('dashDept').innerText = s.department;
+        document.getElementById('dashRoll').innerText = s.roll;
+        document.getElementById('dashFather').innerText = s.father;
+        document.getElementById('dashAtt').innerText = s.attendance || "১০০%";
+        document.getElementById('dashRes').innerText = s.result || "অপেক্ষমান";
+        document.getElementById('dashDue').innerText = s.due || "০.০০ ৳";
+      }
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+      localStorage.removeItem('studentSession');
+      window.location.href = 'student-login.html';
+    });
+  </script>
+</body>
+</html>
