@@ -9,13 +9,11 @@
   <link rel="stylesheet" href="css/style.css">
   
   <style>
-    /* A4 সাইজের জন্য নিখুঁত প্রিন্ট স্টাইল */
     @media print {
       @page {
         size: A4 portrait;
-        margin: 12mm;
+        margin: 8mm;
       }
-
       html, body {
         width: 210mm;
         height: 297mm;
@@ -23,30 +21,23 @@
         margin: 0 !important;
         padding: 0 !important;
       }
-
-      /* পেজের বাকি সবকিছু হাইড থাকবে */
       body * {
         visibility: hidden;
       }
-
-      /* শুধু A4 শিটটি প্রিন্ট হবে */
       #printableA4, #printableA4 * {
         visibility: visible;
       }
-
       #printableA4 {
         position: absolute;
         left: 0;
         top: 0;
         width: 100% !important;
-        min-height: 260mm;
-        padding: 30px !important;
+        min-height: 275mm;
+        padding: 18px !important;
         border: 2px solid #0f5132 !important;
         border-radius: 6px;
         box-sizing: border-box;
-        display: block !important;
       }
-
       .no-print {
         display: none !important;
       }
@@ -70,31 +61,29 @@
   </nav>
 
   <div class="container py-4">
-    <!-- প্রিন্ট বাটন (স্ক্রিনে দৃশ্যমান) -->
     <div class="d-flex justify-content-end mb-3 no-print">
       <button class="btn btn-success fw-semibold shadow-sm" onclick="window.print()">
-        <i class="fa-solid fa-file-pdf me-2"></i>A4 সাইজে প্রিন্ট / PDF ডাউনলোড
+        <i class="fa-solid fa-file-pdf me-2"></i>A4 সাইজে প্রত্যয়নপত্র প্রিন্ট
       </button>
     </div>
 
-    <!-- মূল A4 ডকুমেন্ট (স্ক্রিন ও প্রিন্ট উভয় স্থানে সুন্দরভাবে দেখাবে) -->
-    <div class="card border-0 shadow-sm p-4 mx-auto bg-white" id="printableA4" style="max-width: 800px;">
+    <!-- মূল A4 প্রফেশনাল প্রত্যয়নপত্র -->
+    <div class="card border-0 shadow-sm p-4 mx-auto bg-white" id="printableA4" style="max-width: 850px;">
       
-      <!-- মাদ্রাসার হেডার -->
-      <div class="text-center border-bottom border-success border-2 pb-3 mb-4">
+      <div class="text-center border-bottom border-success border-2 pb-2 mb-3">
         <h3 class="fw-bold text-success mb-1">জামিয়া তাসলিমুল কুরআন ইসলামিয়া</h3>
-        <p class="text-muted small mb-1">ঠিকানা: মাদ্রাসার মূল শাখা, ঢাকা, বাংলাদেশ</p>
-        <span class="badge bg-success px-3 py-2 fs-6">শিক্ষার্থী বিবরণী ও প্রত্যয়ন পত্র</span>
+        <p class="text-muted small mb-1">দ্বীনি ও আধুনিক শিক্ষার এক অনন্য সমন্বয়</p>
+        <span class="badge bg-success px-3 py-1 fs-6">শিক্ষার্থী বিবরণী ও প্রত্যয়ন পত্র</span>
       </div>
 
-      <!-- ছাত্রের বিস্তারিত তথ্য টেবিল -->
-      <div class="row g-4 align-items-center mb-4">
+      <!-- ছাত্রের বিস্তারিত টেবিল ও ছবি -->
+      <div class="row g-3 align-items-start mb-3">
         <div class="col-8">
-          <table class="table table-bordered table-sm mb-0">
+          <table class="table table-bordered table-sm mb-0 small">
             <tbody>
               <tr>
-                <th class="bg-light w-40 text-secondary">শিক্ষার্থীর নাম:</th>
-                <td class="fw-bold fs-6" id="dashName">...</td>
+                <th class="bg-light text-secondary w-35">শিক্ষার্থীর নাম:</th>
+                <td class="fw-bold text-dark fs-6" id="dashName">...</td>
               </tr>
               <tr>
                 <th class="bg-light text-secondary">Student ID:</th>
@@ -102,64 +91,131 @@
               </tr>
               <tr>
                 <th class="bg-light text-secondary">বিভাগ:</th>
-                <td id="dashDept">...</td>
+                <td class="fw-bold" id="dashDept">...</td>
               </tr>
               <tr>
                 <th class="bg-light text-secondary">শ্রেণি রোল:</th>
-                <td id="dashRoll">...</td>
+                <td class="fw-bold" id="dashRoll">...</td>
               </tr>
               <tr>
                 <th class="bg-light text-secondary">পিতার নাম:</th>
                 <td id="dashFather">...</td>
               </tr>
               <tr>
-                <th class="bg-light text-secondary">সেশন:</th>
-                <td>২০২৬</td>
+                <th class="bg-light text-secondary">মাতার নাম:</th>
+                <td id="dashMother">...</td>
+              </tr>
+              <tr>
+                <th class="bg-light text-secondary">জন্ম তারিখ:</th>
+                <td id="dashDob">...</td>
+              </tr>
+              <tr>
+                <th class="bg-light text-secondary">রক্তের গ্রুপ:</th>
+                <td class="fw-bold text-danger" id="dashBlood">...</td>
+              </tr>
+              <tr>
+                <th class="bg-light text-secondary">অভিভাবকের মোবাইল:</th>
+                <td id="dashPhone">...</td>
               </tr>
             </tbody>
           </table>
         </div>
         <div class="col-4 text-center">
-          <img src="https://via.placeholder.com/130" class="img-thumbnail border-success" alt="Student Photo" style="width: 130px; height: 140px; object-fit: cover;">
-          <div class="small text-muted mt-1">শিক্ষার্থীর ছবি</div>
+          <img id="dashPhoto" src="https://via.placeholder.com/130" class="img-thumbnail border-success mb-1" alt="Student Photo" style="width: 130px; height: 145px; object-fit: cover;">
+          <div class="small text-muted">শিক্ষার্থীর ছবি</div>
         </div>
       </div>
 
-      <!-- একাডেমিক ও ফি স্ট্যাটাস কার্ড -->
-      <h6 class="fw-bold text-dark border-bottom pb-2 mb-3">প্রাতিষ্ঠানিক অগ্রগতি ও ফি সংক্রান্ত তথ্য</h6>
-      <div class="row g-3 mb-4">
+      <!-- আলাদাভাবে ঠিকানা সেকশন -->
+      <div class="mb-3">
+        <h6 class="fw-bold text-dark border-bottom pb-1 mb-2 small">ঠিকানা সংক্রান্ত তথ্য</h6>
+        
+        <!-- বর্তমান ঠিকানা টেবিল -->
+        <table class="table table-bordered table-sm small mb-2">
+          <tbody>
+            <tr class="table-light">
+              <th colspan="5" class="text-success"><i class="fa-solid fa-location-dot me-1"></i> বর্তমান ঠিকানা</th>
+            </tr>
+            <tr>
+              <th class="bg-light text-muted">গ্রাম/মহল্লা:</th>
+              <td id="preVillageText">...</td>
+              <th class="bg-light text-muted">ডাকঘর:</th>
+              <td colspan="2" id="prePostText">...</td>
+            </tr>
+            <tr>
+              <th class="bg-light text-muted">ইউনিয়ন/ওয়ার্ড:</th>
+              <td id="preUnionText">...</td>
+              <th class="bg-light text-muted">থানা/উপজেলা:</th>
+              <td id="preThanaText">...</td>
+            </tr>
+            <tr>
+              <th class="bg-light text-muted">জেলা:</th>
+              <td colspan="4" class="fw-semibold" id="preDistrictText">...</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- স্থায়ী ঠিকানা টেবিল -->
+        <table class="table table-bordered table-sm small mb-0">
+          <tbody>
+            <tr class="table-light">
+              <th colspan="5" class="text-secondary"><i class="fa-solid fa-house-chimney me-1"></i> স্থায়ী ঠিকানা</th>
+            </tr>
+            <tr>
+              <th class="bg-light text-muted">গ্রাম/মহল্লা:</th>
+              <td id="perVillageText">...</td>
+              <th class="bg-light text-muted">ডাকঘর:</th>
+              <td colspan="2" id="perPostText">...</td>
+            </tr>
+            <tr>
+              <th class="bg-light text-muted">ইউনিয়ন/ওয়ার্ড:</th>
+              <td id="perUnionText">...</td>
+              <th class="bg-light text-muted">থানা/উপজেলা:</th>
+              <td id="perThanaText">...</td>
+            </tr>
+            <tr>
+              <th class="bg-light text-muted">জেলা:</th>
+              <td colspan="4" class="fw-semibold" id="perDistrictText">...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ফলাফল ও হাজিরা -->
+      <h6 class="fw-bold text-dark border-bottom pb-1 mb-2 small">প্রাতিষ্ঠানিক অগ্রগতি ও ফি সংক্রান্ত তথ্য</h6>
+      <div class="row g-2 mb-3">
         <div class="col-4">
-          <div class="p-3 border rounded text-center bg-light">
+          <div class="p-2 border rounded text-center bg-light">
             <small class="text-muted d-block">মোট উপস্থিতি</small>
-            <h4 class="fw-bold text-success my-1" id="dashAtt">১০০%</h4>
+            <h5 class="fw-bold text-success my-1" id="dashAtt">১০০%</h5>
           </div>
         </div>
         <div class="col-4">
-          <div class="p-3 border rounded text-center bg-light">
-            <small class="text-muted d-block">পরীক্ষার ফলাফল / মান</small>
-            <h4 class="fw-bold text-primary my-1" id="dashRes">...</h4>
+          <div class="p-2 border rounded text-center bg-light">
+            <small class="text-muted d-block">ফলাফল / মান</small>
+            <h5 class="fw-bold text-primary my-1" id="dashRes">...</h5>
           </div>
         </div>
         <div class="col-4">
-          <div class="p-3 border rounded text-center bg-light">
-            <small class="text-muted d-block">বকেয়া ফি স্ট্যাটাস</small>
-            <h4 class="fw-bold text-danger my-1" id="dashDue">০.০০ ৳</h4>
+          <div class="p-2 border rounded text-center bg-light">
+            <small class="text-muted d-block">বকেয়া ফি</small>
+            <h5 class="fw-bold text-danger my-1" id="dashDue">০.০০ ৳</h5>
           </div>
         </div>
       </div>
 
       <!-- প্রাতিষ্ঠানিক প্রত্যয়ন -->
-      <div class="border rounded p-3 mb-5 bg-light small text-secondary lh-lg">
-        এই মর্মে প্রত্যয়ন করা যাচ্ছে যে, উপরোক্ত শিক্ষার্থী অত্র জামিয়া তাসলিমুল কুরআন ইসলামিয়ার একজন নিয়মিত ও মনোযোগী ছাত্র। প্রতিষ্ঠানের নিয়ম-শৃঙ্খলা বজায় রেখে সে নিয়মিত পাঠ কার্যক্রমে অংশগ্রহণ করছে।
+      <div class="border rounded p-2 mb-3 bg-light small text-secondary">
+        এই মর্মে প্রত্যয়ন করা যাচ্ছে যে, উপরোক্ত শিক্ষার্থী জামিয়া তাসলিমুল কুরআন ইসলামিয়ার একজন নিয়মিত ছাত্র। প্রতিষ্ঠানের যাবতীয় নিয়ম-শৃঙ্খলা মেনে সে যথারীতি শিক্ষা গ্রহণ করছে।
       </div>
 
-      <!-- সাক্ষর সেকশন (A4 পাতার নিচে) -->
-      <div class="row text-center mt-5 pt-4">
+      <!-- স্বাক্ষর -->
+      <div class="row text-center mt-3 pt-2">
         <div class="col-4">
           <div class="border-top border-dark pt-1 small fw-semibold">হিসাব শাখা</div>
         </div>
         <div class="col-4">
-          <div class="border-top border-dark pt-1 small fw-semibold">নাজেমে তা'লীমাত (শিক্ষা সচিব)</div>
+          <div class="border-top border-dark pt-1 small fw-semibold">শিক্ষা সচিব</div>
         </div>
         <div class="col-4">
           <div class="border-top border-dark pt-1 small fw-semibold">মুহতামিম / প্রিন্সিপাল</div>
@@ -188,6 +244,31 @@
         document.getElementById('dashDept').innerText = s.department;
         document.getElementById('dashRoll').innerText = s.roll;
         document.getElementById('dashFather').innerText = s.father;
+        document.getElementById('dashMother').innerText = s.mother || "দেওয়া হয়নি";
+        document.getElementById('dashDob').innerText = s.dob || "দেওয়া হয়নি";
+        document.getElementById('dashBlood').innerText = s.bloodGroup || "অজানা";
+        document.getElementById('dashPhone').innerText = s.phone || "দেওয়া হয়নি";
+        
+        if (s.photo) {
+          document.getElementById('dashPhoto').src = s.photo;
+        }
+
+        // বর্তমান ঠিকানা আলাদা ফিল্ডে বসানো
+        const pre = s.presentAddress || {};
+        document.getElementById('preVillageText').innerText = pre.village || "-";
+        document.getElementById('prePostText').innerText = pre.post || "-";
+        document.getElementById('preUnionText').innerText = pre.union || "-";
+        document.getElementById('preThanaText').innerText = pre.thana || "-";
+        document.getElementById('preDistrictText').innerText = pre.district || "-";
+
+        // স্থায়ী ঠিকানা আলাদা ফিল্ডে বসানো
+        const per = s.permanentAddress || {};
+        document.getElementById('perVillageText').innerText = per.village || "-";
+        document.getElementById('perPostText').innerText = per.post || "-";
+        document.getElementById('perUnionText').innerText = per.union || "-";
+        document.getElementById('perThanaText').innerText = per.thana || "-";
+        document.getElementById('perDistrictText').innerText = per.district || "-";
+
         document.getElementById('dashAtt').innerText = s.attendance || "১০০%";
         document.getElementById('dashRes').innerText = s.result || "অপেক্ষমান";
         document.getElementById('dashDue').innerText = s.due || "০.০০ ৳";

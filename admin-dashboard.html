@@ -24,36 +24,154 @@
   <div class="container py-4">
     <div class="row g-4">
       
-      <!-- বাম পাশ: ছাত্র যোগ ও রেজাল্ট আপডেট -->
-      <div class="col-lg-5">
-        <!-- নতুন ছাত্র যোগ -->
+      <!-- বাম পাশ: ছাত্র ভর্তি ও রেজাল্ট আপডেট -->
+      <div class="col-lg-7">
         <div class="card border-0 shadow-sm p-4 bg-white mb-4">
-          <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-user-plus me-2 text-success"></i>নতুন ছাত্র যোগ</h5>
+          <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-user-plus me-2 text-success"></i>পূর্ণাঙ্গ ছাত্র ভর্তি ফরম</h5>
           <form id="addStudentForm">
-            <div class="mb-2">
-              <input type="text" class="form-control form-control-sm" id="name" placeholder="ছাত্রের নাম" required>
-            </div>
-            <div class="mb-2">
-              <input type="text" class="form-control form-control-sm" id="sId" placeholder="Student ID (যেমন: JTQ-2026-0002)" required>
-            </div>
-            <div class="mb-2">
-              <input type="text" class="form-control form-control-sm" id="sPass" value="jtq@12345" required>
-            </div>
-            <div class="row g-2 mb-2">
+            
+            <!-- ছবি আপলোড ও প্রিভিউ -->
+            <div class="row g-3 align-items-center mb-3 p-2 border rounded bg-light">
+              <div class="col-auto">
+                <img id="imagePreview" src="https://via.placeholder.com/90" class="img-thumbnail rounded" style="width: 85px; height: 95px; object-fit: cover;">
+              </div>
               <div class="col">
-                <select class="form-select form-select-sm" id="dept">
-                  <option value="হিফজুল কুরআন">হিফজুল কুরআন</option>
-                  <option value="কিতাব বিভাগ">কিতাব বিভাগ</option>
+                <label class="form-label small fw-semibold mb-1">ছাত্রের ছবি আপলোড করুন</label>
+                <input type="file" class="form-control form-control-sm" id="studentPhotoInput" accept="image/*" required>
+                <small class="text-muted d-block mt-1" style="font-size: 11px;">পাসপোর্ট সাইজের পরিষ্কার ছবি নির্বাচন করুন</small>
+              </div>
+            </div>
+
+            <!-- মৌলিক তথ্য -->
+            <div class="row g-2 mb-2">
+              <div class="col-md-6">
+                <label class="form-label small fw-semibold">ছাত্রের নাম</label>
+                <input type="text" class="form-control form-control-sm" id="name" placeholder="ছাত্রের পুরো নাম" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label small fw-semibold">Student ID</label>
+                <input type="text" class="form-control form-control-sm" id="sId" placeholder="যেমন: JTQ-2026-0002" required>
+              </div>
+            </div>
+
+            <div class="row g-2 mb-2">
+              <div class="col-md-6">
+                <label class="form-label small fw-semibold">পিতার নাম</label>
+                <input type="text" class="form-control form-control-sm" id="father" placeholder="পিতার নাম" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label small fw-semibold">মাতার নাম</label>
+                <input type="text" class="form-control form-control-sm" id="mother" placeholder="মাতার নাম" required>
+              </div>
+            </div>
+
+            <div class="row g-2 mb-2">
+              <div class="col-md-6">
+                <label class="form-label small fw-semibold">অভিভাবকের মোবাইল নম্বর</label>
+                <input type="tel" class="form-control form-control-sm" id="phone" placeholder="017XXXXXXXX" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label small fw-semibold">জন্ম তারিখ (Date of Birth)</label>
+                <input type="date" class="form-control form-control-sm" id="dob" required>
+              </div>
+            </div>
+
+            <!-- বিভাগ, রোল ও রক্তের গ্রুপ -->
+            <div class="row g-2 mb-3">
+              <div class="col-md-4">
+                <label class="form-label small fw-semibold">বিভাগ</label>
+                <select class="form-select form-select-sm" id="dept" required>
+                  <option value="মক্তব">মক্তব</option>
+                  <option value="নূরানী">নূরানী</option>
+                  <option value="নাজেরা">নাজেরা</option>
+                  <option value="হিফজ বিভাগ">হিফজ বিভাগ</option>
                 </select>
               </div>
-              <div class="col">
-                <input type="number" class="form-control form-control-sm" id="roll" placeholder="রোল" required>
+              <div class="col-md-4">
+                <label class="form-label small fw-semibold">রোল নম্বর</label>
+                <input type="number" class="form-control form-control-sm" id="roll" placeholder="০১" required>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label small fw-semibold">রক্তের গ্রুপ (Blood Group)</label>
+                <select class="form-select form-select-sm" id="bloodGroup">
+                  <option value="A+">A+</option>
+                  <option value="A-">A-</option>
+                  <option value="B+">B+</option>
+                  <option value="B-">B-</option>
+                  <option value="O+">O+</option>
+                  <option value="O-">O-</option>
+                  <option value="AB+">AB+</option>
+                  <option value="AB-">AB-</option>
+                  <option value="অজানা">অজানা</option>
+                </select>
               </div>
             </div>
-            <div class="mb-3">
-              <input type="text" class="form-control form-control-sm" id="father" placeholder="পিতার নাম" required>
+
+            <!-- বর্তমান ঠিকানা -->
+            <div class="border rounded p-3 mb-3 bg-light">
+              <span class="badge bg-success mb-2">বর্তমান ঠিকানা (Present Address)</span>
+              <div class="row g-2">
+                <div class="col-md-4">
+                  <label class="small text-muted mb-0">গ্রাম / মহল্লা</label>
+                  <input type="text" class="form-control form-control-sm" id="preVillage" placeholder="গ্রাম" required>
+                </div>
+                <div class="col-md-4">
+                  <label class="small text-muted mb-0">ডাকঘর</label>
+                  <input type="text" class="form-control form-control-sm" id="prePost" placeholder="ডাকঘর" required>
+                </div>
+                <div class="col-md-4">
+                  <label class="small text-muted mb-0">ইউনিয়ন / ওয়ার্ড</label>
+                  <input type="text" class="form-control form-control-sm" id="preUnion" placeholder="ইউনিয়ন" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="small text-muted mb-0">থানা / উপজেলা</label>
+                  <input type="text" class="form-control form-control-sm" id="preThana" placeholder="থানা" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="small text-muted mb-0">জেলা</label>
+                  <input type="text" class="form-control form-control-sm" id="preDistrict" placeholder="জেলা" required>
+                </div>
+              </div>
             </div>
-            <button type="submit" class="btn btn-success btn-sm w-100 fw-semibold">ছাত্র যোগ করুন</button>
+
+            <!-- স্থায়ী ঠিকানা -->
+            <div class="border rounded p-3 mb-3 bg-light">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="badge bg-secondary">স্থায়ী ঠিকানা (Permanent Address)</span>
+                <button type="button" class="btn btn-outline-dark btn-sm py-0" style="font-size: 11px;" id="copyAddressBtn">বর্তমান ঠিকানার মতো একই</button>
+              </div>
+              <div class="row g-2">
+                <div class="col-md-4">
+                  <label class="small text-muted mb-0">গ্রাম / মহল্লা</label>
+                  <input type="text" class="form-control form-control-sm" id="perVillage" placeholder="গ্রাম" required>
+                </div>
+                <div class="col-md-4">
+                  <label class="small text-muted mb-0">ডাকঘর</label>
+                  <input type="text" class="form-control form-control-sm" id="perPost" placeholder="ডাকঘর" required>
+                </div>
+                <div class="col-md-4">
+                  <label class="small text-muted mb-0">ইউনিয়ন / ওয়ার্ড</label>
+                  <input type="text" class="form-control form-control-sm" id="perUnion" placeholder="ইউনিয়ন" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="small text-muted mb-0">থানা / উপজেলা</label>
+                  <input type="text" class="form-control form-control-sm" id="perThana" placeholder="থানা" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="small text-muted mb-0">জেলা</label>
+                  <input type="text" class="form-control form-control-sm" id="perDistrict" placeholder="জেলা" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label small fw-semibold">ডিফল্ট লগইন পাসওয়ার্ড</label>
+              <input type="text" class="form-control form-control-sm" id="sPass" value="jtq@12345" required>
+            </div>
+
+            <button type="submit" class="btn btn-success btn-sm w-100 fw-semibold" id="submitBtn">
+              ছাত্র ভর্তি সম্পন্ন করুন
+            </button>
           </form>
         </div>
 
@@ -79,22 +197,21 @@
       </div>
 
       <!-- ডান পাশ: ছাত্র তালিকা -->
-      <div class="col-lg-7">
-        <div class="card border-0 shadow-sm p-4 bg-white">
-          <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-users me-2 text-primary"></i>ছাত্রদের সার্বিক তথ্য</h5>
+      <div class="col-lg-5">
+        <div class="card border-0 shadow-sm p-4 bg-white sticky-top" style="top: 20px;">
+          <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-users me-2 text-primary"></i>ভর্তি হওয়া শিক্ষার্থীদের তালিকা</h5>
           <div class="table-responsive">
             <table class="table table-hover align-middle small">
               <thead class="table-light">
                 <tr>
+                  <th>ছবি</th>
                   <th>আইডি</th>
-                  <th>নাম</th>
-                  <th>রেজাল্ট</th>
-                  <th>বকেয়া ফি</th>
-                  <th>হাজিরা</th>
+                  <th>বিভাগ</th>
+                  <th>জেলা</th>
                 </tr>
               </thead>
               <tbody id="studentTableBody">
-                <tr><td colspan="5" class="text-center text-muted">লোড হচ্ছে...</td></tr>
+                <tr><td colspan="4" class="text-center text-muted">তথ্য লোড হচ্ছে...</td></tr>
               </tbody>
             </table>
           </div>
@@ -118,46 +235,102 @@
       window.location.href = 'admin-login.html';
     });
 
-    // রিয়েল-টাইম তালিকা লোড
+    // ছবি Base64 ও প্রিভিউ
+    let base64Image = "";
+    document.getElementById('studentPhotoInput').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          base64Image = event.target.result;
+          document.getElementById('imagePreview').src = base64Image;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // বর্তমান ঠিকানা কপি করে স্থায়ী ঠিকানায় বসানো
+    document.getElementById('copyAddressBtn').addEventListener('click', function() {
+      document.getElementById('perVillage').value = document.getElementById('preVillage').value;
+      document.getElementById('perPost').value = document.getElementById('prePost').value;
+      document.getElementById('perUnion').value = document.getElementById('preUnion').value;
+      document.getElementById('perThana').value = document.getElementById('preThana').value;
+      document.getElementById('perDistrict').value = document.getElementById('preDistrict').value;
+    });
+
+    // রিয়েল-টাইম তালিকা দেখানো
     db.collection("students").onSnapshot((snapshot) => {
       const tbody = document.getElementById('studentTableBody');
       tbody.innerHTML = "";
       if (snapshot.empty) {
-        tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted">কোনো রেকর্ড নেই</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="4" class="text-center text-muted">কোনো রেকর্ড নেই</td></tr>`;
         return;
       }
       snapshot.forEach((doc) => {
         const d = doc.data();
+        const photo = d.photo || 'https://via.placeholder.com/40';
         tbody.innerHTML += `
           <tr>
-            <td><strong>${d.studentId}</strong></td>
-            <td>${d.name}</td>
-            <td><span class="badge bg-primary">${d.result || 'অপেক্ষমান'}</span></td>
-            <td><span class="badge bg-danger">${d.due || '০ ৳'}</span></td>
-            <td>${d.attendance || '১০০%'}</td>
+            <td><img src="${photo}" class="rounded-circle" style="width:35px; height:35px; object-fit:cover;"></td>
+            <td><strong>${d.studentId}</strong><br><small class="text-muted">${d.name}</small></td>
+            <td><span class="badge bg-success">${d.department || '-'}</span></td>
+            <td>${d.permanentAddress ? d.permanentAddress.district : '-'}</td>
           </tr>
         `;
       });
     });
 
-    // ছাত্র যোগ
+    // সংরক্ষণ
     document.getElementById('addStudentForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      const id = document.getElementById('sId').value.trim();
-      db.collection("students").doc(id).set({
-        studentId: id,
+      const sId = document.getElementById('sId').value.trim();
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.innerText = "সংরক্ষণ হচ্ছে...";
+      submitBtn.disabled = true;
+
+      const studentData = {
+        studentId: sId,
         password: document.getElementById('sPass').value,
         name: document.getElementById('name').value.trim(),
+        father: document.getElementById('father').value.trim(),
+        mother: document.getElementById('mother').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        dob: document.getElementById('dob').value,
         department: document.getElementById('dept').value,
         roll: document.getElementById('roll').value,
-        father: document.getElementById('father').value.trim(),
+        bloodGroup: document.getElementById('bloodGroup').value,
+        photo: base64Image || "https://via.placeholder.com/130",
+        presentAddress: {
+          village: document.getElementById('preVillage').value.trim(),
+          post: document.getElementById('prePost').value.trim(),
+          union: document.getElementById('preUnion').value.trim(),
+          thana: document.getElementById('preThana').value.trim(),
+          district: document.getElementById('preDistrict').value.trim()
+        },
+        permanentAddress: {
+          village: document.getElementById('perVillage').value.trim(),
+          post: document.getElementById('perPost').value.trim(),
+          union: document.getElementById('perUnion').value.trim(),
+          thana: document.getElementById('perThana').value.trim(),
+          district: document.getElementById('perDistrict').value.trim()
+        },
+        admissionDate: new Date().toISOString().split('T')[0],
         attendance: "১০০%",
         result: "অপেক্ষমান",
         due: "০.০০ ৳"
-      }).then(() => {
-        alert("ছাত্র যুক্ত হয়েছে!");
+      };
+
+      db.collection("students").doc(sId).set(studentData).then(() => {
+        alert("নতুন ছাত্র সফলভাবে ভর্তি করা হয়েছে!");
         this.reset();
+        document.getElementById('imagePreview').src = "https://via.placeholder.com/90";
+        base64Image = "";
         document.getElementById('sPass').value = "jtq@12345";
+      }).catch((err) => {
+        alert("ত্রুটি: " + err.message);
+      }).finally(() => {
+        submitBtn.innerText = "ছাত্র ভর্তি সম্পন্ন করুন";
+        submitBtn.disabled = false;
       });
     });
 
@@ -165,19 +338,15 @@
     document.getElementById('updateDataForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const id = document.getElementById('updateId').value.trim();
-      const res = document.getElementById('updateRes').value.trim();
-      const due = document.getElementById('updateDue').value.trim();
-      const att = document.getElementById('updateAtt').value.trim();
-
       db.collection("students").doc(id).update({
-        result: res,
-        due: due,
-        attendance: att
+        result: document.getElementById('updateRes').value.trim(),
+        due: document.getElementById('updateDue').value.trim(),
+        attendance: document.getElementById('updateAtt').value.trim()
       }).then(() => {
-        alert("তথ্য আপডেট হয়েছে!");
+        alert("তথ্য আপডেট সফল হয়েছে!");
         this.reset();
       }).catch((err) => {
-        alert("আইডি খুঁজে পাওয়া যায়নি: " + err.message);
+        alert("আইডি পাওয়া যায়নি: " + err.message);
       });
     });
   </script>
