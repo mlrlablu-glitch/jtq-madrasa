@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ছাত্র ড্যাশবোর্ড ও পড়া ট্র্যাকার - JTQ মাদ্রাসা</title>
+  <title>ছাত্র ড্যাশবোর্ড ও অনলাইন ফি - JTQ মাদ্রাসা</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
@@ -17,6 +17,10 @@
     }
     .diary-table th {
       background-color: #f1f8f4;
+    }
+    .nav-pills .nav-link.active {
+      background-color: #198754 !important;
+      color: #fff !important;
     }
     @media print {
       @page {
@@ -58,7 +62,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm no-print">
     <div class="container">
       <a class="navbar-brand fw-bold" href="#">
-        <i class="fa-solid fa-mosque me-2"></i>JTQ মাদ্রাসা পোর্টাল
+        <i class="fa-solid fa-mosque me-2"></i>JTQ মাদ্রাসা শিক্ষার্থী পোর্টাল
       </a>
       <div class="d-flex align-items-center">
         <span class="text-white me-3 d-none d-md-inline" id="navName">লোড হচ্ছে...</span>
@@ -71,21 +75,26 @@
 
   <div class="container py-4">
     
-    <!-- ট্যাব নেভিগেশন -->
+    <!-- ৩টি প্রধান ট্যাব নেভিগেশন -->
     <ul class="nav nav-pills nav-fill mb-4 p-2 bg-white rounded shadow-sm no-print" id="dashboardTabs">
       <li class="nav-item">
         <button class="nav-link active fw-bold" id="tabProfileBtn" onclick="switchTab('profile')">
-          <i class="fa-solid fa-id-card me-2"></i>আমার বিবরণী ও প্রত্যয়ন পত্র
+          <i class="fa-solid fa-id-card me-1"></i> ১. আমার বিবরণী ও প্রত্যয়ন পত্র
         </button>
       </li>
       <li class="nav-item">
         <button class="nav-link fw-bold text-dark" id="tabSabakBtn" onclick="switchTab('sabak')">
-          <i class="fa-solid fa-book-journal-whills me-2 text-success"></i>দৈনিক, সাপ্তাহিক ও মাসিক সবক রেকর্ড
+          <i class="fa-solid fa-book-journal-whills me-1 text-success"></i> ২. দৈনিক, সাপ্তাহিক ও মাসিক সবক রেকর্ড
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link fw-bold text-dark" id="tabFeeBtn" onclick="switchTab('fee')">
+          <i class="fa-solid fa-money-check-dollar me-1 text-primary"></i> ৩. অনলাইন মাসিক বেতন জমা ও রশিদ
         </button>
       </li>
     </ul>
 
-    <!-- ১. বিবরণী ও প্রত্যয়ন পত্র সেকশন (নিবন্ধন নম্বরসহ) -->
+    <!-- ১. বিবরণী ও প্রত্যয়ন পত্র সেকশন -->
     <div id="profileSection">
       <div class="d-flex justify-content-end mb-3 no-print">
         <button class="btn btn-success fw-semibold shadow-sm" onclick="window.print()">
@@ -136,7 +145,7 @@
                 <th class="bg-light text-muted">ডাকঘর:</th><td colspan="2" id="prePostText">...</td>
               </tr>
               <tr>
-                <th class="bg-light text-muted">ইউনিয়ন/ওয়ার্ড:</th><td id="preUnionText">...</td>
+                <th class="bg-light text-muted">ইউনিয়ন/ওয়ার্ড:</th><td id="preUnionText">...</td>
                 <th class="bg-light text-muted">থানা/উপজেলা:</th><td id="preThanaText">...</td>
               </tr>
               <tr><th class="bg-light text-muted">জেলা:</th><td colspan="4" class="fw-semibold" id="preDistrictText">...</td></tr>
@@ -151,7 +160,7 @@
                 <th class="bg-light text-muted">ডাকঘর:</th><td colspan="2" id="perPostText">...</td>
               </tr>
               <tr>
-                <th class="bg-light text-muted">ইউনিয়ন/ওয়ার্ড:</th><td id="perUnionText">...</td>
+                <th class="bg-light text-muted">ইউনিয়ন/ওয়ার্ড:</th><td id="perUnionText">...</td>
                 <th class="bg-light text-muted">থানা/উপজেলা:</th><td id="perThanaText">...</td>
               </tr>
               <tr><th class="bg-light text-muted">জেলা:</th><td colspan="4" class="fw-semibold" id="perDistrictText">...</td></tr>
@@ -194,10 +203,8 @@
       </div>
     </div>
 
-    <!-- ২. সবক ডায়েরি সেকশন (নাম, আইডি, ক্লাস, রোল, সময়কাল সহ) -->
+    <!-- ২. সবক ডায়েরি সেকশন -->
     <div id="sabakSection" style="display: none;">
-      
-      <!-- ফিল্টার বক্স -->
       <div class="card border-0 shadow-sm p-4 bg-white mb-4 no-print border-top border-success border-4">
         <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-filter me-2 text-success"></i>পড়ার তথ্য ফিল্টার করুন</h5>
         
@@ -242,14 +249,13 @@
         </div>
       </div>
 
-      <!-- ছাত্রের ডায়েরি হেডার (নাম -> আইডি -> ক্লাস -> রোল -> সময়কাল) -->
       <div class="card border-0 shadow-sm p-4 bg-white">
         <div class="border border-dark p-2 text-center position-relative mb-2">
           <span class="fs-5 fw-bold bg-dark text-white px-4 py-1 rounded-pill" id="tableHeaderTitle">পড়ার বিবরণী</span>
           <div class="d-flex flex-wrap justify-content-between mt-2 px-2 small fw-semibold">
             <div>ছাত্রের নাম: <span class="border-bottom border-dark px-1 fw-bold text-dark" id="diaryStudentName">...</span></div>
             <div>আইডি: <span class="border-bottom border-dark px-1 fw-bold text-success" id="diaryStudentId">...</span></div>
-            <div>শ্রেণি/বিভাগ: <span class="border-bottom border-dark px-1 fw-bold text-dark" id="diaryStudentClass">...</span></div>
+            <div>শ্রেণি/বিভাগ: <span class="border-bottom border-dark px-1 fw-bold text-dark" id="diaryStudentDept">...</span></div>
             <div>রোল: <span class="border-bottom border-dark px-1 fw-bold text-dark" id="diaryStudentRoll">...</span></div>
             <div>সময়কাল: <span class="border-bottom border-dark px-1 fw-bold text-primary" id="diaryPeriod">...</span></div>
           </div>
@@ -286,6 +292,131 @@
           </table>
         </div>
       </div>
+    </div>
+
+    <!-- ৩. অনলাইন মাসিক বেতন প্রদান ও রশিদ সেকশন (নতুন যুক্ত করা হয়েছে) -->
+    <div id="feeSection" style="display: none;">
+      
+      <!-- পেমেন্ট ফরম -->
+      <div class="card border-0 shadow-sm p-4 bg-white mb-4 border-top border-primary border-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-receipt me-2 text-primary"></i>অনলাইন মাসিক বেতন পরিশোধ ফরম</h5>
+          <span class="badge bg-danger fs-6">মোট বকেয়া: <span id="paymentCurrentDue">০.০০ ৳</span></span>
+        </div>
+
+        <!-- মাদ্রাসা পেমেন্ট নম্বর সহায়িকা -->
+        <div class="alert alert-info py-2 px-3 small mb-3">
+          <i class="fa-solid fa-circle-info me-1"></i> <strong>মাদ্রাসা পেমেন্ট নম্বর:</strong> বিকাশ/নগদ/রকেট (পার্সোনাল/মার্চেন্ট): <strong>017XXXXXXXX</strong> | ব্যাংক অ্যাকাউন্ট: <strong>ইসলামী ব্যাংক বাংলাদেশ লি., হিসাব নং: ২০৫০XXXXXXXXX</strong>
+        </div>
+
+        <form id="onlinePaymentForm">
+          <div class="row g-2 mb-3">
+            <div class="col-md-3">
+              <label class="form-label small fw-semibold">বেতনের মাস</label>
+              <select class="form-select form-select-sm" id="payMonth" required>
+                <option value="জানুয়ারি">জানুয়ারি</option>
+                <option value="ফেব্রুয়ারি">ফেব্রুয়ারি</option>
+                <option value="মার্চ">মার্চ</option>
+                <option value="এপ্রিল">এপ্রিল</option>
+                <option value="মে">মে</option>
+                <option value="জুন">জুন</option>
+                <option value="জুলাই">জুলাই</option>
+                <option value="আগস্ট">আগস্ট</option>
+                <option value="সেপ্টেম্বর" selected>সেপ্টেম্বর</option>
+                <option value="অক্টোবর">অক্টোবর</option>
+                <option value="নভেম্বর">নভেম্বর</option>
+                <option value="ডিসেম্বর">ডিসেম্বর</option>
+              </select>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label small fw-semibold">সাল / বছর</label>
+              <select class="form-select form-select-sm" id="payYear" required>
+                <option value="২০২৫">২০২৫</option>
+                <option value="২০২৬" selected>২০২৬</option>
+                <option value="২০২৭">২০২৭</option>
+                <option value="২০২৮">২০২৮</option>
+              </select>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label small fw-semibold">টাকার পরিমাণ (টাকা)</label>
+              <input type="number" class="form-control form-control-sm" id="payAmount" placeholder="যেমন: ১০০০" required>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label small fw-semibold">টাকা পাঠানোর তারিখ</label>
+              <input type="date" class="form-control form-control-sm" id="payDate" required>
+            </div>
+          </div>
+
+          <!-- পেমেন্ট মেথড নির্বাচন -->
+          <div class="row g-2 mb-3">
+            <div class="col-md-4">
+              <label class="form-label small fw-semibold">কীভাবে টাকা পাঠিয়েছেন?</label>
+              <select class="form-select form-select-sm fw-bold border-primary" id="payMethod" onchange="togglePaymentFields()" required>
+                <option value="বিকাশ (bKash)">বিকাশ (bKash)</option>
+                <option value="নগদ (Nagad)">নগদ (Nagad)</option>
+                <option value="রকেট (Rocket)">রকেট (Rocket)</option>
+                <option value="ব্যাংক ট্রান্সফার (Bank)">ব্যাংক ট্রান্সফার (Bank Transfer)</option>
+              </select>
+            </div>
+
+            <!-- মোবাইল ব্যাংকিং তথ্য (বিকাশ/নগদ/রকেট) -->
+            <div class="col-md-4" id="mfsSenderDiv">
+              <label class="form-label small fw-semibold" id="mfsSenderLabel">প্রেরকের বিকাশ নম্বর</label>
+              <input type="tel" class="form-control form-control-sm" id="paySenderNumber" placeholder="যে নম্বর থেকে টাকা পাঠিয়েছেন">
+            </div>
+
+            <div class="col-md-4" id="mfsTrxDiv">
+              <label class="form-label small fw-semibold">ট্রানজেকশন আইডি (TrxID)</label>
+              <input type="text" class="form-control form-control-sm" id="payTrxId" placeholder="যেমন: BL72XXXXXX">
+            </div>
+          </div>
+
+          <!-- ব্যাংক ট্রান্সফার ফিল্ড (ড্রপডাউনে ব্যাংক সিলেক্ট করলে ওপেন হবে) -->
+          <div class="row g-2 mb-3 p-2 border rounded bg-light" id="bankDetailsDiv" style="display: none;">
+            <div class="col-md-4">
+              <label class="form-label small fw-semibold">ব্যাংকের নাম</label>
+              <input type="text" class="form-control form-control-sm" id="payBankName" placeholder="যেমন: ইসলামী ব্যাংক / সোনালী ব্যাংক">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small fw-semibold">প্রেরকের ব্যাংক অ্যাকাউন্ট নম্বর</label>
+              <input type="text" class="form-control form-control-sm" id="payBankAccountNo" placeholder="অ্যাকাউন্ট নম্বর">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small fw-semibold">শাখা / ব্রাঞ্চের নাম</label>
+              <input type="text" class="form-control form-control-sm" id="payBankBranch" placeholder="যেমন: বাইপাইল শাখা">
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-sm px-4 fw-semibold" id="submitPaymentBtn">
+            <i class="fa-solid fa-paper-plane me-1"></i> বেতন জমার তথ্য সাবমিট করুন
+          </button>
+        </form>
+      </div>
+
+      <!-- ছাত্রের দেওয়া সকল পেমেন্ট ও অনলাইন রশিদের তালিকা -->
+      <div class="card border-0 shadow-sm p-4 bg-white">
+        <h6 class="fw-bold text-dark mb-3"><i class="fa-solid fa-clock-rotate-left me-2 text-primary"></i>আমার জমা দেওয়া বেতনের ট্র্যাকিং ও অনলাইন রশিদ</h6>
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover align-middle small text-center mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>পরিশোধিত মাস ও সাল</th>
+                <th>পরিমাণ</th>
+                <th>পেমেন্ট মাধ্যম</th>
+                <th>প্রেরক নম্বর / অ্যাকাউন্ট ও TrxID</th>
+                <th>টাকা পাঠানোর তারিখ</th>
+                <th>স্ট্যাটাস</th>
+              </tr>
+            </thead>
+            <tbody id="onlinePaymentHistoryBody">
+              <tr><td colspan="6" class="text-center text-muted">পেমেন্ট ইতিহাস লোড হচ্ছে...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 
     </div>
 
@@ -301,47 +432,65 @@
       window.location.href = 'student-login.html';
     }
 
+    // ৩টি ট্যাব সুইচার
     function switchTab(tab) {
       const pSec = document.getElementById('profileSection');
       const sSec = document.getElementById('sabakSection');
+      const fSec = document.getElementById('feeSection');
+      
       const pBtn = document.getElementById('tabProfileBtn');
       const sBtn = document.getElementById('tabSabakBtn');
+      const fBtn = document.getElementById('tabFeeBtn');
+
+      [pSec, sSec, fSec].forEach(el => el.style.display = 'none');
+      [pBtn, sBtn, fBtn].forEach(btn => {
+        btn.classList.remove('active');
+        btn.classList.add('text-dark');
+      });
 
       if (tab === 'profile') {
         pSec.style.display = 'block';
-        sSec.style.display = 'none';
         pBtn.classList.add('active');
         pBtn.classList.remove('text-dark');
-        sBtn.classList.remove('active');
-        sBtn.classList.add('text-dark');
-      } else {
-        pSec.style.display = 'none';
+      } else if (tab === 'sabak') {
         sSec.style.display = 'block';
         sBtn.classList.add('active');
         sBtn.classList.remove('text-dark');
-        pBtn.classList.remove('active');
-        pBtn.classList.add('text-dark');
         applySabakFilter();
+      } else if (tab === 'fee') {
+        fSec.style.display = 'block';
+        fBtn.classList.add('active');
+        fBtn.classList.remove('text-dark');
+        loadOnlinePaymentHistory();
       }
     }
 
-    function toggleFilterInputs() {
-      const type = document.getElementById('filterType').value;
-      document.getElementById('dailyInputDiv').style.display = (type === 'daily') ? 'block' : 'none';
-      document.getElementById('monthlyInputDiv').style.display = (type === 'monthly') ? 'block' : 'none';
+    // পেমেন্ট মাধ্যম অনুযায়ী ফিল্ড প্রদর্শন
+    function togglePaymentFields() {
+      const method = document.getElementById('payMethod').value;
+      const mfsSenderLabel = document.getElementById('mfsSenderLabel');
+      const mfsSenderDiv = document.getElementById('mfsSenderDiv');
+      const mfsTrxDiv = document.getElementById('mfsTrxDiv');
+      const bankDiv = document.getElementById('bankDetailsDiv');
+
+      if (method.includes("ব্যাংক")) {
+        mfsSenderDiv.style.display = 'none';
+        mfsTrxDiv.style.display = 'none';
+        bankDiv.style.display = 'flex';
+      } else {
+        mfsSenderDiv.style.display = 'block';
+        mfsTrxDiv.style.display = 'block';
+        bankDiv.style.display = 'none';
+        if(method.includes("বিকাশ")) mfsSenderLabel.innerText = "প্রেরকের বিকাশ নম্বর";
+        else if(method.includes("নগদ")) mfsSenderLabel.innerText = "প্রেরকের নগদ নম্বর";
+        else if(method.includes("রকেট")) mfsSenderLabel.innerText = "প্রেরকের রকেট নম্বর";
+      }
     }
 
-    function formatAMPM(timeStr) {
-      if (!timeStr || timeStr === "-") return "-";
-      let [hours, minutes] = timeStr.split(':');
-      hours = parseInt(hours);
-      const ampm = hours >= 12 ? 'PM' : 'AM';
-      hours = hours % 12;
-      hours = hours ? hours : 12;
-      return `${hours}:${minutes} ${ampm}`;
-    }
+    // তারিখ ডিফল্ট
+    document.getElementById('payDate').value = new Date().toISOString().split('T')[0];
 
-    // ছাত্রের প্রোফাইল ও নিবন্ধন নম্বর লোড
+    // প্রোফাইল লোড
     db.collection("students").doc(currentId).get().then((doc) => {
       if (doc.exists) {
         const s = doc.data();
@@ -360,11 +509,12 @@
         document.getElementById('dashBlood').innerText = s.bloodGroup || "অজানা";
         document.getElementById('dashPhone').innerText = s.phone || "দেওয়া হয়নি";
 
-        // ডায়েরি হেডারের ফিল্ডগুলো পূরণ
         document.getElementById('diaryStudentName').innerText = s.name;
         document.getElementById('diaryStudentId').innerText = s.studentId;
-        document.getElementById('diaryStudentClass').innerText = s.department;
+        document.getElementById('diaryStudentDept').innerText = s.department;
         document.getElementById('diaryStudentRoll').innerText = s.roll;
+
+        document.getElementById('paymentCurrentDue').innerText = s.due || "০.০০ ৳";
         
         if (s.photo) {
           document.getElementById('dashPhoto').src = s.photo;
@@ -390,7 +540,106 @@
       }
     });
 
-    // সবকের ফিল্টার লজিক (মাসিক তথ্য নির্ভুলভাবে আসার সহজ সমাধান)
+    // অনলাইন পেমেন্ট সাবমিট লজিক
+    document.getElementById('onlinePaymentForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const month = document.getElementById('payMonth').value;
+      const year = document.getElementById('payYear').value;
+      const amount = document.getElementById('payAmount').value;
+      const date = document.getElementById('payDate').value;
+      const method = document.getElementById('payMethod').value;
+      const btn = document.getElementById('submitPaymentBtn');
+
+      let senderDetail = "";
+      if (method.includes("ব্যাংক")) {
+        const bName = document.getElementById('payBankName').value.trim();
+        const bAcc = document.getElementById('payBankAccountNo').value.trim();
+        const bBranch = document.getElementById('payBankBranch').value.trim();
+        senderDetail = `ব্যাংক: ${bName}, হিসাব: ${bAcc}, শাখা: ${bBranch}`;
+      } else {
+        const sNum = document.getElementById('paySenderNumber').value.trim();
+        const trx = document.getElementById('payTrxId').value.trim();
+        senderDetail = `নম্বর: ${sNum}, TrxID: ${trx}`;
+      }
+
+      btn.disabled = true;
+      btn.innerText = "সাবমিট হচ্ছে...";
+
+      const paymentRecord = {
+        studentId: currentId,
+        month: month,
+        year: year,
+        amount: amount + " ৳",
+        date: date,
+        method: method,
+        senderDetail: senderDetail,
+        status: "অপেক্ষমান (Pending)",
+        submittedAt: new Date()
+      };
+
+      db.collection("students").doc(currentId).collection("online_fee_submissions").add(paymentRecord)
+        .then(() => {
+          alert("আপনার বেতন জমার তথ্য সফলভাবে জমা হয়েছে! মাদ্রাসা কর্তৃপক্ষ যাচাই করে বকেয়া সমন্বয় করে দেবে।");
+          document.getElementById('payAmount').value = "";
+          document.getElementById('payTrxId').value = "";
+          document.getElementById('paySenderNumber').value = "";
+          loadOnlinePaymentHistory();
+        }).catch(err => {
+          alert("ত্রুটি: " + err.message);
+        }).finally(() => {
+          btn.disabled = false;
+          btn.innerHTML = `<i class="fa-solid fa-paper-plane me-1"></i> বেতন জমার তথ্য সাবমিট করুন`;
+        });
+    });
+
+    // পেমেন্ট ইতিহাস লোড
+    function loadOnlinePaymentHistory() {
+      const tbody = document.getElementById('onlinePaymentHistoryBody');
+      tbody.innerHTML = `<tr><td colspan="6" class="text-center">লোড হচ্ছে...</td></tr>`;
+
+      db.collection("students").doc(currentId).collection("online_fee_submissions").orderBy("submittedAt", "desc").get()
+        .then(snapshot => {
+          tbody.innerHTML = "";
+          if (snapshot.empty) {
+            tbody.innerHTML = `<tr><td colspan="6" class="text-muted">এখনো কোনো অনলাইন ফি সাবমিট করা হয়নি।</td></tr>`;
+            return;
+          }
+          snapshot.forEach(doc => {
+            const p = doc.data();
+            const statusBadge = p.status.includes("অনুমোদিত") ? 'bg-success' : 'bg-warning text-dark';
+            tbody.innerHTML += `
+              <tr>
+                <td><strong>${p.month} ${p.year}</strong></td>
+                <td><span class="text-success fw-bold">${p.amount}</span></td>
+                <td><span class="badge bg-light text-dark border">${p.method}</span></td>
+                <td class="small text-start">${p.senderDetail}</td>
+                <td>${p.date}</td>
+                <td><span class="badge ${statusBadge}">${p.status}</span></td>
+              </tr>
+            `;
+          });
+        }).catch(err => {
+          tbody.innerHTML = `<tr><td colspan="6" class="text-danger">তথ্য আনতে সমস্যা হয়েছে: ${err.message}</td></tr>`;
+        });
+    }
+
+    // সবক ফিল্টার লজিক
+    function toggleFilterInputs() {
+      const type = document.getElementById('filterType').value;
+      document.getElementById('dailyInputDiv').style.display = (type === 'daily') ? 'block' : 'none';
+      document.getElementById('monthlyInputDiv').style.display = (type === 'monthly') ? 'block' : 'none';
+    }
+
+    function formatAMPM(timeStr) {
+      if (!timeStr || timeStr === "-") return "-";
+      let [hours, minutes] = timeStr.split(':');
+      hours = parseInt(hours);
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+      return `${hours}:${minutes} ${ampm}`;
+    }
+
     function applySabakFilter() {
       const type = document.getElementById('filterType').value;
       const tbody = document.getElementById('studentDiaryBody');
@@ -409,7 +658,6 @@
         document.getElementById('diaryPeriod').innerText = specificDate;
       } else if (type === 'monthly') {
         const month = document.getElementById('filterMonthName').value;
-        // ইনডেক্সিং এরর এড়াতে শুধু মাস দিয়ে নিখুঁত কুয়েরি
         query = query.where("month", "==", month);
         document.getElementById('tableHeaderTitle').innerText = "মাসিক বিবরণী";
         document.getElementById('diaryPeriod').innerText = month + " মাস";
