@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
   <style>
-    /* প্রিমিয়াম ইসলামিক ব্যানার স্টাইল */
+    /* প্রিমিয়াম ইসলামিক ব্যানার স্টাইল */
     .hero-banner {
       position: relative;
       background: linear-gradient(135deg, rgba(6, 44, 25, 0.92), rgba(15, 81, 50, 0.88)), 
@@ -53,11 +53,38 @@
       padding: 12px 20px;
       border: 1px solid rgba(255, 255, 255, 0.15);
     }
+
+    /* নেভিগেশন মেনু স্টাইল: সব বাটন একই কালার থাকবে */
+    .custom-nav-btn {
+      color: #ffffff !important;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      display: inline-block;
+    }
+    .custom-nav-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      color: #ffd700 !important;
+    }
+
+    /* নির্বাচিত (Active) পেজ হলে শুধুই এটি হাইলাইট কালার হবে */
+    .custom-nav-btn.active-page {
+      background: #ffc107 !important;
+      color: #062c19 !important;
+      border-color: #ffc107 !important;
+      font-weight: 700 !important;
+      box-shadow: 0 2px 8px rgba(255, 193, 7, 0.4);
+    }
   </style>
 </head>
 <body class="bg-light">
 
-  <!-- নেভিগেশন বার (সংশোধিত মেনুবার) -->
+  <!-- নেভিগেশন বার -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm sticky-top">
     <div class="container">
       <a class="navbar-brand fw-bold" href="index.html">
@@ -68,24 +95,29 @@
       </button>
       <div class="collapse navbar-collapse" id="mainNav">
         <ul class="navbar-nav ms-auto align-items-center gap-2">
+          <!-- হোম পেজ অ্যাক্টিভ (Active Color) -->
           <li class="nav-item">
-            <a class="nav-link active fw-semibold" href="index.html"><i class="fa-solid fa-house me-1"></i> হোম</a>
+            <a class="custom-nav-btn active-page" href="index.html">
+              <i class="fa-solid fa-house me-1"></i> হোম
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link fw-semibold text-white" href="hifz-calculator.html"><i class="fa-solid fa-calculator me-1"></i> হিফজ ক্যালকুলেটর</a>
+            <a class="custom-nav-btn" href="hifz-calculator.html">
+              <i class="fa-solid fa-calculator me-1"></i> হিফজ ক্যালকুলেটর
+            </a>
           </li>
           <li class="nav-item">
-            <a class="btn btn-warning btn-sm text-dark fw-bold px-3 shadow-sm" href="student-login.html">
+            <a class="custom-nav-btn" href="student-login.html">
               <i class="fa-solid fa-graduation-cap me-1"></i> শিক্ষার্থী পোর্টাল
             </a>
           </li>
           <li class="nav-item">
-            <a class="btn btn-outline-light btn-sm fw-semibold px-3" href="teacher-login.html">
+            <a class="custom-nav-btn" href="teacher-login.html">
               <i class="fa-solid fa-chalkboard-user me-1"></i> শিক্ষক লগইন
             </a>
           </li>
           <li class="nav-item">
-            <a class="btn btn-outline-light btn-sm fw-semibold px-3" href="admin-login.html">
+            <a class="custom-nav-btn" href="admin-login.html">
               <i class="fa-solid fa-user-shield me-1"></i> অ্যাডমিন
             </a>
           </li>
