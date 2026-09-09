@@ -1,1 +1,428 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>শিক্ষার্থী পূর্ণাঙ্গ প্রোফাইল ও ইতিহাস অনুসন্ধান - JTQ মাদ্রাসা</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .status-card {
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      padding: 18px;
+    }
+    .profile-photo {
+      width: 125px;
+      height: 140px;
+      object-fit: cover;
+      border: 3px solid #198754;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body class="bg-light">
 
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="admin-dashboard.html">
+        <i class="fa-solid fa-gauge-high me-2"></i>JTQ অ্যাডমিন
+      </a>
+      <div class="d-flex gap-2">
+        <a href="admin-dashboard.html" class="btn btn-outline-light btn-sm">
+          <i class="fa-solid fa-user-plus me-1"></i> নতুন ছাত্র ভর্তি
+        </a>
+        <a href="student-list.html" class="btn btn-outline-light btn-sm">
+          <i class="fa-solid fa-users me-1"></i> রেজিস্টার
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-4">
+    
+    <!-- সার্চ বার -->
+    <div class="card border-0 shadow-sm p-4 bg-white mb-4 border-top border-warning border-4">
+      <h4 class="fw-bold text-dark mb-2"><i class="fa-solid fa-magnifying-glass me-2 text-warning"></i>শিক্ষার্থী তথ্য ও অগ্রগতি অনুসন্ধান</h4>
+      <p class="text-muted small mb-3">যেকোনো ছাত্রের Student ID লিখলে তার ভর্তির ডেটা, শেষ মাসের বেতন, পরীক্ষার ফি, নিয়মিত পড়া (সবক) ও হাজিরা চলে আসবে।</p>
+      
+      <form id="searchProfileForm" class="row g-2 align-items-center">
+        <div class="col-md-8">
+          <input type="text" class="form-control form-control-lg fw-bold" id="searchStudentId" placeholder="Student ID লিখুন (যেমন: JTQ-2026-0001)" required>
+        </div>
+        <div class="col-md-4">
+          <button type="submit" class="btn btn-warning btn-lg w-100 fw-bold text-dark shadow-sm" id="searchBtn">
+            <i class="fa-solid fa-chart-line me-1"></i> পূর্ণাঙ্গ তথ্য লোড করুন
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- ফলাফল সেকশন (সার্চ করার পর দৃশ্যমান হবে) -->
+    <div id="studentDetailsView" style="display: none;">
+      
+      <!-- ১. সারসংক্ষেপ স্ট্যাটাস কার্ড (বেতন, পরীক্ষার ফি, সবক, হাজিরা) -->
+      <div class="row g-3 mb-4">
+        <!-- বেতন স্ট্যাটাস -->
+        <div class="col-md-3">
+          <div class="status-card h-100 border-start border-success border-4 shadow-sm">
+            <span class="text-muted small fw-semibold d-block mb-1">সর্বশেষ পরিশোধিত বেতন</span>
+            <h5 class="fw-bold text-success mb-1" id="sumLastTuition">লোড হচ্ছে...</h5>
+            <small class="text-muted d-block" id="sumTuitionDate">-</small>
+            <span class="badge bg-danger mt-2" id="sumTotalDue">বকেয়া: ০.০০ ৳</span>
+          </div>
+        </div>
+
+        <!-- পরীক্ষার ফি স্ট্যাটাস -->
+        <div class="col-md-3">
+          <div class="status-card h-100 border-start border-primary border-4 shadow-sm">
+            <span class="text-muted small fw-semibold d-block mb-1">সর্বশেষ পরীক্ষার ফি</span>
+            <h5 class="fw-bold text-primary mb-1" id="sumLastExamFee">লোড হচ্ছে...</h5>
+            <small class="text-muted d-block" id="sumExamFeeDate">-</small>
+            <span class="badge bg-light text-dark border mt-2" id="sumExamFeeStatus">স্ট্যাটাস: -</span>
+          </div>
+        </div>
+
+        <!-- সবক অগ্রগতি -->
+        <div class="col-md-3">
+          <div class="status-card h-100 border-start border-warning border-4 shadow-sm">
+            <span class="text-muted small fw-semibold d-block mb-1">সবক (পড়া নিয়মিত দিচ্ছে কি না)</span>
+            <h5 class="fw-bold text-dark mb-1" id="sumSabakActive">যাচাই হচ্ছে...</h5>
+            <small class="text-muted d-block" id="sumLastSabakRead">শেষ পড়া: -</small>
+            <span class="badge bg-success mt-2" id="sumLastSabakDate">তারিখ: -</span>
+          </div>
+        </div>
+
+        <!-- হাজিরা ও ফলাফল -->
+        <div class="col-md-3">
+          <div class="status-card h-100 border-start border-info border-4 shadow-sm">
+            <span class="text-muted small fw-semibold d-block mb-1">উপস্থিতি ও মান</span>
+            <h5 class="fw-bold text-info mb-1" id="sumAttendance">১০০%</h5>
+            <small class="text-muted d-block" id="sumResult">ফলাফল: অপেক্ষমান</small>
+            <span class="badge bg-dark mt-2" id="sumStudentDeptRoll">বিভাগ: - | রোল: -</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ২. ভর্তির সম্পূর্ণ বিস্তারিত বিবরণী -->
+      <div class="card border-0 shadow-sm p-4 bg-white mb-4">
+        <h5 class="fw-bold text-dark border-bottom pb-2 mb-3">
+          <i class="fa-solid fa-address-card me-2 text-success"></i>শিক্ষার্থীর মূল ভর্তি তথ্য
+        </h5>
+
+        <div class="row g-4 align-items-start">
+          <div class="col-md-3 text-center">
+            <img id="viewPhoto" src="https://via.placeholder.com/130" class="profile-photo mb-2" alt="Student Photo">
+            <h6 class="fw-bold text-dark mb-0" id="viewNameBn">...</h6>
+            <span class="badge bg-success mb-1" id="viewDept">...</span>
+            <div class="text-muted small" id="viewId">...</div>
+          </div>
+
+          <div class="col-md-9">
+            <div class="table-responsive">
+              <table class="table table-bordered table-sm small mb-0">
+                <tbody>
+                  <tr>
+                    <th class="bg-light w-25">নাম (বাংলা):</th>
+                    <td class="fw-bold text-dark" id="tblNameBn">...</td>
+                    <th class="bg-light w-25">Name (English):</th>
+                    <td id="tblNameEn">...</td>
+                  </tr>
+                  <tr>
+                    <th class="bg-light">الاسم (بالعربية):</th>
+                    <td class="fw-bold text-end" dir="rtl" id="tblNameAr">...</td>
+                    <th class="bg-light">শ্রেণি রোল নম্বর:</th>
+                    <td class="fw-bold" id="tblRoll">...</td>
+                  </tr>
+                  <tr>
+                    <th class="bg-light">পিতার নাম (বাংলা):</th>
+                    <td id="tblFatherBn">...</td>
+                    <th class="bg-light">Father's Name (En):</th>
+                    <td id="tblFatherEn">...</td>
+                  </tr>
+                  <tr>
+                    <th class="bg-light">اسم الأب (بالعربية):</th>
+                    <td class="text-end" dir="rtl" id="tblFatherAr">...</td>
+                    <th class="bg-light">পিতার NID নম্বর:</th>
+                    <td id="tblFatherNid">...</td>
+                  </tr>
+                  <tr>
+                    <th class="bg-light">মাতার নাম (বাংলা):</th>
+                    <td id="tblMotherBn">...</td>
+                    <th class="bg-light">Mother's Name (En):</th>
+                    <td id="tblMotherEn">...</td>
+                  </tr>
+                  <tr>
+                    <th class="bg-light">اسم الأم (بالعربية):</th>
+                    <td class="text-end" dir="rtl" id="tblMotherAr">...</td>
+                    <th class="bg-light">মাতার NID নম্বর:</th>
+                    <td id="tblMotherNid">...</td>
+                  </tr>
+                  <tr>
+                    <th class="bg-light">জন্ম নিবন্ধন কার্ড নং:</th>
+                    <td class="fw-bold text-primary" id="tblRegNo">...</td>
+                    <th class="bg-light">জন্ম তারিখ ও রক্ত:</th>
+                    <td id="tblDobBlood">...</td>
+                  </tr>
+                  <tr>
+                    <th class="bg-light">অভিভাবকের মোবাইল:</th>
+                    <td id="tblPhone">...</td>
+                    <th class="bg-light">ভর্তির তারিখ:</th>
+                    <td id="tblAdmissionDate">...</td>
+                  </tr>
+                  <tr>
+                    <th class="bg-light">বর্তমান ঠিকানা:</th>
+                    <td colspan="3" id="tblPresentAddress">...</td>
+                  </tr>
+                  <tr>
+                    <th class="bg-light">স্থায়ী ঠিকানা:</th>
+                    <td colspan="3" id="tblPermanentAddress">...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ৩. শেষ ৭ দিনের পাঠদান (সবক ডায়রি) -->
+      <div class="card border-0 shadow-sm p-4 bg-white mb-4">
+        <h5 class="fw-bold text-dark border-bottom pb-2 mb-3">
+          <i class="fa-solid fa-book-journal-whills me-2 text-warning"></i>সাম্প্রতিক পড়ার রেকর্ড (সবক, সাত সবক ও আমুখতা)
+        </h5>
+        <div class="table-responsive">
+          <table class="table table-bordered table-sm text-center small align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>তারিখ ও বার</th>
+                <th>সবক (পারা ও পৃষ্ঠা)</th>
+                <th>সাত সবক</th>
+                <th>আমুখতা</th>
+                <th>দৈনিক তিলাওয়াত</th>
+                <th>শিক্ষকের নাম ও মোবাইল</th>
+              </tr>
+            </thead>
+            <tbody id="viewSabakTableBody">
+              <tr><td colspan="6" class="text-muted">তথ্য লোড হচ্ছে...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ৪. সকল ফি ও অনুদানের পূর্ণাঙ্গ ইতিহাস -->
+      <div class="card border-0 shadow-sm p-4 bg-white">
+        <h5 class="fw-bold text-dark border-bottom pb-2 mb-3">
+          <i class="fa-solid fa-file-invoice-dollar me-2 text-primary"></i>পরিশোধিত বেতন ও অনলাইন ফি জমার সম্পূর্ণ হিস্ট্রি
+        </h5>
+        <div class="table-responsive">
+          <table class="table table-bordered table-sm text-center small align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>ফি-র ধরন / মাস ও সাল</th>
+                <th>টাকার পরিমাণ</th>
+                <th>মাধ্যম ও TrxID</th>
+                <th>জমার তারিখ</th>
+                <th>স্ট্যাটাস</th>
+              </tr>
+            </thead>
+            <tbody id="viewPaymentTableBody">
+              <tr><td colspan="5" class="text-muted">তথ্য লোড হচ্ছে...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+
+  <script>
+    if (localStorage.getItem('adminSession') !== 'active') {
+      window.location.href = 'admin-login.html';
+    }
+
+    document.getElementById('searchProfileForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const sId = document.getElementById('searchStudentId').value.trim();
+      const btn = document.getElementById('searchBtn');
+      btn.innerText = "খোঁজা হচ্ছে...";
+      btn.disabled = true;
+
+      loadFullStudentProfile(sId, btn);
+    });
+
+    function loadFullStudentProfile(sId, btn) {
+      db.collection("students").doc(sId).get().then((doc) => {
+        if (!doc.exists) {
+          alert("এই Student ID (" + sId + ") দিয়ে কোনো শিক্ষার্থীর তথ্য পাওয়া যায়নি!");
+          document.getElementById('studentDetailsView').style.display = 'none';
+          return;
+        }
+
+        const s = doc.data();
+        document.getElementById('studentDetailsView').style.display = 'block';
+
+        // ভর্তির তথ্য প্রদর্শন
+        document.getElementById('viewPhoto').src = s.photo || 'https://via.placeholder.com/130';
+        document.getElementById('viewNameBn').innerText = s.nameBn || s.name || "-";
+        document.getElementById('viewDept').innerText = s.department || "-";
+        document.getElementById('viewId').innerText = s.studentId;
+
+        document.getElementById('tblNameBn').innerText = s.nameBn || s.name || "-";
+        document.getElementById('tblNameEn').innerText = s.nameEn || "-";
+        document.getElementById('tblNameAr').innerText = s.nameAr || "-";
+        document.getElementById('tblRoll').innerText = s.roll || "-";
+
+        document.getElementById('tblFatherBn').innerText = s.fatherBn || s.father || "-";
+        document.getElementById('tblFatherEn').innerText = s.fatherEn || "-";
+        document.getElementById('tblFatherAr').innerText = s.fatherAr || "-";
+        document.getElementById('tblFatherNid').innerText = s.fatherNid || "-";
+
+        document.getElementById('tblMotherBn').innerText = s.motherBn || s.mother || "-";
+        document.getElementById('tblMotherEn').innerText = s.motherEn || "-";
+        document.getElementById('tblMotherAr').innerText = s.motherAr || "-";
+        document.getElementById('tblMotherNid').innerText = s.motherNid || "-";
+
+        document.getElementById('tblRegNo').innerText = s.studentRegNo || "-";
+        document.getElementById('tblDobBlood').innerText = (s.dob || "-") + " | রক্ত: " + (s.bloodGroup || "অজানা");
+        document.getElementById('tblPhone').innerText = s.phone || "-";
+        document.getElementById('tblAdmissionDate').innerText = s.admissionDate || "-";
+
+        const pre = s.presentAddress || {};
+        document.getElementById('tblPresentAddress').innerText = `গ্রাম: ${pre.village || '-'}, ডাক: ${pre.post || '-'}, ইউনিয়ন: ${pre.union || '-'}, থানা: ${pre.thana || '-'}, জেলা: ${pre.district || '-'}`;
+        const per = s.permanentAddress || {};
+        document.getElementById('tblPermanentAddress').innerText = `গ্রাম: ${per.village || '-'}, ডাক: ${per.post || '-'}, ইউনিয়ন: ${per.union || '-'}, থানা: ${per.thana || '-'}, জেলা: ${per.district || '-'}`;
+
+        document.getElementById('sumAttendance').innerText = s.attendance || "১০০%";
+        document.getElementById('sumResult').innerText = "ফলাফল: " + (s.result || "অপেক্ষমান");
+        document.getElementById('sumStudentDeptRoll').innerText = `বিভাগ: ${s.department || '-'} | রোল: ${s.roll || '-'}`;
+        document.getElementById('sumTotalDue').innerText = "বকেয়া: " + (s.due || "০.০০ ৳");
+
+        // ২. শেষ সবক ও পড়ার হিস্ট্রি লোড
+        loadSabakHistory(sId);
+
+        // ৩. ফি ও পেমেন্ট হিস্ট্রি লোড (বেতন ও পরীক্ষার ফি আলাদা ট্র্যাকিং)
+        loadFeeHistory(sId);
+
+      }).catch((err) => {
+        alert("ত্রুটি: " + err.message);
+      }).finally(() => {
+        btn.innerText = "পূর্ণাঙ্গ তথ্য লোড করুন";
+        btn.disabled = false;
+      });
+    }
+
+    // সবক ট্র্যাকিং
+    function loadSabakHistory(sId) {
+      const tbody = document.getElementById('viewSabakTableBody');
+      tbody.innerHTML = `<tr><td colspan="6" class="text-muted">পড়ার রেকর্ড লোড হচ্ছে...</td></tr>`;
+
+      db.collection("students").doc(sId).collection("daily_sabak").orderBy("date", "desc").limit(7).get()
+        .then((snapshot) => {
+          tbody.innerHTML = "";
+          if (snapshot.empty) {
+            tbody.innerHTML = `<tr><td colspan="6" class="text-muted">কোনো সবক এন্ট্রি নেই।</td></tr>`;
+            document.getElementById('sumSabakActive').innerText = "কোনো সবক নেই";
+            document.getElementById('sumLastSabakRead').innerText = "পড়া অনিয়মিত";
+            document.getElementById('sumLastSabakDate').innerText = "তারিখ: -";
+            return;
+          }
+
+          let isFirst = true;
+          snapshot.forEach((doc) => {
+            const r = doc.data();
+            if (isFirst) {
+              document.getElementById('sumSabakActive').innerText = "নিয়মিত পড়ছে";
+              document.getElementById('sumLastSabakRead').innerText = `শেষ সবক পারা: ${r.sabakPara || '-'}, পৃষ্ঠা: ${r.sabakPage || '-'}`;
+              document.getElementById('sumLastSabakDate').innerText = `তারিখ: ${r.date}`;
+              isFirst = false;
+            }
+
+            const sabakInfo = (r.sabakPara && r.sabakPara !== '-') ? `পারা: ${r.sabakPara}, পৃষ্ঠা: ${r.sabakPage || '-'}` : '-';
+            const satInfo = (r.satPara && r.satPara !== '-') ? `পারা: ${r.satPara}, পৃষ্ঠা: ${r.satPage || '-'} (ভুল: ${r.satMistake || '০'})` : '-';
+            const amukhInfo = (r.amukhPara && r.amukhPara !== '-') ? `পারা: ${r.amukhPara}, পৃষ্ঠা: ${r.amukhPage || '-'} (ভুল: ${r.amukhMistake || '০'})` : '-';
+            const teacher = r.teacherName ? `${r.teacherName} (${r.teacherPhone || ''})` : 'যাচাইকৃত';
+
+            tbody.innerHTML += `
+              <tr>
+                <td><strong>${r.date}</strong><br><small class="text-muted">${r.day}</small></td>
+                <td><span class="badge bg-success">${sabakInfo}</span></td>
+                <td>${satInfo}</td>
+                <td>${amukhInfo}</td>
+                <td>${r.dailyTilawat || '-'}</td>
+                <td><small>${teacher}</small></td>
+              </tr>
+            `;
+          });
+        });
+    }
+
+    // ফি হিস্ট্রি ট্র্যাকিং (অনলাইন ও অফলাইন উভয় রেকর্ড)
+    function loadFeeHistory(sId) {
+      const tbody = document.getElementById('viewPaymentTableBody');
+      tbody.innerHTML = `<tr><td colspan="5" class="text-muted">ফি রেকর্ড লোড হচ্ছে...</td></tr>`;
+
+      // ১. অনলাইন ফি সাবমিশন চেক
+      db.collection("students").doc(sId).collection("online_fee_submissions").orderBy("submittedAt", "desc").get()
+        .then((snapshot) => {
+          tbody.innerHTML = "";
+          let lastTuition = null;
+          let lastExam = null;
+
+          if (!snapshot.empty) {
+            snapshot.forEach((doc) => {
+              const p = doc.data();
+              const cat = p.category || "মাসিক বেতন";
+
+              if (!lastTuition && (cat.includes("মাসিক বেতন") || p.month)) {
+                lastTuition = p;
+              }
+              if (!lastExam && cat.includes("পরীক্ষা")) {
+                lastExam = p;
+              }
+
+              tbody.innerHTML += `
+                <tr>
+                  <td><strong>${cat}</strong></td>
+                  <td><span class="text-success fw-bold">${p.amount}</span></td>
+                  <td>${p.method}<br><small class="text-muted">${p.senderDetail || '-'}</small></td>
+                  <td>${p.date}</td>
+                  <td><span class="badge ${p.status.includes('অনুমোদিত') ? 'bg-success' : 'bg-warning text-dark'}">${p.status}</span></td>
+                </tr>
+              `;
+            });
+          }
+
+          // ২. কার্ডে সারসংক্ষেপ প্রদর্শন
+          if (lastTuition) {
+            document.getElementById('sumLastTuition').innerText = lastTuition.month ? `${lastTuition.month} ${lastTuition.year || ''}` : lastTuition.category;
+            document.getElementById('sumTuitionDate').innerText = "পরিশোধ: " + lastTuition.date;
+          } else {
+            document.getElementById('sumLastTuition').innerText = "রেকর্ড পাওয়া যায়নি";
+            document.getElementById('sumTuitionDate').innerText = "এখনো বেতন দেয়নি";
+          }
+
+          if (lastExam) {
+            document.getElementById('sumLastExamFee').innerText = "পরিশোধিত (" + lastExam.amount + ")";
+            document.getElementById('sumExamFeeDate').innerText = "তারিখ: " + lastExam.date;
+            document.getElementById('sumExamFeeStatus').innerText = lastExam.status;
+          } else {
+            document.getElementById('sumLastExamFee').innerText = "ফি দেয়নি / বকেয়া";
+            document.getElementById('sumExamFeeDate').innerText = "-";
+            document.getElementById('sumExamFeeStatus').innerText = "অপেক্ষমান";
+          }
+
+          if (snapshot.empty) {
+            tbody.innerHTML = `<tr><td colspan="5" class="text-muted">কোনো জমার রেকর্ড পাওয়া যায়নি।</td></tr>`;
+          }
+        });
+    }
+  </script>
+</body>
+</html>
