@@ -48,7 +48,7 @@
 
   <div class="container py-4">
     
-    <!-- ৩টি প্রধান ট্যাব নেভিগেশন (ছাত্র ড্যাশবোর্ডের মতো) -->
+    <!-- ৩টি প্রধান ট্যাব নেভিগেশন -->
     <ul class="nav nav-pills nav-fill mb-4 p-2 bg-white rounded shadow-sm" id="adminTabs">
       <li class="nav-item">
         <button class="nav-link active fw-bold" id="tabAdmissionBtn" onclick="switchAdminTab('admission')">
@@ -86,10 +86,20 @@
                 </div>
               </div>
 
-              <!-- ১. Student ID -->
-              <div class="mb-3 p-2 border rounded bg-light border-start border-success border-4">
-                <label class="form-label small fw-bold text-success"><i class="fa-solid fa-id-card me-1"></i>শিক্ষার্থীর Student ID</label>
-                <input type="text" class="form-control form-control-sm fw-bold" id="sId" placeholder="যেমন: JTQ-2026-0001" required>
+              <!-- ১. Student ID ও ভর্তির তারিখ -->
+              <div class="row g-2 mb-3">
+                <div class="col-md-6">
+                  <div class="p-2 border rounded bg-light border-start border-success border-4 h-100">
+                    <label class="form-label small fw-bold text-success"><i class="fa-solid fa-id-card me-1"></i>শিক্ষার্থীর Student ID</label>
+                    <input type="text" class="form-control form-control-sm fw-bold" id="sId" placeholder="যেমন: JTQ-2026-0001" required>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="p-2 border rounded bg-light border-start border-primary border-4 h-100">
+                    <label class="form-label small fw-bold text-primary"><i class="fa-solid fa-calendar-day me-1"></i>ছাত্র ভর্তির তারিখ</label>
+                    <input type="date" class="form-control form-control-sm fw-semibold" id="admissionDate" required>
+                  </div>
+                </div>
               </div>
 
               <!-- ২. শিক্ষার্থীর নাম (বাংলা, ইংরেজি, আরবি) -->
@@ -97,7 +107,7 @@
                 <span class="badge bg-success mb-2">শিক্ষার্থীর নাম</span>
                 <div class="row g-2">
                   <div class="col-md-4">
-                    <label class="form-label small fw-semibold">বাংলায় নাম</label>
+                    <label class="form-label small fw-semibold">বাংলায় নাম</label>
                     <input type="text" class="form-control form-control-sm" id="nameBn" placeholder="মোহাম্মদ আব্দুল্লাহ" required>
                   </div>
                   <div class="col-md-4">
@@ -429,7 +439,7 @@
                     </tr>
                     <tr>
                       <th class="bg-light">অভিভাবকের মোবাইল:</th><td id="tblPhone">...</td>
-                      <th class="bg-light">ভর্তির তারিখ:</th><td id="tblAdmissionDate">...</td>
+                      <th class="bg-light">ভর্তির তারিখ:</th><td class="fw-bold text-success" id="tblAdmissionDate">...</td>
                     </tr>
                     <tr>
                       <th class="bg-light">বর্তমান ঠিকানা:</th><td colspan="3" id="tblPresentAddress">...</td>
@@ -547,6 +557,9 @@
       window.location.href = 'admin-login.html';
     });
 
+    // ভর্তির তারিখে আজকের তারিখ ডিফল্ট সেট করা
+    document.getElementById('admissionDate').value = new Date().toISOString().split('T')[0];
+
     // ৩টি ট্যাব পরিবর্তনের লজিক
     function switchAdminTab(tab) {
       const aSec = document.getElementById('admissionSection');
@@ -625,12 +638,15 @@
     document.getElementById('addStudentForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const sId = document.getElementById('sId').value.trim();
+      const admDate = document.getElementById('admissionDate').value;
       const submitBtn = document.getElementById('submitBtn');
       submitBtn.innerText = "সংরক্ষণ হচ্ছে...";
       submitBtn.disabled = true;
 
       const studentData = {
         studentId: sId,
+        admissionDate: admDate, // নির্বাচিত ভর্তির তারিখ
+
         nameBn: document.getElementById('nameBn').value.trim(),
         nameEn: document.getElementById('nameEn').value.trim(),
         nameAr: document.getElementById('nameAr').value.trim(),
@@ -671,18 +687,18 @@
           thana: document.getElementById('perThana').value.trim(),
           district: document.getElementById('perDistrict').value.trim()
         },
-        admissionDate: new Date().toISOString().split('T')[0],
         attendance: "১০০%",
         result: "অপেক্ষমান",
         due: "০.০০ ৳"
       };
 
       db.collection("students").doc(sId).set(studentData).then(() => {
-        alert("নতুন ছাত্র সফলভাবে ভর্তি করা হয়েছে!");
+        alert("নতুন ছাত্র সফলভাবে ভর্তি করা হয়েছে! ভর্তির তারিখ: " + admDate);
         this.reset();
         document.getElementById('imagePreview').src = "https://via.placeholder.com/90";
         base64Image = "";
         document.getElementById('sPass').value = "jtq@12345";
+        document.getElementById('admissionDate').value = new Date().toISOString().split('T')[0];
       }).catch((err) => {
         alert("ত্রুটি: " + err.message);
       }).finally(() => {
@@ -782,7 +798,6 @@
         const s = doc.data();
         document.getElementById('studentDetailsView').style.display = 'block';
 
-        // ভর্তির তথ্য প্রদর্শন
         document.getElementById('viewPhoto').src = s.photo || 'https://via.placeholder.com/130';
         document.getElementById('viewNameBn').innerText = s.nameBn || s.name || "-";
         document.getElementById('viewDept').innerText = s.department || "-";
@@ -818,13 +833,8 @@
         document.getElementById('sumStudentDeptRoll').innerText = `বিভাগ: ${s.department || '-'} | রোল: ${s.roll || '-'}`;
         document.getElementById('sumTotalDue').innerText = "বকেয়া: " + (s.due || "০.০০ ৳");
 
-        // ৩টি পরীক্ষার ফলাফল লোড
         loadExamReports(sId);
-
-        // সবক ট্র্যাকিং লোড
         loadSabakHistory(sId);
-
-        // ফি ট্র্যাকিং লোড
         loadFeeHistory(sId);
 
       }).catch((err) => {
