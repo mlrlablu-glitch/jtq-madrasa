@@ -1,1 +1,311 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>দৈনিক পড়া ও সাপ্তাহিক তথ্য - JTQ মাদ্রাসা</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .diary-table th, .diary-table td {
+      text-align: center;
+      vertical-align: middle;
+      padding: 6px 4px;
+      font-size: 13px;
+    }
+    .diary-table th {
+      background-color: #f1f8f4;
+    }
+    @media print {
+      body * { visibility: hidden; }
+      #printableArea, #printableArea * { visibility: visible; }
+      #printableArea {
+        position: absolute; left: 0; top: 0; width: 100%;
+      }
+      .no-print { display: none !important; }
+    }
+  </style>
+</head>
+<body class="bg-light">
 
+  <!-- নেভিগেশন বার -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm no-print">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">
+        <i class="fa-solid fa-mosque me-2"></i>জামিয়া তাসলিমুল কুরআন
+      </a>
+      <div class="d-flex align-items-center gap-2">
+        <a href="index.html" class="btn btn-outline-light btn-sm"><i class="fa-solid fa-house me-1"></i> হোম</a>
+        <a href="hifz-calculator.html" class="btn btn-outline-light btn-sm"><i class="fa-solid fa-calculator me-1"></i> ক্যালকুলেটর</a>
+        <a href="student-login.html" class="btn btn-warning btn-sm text-dark fw-bold"><i class="fa-solid fa-graduation-cap me-1"></i> শিক্ষার্থী</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-4">
+    
+    <!-- পড়া এন্ট্রি ফর্ম (ইনপুট সেকশন) -->
+    <div class="card border-0 shadow-sm p-4 bg-white mb-4 no-print border-top border-success border-4">
+      <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-pen-nib me-2 text-success"></i>দৈনিক সবক ও পড়া ইনপুট ফরম</h5>
+      
+      <form id="sabakForm">
+        <div class="row g-2 mb-3">
+          <div class="col-md-4">
+            <label class="form-label small fw-semibold">Student ID</label>
+            <input type="text" class="form-control form-control-sm" id="inpStudentId" placeholder="যেমন: JTQ-2026-0001" required>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label small fw-semibold">তারিখ</label>
+            <input type="date" class="form-control form-control-sm" id="inpDate" required>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label small fw-semibold">বার</label>
+            <select class="form-select form-select-sm" id="inpDay">
+              <option value="শনিবার">শনিবার</option>
+              <option value="রবিবার">রবিবার</option>
+              <option value="সোমবার">সোমবার</option>
+              <option value="মঙ্গলবার">মঙ্গলবার</option>
+              <option value="বুধবার">বুধবার</option>
+              <option value="বৃহস্পতিবার">বৃহস্পতিবার</option>
+              <option value="শুক্রবার">শুক্রবার</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label small fw-semibold">মাসের নাম</label>
+            <input type="text" class="form-control form-control-sm" id="inpMonth" placeholder="যেমন: সেপ্টেম্বর / রবিউল আউয়াল" required>
+          </div>
+        </div>
+
+        <!-- ৩টি প্রধান পড়ার ক্যাটাগরি -->
+        <div class="row g-2 mb-3">
+          <!-- সবক -->
+          <div class="col-md-3">
+            <div class="p-2 border rounded bg-light">
+              <span class="badge bg-success mb-2">১. সবক</span>
+              <div class="row g-1">
+                <div class="col-6"><input type="text" class="form-control form-control-sm" id="sabakPara" placeholder="পারা"></div>
+                <div class="col-6"><input type="text" class="form-control form-control-sm" id="sabakPage" placeholder="পৃষ্ঠা"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- সাত সবক -->
+          <div class="col-md-4">
+            <div class="p-2 border rounded bg-light">
+              <span class="badge bg-primary mb-2">২. সাত সবক</span>
+              <div class="row g-1">
+                <div class="col-3"><input type="text" class="form-control form-control-sm" id="satPara" placeholder="পারা"></div>
+                <div class="col-3"><input type="text" class="form-control form-control-sm" id="satPage" placeholder="পৃষ্ঠা"></div>
+                <div class="col-3"><input type="text" class="form-control form-control-sm" id="satAmount" placeholder="পরিমাণ"></div>
+                <div class="col-3"><input type="text" class="form-control form-control-sm" id="satMistake" placeholder="ভুল"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- আমুখতা -->
+          <div class="col-md-5">
+            <div class="p-2 border rounded bg-light">
+              <span class="badge bg-secondary mb-2">৩. আমুখতা ও তিলাওয়াত</span>
+              <div class="row g-1">
+                <div class="col-3"><input type="text" class="form-control form-control-sm" id="amukhPara" placeholder="পারা"></div>
+                <div class="col-3"><input type="text" class="form-control form-control-sm" id="amukhPage" placeholder="পৃষ্ঠা"></div>
+                <div class="col-3"><input type="text" class="form-control form-control-sm" id="amukhAmount" placeholder="পরিমাণ"></div>
+                <div class="col-3"><input type="text" class="form-control form-control-sm" id="amukhMistake" placeholder="ভুল"></div>
+                <div class="col-12 mt-1"><input type="text" class="form-control form-control-sm" id="dailyTilawat" placeholder="দৈনিক তিলাওয়াত (যেমন: ১ পারা)"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-success btn-sm px-4 fw-semibold" id="saveSabakBtn">
+          <i class="fa-solid fa-cloud-arrow-up me-1"></i> আজকের পড়া সংরক্ষণ করুন
+        </button>
+      </form>
+    </div>
+
+    <!-- ডায়রি ভিউ সেকশন (ছবি অনুযায়ী ছক) -->
+    <div class="card border-0 shadow-sm p-4 bg-white" id="printableArea">
+      
+      <!-- খোঁজার বক্স -->
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 no-print">
+        <div class="d-flex gap-2 align-items-center">
+          <input type="text" class="form-control form-control-sm" id="searchId" placeholder="Student ID লিখুন">
+          <button class="btn btn-dark btn-sm text-nowrap" id="searchBtn"><i class="fa-solid fa-magnifying-glass me-1"></i>রেকর্ড দেখুন</button>
+        </div>
+        <button class="btn btn-outline-success btn-sm" onclick="window.print()"><i class="fa-solid fa-print me-1"></i>ছাপান (প্রিন্ট)</button>
+      </div>
+
+      <!-- সাপ্তাহিক তথ্য হেডার -->
+      <div class="border border-dark p-2 text-center position-relative mb-2">
+        <span class="fs-5 fw-bold bg-dark text-white px-4 py-1 rounded-pill">সাপ্তাহিক তথ্য</span>
+        <div class="d-flex justify-content-between mt-2 px-3 small fw-semibold">
+          <div>ছাত্র-ছাত্রীর নাম : <span class="border-bottom border-dark px-3 fw-bold" id="viewStudentName">..................</span></div>
+          <div>আইডি : <span class="border-bottom border-dark px-2 fw-bold" id="viewStudentId">..........</span></div>
+          <div>মাসের নাম : <span class="border-bottom border-dark px-3 fw-bold" id="viewMonthName">..................</span></div>
+        </div>
+      </div>
+
+      <!-- মূল টেবিল -->
+      <div class="table-responsive">
+        <table class="table table-bordered border-dark diary-table mb-2">
+          <thead>
+            <tr>
+              <th rowspan="2" style="width: 80px;">বার</th>
+              <th colspan="2">সবক</th>
+              <th colspan="4">সাত সবক</th>
+              <th colspan="4">আমুখতা</th>
+              <th rowspan="2">দৈনিক<br>তিলাওয়াত</th>
+              <th rowspan="2">শিক্ষকের<br>স্বাক্ষর</th>
+              <th rowspan="2" style="width: 90px;">তারিখ</th>
+            </tr>
+            <tr>
+              <th>পারা</th>
+              <th>পৃষ্ঠা</th>
+              <th>পারা</th>
+              <th>পৃষ্ঠা</th>
+              <th>পরিমাণ</th>
+              <th>ভুল</th>
+              <th>পারা</th>
+              <th>পৃষ্ঠা</th>
+              <th>পরিমাণ</th>
+              <th>ভুল</th>
+            </tr>
+          </thead>
+          <tbody id="diaryTableBody">
+            <tr><td colspan="14" class="text-muted">Student ID দিয়ে খুঁজলে এই সপ্তাহের পড়া প্রদর্শিত হবে।</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- শবীনার বিবরণী অংশ (ছবির নিচের অংশ) -->
+      <div class="border border-dark p-2 mt-2">
+        <div class="row g-2 align-items-center small">
+          <div class="col-md-6 border-end border-dark">
+            <span class="fw-bold">বণ্টনকৃত সাপ্তাহিক শবীনার পারাসমূহ :</span>
+            <input type="text" class="form-control form-control-sm border-0 border-bottom rounded-0 mt-1" id="weeklyDistPara" placeholder="এখানে লিখুন...">
+          </div>
+          <div class="col-md-6">
+            <div class="fw-bold mb-1">তিলাওয়াতকৃত সাপ্তাহিক শবীনার পারা :</div>
+            <div class="row g-1">
+              <div class="col-6"><input type="text" class="form-control form-control-sm" id="whichPara" placeholder="কোন্ কোন্ পারা"></div>
+              <div class="col-6"><input type="text" class="form-control form-control-sm" id="lokmaCount" placeholder="মোট লোকমার সংখ্যা"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ফায়ারবেস স্ক্রিপ্ট -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+
+  <script>
+    // আজকের তারিখ ও বার সেট করা
+    const today = new Date();
+    document.getElementById('inpDate').value = today.toISOString().split('T')[0];
+    const daysArr = ["রবিবার", "সোমবার", "মঙ্গলবার", "বুধবার", "বৃহস্পতিবার", "শুক্রবার", "শনিবার"];
+    document.getElementById('inpDay').value = daysArr[today.getDay()];
+
+    // পড়া সেভ করা
+    document.getElementById('sabakForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const sId = document.getElementById('inpStudentId').value.trim();
+      const date = document.getElementById('inpDate').value;
+      const day = document.getElementById('inpDay').value;
+      const month = document.getElementById('inpMonth').value.trim();
+      const btn = document.getElementById('saveSabakBtn');
+
+      btn.disabled = true;
+      btn.innerText = "সংরক্ষণ হচ্ছে...";
+
+      const record = {
+        date: date,
+        day: day,
+        month: month,
+        sabakPara: document.getElementById('sabakPara').value.trim() || "-",
+        sabakPage: document.getElementById('sabakPage').value.trim() || "-",
+        satPara: document.getElementById('satPara').value.trim() || "-",
+        satPage: document.getElementById('satPage').value.trim() || "-",
+        satAmount: document.getElementById('satAmount').value.trim() || "-",
+        satMistake: document.getElementById('satMistake').value.trim() || "-",
+        amukhPara: document.getElementById('amukhPara').value.trim() || "-",
+        amukhPage: document.getElementById('amukhPage').value.trim() || "-",
+        amukhAmount: document.getElementById('amukhAmount').value.trim() || "-",
+        amukhMistake: document.getElementById('amukhMistake').value.trim() || "-",
+        dailyTilawat: document.getElementById('dailyTilawat').value.trim() || "-",
+        signature: "যাচাইকৃত",
+        timestamp: new Date()
+      };
+
+      db.collection("students").doc(sId).collection("daily_sabak").add(record).then(() => {
+        alert("আজকের সবক রেকর্ড সফলভাবে সংরক্ষিত হয়েছে!");
+        document.getElementById('searchId').value = sId;
+        loadDiary(sId);
+      }).catch(err => {
+        alert("ত্রুটি: " + err.message);
+      }).finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up me-1"></i> আজকের পড়া সংরক্ষণ করুন`;
+      });
+    });
+
+    // ডায়েরির ছকে ডাটা দেখানো
+    function loadDiary(sId) {
+      const tbody = document.getElementById('diaryTableBody');
+      tbody.innerHTML = `<tr><td colspan="14">তথ্য লোড হচ্ছে...</td></tr>`;
+
+      // ছাত্রের নাম সংগ্রহ
+      db.collection("students").doc(sId).get().then(doc => {
+        if(doc.exists) {
+          document.getElementById('viewStudentName').innerText = doc.data().name;
+          document.getElementById('viewStudentId').innerText = sId;
+        }
+      });
+
+      // শেষ ৭ দিনের পড়া লোড
+      db.collection("students").doc(sId).collection("daily_sabak").orderBy("date", "desc").limit(7).get()
+        .then(snapshot => {
+          tbody.innerHTML = "";
+          if(snapshot.empty) {
+            tbody.innerHTML = `<tr><td colspan="14" class="text-muted">কোনো পড়া এন্ট্রি নেই।</td></tr>`;
+            return;
+          }
+          let lastMonth = "";
+          snapshot.forEach(d => {
+            const r = d.data();
+            lastMonth = r.month;
+            tbody.innerHTML += `
+              <tr>
+                <td class="fw-bold">${r.day}</td>
+                <td>${r.sabakPara}</td>
+                <td>${r.sabakPage}</td>
+                <td>${r.satPara}</td>
+                <td>${r.satPage}</td>
+                <td>${r.satAmount}</td>
+                <td class="text-danger fw-bold">${r.satMistake}</td>
+                <td>${r.amukhPara}</td>
+                <td>${r.amukhPage}</td>
+                <td>${r.amukhAmount}</td>
+                <td class="text-danger fw-bold">${r.amukhMistake}</td>
+                <td>${r.dailyTilawat}</td>
+                <td><small class="text-success">${r.signature}</small></td>
+                <td>${r.date}</td>
+              </tr>
+            `;
+          });
+          document.getElementById('viewMonthName').innerText = lastMonth || "-";
+        });
+    }
+
+    document.getElementById('searchBtn').addEventListener('click', function() {
+      const sId = document.getElementById('searchId').value.trim();
+      if(sId) loadDiary(sId);
+      else alert("Student ID দিন!");
+    });
+  </script>
+</body>
+</html>
