@@ -3,30 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JTQIM</title>
+  <title>জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
-  <style>
-    .calc-card {
-      background: #ffffff;
-      border-radius: 12px;
-      border-top: 4px solid #198754;
-    }
-    .badge-soft {
-      background-color: #e8f5e9;
-      color: #198754;
-      font-weight: 600;
-    }
-  </style>
 </head>
 <body class="bg-light">
 
   <!-- নেভিগেশন বার -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm sticky-top">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="#">
-        <i class="fa-solid fa-mosque me-2"></i>জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা
+      <a class="navbar-brand fw-bold" href="index.html">
+        <i class="fa-solid fa-mosque me-2"></i>জামিয়া তাসলিমুল কুরআন
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
         <span class="navbar-toggler-icon"></span>
@@ -34,14 +22,14 @@
       <div class="collapse navbar-collapse" id="mainNav">
         <ul class="navbar-nav ms-auto align-items-center gap-2">
           <li class="nav-item">
-            <a class="nav-link active fw-semibold" href="#home"><i class="fa-solid fa-house me-1"></i> হোম</a>
+            <a class="nav-link active fw-semibold" href="index.html"><i class="fa-solid fa-house me-1"></i> হোম</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link fw-semibold" href="#hifz-calculator"><i class="fa-solid fa-calculator me-1"></i> হিফজ ক্যালকুলেটর</a>
+            <a class="nav-link fw-semibold text-white" href="hifz-calculator.html"><i class="fa-solid fa-calculator me-1"></i> হিফজ ক্যালকুলেটর</a>
           </li>
           <li class="nav-item">
             <a class="btn btn-warning btn-sm text-dark fw-bold px-3 shadow-sm" href="student-login.html">
-              <i class="fa-solid fa-graduation-cap me-1"></i> শিক্ষার্থী লগইন
+              <i class="fa-solid fa-graduation-cap me-1"></i> শিক্ষার্থী পোর্টাল
             </a>
           </li>
           <li class="nav-item">
@@ -55,108 +43,69 @@
   </nav>
 
   <!-- হিরো সেকশন -->
-  <section class="py-5 text-center bg-white border-bottom" id="home">
-    <div class="container py-4">
-      <h1 class="fw-bold text-success display-6 mb-3">জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা</h1>
+  <section class="py-5 text-center bg-white border-bottom shadow-sm">
+    <div class="container py-5">
+      <div class="mb-3">
+        <i class="fa-solid fa-mosque fa-3x text-success"></i>
+      </div>
+      <h1 class="fw-bold text-success display-5 mb-3">জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা</h1>
       <p class="lead text-muted mx-auto" style="max-width: 750px;">
-        কুরআনিক আলোয় জীবন গড়ার প্রত্যয়ে দ্বীনি ও আধুনিক শিক্ষার এক অনন্য সমন্বয়। হিফজুল কুরআন, নাজেরা ও মক্তব বিভাগে সুশৃঙ্খল পাঠদান।
+        কুরআনিক আলোয় জীবন গড়ার প্রত্যয়ে দ্বীনি ও আধুনিক শিক্ষার এক অনন্য সমন্বয়। হিফজুল কুরআন, নাজেরা ও মক্তব বিভাগে সুশৃঙ্খল পরিবেশ ও মানসম্মত পাঠদান।
       </p>
-      <div class="d-flex justify-content-center gap-3 mt-4">
-        <a href="#hifz-calculator" class="btn btn-success fw-semibold px-4 py-2">
-          <i class="fa-solid fa-calculator me-2"></i>হিফজ ক্যালকুলেটরে হিসাব করুন
+      
+      <!-- মূল ফিচার বাটন -->
+      <div class="d-flex flex-wrap justify-content-center gap-3 mt-4">
+        <a href="hifz-calculator.html" class="btn btn-success fw-semibold px-4 py-2 shadow-sm">
+          <i class="fa-solid fa-calculator me-2"></i>হিফজ ক্যালকুলেটর
         </a>
-        <a href="student-login.html" class="btn btn-outline-success fw-semibold px-4 py-2">
-          <i class="fa-solid fa-arrow-right-to-bracket me-2"></i>শিক্ষার্থী পোর্টাল
+        <a href="student-login.html" class="btn btn-warning fw-bold text-dark px-4 py-2 shadow-sm">
+          <i class="fa-solid fa-arrow-right-to-bracket me-2"></i>শিক্ষার্থী লগইন
+        </a>
+        <a href="admin-login.html" class="btn btn-outline-dark fw-semibold px-4 py-2">
+          <i class="fa-solid fa-lock me-2"></i>অ্যাডমিন প্যানেল
         </a>
       </div>
     </div>
   </section>
 
-  <!-- হিফজ ক্যালকুলেটর সেকশন -->
-  <section class="py-5" id="hifz-calculator">
+  <!-- বিভাগসমূহ সেকশন -->
+  <section class="py-5">
     <div class="container">
-      <div class="text-center mb-4">
-        <span class="badge badge-soft px-3 py-2 rounded-pill mb-2">ছুটি ও পরীক্ষাসহ নিখুঁত হিসাব</span>
-        <h3 class="fw-bold text-dark">হিফজ সম্পন্ন করার সম্ভাব্য সময় ক্যালকুলেটর</h3>
-        <p class="text-muted small">৩টি বার্ষিক পরীক্ষার মোট ছুটি (৯৬ দিন) ও দুই ঈদের ছুটি (২৪ দিন) স্বয়ংক্রিয়ভাবে বাদ দিয়ে তৈরি</p>
+      <div class="text-center mb-5">
+        <h3 class="fw-bold text-dark">আমাদের শিক্ষা বিভাগসমূহ</h3>
+        <p class="text-muted">দক্ষ ও অভিজ্ঞ শিক্ষক মণ্ডলী দ্বারা নিয়মিত তত্ত্বাবধান</p>
       </div>
 
-      <div class="row justify-content-center">
-        <div class="col-lg-8">
-          <div class="card border-0 shadow-sm p-4 p-md-5 calc-card">
-            
-            <form id="hifzCalcForm">
-              <div class="row g-3">
-                <div class="col-md-6">
-                  <label class="form-label small fw-semibold">দৈনিক নতুন পড়ার পরিমাণ (পৃষ্ঠা)</label>
-                  <div class="input-group">
-                    <span class="input-group-text"><i class="fa-solid fa-book-open"></i></span>
-                    <input type="number" class="form-control" id="dailyPages" value="2" min="0.5" step="0.5" required>
-                  </div>
-                  <small class="text-muted">ডিফল্ট: প্রতিদিন ২ পৃষ্ঠা (১ পাতা)</small>
-                </div>
+      <div class="row g-4">
+        <div class="col-md-3">
+          <div class="card h-100 border-0 shadow-sm p-4 text-center bg-white">
+            <div class="mb-3 text-success"><i class="fa-solid fa-book-quran fa-2x"></i></div>
+            <h5 class="fw-bold">মক্তব বিভাগ</h5>
+            <p class="small text-muted mb-0">বিশুদ্ধ উচ্চারণে কুরআন পাঠ, মাসয়ালা-মাসায়েল ও বুনিয়াদি ইসলামী শিক্ষার ভিত গঠন।</p>
+          </div>
+        </div>
 
-                <div class="col-md-6">
-                  <label class="form-label small fw-semibold">বর্তমানে মুখস্থ সম্পন্ন হয়েছে (পারা)</label>
-                  <div class="input-group">
-                    <span class="input-group-text"><i class="fa-solid fa-bookmark"></i></span>
-                    <input type="number" class="form-control" id="memorizedPara" value="0" min="0" max="29" step="0.5" required>
-                  </div>
-                  <small class="text-muted">নতুন শুরু করলে ০ দিন</small>
-                </div>
-              </div>
+        <div class="col-md-3">
+          <div class="card h-100 border-0 shadow-sm p-4 text-center bg-white">
+            <div class="mb-3 text-success"><i class="fa-solid fa-book-open-reader fa-2x"></i></div>
+            <h5 class="fw-bold">নূরানী বিভাগ</h5>
+            <p class="small text-muted mb-0">সহজ ও দ্রুত পদ্ধতিতে তাজবীদ সহকারে কুরআন শিক্ষা এবং জরুরি দোয়া ও আদব শিক্ষাদান।</p>
+          </div>
+        </div>
 
-              <!-- ছুটির তথ্য চার্ট -->
-              <div class="bg-light rounded p-3 my-4 small">
-                <div class="fw-bold text-secondary mb-2"><i class="fa-solid fa-calendar-check me-2 text-success"></i>ক্যালকুলেটরে অন্তর্ভুক্ত বার্ষিক ছুটির হিসাব:</div>
-                <ul class="mb-0 text-muted ps-3">
-                  <li>প্রতি পরীক্ষার ছুটি: পরীক্ষার আগে ১৫ দিন + পরীক্ষা ১০ দিন + পর ১ সপ্তাহ (৭ দিন) = <strong>৩২ দিন</strong></li>
-                  <li>বছরে ৩টি পরীক্ষা = <strong>৯৬ দিন</strong></li>
-                  <li>ঈদুল ফিতর ও ঈদুল আজহা (১২ দিন করে) = <strong>২৪ দিন</strong></li>
-                  <li><strong>বছরে সর্বমোট ছুটি: ১২০ দিন</strong> (কার্যকর পড়ার দিন = ২৪৫ দিন/বছর)</li>
-                </ul>
-              </div>
+        <div class="col-md-3">
+          <div class="card h-100 border-0 shadow-sm p-4 text-center bg-white">
+            <div class="mb-3 text-success"><i class="fa-solid fa-lines-leaning fa-2x"></i></div>
+            <h5 class="fw-bold">নাজেরা বিভাগ</h5>
+            <p class="small text-muted mb-0">হিফজ শুরু করার পূর্বে সম্পূর্ণ কুরআন শুদ্ধভাবে তরল কণ্ঠে তেলাওয়াত করার বিশেষ প্রস্তুতি।</p>
+          </div>
+        </div>
 
-              <button type="button" class="btn btn-success w-100 py-2 fw-semibold" id="calculateBtn">
-                <i class="fa-solid fa-calculator me-2"></i>হিসাব দেখুন
-              </button>
-            </form>
-
-            <!-- ফলাফলের বক্স -->
-            <div class="mt-4 pt-3 border-top" id="resultBox" style="display: none;">
-              <h5 class="fw-bold text-success text-center mb-3">সম্ভাব্য সমাপ্তির ফলাফল</h5>
-              
-              <div class="row g-3 text-center">
-                <div class="col-md-4">
-                  <div class="p-3 border rounded bg-light">
-                    <div class="text-muted small">শুধু পড়ার দিন লাগবে</div>
-                    <h4 class="fw-bold text-dark my-1" id="pureStudyDays">০ দিন</h4>
-                    <small class="text-muted">ক্লাস চালু থাকা দিন</small>
-                  </div>
-                </div>
-
-                <div class="col-md-4">
-                  <div class="p-3 border rounded bg-light">
-                    <div class="text-muted small">মোট সম্ভাব্য ছুটি পড়বে</div>
-                    <h4 class="fw-bold text-warning my-1" id="totalVacationDays">০ দিন</h4>
-                    <small class="text-muted">পরীক্ষা ও ঈদের বন্ধ</small>
-                  </div>
-                </div>
-
-                <div class="col-md-4">
-                  <div class="p-3 border rounded bg-success bg-opacity-10 border-success">
-                    <div class="text-success small fw-semibold">ছুটিসহ মোট সময় লাগবে</div>
-                    <h4 class="fw-bold text-success my-1" id="formattedTotalTime">...</h4>
-                    <small class="text-muted" id="totalCalendarDays">(মোট ০ দিন)</small>
-                  </div>
-                </div>
-              </div>
-
-              <div class="alert alert-success mt-3 mb-0 text-center small">
-                <i class="fa-solid fa-circle-check me-1"></i> ইনশাআল্লাহ, নিয়মিত প্রতিদিন <strong id="pagesEcho">২</strong> পৃষ্ঠা করে পড়লে আনুমানিক <strong id="finishEstimate">...</strong> মধ্যে পূর্ণ কুরআন হিফজ সম্পন্ন করা সম্ভব হবে।
-              </div>
-            </div>
-
+        <div class="col-md-3">
+          <div class="card h-100 border-0 shadow-sm p-4 text-center bg-white border-top border-success border-3">
+            <div class="mb-3 text-success"><i class="fa-solid fa-star-and-crescent fa-2x"></i></div>
+            <h5 class="fw-bold">হিফজ বিভাগ</h5>
+            <p class="small text-muted mb-0">পরিকল্পিত রুটিন অনুযায়ী সম্পূর্ণ কুরআন হিফজ এবং নিয়মিত সবক-শুনানি ও পুনরাবৃত্তি।</p>
           </div>
         </div>
       </div>
@@ -172,58 +121,5 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    document.getElementById('calculateBtn').addEventListener('click', function() {
-      const dailyPages = parseFloat(document.getElementById('dailyPages').value);
-      const memorizedPara = parseFloat(document.getElementById('memorizedPara').value);
-
-      if (!dailyPages || dailyPages <= 0) {
-        alert("দয়া করে সঠিক দৈনিক পড়ার পরিমাণ দিন!");
-        return;
-      }
-
-      // সাধারণ কুরআন ৬০৪ পৃষ্ঠা (প্রতি পারা প্রায় ২০.১৩ পৃষ্ঠা)
-      const totalQuranPages = 604;
-      const completedPages = memorizedPara * 20.133;
-      const remainingPages = Math.max(0, totalQuranPages - completedPages);
-
-      // ১. শুধু ক্লাস চালু থাকার পড়ার দিন
-      const pureStudyDays = Math.ceil(remainingPages / dailyPages);
-
-      // ২. বাৎসরিক ছুটি হিসাব:
-      // বছরে কার্যকরী ক্লাস দিন = ৩৬৫ - ১২০ = ২৪৫ দিন
-      // বাৎসরিক বন্ধ = ১২০ দিন
-      const effectiveDaysPerYear = 245;
-      const totalYearsFraction = pureStudyDays / effectiveDaysPerYear;
-      
-      // মোট সম্ভাব্য ক্যালেন্ডার দিন (পড়ার দিন + আনুপাতিক ছুটি)
-      const totalCalendarDays = Math.ceil(totalYearsFraction * 365);
-      const totalVacationDays = totalCalendarDays - pureStudyDays;
-
-      // বছর ও মাস বের করা
-      const years = Math.floor(totalCalendarDays / 365);
-      const remainingAfterYears = totalCalendarDays % 365;
-      const months = Math.floor(remainingAfterYears / 30);
-      const days = remainingAfterYears % 30;
-
-      let timeString = "";
-      if (years > 0) timeString += `${years} বছর `;
-      if (months > 0) timeString += `${months} মাস `;
-      if (days > 0 || (years === 0 && months === 0)) timeString += `${days} দিন`;
-
-      // স্ক্রিনে ডেটা দেখানো
-      document.getElementById('pureStudyDays').innerText = `${pureStudyDays} দিন`;
-      document.getElementById('totalVacationDays').innerText = `${totalVacationDays} দিন`;
-      document.getElementById('formattedTotalTime').innerText = timeString;
-      document.getElementById('totalCalendarDays').innerText = `(মোট প্রায় ${totalCalendarDays} দিন)`;
-      document.getElementById('pagesEcho').innerText = dailyPages;
-      document.getElementById('finishEstimate').innerText = timeString;
-
-      document.getElementById('resultBox').style.display = 'block';
-    });
-
-    // স্বয়ংক্রিয়ভাবে প্রথমবার হিসাব দেখানো
-    document.getElementById('calculateBtn').click();
-  </script>
 </body>
 </html>
