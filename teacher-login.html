@@ -1,1 +1,97 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>শিক্ষক / উস্তাদজি লগইন - JTQ মাদ্রাসা</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #062c19, #0f5132);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .login-card {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      max-width: 420px;
+      width: 100%;
+      padding: 30px;
+    }
+  </style>
+</head>
+<body>
 
+  <div class="login-card">
+    <div class="text-center mb-4">
+      <div class="mb-2 text-success">
+        <i class="fa-solid fa-chalkboard-user fa-3x"></i>
+      </div>
+      <h4 class="fw-bold text-dark">শিক্ষক পোর্টাল লগইন</h4>
+      <p class="text-muted small">দৈনিক সবক ও পাঠদান তথ্য এন্ট্রি করতে লগইন করুন</p>
+    </div>
+
+    <form id="teacherLoginForm">
+      <div class="mb-3">
+        <label class="form-label small fw-semibold">শিক্ষকের পুরো নাম</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="fa-solid fa-user-tie"></i></span>
+          <input type="text" class="form-control" id="tName" placeholder="যেমন: মাও. আব্দুর রহমান" required>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label small fw-semibold">মোবাইল নম্বর</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
+          <input type="tel" class="form-control" id="tPhone" placeholder="017XXXXXXXX" required>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label small fw-semibold">শিক্ষক পাসওয়ার্ড</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+          <input type="password" class="form-control" id="tPass" placeholder="পাসওয়ার্ড লিখুন" required>
+        </div>
+        <small class="text-muted" style="font-size: 11px;">ডিফল্ট পাসওয়ার্ড: <strong>teacher@123</strong></small>
+      </div>
+
+      <button type="submit" class="btn btn-success w-100 fw-semibold py-2 shadow-sm">
+        <i class="fa-solid fa-right-to-bracket me-1"></i> লগইন করুন
+      </button>
+    </form>
+
+    <div class="text-center mt-3">
+      <a href="index.html" class="text-decoration-none small text-muted">
+        <i class="fa-solid fa-house me-1"></i> মূল ওয়েবসাইটে ফিরে যান
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // শিক্ষক লগইন লজিক
+    document.getElementById('teacherLoginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('tName').value.trim();
+      const phone = document.getElementById('tPhone').value.trim();
+      const pass = document.getElementById('tPass').value;
+
+      // শিক্ষক পিন/পাসওয়ার্ড (teacher@123)
+      if (pass === 'teacher@123') {
+        localStorage.setItem('teacherSession', 'active');
+        localStorage.setItem('teacherName', name);
+        localStorage.setItem('teacherPhone', phone);
+        window.location.href = 'daily-sabak.html';
+      } else {
+        alert("ভুল পাসওয়ার্ড! সঠিক শিক্ষক পাসওয়ার্ড প্রদান করুন।");
+      }
+    });
+  </script>
+</body>
+</html>
