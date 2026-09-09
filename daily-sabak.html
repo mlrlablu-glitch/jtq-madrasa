@@ -50,8 +50,9 @@
       <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-pen-nib me-2 text-success"></i>দৈনিক সবক ও পড়া ইনপুট ফরম</h5>
       
       <form id="sabakForm">
+        <!-- প্রথম সারি: মৌলিক তথ্য -->
         <div class="row g-2 mb-3">
-          <div class="col-md-4">
+          <div class="col-md-3">
             <label class="form-label small fw-semibold">Student ID</label>
             <input type="text" class="form-control form-control-sm" id="inpStudentId" placeholder="যেমন: JTQ-2026-0001" required>
           </div>
@@ -71,9 +72,43 @@
               <option value="শুক্রবার">শুক্রবার</option>
             </select>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-2">
             <label class="form-label small fw-semibold">মাসের নাম</label>
-            <input type="text" class="form-control form-control-sm" id="inpMonth" placeholder="যেমন: সেপ্টেম্বর / রবিউল আউয়াল" required>
+            <select class="form-select form-select-sm" id="inpMonth" required>
+              <option value="জানুয়ারি">জানুয়ারি</option>
+              <option value="ফেব্রুয়ারি">ফেব্রুয়ারি</option>
+              <option value="মার্চ">মার্চ</option>
+              <option value="এপ্রিল">এপ্রিল</option>
+              <option value="মে">মে</option>
+              <option value="জুন">জুন</option>
+              <option value="জুলাই">জুলাই</option>
+              <option value="আগস্ট">আগস্ট</option>
+              <option value="সেপ্টেম্বর" selected>সেপ্টেম্বর</option>
+              <option value="অক্টোবর">অক্টোবর</option>
+              <option value="নভেম্বর">নভেম্বর</option>
+              <option value="ডিসেম্বর">ডিসেম্বর</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label small fw-semibold">সাল / বছর</label>
+            <select class="form-select form-select-sm" id="inpYear" required>
+              <option value="২০২৫">২০২৫</option>
+              <option value="২০২৬" selected>২০২৬</option>
+              <option value="২০২৭">২০২৭</option>
+              <option value="২০২৮">২০২৮</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- দ্বিতীয় সারি: দায়িত্বপ্রাপ্ত উস্তাদজির তথ্য -->
+        <div class="row g-2 mb-3 p-2 border rounded bg-light">
+          <div class="col-md-6">
+            <label class="form-label small fw-semibold"><i class="fa-solid fa-user-tie text-success me-1"></i>যে হুজুর পড়া নিয়েছেন তাঁর নাম</label>
+            <input type="text" class="form-control form-control-sm" id="teacherName" placeholder="যেমন: হাফেজ মাও. আব্দুর রহমান" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label small fw-semibold"><i class="fa-solid fa-phone text-success me-1"></i>হুজুরের মোবাইল নম্বর</label>
+            <input type="tel" class="form-control form-control-sm" id="teacherPhone" placeholder="017XXXXXXXX" required>
           </div>
         </div>
 
@@ -140,9 +175,9 @@
       <div class="border border-dark p-2 text-center position-relative mb-2">
         <span class="fs-5 fw-bold bg-dark text-white px-4 py-1 rounded-pill">সাপ্তাহিক তথ্য</span>
         <div class="d-flex justify-content-between mt-2 px-3 small fw-semibold">
-          <div>ছাত্র-ছাত্রীর নাম : <span class="border-bottom border-dark px-3 fw-bold" id="viewStudentName">..................</span></div>
-          <div>আইডি : <span class="border-bottom border-dark px-2 fw-bold" id="viewStudentId">..........</span></div>
-          <div>মাসের নাম : <span class="border-bottom border-dark px-3 fw-bold" id="viewMonthName">..................</span></div>
+          <div>ছাত্র-ছাত্রীর নাম : <span class="border-bottom border-dark px-3 fw-bold text-dark" id="viewStudentName">..................</span></div>
+          <div>আইডি : <span class="border-bottom border-dark px-2 fw-bold text-success" id="viewStudentId">..........</span></div>
+          <div>মাস ও সাল : <span class="border-bottom border-dark px-3 fw-bold text-dark" id="viewMonthName">..................</span></div>
         </div>
       </div>
 
@@ -156,7 +191,7 @@
               <th colspan="4">সাত সবক</th>
               <th colspan="4">আমুখতা</th>
               <th rowspan="2">দৈনিক<br>তিলাওয়াত</th>
-              <th rowspan="2">শিক্ষকের<br>স্বাক্ষর</th>
+              <th rowspan="2" style="min-width: 140px;">দায়িত্বপ্রাপ্ত শিক্ষক<br>(নাম ও মোবাইল)</th>
               <th rowspan="2" style="width: 90px;">তারিখ</th>
             </tr>
             <tr>
@@ -216,7 +251,10 @@
       const sId = document.getElementById('inpStudentId').value.trim();
       const date = document.getElementById('inpDate').value;
       const day = document.getElementById('inpDay').value;
-      const month = document.getElementById('inpMonth').value.trim();
+      const month = document.getElementById('inpMonth').value;
+      const year = document.getElementById('inpYear').value;
+      const teacher = document.getElementById('teacherName').value.trim();
+      const phone = document.getElementById('teacherPhone').value.trim();
       const btn = document.getElementById('saveSabakBtn');
 
       btn.disabled = true;
@@ -226,6 +264,9 @@
         date: date,
         day: day,
         month: month,
+        year: year,
+        teacherName: teacher,
+        teacherPhone: phone,
         sabakPara: document.getElementById('sabakPara').value.trim() || "-",
         sabakPage: document.getElementById('sabakPage').value.trim() || "-",
         satPara: document.getElementById('satPara').value.trim() || "-",
@@ -237,7 +278,6 @@
         amukhAmount: document.getElementById('amukhAmount').value.trim() || "-",
         amukhMistake: document.getElementById('amukhMistake').value.trim() || "-",
         dailyTilawat: document.getElementById('dailyTilawat').value.trim() || "-",
-        signature: "যাচাইকৃত",
         timestamp: new Date()
       };
 
@@ -274,10 +314,11 @@
             tbody.innerHTML = `<tr><td colspan="14" class="text-muted">কোনো পড়া এন্ট্রি নেই।</td></tr>`;
             return;
           }
-          let lastMonth = "";
+          let lastPeriod = "";
           snapshot.forEach(d => {
             const r = d.data();
-            lastMonth = r.month;
+            lastPeriod = `${r.month} ${r.year || ''}`;
+            const teacherDetails = r.teacherName ? `<strong>${r.teacherName}</strong><br><small class="text-muted">${r.teacherPhone || ''}</small>` : '<small class="text-success">যাচাইকৃত</small>';
             tbody.innerHTML += `
               <tr>
                 <td class="fw-bold">${r.day}</td>
@@ -292,12 +333,12 @@
                 <td>${r.amukhAmount}</td>
                 <td class="text-danger fw-bold">${r.amukhMistake}</td>
                 <td>${r.dailyTilawat}</td>
-                <td><small class="text-success">${r.signature}</small></td>
+                <td>${teacherDetails}</td>
                 <td>${r.date}</td>
               </tr>
             `;
           });
-          document.getElementById('viewMonthName').innerText = lastMonth || "-";
+          document.getElementById('viewMonthName').innerText = lastPeriod || "-";
         });
     }
 
