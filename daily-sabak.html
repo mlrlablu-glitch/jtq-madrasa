@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>দৈনিক পড়া ও সবক এন্ট্রি - JTQ মাদ্রাসা</title>
+  <title>দৈনিক পড়া ও উপস্থিতি এন্ট্রি - JTQ মাদ্রাসা</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
@@ -11,8 +11,9 @@
     .diary-table th, .diary-table td {
       text-align: center;
       vertical-align: middle;
-      padding: 6px 3px;
-      font-size: 12px;
+      padding: 5px 2px;
+      font-size: 11.5px;
+      white-space: nowrap;
     }
     .diary-table th {
       background-color: #f1f8f4;
@@ -44,16 +45,17 @@
     </div>
   </nav>
 
-  <div class="container py-4">
+  <div class="container-fluid py-4 px-3">
     
-    <!-- পড়া এন্ট্রি ফর্ম -->
-    <div class="card border-0 shadow-sm p-4 bg-white mb-4 no-print border-top border-success border-4">
+    <!-- পড়া ও উপস্থিতি এন্ট্রি ফর্ম -->
+    <div class="card border-0 shadow-sm p-4 bg-white mb-4 no-print border-top border-success border-4 mx-auto" style="max-width: 1100px;">
       <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-pen-nib me-2 text-success"></i>দৈনিক পড়া ইনপুট ফরম</h5>
+        <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-clipboard-user me-2 text-success"></i>দৈনিক পড়া ও উপস্থিতি ইনপুট ফরম</h5>
         <span class="badge bg-success small"><i class="fa-solid fa-check me-1"></i>শিক্ষক ভেরিফায়েড মোড</span>
       </div>
       
       <form id="sabakForm">
+        <!-- সারি ১: সাধারণ তথ্য -->
         <div class="row g-2 mb-3">
           <div class="col-md-3">
             <label class="form-label small fw-semibold">Student ID</label>
@@ -103,9 +105,35 @@
           </div>
         </div>
 
+        <!-- সারি ২: উপস্থিতি -->
+        <div class="row g-2 mb-3 p-2 border rounded bg-light align-items-center">
+          <div class="col-md-4">
+            <label class="form-label small fw-bold text-dark mb-0">
+              <i class="fa-solid fa-user-check me-1 text-success"></i>আজকের ক্লাসে শিক্ষার্থীর উপস্থিতি:
+            </label>
+          </div>
+          <div class="col-md-8">
+            <div class="d-flex gap-4">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="attendanceStatus" id="attPresent" value="উপস্থিত" checked>
+                <label class="form-check-label small fw-bold text-success" for="attPresent">উপস্থিত (Present)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="attendanceStatus" id="attAbsent" value="অনুপস্থিত">
+                <label class="form-check-label small fw-bold text-danger" for="attAbsent">অনুপস্থিত (Absent)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="attendanceStatus" id="attLeave" value="ছুটিতে">
+                <label class="form-check-label small fw-bold text-warning" for="attLeave">ছুটিতে (Leave)</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- সারি ৩: পড়ার ক্যাটাগরি -->
         <div class="row g-2 mb-3">
           <div class="col-md-12">
-            <label class="form-label small fw-bold text-success"><i class="fa-solid fa-list-check me-1"></i>কোন পড়াটি এখন নিচ্ছেন? (নির্বাচন করুন)</label>
+            <label class="form-label small fw-bold text-success"><i class="fa-solid fa-list-check me-1"></i>কোন পড়াটি এখন নিচ্ছেন?</label>
             <select class="form-select form-select-sm fw-semibold border-success" id="lessonTypeSelect">
               <option value="sabak">১. সবক (নতুন পড়া)</option>
               <option value="satSabak">২. সাত সবক (সাম্প্রতিক পড়া)</option>
@@ -118,18 +146,9 @@
         <div id="sectionSabak" class="p-3 border rounded bg-light mb-3">
           <span class="badge bg-success mb-2 fs-6"><i class="fa-solid fa-book-open me-1"></i> ১. সবক ইনপুট</span>
           <div class="row g-2">
-            <div class="col-md-4">
-              <label class="form-label small fw-semibold">পারা</label>
-              <input type="text" class="form-control form-control-sm" id="sabakPara" placeholder="যেমন: ১">
-            </div>
-            <div class="col-md-4">
-              <label class="form-label small fw-semibold">পৃষ্ঠা</label>
-              <input type="text" class="form-control form-control-sm" id="sabakPage" placeholder="যেমন: ৫">
-            </div>
-            <div class="col-md-4">
-              <label class="form-label small fw-semibold"><i class="fa-regular fa-clock me-1 text-success"></i>পড়া দেওয়ার সময়</label>
-              <input type="time" class="form-control form-control-sm" id="sabakTime">
-            </div>
+            <div class="col-md-4"><label class="form-label small fw-semibold">পারা</label><input type="text" class="form-control form-control-sm" id="sabakPara" placeholder="যেমন: ১"></div>
+            <div class="col-md-4"><label class="form-label small fw-semibold">পৃষ্ঠা</label><input type="text" class="form-control form-control-sm" id="sabakPage" placeholder="যেমন: ৫"></div>
+            <div class="col-md-4"><label class="form-label small fw-semibold">পড়া দেওয়ার সময়</label><input type="time" class="form-control form-control-sm" id="sabakTime"></div>
           </div>
         </div>
 
@@ -137,26 +156,11 @@
         <div id="sectionSatSabak" class="p-3 border rounded bg-light mb-3" style="display: none;">
           <span class="badge bg-primary mb-2 fs-6"><i class="fa-solid fa-book me-1"></i> ২. সাত সবক ইনপুট</span>
           <div class="row g-2">
-            <div class="col-md-3">
-              <label class="form-label small fw-semibold">পারা</label>
-              <input type="text" class="form-control form-control-sm" id="satPara" placeholder="পারা">
-            </div>
-            <div class="col-md-3">
-              <label class="form-label small fw-semibold">পৃষ্ঠা</label>
-              <input type="text" class="form-control form-control-sm" id="satPage" placeholder="পৃষ্ঠা">
-            </div>
-            <div class="col-md-2">
-              <label class="form-label small fw-semibold"><i class="fa-regular fa-clock me-1 text-primary"></i>সময়</label>
-              <input type="time" class="form-control form-control-sm" id="satTime">
-            </div>
-            <div class="col-md-2">
-              <label class="form-label small fw-semibold">পরিমাণ</label>
-              <input type="text" class="form-control form-control-sm" id="satAmount" placeholder="পরিমাণ">
-            </div>
-            <div class="col-md-2">
-              <label class="form-label small fw-semibold">ভুল</label>
-              <input type="text" class="form-control form-control-sm" id="satMistake" placeholder="ভুল">
-            </div>
+            <div class="col-md-3"><label class="form-label small fw-semibold">পারা</label><input type="text" class="form-control form-control-sm" id="satPara" placeholder="পারা"></div>
+            <div class="col-md-3"><label class="form-label small fw-semibold">পৃষ্ঠা</label><input type="text" class="form-control form-control-sm" id="satPage" placeholder="পৃষ্ঠা"></div>
+            <div class="col-md-2"><label class="form-label small fw-semibold">সময়</label><input type="time" class="form-control form-control-sm" id="satTime"></div>
+            <div class="col-md-2"><label class="form-label small fw-semibold">পরিমাণ</label><input type="text" class="form-control form-control-sm" id="satAmount" placeholder="পরিমাণ"></div>
+            <div class="col-md-2"><label class="form-label small fw-semibold">ভুল</label><input type="text" class="form-control form-control-sm" id="satMistake" placeholder="ভুল"></div>
           </div>
         </div>
 
@@ -164,55 +168,31 @@
         <div id="sectionAmukh" class="p-3 border rounded bg-light mb-3" style="display: none;">
           <span class="badge bg-secondary mb-2 fs-6"><i class="fa-solid fa-book-quran me-1"></i> ৩. আমুখতা ও তিলাওয়াত ইনপুট</span>
           <div class="row g-2 mb-2">
-            <div class="col-md-3">
-              <label class="form-label small fw-semibold">পারা</label>
-              <input type="text" class="form-control form-control-sm" id="amukhPara" placeholder="পারা">
-            </div>
-            <div class="col-md-3">
-              <label class="form-label small fw-semibold">পৃষ্ঠা</label>
-              <input type="text" class="form-control form-control-sm" id="amukhPage" placeholder="পৃষ্ঠা">
-            </div>
-            <div class="col-md-2">
-              <label class="form-label small fw-semibold"><i class="fa-regular fa-clock me-1 text-secondary"></i>সময়</label>
-              <input type="time" class="form-control form-control-sm" id="amukhTime">
-            </div>
-            <div class="col-md-2">
-              <label class="form-label small fw-semibold">পরিমাণ</label>
-              <input type="text" class="form-control form-control-sm" id="amukhAmount" placeholder="পরিমাণ">
-            </div>
-            <div class="col-md-2">
-              <label class="form-label small fw-semibold">ভুল</label>
-              <input type="text" class="form-control form-control-sm" id="amukhMistake" placeholder="ভুল">
-            </div>
+            <div class="col-md-3"><label class="form-label small fw-semibold">পারা</label><input type="text" class="form-control form-control-sm" id="amukhPara" placeholder="পারা"></div>
+            <div class="col-md-3"><label class="form-label small fw-semibold">পৃষ্ঠা</label><input type="text" class="form-control form-control-sm" id="amukhPage" placeholder="পৃষ্ঠা"></div>
+            <div class="col-md-2"><label class="form-label small fw-semibold">সময়</label><input type="time" class="form-control form-control-sm" id="amukhTime"></div>
+            <div class="col-md-2"><label class="form-label small fw-semibold">পরিমাণ</label><input type="text" class="form-control form-control-sm" id="amukhAmount" placeholder="পরিমাণ"></div>
+            <div class="col-md-2"><label class="form-label small fw-semibold">ভুল</label><input type="text" class="form-control form-control-sm" id="amukhMistake" placeholder="ভুল"></div>
           </div>
           <div class="row g-2">
-            <div class="col-md-12">
-              <label class="form-label small fw-semibold">দৈনিক তিলাওয়াত</label>
-              <input type="text" class="form-control form-control-sm" id="dailyTilawat" placeholder="যেমন: ১ পারা">
-            </div>
+            <div class="col-md-12"><label class="form-label small fw-semibold">দৈনিক তিলাওয়াত</label><input type="text" class="form-control form-control-sm" id="dailyTilawat" placeholder="যেমন: ১ পারা"></div>
           </div>
         </div>
 
-        <!-- শিক্ষক তথ্য (লগইন করা তথ্য থেকে অটোমেটিক বসে যাবে) -->
+        <!-- শিক্ষক তথ্য -->
         <div class="row g-2 mb-3 p-2 border rounded bg-light">
-          <div class="col-md-6">
-            <label class="form-label small fw-semibold"><i class="fa-solid fa-user-tie text-success me-1"></i>পড়া গ্রহণকারী শিক্ষক</label>
-            <input type="text" class="form-control form-control-sm bg-white" id="teacherName" readonly required>
-          </div>
-          <div class="col-md-6">
-            <label class="form-label small fw-semibold"><i class="fa-solid fa-phone text-success me-1"></i>শিক্ষকের মোবাইল নম্বর</label>
-            <input type="tel" class="form-control form-control-sm bg-white" id="teacherPhone" readonly required>
-          </div>
+          <div class="col-md-6"><label class="form-label small fw-semibold">শিক্ষকের নাম</label><input type="text" class="form-control form-control-sm bg-white" id="teacherName" readonly required></div>
+          <div class="col-md-6"><label class="form-label small fw-semibold">শিক্ষকের মোবাইল নম্বর</label><input type="tel" class="form-control form-control-sm bg-white" id="teacherPhone" readonly required></div>
         </div>
 
         <button type="submit" class="btn btn-success btn-sm px-4 fw-semibold" id="saveSabakBtn">
-          <i class="fa-solid fa-cloud-arrow-up me-1"></i> পড়া সংরক্ষণ করুন
+          <i class="fa-solid fa-cloud-arrow-up me-1"></i> পড়া ও উপস্থিতি সংরক্ষণ করুন
         </button>
       </form>
     </div>
 
-    <!-- ডায়েরি ভিউ ছক -->
-    <div class="card border-0 shadow-sm p-4 bg-white" id="printableArea">
+    <!-- ডায়েরি ভিউ ছক (সম্পূর্ণ আলাদা কলামসমূহ) -->
+    <div class="card border-0 shadow-sm p-3 bg-white" id="printableArea">
       <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 no-print">
         <div class="d-flex gap-2 align-items-center">
           <input type="text" class="form-control form-control-sm" id="searchId" placeholder="Student ID লিখুন">
@@ -222,7 +202,7 @@
       </div>
 
       <div class="border border-dark p-2 text-center position-relative mb-2">
-        <span class="fs-5 fw-bold bg-dark text-white px-4 py-1 rounded-pill">সাপ্তাহিক তথ্য</span>
+        <span class="fs-5 fw-bold bg-dark text-white px-4 py-1 rounded-pill">সাপ্তাহিক তথ্য ও উপস্থিতি</span>
         <div class="d-flex flex-wrap justify-content-between mt-2 px-2 small fw-semibold">
           <div>ছাত্রের নাম: <span class="border-bottom border-dark px-1 fw-bold text-dark" id="viewStudentName">...</span></div>
           <div>আইডি: <span class="border-bottom border-dark px-1 fw-bold text-success" id="viewStudentId">...</span></div>
@@ -232,33 +212,42 @@
         </div>
       </div>
 
+      <!-- মূল টেবিল: পারা, পৃষ্ঠা, সময় এবং শিক্ষক-মোবাইল আলাদা আলাদা কলামে -->
       <div class="table-responsive">
         <table class="table table-bordered border-dark diary-table mb-2">
           <thead>
             <tr>
-              <th rowspan="2" style="width: 75px;">বার</th>
-              <th colspan="2">সবক</th>
-              <th colspan="4">সাত সবক</th>
-              <th colspan="4">আমুখতা</th>
+              <th rowspan="2">বার</th>
+              <th rowspan="2">উপস্থিতি</th>
+              <th colspan="3">সবক</th>
+              <th colspan="5">সাত সবক</th>
+              <th colspan="5">আমুখতা</th>
               <th rowspan="2">দৈনিক<br>তিলাওয়াত</th>
-              <th rowspan="2" style="min-width: 130px;">শিক্ষক<br>(নাম ও মোবাইল)</th>
-              <th rowspan="2" style="width: 85px;">তারিখ</th>
+              <th rowspan="2">শিক্ষকের নাম</th>
+              <th rowspan="2">শিক্ষকের মোবাইল</th>
+              <th rowspan="2">তারিখ</th>
             </tr>
             <tr>
-              <th>পারা ও পৃষ্ঠা</th>
+              <!-- সবক -->
+              <th>পারা</th>
+              <th>পৃষ্ঠা</th>
               <th>সময়</th>
-              <th>পারা ও পৃষ্ঠা</th>
+              <!-- সাত সবক -->
+              <th>পারা</th>
+              <th>পৃষ্ঠা</th>
               <th>সময়</th>
               <th>পরিমাণ</th>
               <th>ভুল</th>
-              <th>পারা ও পৃষ্ঠা</th>
+              <!-- আমুখতা -->
+              <th>পারা</th>
+              <th>পৃষ্ঠা</th>
               <th>সময়</th>
               <th>পরিমাণ</th>
               <th>ভুল</th>
             </tr>
           </thead>
           <tbody id="diaryTableBody">
-            <tr><td colspan="14" class="text-muted">Student ID দিয়ে খুঁজলে রেকর্ড দেখা যাবে।</td></tr>
+            <tr><td colspan="19" class="text-muted">Student ID দিয়ে খুঁজলে রেকর্ড দেখা যাবে।</td></tr>
           </tbody>
         </table>
       </div>
@@ -287,7 +276,6 @@
   <script src="js/firebase-config.js"></script>
 
   <script>
-    // শিক্ষক লগইন চেক
     if (localStorage.getItem('teacherSession') !== 'active') {
       window.location.href = 'teacher-login.html';
     }
@@ -338,7 +326,7 @@
       else if (this.value === 'amukhTilawat') secAmukh.style.display = 'block';
     });
 
-    // পড়া সংরক্ষণ
+    // সংরক্ষণ
     document.getElementById('sabakForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const sId = document.getElementById('inpStudentId').value.trim();
@@ -347,6 +335,7 @@
       const month = document.getElementById('inpMonth').value;
       const year = document.getElementById('inpYear').value;
       const lessonType = document.getElementById('lessonTypeSelect').value;
+      const attendance = document.querySelector('input[name="attendanceStatus"]:checked').value;
       const btn = document.getElementById('saveSabakBtn');
 
       btn.disabled = true;
@@ -357,6 +346,7 @@
         day: day,
         month: month,
         year: year,
+        attendance: attendance,
         teacherName: tName,
         teacherPhone: tPhone,
         timestamp: new Date()
@@ -383,20 +373,26 @@
 
       db.collection("students").doc(sId).collection("daily_sabak").doc(date).set(updatePayload, { merge: true })
         .then(() => {
-          alert("পড়া ও সময় সফলভাবে সংরক্ষিত হয়েছে!");
+          return db.collection("students").doc(sId).update({
+            lastAttendanceStatus: attendance,
+            lastAttendanceDate: date
+          });
+        }).then(() => {
+          alert("পড়া ও উপস্থিতি সফলভাবে সংরক্ষিত হয়েছে!");
           document.getElementById('searchId').value = sId;
           loadDiary(sId);
         }).catch(err => {
           alert("ত্রুটি: " + err.message);
         }).finally(() => {
           btn.disabled = false;
-          btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up me-1"></i> পড়া সংরক্ষণ করুন`;
+          btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up me-1"></i> পড়া ও উপস্থিতি সংরক্ষণ করুন`;
         });
     });
 
+    // ছকে লোড
     function loadDiary(sId) {
       const tbody = document.getElementById('diaryTableBody');
-      tbody.innerHTML = `<tr><td colspan="14">তথ্য লোড হচ্ছে...</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="19">তথ্য লোড হচ্ছে...</td></tr>`;
 
       db.collection("students").doc(sId).get().then(doc => {
         if(doc.exists) {
@@ -412,34 +408,46 @@
         .then(snapshot => {
           tbody.innerHTML = "";
           if(snapshot.empty) {
-            tbody.innerHTML = `<tr><td colspan="14" class="text-muted">কোনো পড়া এন্ট্রি নেই।</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="19" class="text-muted">কোনো রেকর্ড নেই।</td></tr>`;
             return;
           }
           let lastPeriod = "";
           snapshot.forEach(d => {
             const r = d.data();
             lastPeriod = `${r.month} ${r.year || ''}`;
-            const teacherDetails = r.teacherName ? `<strong>${r.teacherName}</strong><br><small class="text-muted">${r.teacherPhone || ''}</small>` : '<small class="text-success">যাচাইকৃত</small>';
 
-            const sabakText = (r.sabakPara && r.sabakPara !== '-') ? `পারা: ${r.sabakPara}<br>পৃষ্ঠা: ${r.sabakPage || '-'}` : '-';
-            const satText = (r.satPara && r.satPara !== '-') ? `পারা: ${r.satPara}<br>পৃষ্ঠা: ${r.satPage || '-'}` : '-';
-            const amukhText = (r.amukhPara && r.amukhPara !== '-') ? `পারা: ${r.amukhPara}<br>পৃষ্ঠা: ${r.amukhPage || '-'}` : '-';
+            let attBadge = '<span class="badge bg-success">উপস্থিত</span>';
+            if (r.attendance === 'অনুপস্থিত') attBadge = '<span class="badge bg-danger">অনুপস্থিত</span>';
+            else if (r.attendance === 'ছুটিতে') attBadge = '<span class="badge bg-warning text-dark">ছুটি</span>';
 
             tbody.innerHTML += `
               <tr>
                 <td class="fw-bold">${r.day}</td>
-                <td>${sabakText}</td>
+                <td>${attBadge}</td>
+                
+                <!-- সবক (আলাদা ৩ কলাম) -->
+                <td>${r.sabakPara || '-'}</td>
+                <td>${r.sabakPage || '-'}</td>
                 <td><span class="badge bg-light text-dark border">${formatAMPM(r.sabakTime)}</span></td>
-                <td>${satText}</td>
+
+                <!-- সাত সবক (আলাদা ৫ কলাম) -->
+                <td>${r.satPara || '-'}</td>
+                <td>${r.satPage || '-'}</td>
                 <td><span class="badge bg-light text-dark border">${formatAMPM(r.satTime)}</span></td>
                 <td>${r.satAmount || '-'}</td>
                 <td class="text-danger fw-bold">${r.satMistake || '-'}</td>
-                <td>${amukhText}</td>
+
+                <!-- আমুখতা (আলাদা ৫ কলাম) -->
+                <td>${r.amukhPara || '-'}</td>
+                <td>${r.amukhPage || '-'}</td>
                 <td><span class="badge bg-light text-dark border">${formatAMPM(r.amukhTime)}</span></td>
                 <td>${r.amukhAmount || '-'}</td>
                 <td class="text-danger fw-bold">${r.amukhMistake || '-'}</td>
+
+                <!-- অন্যান্য ও শিক্ষক (আলাদা ২ কলাম) -->
                 <td>${r.dailyTilawat || '-'}</td>
-                <td>${teacherDetails}</td>
+                <td class="fw-semibold text-dark">${r.teacherName || '-'}</td>
+                <td>${r.teacherPhone || '-'}</td>
                 <td>${r.date}</td>
               </tr>
             `;
