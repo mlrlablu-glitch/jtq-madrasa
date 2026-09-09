@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>দৈনিক পড়া ও সাপ্তাহিক তথ্য - JTQ মাদ্রাসা</title>
+  <title>দৈনিক পড়া ও সবক এন্ট্রি - JTQ মাদ্রাসা</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
@@ -12,26 +12,15 @@
       text-align: center;
       vertical-align: middle;
       padding: 6px 3px;
-      font-size: 12.5px;
+      font-size: 12px;
     }
     .diary-table th {
       background-color: #f1f8f4;
     }
-    .time-badge {
-      display: block;
-      font-size: 10px;
-      color: #0f5132;
-      background: #e8f5e9;
-      border-radius: 4px;
-      padding: 1px 2px;
-      margin-top: 2px;
-    }
     @media print {
       body * { visibility: hidden; }
       #printableArea, #printableArea * { visibility: visible; }
-      #printableArea {
-        position: absolute; left: 0; top: 0; width: 100%;
-      }
+      #printableArea { position: absolute; left: 0; top: 0; width: 100%; }
       .no-print { display: none !important; }
     }
   </style>
@@ -42,12 +31,15 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm no-print">
     <div class="container">
       <a class="navbar-brand fw-bold" href="index.html">
-        <i class="fa-solid fa-mosque me-2"></i>জামিয়া তাসলিমুল কুরআন
+        <i class="fa-solid fa-mosque me-2"></i>JTQ মাদ্রাসা শিক্ষক প্যানেল
       </a>
-      <div class="d-flex align-items-center gap-2">
-        <a href="index.html" class="btn btn-outline-light btn-sm"><i class="fa-solid fa-house me-1"></i> হোম</a>
-        <a href="hifz-calculator.html" class="btn btn-outline-light btn-sm"><i class="fa-solid fa-calculator me-1"></i> ক্যালকুলেটর</a>
-        <a href="student-login.html" class="btn btn-warning btn-sm text-dark fw-bold"><i class="fa-solid fa-graduation-cap me-1"></i> শিক্ষার্থী</a>
+      <div class="d-flex align-items-center gap-3">
+        <span class="text-white small d-none d-md-inline">
+          <i class="fa-solid fa-user-tie me-1"></i>উস্তাদজি: <strong id="topTeacherName">...</strong>
+        </span>
+        <button class="btn btn-outline-light btn-sm" id="teacherLogoutBtn">
+          <i class="fa-solid fa-right-from-bracket me-1"></i> লগআউট
+        </button>
       </div>
     </div>
   </nav>
@@ -56,10 +48,12 @@
     
     <!-- পড়া এন্ট্রি ফর্ম -->
     <div class="card border-0 shadow-sm p-4 bg-white mb-4 no-print border-top border-success border-4">
-      <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-pen-nib me-2 text-success"></i>দৈনিক পড়া ইনপুট ফরম</h5>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-pen-nib me-2 text-success"></i>দৈনিক পড়া ইনপুট ফরম</h5>
+        <span class="badge bg-success small"><i class="fa-solid fa-check me-1"></i>শিক্ষক ভেরিফায়েড মোড</span>
+      </div>
       
       <form id="sabakForm">
-        <!-- প্রথম সারি: প্রাথমিক তথ্য -->
         <div class="row g-2 mb-3">
           <div class="col-md-3">
             <label class="form-label small fw-semibold">Student ID</label>
@@ -109,10 +103,9 @@
           </div>
         </div>
 
-        <!-- পড়ার ধরন নির্বাচন -->
         <div class="row g-2 mb-3">
           <div class="col-md-12">
-            <label class="form-label small fw-bold text-success"><i class="fa-solid fa-list-check me-1"></i>কোন পড়াটি এখন নিচ্ছেন? (ড্রপডাউন থেকে নির্বাচন করুন)</label>
+            <label class="form-label small fw-bold text-success"><i class="fa-solid fa-list-check me-1"></i>কোন পড়াটি এখন নিচ্ছেন? (নির্বাচন করুন)</label>
             <select class="form-select form-select-sm fw-semibold border-success" id="lessonTypeSelect">
               <option value="sabak">১. সবক (নতুন পড়া)</option>
               <option value="satSabak">২. সাত সবক (সাম্প্রতিক পড়া)</option>
@@ -121,7 +114,7 @@
           </div>
         </div>
 
-        <!-- ১. সবক সেকশন (পারা, পৃষ্ঠা ও সময়) -->
+        <!-- ১. সবক -->
         <div id="sectionSabak" class="p-3 border rounded bg-light mb-3">
           <span class="badge bg-success mb-2 fs-6"><i class="fa-solid fa-book-open me-1"></i> ১. সবক ইনপুট</span>
           <div class="row g-2">
@@ -140,7 +133,7 @@
           </div>
         </div>
 
-        <!-- ২. সাত সবক সেকশন (পারা, পৃষ্ঠা, সময়, পরিমাণ ও ভুল) -->
+        <!-- ২. সাত সবক -->
         <div id="sectionSatSabak" class="p-3 border rounded bg-light mb-3" style="display: none;">
           <span class="badge bg-primary mb-2 fs-6"><i class="fa-solid fa-book me-1"></i> ২. সাত সবক ইনপুট</span>
           <div class="row g-2">
@@ -167,7 +160,7 @@
           </div>
         </div>
 
-        <!-- ৩. আমুখতা ও তিলাওয়াত সেকশন -->
+        <!-- ৩. আমুখতা ও তিলাওয়াত -->
         <div id="sectionAmukh" class="p-3 border rounded bg-light mb-3" style="display: none;">
           <span class="badge bg-secondary mb-2 fs-6"><i class="fa-solid fa-book-quran me-1"></i> ৩. আমুখতা ও তিলাওয়াত ইনপুট</span>
           <div class="row g-2 mb-2">
@@ -200,15 +193,15 @@
           </div>
         </div>
 
-        <!-- শিক্ষক তথ্য -->
+        <!-- শিক্ষক তথ্য (লগইন করা তথ্য থেকে অটোমেটিক বসে যাবে) -->
         <div class="row g-2 mb-3 p-2 border rounded bg-light">
           <div class="col-md-6">
-            <label class="form-label small fw-semibold"><i class="fa-solid fa-user-tie text-success me-1"></i>পড়া গ্রহণকারী হুজুরের নাম</label>
-            <input type="text" class="form-control form-control-sm" id="teacherName" placeholder="হুজুরের নাম" required>
+            <label class="form-label small fw-semibold"><i class="fa-solid fa-user-tie text-success me-1"></i>পড়া গ্রহণকারী শিক্ষক</label>
+            <input type="text" class="form-control form-control-sm bg-white" id="teacherName" readonly required>
           </div>
           <div class="col-md-6">
-            <label class="form-label small fw-semibold"><i class="fa-solid fa-phone text-success me-1"></i>হুজুরের মোবাইল নম্বর</label>
-            <input type="tel" class="form-control form-control-sm" id="teacherPhone" placeholder="017XXXXXXXX" required>
+            <label class="form-label small fw-semibold"><i class="fa-solid fa-phone text-success me-1"></i>শিক্ষকের মোবাইল নম্বর</label>
+            <input type="tel" class="form-control form-control-sm bg-white" id="teacherPhone" readonly required>
           </div>
         </div>
 
@@ -218,9 +211,8 @@
       </form>
     </div>
 
-    <!-- ডায়রি ভিউ সেকশন (ছক) -->
+    <!-- ডায়েরি ভিউ ছক -->
     <div class="card border-0 shadow-sm p-4 bg-white" id="printableArea">
-      
       <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 no-print">
         <div class="d-flex gap-2 align-items-center">
           <input type="text" class="form-control form-control-sm" id="searchId" placeholder="Student ID লিখুন">
@@ -229,17 +221,17 @@
         <button class="btn btn-outline-success btn-sm" onclick="window.print()"><i class="fa-solid fa-print me-1"></i>ছাপান (প্রিন্ট)</button>
       </div>
 
-      <!-- হেডার -->
       <div class="border border-dark p-2 text-center position-relative mb-2">
         <span class="fs-5 fw-bold bg-dark text-white px-4 py-1 rounded-pill">সাপ্তাহিক তথ্য</span>
-        <div class="d-flex justify-content-between mt-2 px-3 small fw-semibold">
-          <div>ছাত্র-ছাত্রীর নাম : <span class="border-bottom border-dark px-3 fw-bold text-dark" id="viewStudentName">..................</span></div>
-          <div>আইডি : <span class="border-bottom border-dark px-2 fw-bold text-success" id="viewStudentId">..........</span></div>
-          <div>মাস ও সাল : <span class="border-bottom border-dark px-3 fw-bold text-dark" id="viewMonthName">..................</span></div>
+        <div class="d-flex flex-wrap justify-content-between mt-2 px-2 small fw-semibold">
+          <div>ছাত্রের নাম: <span class="border-bottom border-dark px-1 fw-bold text-dark" id="viewStudentName">...</span></div>
+          <div>আইডি: <span class="border-bottom border-dark px-1 fw-bold text-success" id="viewStudentId">...</span></div>
+          <div>শ্রেণি/বিভাগ: <span class="border-bottom border-dark px-1 fw-bold text-dark" id="viewStudentDept">...</span></div>
+          <div>রোল: <span class="border-bottom border-dark px-1 fw-bold text-dark" id="viewStudentRoll">...</span></div>
+          <div>মাস ও সাল: <span class="border-bottom border-dark px-1 fw-bold text-primary" id="viewMonthName">...</span></div>
         </div>
       </div>
 
-      <!-- মূল টেবিল (সময়সহ) -->
       <div class="table-responsive">
         <table class="table table-bordered border-dark diary-table mb-2">
           <thead>
@@ -287,7 +279,6 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
 
@@ -296,7 +287,22 @@
   <script src="js/firebase-config.js"></script>
 
   <script>
-    // তারিখ, বার ও বর্তমান সময় ডিফল্ট সেট করা
+    // শিক্ষক লগইন চেক
+    if (localStorage.getItem('teacherSession') !== 'active') {
+      window.location.href = 'teacher-login.html';
+    }
+
+    const tName = localStorage.getItem('teacherName') || "শিক্ষক";
+    const tPhone = localStorage.getItem('teacherPhone') || "";
+    document.getElementById('topTeacherName').innerText = tName;
+    document.getElementById('teacherName').value = tName;
+    document.getElementById('teacherPhone').value = tPhone;
+
+    document.getElementById('teacherLogoutBtn').addEventListener('click', function() {
+      localStorage.removeItem('teacherSession');
+      window.location.href = 'teacher-login.html';
+    });
+
     const now = new Date();
     document.getElementById('inpDate').value = now.toISOString().split('T')[0];
     const daysArr = ["রবিবার", "সোমবার", "মঙ্গলবার", "বুধবার", "বৃহস্পতিবার", "শুক্রবার", "শনিবার"];
@@ -307,7 +313,6 @@
     document.getElementById('satTime').value = currentTimeString;
     document.getElementById('amukhTime').value = currentTimeString;
 
-    // সময়কে AM/PM এ ফরম্যাট করা
     function formatAMPM(timeStr) {
       if (!timeStr || timeStr === "-") return "-";
       let [hours, minutes] = timeStr.split(':');
@@ -318,7 +323,6 @@
       return `${hours}:${minutes} ${ampm}`;
     }
 
-    // ড্রপডাউন অনুযায়ী সেকশন পরিবর্তন
     const lessonSelect = document.getElementById('lessonTypeSelect');
     const secSabak = document.getElementById('sectionSabak');
     const secSatSabak = document.getElementById('sectionSatSabak');
@@ -342,8 +346,6 @@
       const day = document.getElementById('inpDay').value;
       const month = document.getElementById('inpMonth').value;
       const year = document.getElementById('inpYear').value;
-      const teacher = document.getElementById('teacherName').value.trim();
-      const phone = document.getElementById('teacherPhone').value.trim();
       const lessonType = document.getElementById('lessonTypeSelect').value;
       const btn = document.getElementById('saveSabakBtn');
 
@@ -355,8 +357,8 @@
         day: day,
         month: month,
         year: year,
-        teacherName: teacher,
-        teacherPhone: phone,
+        teacherName: tName,
+        teacherPhone: tPhone,
         timestamp: new Date()
       };
 
@@ -392,15 +394,17 @@
         });
     });
 
-    // ছকে লোড করা
     function loadDiary(sId) {
       const tbody = document.getElementById('diaryTableBody');
       tbody.innerHTML = `<tr><td colspan="14">তথ্য লোড হচ্ছে...</td></tr>`;
 
       db.collection("students").doc(sId).get().then(doc => {
         if(doc.exists) {
-          document.getElementById('viewStudentName').innerText = doc.data().name;
+          const d = doc.data();
+          document.getElementById('viewStudentName').innerText = d.name;
           document.getElementById('viewStudentId').innerText = sId;
+          document.getElementById('viewStudentDept').innerText = d.department || "-";
+          document.getElementById('viewStudentRoll').innerText = d.roll || "-";
         }
       });
 
