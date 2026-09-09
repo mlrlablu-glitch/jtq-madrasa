@@ -89,7 +89,7 @@
       </li>
       <li class="nav-item">
         <button class="nav-link fw-bold text-dark" id="tabFeeBtn" onclick="switchTab('fee')">
-          <i class="fa-solid fa-money-check-dollar me-1 text-primary"></i> ৩. অনলাইন মাসিক বেতন জমা ও রশিদ
+          <i class="fa-solid fa-money-check-dollar me-1 text-primary"></i> ৩. অনলাইন ফি ও অনুদান প্রদান
         </button>
       </li>
     </ul>
@@ -294,26 +294,44 @@
       </div>
     </div>
 
-    <!-- ৩. অনলাইন মাসিক বেতন প্রদান ও রশিদ সেকশন (নতুন যুক্ত করা হয়েছে) -->
+    <!-- ৩. অনলাইন ফি ও অনুদান পরিশোধ ফরম (ফি ধরন অপশনসহ) -->
     <div id="feeSection" style="display: none;">
       
-      <!-- পেমেন্ট ফরম -->
       <div class="card border-0 shadow-sm p-4 bg-white mb-4 border-top border-primary border-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
-          <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-receipt me-2 text-primary"></i>অনলাইন মাসিক বেতন পরিশোধ ফরম</h5>
+          <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-receipt me-2 text-primary"></i>অনলাইন ফি ও অনুদান পরিশোধ ফরম</h5>
           <span class="badge bg-danger fs-6">মোট বকেয়া: <span id="paymentCurrentDue">০.০০ ৳</span></span>
         </div>
 
-        <!-- মাদ্রাসা পেমেন্ট নম্বর সহায়িকা -->
         <div class="alert alert-info py-2 px-3 small mb-3">
-          <i class="fa-solid fa-circle-info me-1"></i> <strong>মাদ্রাসা পেমেন্ট নম্বর:</strong> বিকাশ/নগদ/রকেট (পার্সোনাল/মার্চেন্ট): <strong>017XXXXXXXX</strong> | ব্যাংক অ্যাকাউন্ট: <strong>ইসলামী ব্যাংক বাংলাদেশ লি., হিসাব নং: ২০৫০XXXXXXXXX</strong>
+          <i class="fa-solid fa-circle-info me-1"></i> <strong>মাদ্রাসার পেমেন্ট গ্রহণ নম্বর:</strong> বিকাশ/নগদ/রকেট: <strong>017XXXXXXXX</strong> | ব্যাংক অ্যাকাউন্ট: <strong>ইসলামী ব্যাংক, হিসাব নং: ২০৫০XXXXXXXXX</strong>
         </div>
 
         <form id="onlinePaymentForm">
-          <div class="row g-2 mb-3">
-            <div class="col-md-3">
-              <label class="form-label small fw-semibold">বেতনের মাস</label>
-              <select class="form-select form-select-sm" id="payMonth" required>
+          
+          <!-- প্রথম সারি: ফি-র ধরন এবং বিবরণ -->
+          <div class="row g-2 mb-3 p-2 border rounded bg-light">
+            <div class="col-md-4">
+              <label class="form-label small fw-bold text-primary"><i class="fa-solid fa-tags me-1"></i>টাকা প্রদানের উদ্দেশ্য / ফি-র ধরন</label>
+              <select class="form-select form-select-sm fw-bold border-primary" id="feeCategory" onchange="toggleFeeCategory()" required>
+                <option value="মাসিক বেতন">১. মাসিক বেতন (Monthly Fee)</option>
+                <option value="পরীক্ষার ফি">২. পরীক্ষার ফি (Exam Fee)</option>
+                <option value="মাদ্রাসায় অনুদান / সদকা">৩. অনুদান / লিল্লাহ ফান্ড (Donation)</option>
+                <option value="ভর্তি / সেশন ফি">৪. ভর্তি / সেশন ফি (Admission Fee)</option>
+                <option value="অন্যান্য বিবিধ">৫. অন্যান্য ফি (Others)</option>
+              </select>
+            </div>
+
+            <!-- অন্যান্য ফির ক্ষেত্রে নাম লেখার ইনপুট -->
+            <div class="col-md-8" id="otherPurposeDiv" style="display: none;">
+              <label class="form-label small fw-semibold">কোন বাবদ টাকা দেওয়া হচ্ছে লিখুন</label>
+              <input type="text" class="form-control form-control-sm" id="otherPurposeText" placeholder="যেমন: নতুন কিতাব ক্রয় / খাবার খরচ ইত্যাদি">
+            </div>
+
+            <!-- মাসিক বেতনের ক্ষেত্রে মাস ও সাল -->
+            <div class="col-md-4" id="monthSelectDiv">
+              <label class="form-label small fw-semibold">কোন মাসের বেতন?</label>
+              <select class="form-select form-select-sm" id="payMonth">
                 <option value="জানুয়ারি">জানুয়ারি</option>
                 <option value="ফেব্রুয়ারি">ফেব্রুয়ারি</option>
                 <option value="মার্চ">মার্চ</option>
@@ -329,28 +347,30 @@
               </select>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-4" id="yearSelectDiv">
               <label class="form-label small fw-semibold">সাল / বছর</label>
-              <select class="form-select form-select-sm" id="payYear" required>
+              <select class="form-select form-select-sm" id="payYear">
                 <option value="২০২৫">২০২৫</option>
                 <option value="২০২৬" selected>২০২৬</option>
                 <option value="২০২৭">২০২৭</option>
                 <option value="২০২৮">২০২৮</option>
               </select>
             </div>
+          </div>
 
-            <div class="col-md-3">
+          <!-- দ্বিতীয় সারি: টাকার পরিমাণ ও তারিখ -->
+          <div class="row g-2 mb-3">
+            <div class="col-md-6">
               <label class="form-label small fw-semibold">টাকার পরিমাণ (টাকা)</label>
               <input type="number" class="form-control form-control-sm" id="payAmount" placeholder="যেমন: ১০০০" required>
             </div>
-
-            <div class="col-md-3">
+            <div class="col-md-6">
               <label class="form-label small fw-semibold">টাকা পাঠানোর তারিখ</label>
               <input type="date" class="form-control form-control-sm" id="payDate" required>
             </div>
           </div>
 
-          <!-- পেমেন্ট মেথড নির্বাচন -->
+          <!-- তৃতীয় সারি: পেমেন্ট মাধ্যম -->
           <div class="row g-2 mb-3">
             <div class="col-md-4">
               <label class="form-label small fw-semibold">কীভাবে টাকা পাঠিয়েছেন?</label>
@@ -362,7 +382,7 @@
               </select>
             </div>
 
-            <!-- মোবাইল ব্যাংকিং তথ্য (বিকাশ/নগদ/রকেট) -->
+            <!-- মোবাইল ব্যাংকিং তথ্য -->
             <div class="col-md-4" id="mfsSenderDiv">
               <label class="form-label small fw-semibold" id="mfsSenderLabel">প্রেরকের বিকাশ নম্বর</label>
               <input type="tel" class="form-control form-control-sm" id="paySenderNumber" placeholder="যে নম্বর থেকে টাকা পাঠিয়েছেন">
@@ -374,14 +394,14 @@
             </div>
           </div>
 
-          <!-- ব্যাংক ট্রান্সফার ফিল্ড (ড্রপডাউনে ব্যাংক সিলেক্ট করলে ওপেন হবে) -->
+          <!-- ব্যাংক ট্রান্সফার ফিল্ড -->
           <div class="row g-2 mb-3 p-2 border rounded bg-light" id="bankDetailsDiv" style="display: none;">
             <div class="col-md-4">
               <label class="form-label small fw-semibold">ব্যাংকের নাম</label>
-              <input type="text" class="form-control form-control-sm" id="payBankName" placeholder="যেমন: ইসলামী ব্যাংক / সোনালী ব্যাংক">
+              <input type="text" class="form-control form-control-sm" id="payBankName" placeholder="যেমন: ইসলামী ব্যাংক">
             </div>
             <div class="col-md-4">
-              <label class="form-label small fw-semibold">প্রেরকের ব্যাংক অ্যাকাউন্ট নম্বর</label>
+              <label class="form-label small fw-semibold">প্রেরকের ব্যাংক হিসাব নম্বর</label>
               <input type="text" class="form-control form-control-sm" id="payBankAccountNo" placeholder="অ্যাকাউন্ট নম্বর">
             </div>
             <div class="col-md-4">
@@ -391,19 +411,19 @@
           </div>
 
           <button type="submit" class="btn btn-primary btn-sm px-4 fw-semibold" id="submitPaymentBtn">
-            <i class="fa-solid fa-paper-plane me-1"></i> বেতন জমার তথ্য সাবমিট করুন
+            <i class="fa-solid fa-paper-plane me-1"></i> জমার তথ্য নিশ্চিত ও সাবমিট করুন
           </button>
         </form>
       </div>
 
-      <!-- ছাত্রের দেওয়া সকল পেমেন্ট ও অনলাইন রশিদের তালিকা -->
+      <!-- ছাত্রের ট্র্যাকিং ও অনলাইন রশিদের তালিকা -->
       <div class="card border-0 shadow-sm p-4 bg-white">
-        <h6 class="fw-bold text-dark mb-3"><i class="fa-solid fa-clock-rotate-left me-2 text-primary"></i>আমার জমা দেওয়া বেতনের ট্র্যাকিং ও অনলাইন রশিদ</h6>
+        <h6 class="fw-bold text-dark mb-3"><i class="fa-solid fa-clock-rotate-left me-2 text-primary"></i>আমার জমা দেওয়া ফি ও অনুদানের ট্র্যাকিং রশিদ</h6>
         <div class="table-responsive">
           <table class="table table-bordered table-hover align-middle small text-center mb-0">
             <thead class="table-light">
               <tr>
-                <th>পরিশোধিত মাস ও সাল</th>
+                <th>টাকা প্রদানের উদ্দেশ্য / খাত</th>
                 <th>পরিমাণ</th>
                 <th>পেমেন্ট মাধ্যম</th>
                 <th>প্রেরক নম্বর / অ্যাকাউন্ট ও TrxID</th>
@@ -432,7 +452,6 @@
       window.location.href = 'student-login.html';
     }
 
-    // ৩টি ট্যাব সুইচার
     function switchTab(tab) {
       const pSec = document.getElementById('profileSection');
       const sSec = document.getElementById('sabakSection');
@@ -465,7 +484,28 @@
       }
     }
 
-    // পেমেন্ট মাধ্যম অনুযায়ী ফিল্ড প্রদর্শন
+    // ফি ক্যাটাগরি পরিবর্তনের লজিক
+    function toggleFeeCategory() {
+      const cat = document.getElementById('feeCategory').value;
+      const monthDiv = document.getElementById('monthSelectDiv');
+      const yearDiv = document.getElementById('yearSelectDiv');
+      const otherDiv = document.getElementById('otherPurposeDiv');
+
+      if (cat === "মাসিক বেতন") {
+        monthDiv.style.display = 'block';
+        yearDiv.style.display = 'block';
+        otherDiv.style.display = 'none';
+      } else if (cat === "অন্যান্য বিবিধ") {
+        monthDiv.style.display = 'none';
+        yearDiv.style.display = 'none';
+        otherDiv.style.display = 'block';
+      } else {
+        monthDiv.style.display = 'none';
+        yearDiv.style.display = 'block';
+        otherDiv.style.display = 'none';
+      }
+    }
+
     function togglePaymentFields() {
       const method = document.getElementById('payMethod').value;
       const mfsSenderLabel = document.getElementById('mfsSenderLabel');
@@ -487,7 +527,6 @@
       }
     }
 
-    // তারিখ ডিফল্ট
     document.getElementById('payDate').value = new Date().toISOString().split('T')[0];
 
     // প্রোফাইল লোড
@@ -540,15 +579,26 @@
       }
     });
 
-    // অনলাইন পেমেন্ট সাবমিট লজিক
+    // অনলাইন পেমেন্ট সাবমিশন
     document.getElementById('onlinePaymentForm').addEventListener('submit', function(e) {
       e.preventDefault();
+      const feeCategory = document.getElementById('feeCategory').value;
       const month = document.getElementById('payMonth').value;
       const year = document.getElementById('payYear').value;
+      const otherPurpose = document.getElementById('otherPurposeText').value.trim();
       const amount = document.getElementById('payAmount').value;
       const date = document.getElementById('payDate').value;
       const method = document.getElementById('payMethod').value;
       const btn = document.getElementById('submitPaymentBtn');
+
+      let categoryDisplay = feeCategory;
+      if (feeCategory === "মাসিক বেতন") {
+        categoryDisplay = `মাসিক বেতন (${month} ${year})`;
+      } else if (feeCategory === "অন্যান্য বিবিধ" && otherPurpose) {
+        categoryDisplay = `অন্যান্য (${otherPurpose})`;
+      } else if (feeCategory !== "মাসিক বেতন") {
+        categoryDisplay = `${feeCategory} (${year})`;
+      }
 
       let senderDetail = "";
       if (method.includes("ব্যাংক")) {
@@ -567,8 +617,7 @@
 
       const paymentRecord = {
         studentId: currentId,
-        month: month,
-        year: year,
+        category: categoryDisplay,
         amount: amount + " ৳",
         date: date,
         method: method,
@@ -579,16 +628,17 @@
 
       db.collection("students").doc(currentId).collection("online_fee_submissions").add(paymentRecord)
         .then(() => {
-          alert("আপনার বেতন জমার তথ্য সফলভাবে জমা হয়েছে! মাদ্রাসা কর্তৃপক্ষ যাচাই করে বকেয়া সমন্বয় করে দেবে।");
+          alert("আপনার " + categoryDisplay + "-এর তথ্য সফলভাবে জমা হয়েছে! মাদ্রাসা কর্তৃপক্ষ যাচাই করে আপডেট করে দেবে।");
           document.getElementById('payAmount').value = "";
           document.getElementById('payTrxId').value = "";
           document.getElementById('paySenderNumber').value = "";
+          document.getElementById('otherPurposeText').value = "";
           loadOnlinePaymentHistory();
         }).catch(err => {
           alert("ত্রুটি: " + err.message);
         }).finally(() => {
           btn.disabled = false;
-          btn.innerHTML = `<i class="fa-solid fa-paper-plane me-1"></i> বেতন জমার তথ্য সাবমিট করুন`;
+          btn.innerHTML = `<i class="fa-solid fa-paper-plane me-1"></i> জমার তথ্য নিশ্চিত ও সাবমিট করুন`;
         });
     });
 
@@ -601,7 +651,7 @@
         .then(snapshot => {
           tbody.innerHTML = "";
           if (snapshot.empty) {
-            tbody.innerHTML = `<tr><td colspan="6" class="text-muted">এখনো কোনো অনলাইন ফি সাবমিট করা হয়নি।</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="6" class="text-muted">এখনো কোনো ফি বা অনুদান জমার রেকর্ড নেই।</td></tr>`;
             return;
           }
           snapshot.forEach(doc => {
@@ -609,7 +659,7 @@
             const statusBadge = p.status.includes("অনুমোদিত") ? 'bg-success' : 'bg-warning text-dark';
             tbody.innerHTML += `
               <tr>
-                <td><strong>${p.month} ${p.year}</strong></td>
+                <td><strong>${p.category || 'মাসিক বেতন'}</strong></td>
                 <td><span class="text-success fw-bold">${p.amount}</span></td>
                 <td><span class="badge bg-light text-dark border">${p.method}</span></td>
                 <td class="small text-start">${p.senderDetail}</td>
