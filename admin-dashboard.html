@@ -24,7 +24,7 @@
   <div class="container py-4">
     <div class="row g-4">
       
-      <!-- বাম পাশ: ছাত্র ভর্তি, রেজাল্ট ও বেতন জমা -->
+      <!-- বাম পাশ: ছাত্র ভর্তি, বেতন গ্রহণ ও ফলাফল আপডেট -->
       <div class="col-lg-7">
         
         <!-- নতুন ছাত্র ভর্তি ফরম -->
@@ -45,11 +45,19 @@
             <div class="row g-2 mb-2">
               <div class="col-md-6">
                 <label class="form-label small fw-semibold">ছাত্রের নাম</label>
-                <input type="text" class="form-control form-control-sm" id="name" placeholder="ছাত্রের নাম" required>
+                <input type="text" class="form-control form-control-sm" id="name" placeholder="ছাত্রের পুরো নাম" required>
               </div>
               <div class="col-md-6">
                 <label class="form-label small fw-semibold">Student ID</label>
-                <input type="text" class="form-control form-control-sm" id="sId" placeholder="যেমন: JTQ-2026-0002" required>
+                <input type="text" class="form-control form-control-sm" id="sId" placeholder="যেমন: JTQ-2026-0001" required>
+              </div>
+            </div>
+
+            <!-- ছাত্রের নিবন্ধন নম্বর -->
+            <div class="row g-2 mb-2">
+              <div class="col-md-12">
+                <label class="form-label small fw-semibold">ছাত্রের জন্ম নিবন্ধন / কার্ড নম্বর</label>
+                <input type="text" class="form-control form-control-sm" id="studentRegNo" placeholder="জন্ম নিবন্ধন ১৭ ডিজিট নম্বর" required>
               </div>
             </div>
 
@@ -59,8 +67,19 @@
                 <input type="text" class="form-control form-control-sm" id="father" placeholder="পিতার নাম" required>
               </div>
               <div class="col-md-6">
+                <label class="form-label small fw-semibold">পিতার NID / নিবন্ধন নম্বর</label>
+                <input type="text" class="form-control form-control-sm" id="fatherNid" placeholder="পিতার ভোটার আইডি / নিবন্ধন নম্বর" required>
+              </div>
+            </div>
+
+            <div class="row g-2 mb-2">
+              <div class="col-md-6">
                 <label class="form-label small fw-semibold">মাতার নাম</label>
                 <input type="text" class="form-control form-control-sm" id="mother" placeholder="মাতার নাম" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label small fw-semibold">মাতার NID / নিবন্ধন নম্বর</label>
+                <input type="text" class="form-control form-control-sm" id="motherNid" placeholder="মাতার ভোটার আইডি / নিবন্ধন নম্বর" required>
               </div>
             </div>
 
@@ -70,14 +89,14 @@
                 <input type="tel" class="form-control form-control-sm" id="phone" placeholder="017XXXXXXXX" required>
               </div>
               <div class="col-md-6">
-                <label class="form-label small fw-semibold">জন্ম তারিখ</label>
+                <label class="form-label small fw-semibold">জন্ম তারিখ (Date of Birth)</label>
                 <input type="date" class="form-control form-control-sm" id="dob" required>
               </div>
             </div>
 
             <div class="row g-2 mb-3">
               <div class="col-md-4">
-                <label class="form-label small fw-semibold">বিভাগ</label>
+                <label class="form-label small fw-semibold">বিভাগ / শ্রেণি</label>
                 <select class="form-select form-select-sm" id="dept" required>
                   <option value="মক্তব">মক্তব</option>
                   <option value="নূরানী">নূরানী</option>
@@ -86,7 +105,7 @@
                 </select>
               </div>
               <div class="col-md-4">
-                <label class="form-label small fw-semibold">রোল নম্বর</label>
+                <label class="form-label small fw-semibold">শ্রেণি রোল নম্বর</label>
                 <input type="number" class="form-control form-control-sm" id="roll" placeholder="০১" required>
               </div>
               <div class="col-md-4">
@@ -111,7 +130,7 @@
               <div class="row g-2">
                 <div class="col-md-4"><input type="text" class="form-control form-control-sm" id="preVillage" placeholder="গ্রাম" required></div>
                 <div class="col-md-4"><input type="text" class="form-control form-control-sm" id="prePost" placeholder="ডাকঘর" required></div>
-                <div class="col-md-4"><input type="text" class="form-control form-control-sm" id="preUnion" placeholder="ইউনিয়ন" required></div>
+                <div class="col-md-4"><input type="text" class="form-control form-control-sm" id="preUnion" placeholder="ইউনিয়ন" required></div>
                 <div class="col-md-6"><input type="text" class="form-control form-control-sm" id="preThana" placeholder="থানা" required></div>
                 <div class="col-md-6"><input type="text" class="form-control form-control-sm" id="preDistrict" placeholder="জেলা" required></div>
               </div>
@@ -126,7 +145,7 @@
               <div class="row g-2">
                 <div class="col-md-4"><input type="text" class="form-control form-control-sm" id="perVillage" placeholder="গ্রাম" required></div>
                 <div class="col-md-4"><input type="text" class="form-control form-control-sm" id="perPost" placeholder="ডাকঘর" required></div>
-                <div class="col-md-4"><input type="text" class="form-control form-control-sm" id="perUnion" placeholder="ইউনিয়ন" required></div>
+                <div class="col-md-4"><input type="text" class="form-control form-control-sm" id="perUnion" placeholder="ইউনিয়ন" required></div>
                 <div class="col-md-6"><input type="text" class="form-control form-control-sm" id="perThana" placeholder="থানা" required></div>
                 <div class="col-md-6"><input type="text" class="form-control form-control-sm" id="perDistrict" placeholder="জেলা" required></div>
               </div>
@@ -143,16 +162,16 @@
           </form>
         </div>
 
-        <!-- মাসিক বেতন জমা ফরম (নতুন যুক্ত করা হয়েছে) -->
+        <!-- মাসিক বেতন গ্রহণ ও বকেয়া আপডেট -->
         <div class="card border-0 shadow-sm p-4 bg-white mb-4 border-start border-success border-4">
-          <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-money-check-dollar me-2 text-success"></i>শিক্ষার্থীর মাসিক বেতন গ্রহণ ফরম</h5>
+          <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-money-check-dollar me-2 text-success"></i>শিক্ষার্থীর মাসিক বেতন গ্রহণ ও বকেয়া আপডেট</h5>
           <form id="feePaymentForm">
             <div class="row g-2 mb-2">
               <div class="col-md-6">
                 <label class="form-label small fw-semibold">Student ID</label>
                 <input type="text" class="form-control form-control-sm" id="feeStudentId" placeholder="যেমন: JTQ-2026-0001" required>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-3">
                 <label class="form-label small fw-semibold">মাসের নাম</label>
                 <select class="form-select form-select-sm" id="feeMonth" required>
                   <option value="জানুয়ারি">জানুয়ারি</option>
@@ -169,9 +188,18 @@
                   <option value="ডিসেম্বর">ডিসেম্বর</option>
                 </select>
               </div>
+              <div class="col-md-3">
+                <label class="form-label small fw-semibold">সাল / বছর</label>
+                <select class="form-select form-select-sm" id="feeYear" required>
+                  <option value="২০২৫">২০২৫</option>
+                  <option value="২০২৬" selected>২০২৬</option>
+                  <option value="২০২৭">২০২৭</option>
+                  <option value="২০২৮">২০২৮</option>
+                </select>
+              </div>
             </div>
 
-            <div class="row g-2 mb-3">
+            <div class="row g-2 mb-2">
               <div class="col-md-6">
                 <label class="form-label small fw-semibold">জমার পরিমাণ (টাকা)</label>
                 <input type="number" class="form-control form-control-sm" id="feeAmount" placeholder="যেমন: ৫০০" required>
@@ -182,38 +210,43 @@
               </div>
             </div>
 
+            <div class="mb-3">
+              <label class="form-label small fw-semibold text-danger">বর্তমান মোট বকেয়া আপডেট (Remaining Due)</label>
+              <input type="text" class="form-control form-control-sm" id="feeRemainingDue" placeholder="যেমন: ০ ৳ বা ৩০০ ৳" required>
+            </div>
+
             <button type="submit" class="btn btn-success btn-sm w-100 fw-semibold" id="feeSubmitBtn">
-              বেতন জমা নিশ্চিত করুন ও রেকর্ড রাখুন
+              বেতন জমা নিশ্চিত করুন ও বকেয়া আপডেট করুন
             </button>
           </form>
         </div>
 
-        <!-- রেজাল্ট ও ফি আপডেট -->
+        <!-- ফলাফল ও উপস্থিতি আপডেট -->
         <div class="card border-0 shadow-sm p-4 bg-white">
-          <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-pen-to-square me-2 text-primary"></i>রেজাল্ট ও মোট বকেয়া আপডেট</h5>
-          <form id="updateDataForm">
+          <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-pen-to-square me-2 text-primary"></i>ফলাফল ও উপস্থিতি আপডেট</h5>
+          <form id="updateResultForm">
             <div class="mb-2">
-              <input type="text" class="form-control form-control-sm" id="updateId" placeholder="টার্গেট Student ID" required>
+              <label class="form-label small fw-semibold">Student ID</label>
+              <input type="text" class="form-control form-control-sm" id="academicId" placeholder="টার্গেট Student ID" required>
             </div>
-            <div class="mb-2">
-              <input type="text" class="form-control form-control-sm" id="updateRes" placeholder="রেজাল্ট (যেমন: মুমতাজ / A+)" required>
+            <div class="row g-2 mb-3">
+              <div class="col-md-6">
+                <label class="form-label small fw-semibold">পরীক্ষার ফলাফল / মান</label>
+                <input type="text" class="form-control form-control-sm" id="academicRes" placeholder="যেমন: মুমতাজ / A+" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label small fw-semibold">হাজিরা শতাংশ</label>
+                <input type="text" class="form-control form-control-sm" id="academicAtt" placeholder="যেমন: ৯৫%" required>
+              </div>
             </div>
-            <div class="mb-2">
-              <input type="text" class="form-control form-control-sm" id="updateDue" placeholder="বর্তমান মোট বকেয়া (যেমন: ০ ৳ বা ৫০০ ৳)" required>
-            </div>
-            <div class="mb-3">
-              <input type="text" class="form-control form-control-sm" id="updateAtt" placeholder="হাজিরা (যেমন: ৯৫%)" required>
-            </div>
-            <button type="submit" class="btn btn-primary btn-sm w-100 fw-semibold">আপডেট সংরক্ষণ করুন</button>
+            <button type="submit" class="btn btn-primary btn-sm w-100 fw-semibold">ফলাফল ও উপস্থিতি সংরক্ষণ করুন</button>
           </form>
         </div>
 
       </div>
 
-      <!-- ডান পাশ: ছাত্র তালিকা ও নির্দিষ্ট ছাত্রের বেতন হিস্ট্রি -->
+      <!-- ডান পাশ: ছাত্র তালিকা -->
       <div class="col-lg-5">
-        
-        <!-- ছাত্র তালিকা -->
         <div class="card border-0 shadow-sm p-4 bg-white mb-4">
           <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-users me-2 text-primary"></i>শিক্ষার্থী তালিকা</h5>
           <div class="table-responsive">
@@ -232,31 +265,6 @@
             </table>
           </div>
         </div>
-
-        <!-- বেতনের হিস্ট্রি খোঁজার বক্স -->
-        <div class="card border-0 shadow-sm p-4 bg-white sticky-top" style="top: 20px;">
-          <h5 class="fw-bold text-dark mb-2"><i class="fa-solid fa-receipt me-2 text-warning"></i>বেতনের রেকর্ড দেখুন</h5>
-          <div class="input-group input-group-sm mb-3">
-            <input type="text" class="form-control" id="searchFeeId" placeholder="Student ID দিয়ে খুঁজুন">
-            <button class="btn btn-dark" type="button" id="searchFeeBtn">খুঁজুন</button>
-          </div>
-
-          <div class="table-responsive">
-            <table class="table table-bordered table-sm small">
-              <thead class="table-light">
-                <tr>
-                  <th>মাস</th>
-                  <th>টাকা</th>
-                  <th>তারিখ</th>
-                </tr>
-              </thead>
-              <tbody id="feeHistoryBody">
-                <tr><td colspan="3" class="text-center text-muted">Student ID দিয়ে খুঁজলে এখানে বেতনের রেকর্ড দেখাবে।</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
       </div>
 
     </div>
@@ -276,10 +284,8 @@
       window.location.href = 'admin-login.html';
     });
 
-    // আজকের তারিখ ডিফল্ট করা
     document.getElementById('feeDate').value = new Date().toISOString().split('T')[0];
 
-    // ছবি Base64
     let base64Image = "";
     document.getElementById('studentPhotoInput').addEventListener('change', function(e) {
       const file = e.target.files[0];
@@ -293,7 +299,6 @@
       }
     });
 
-    // ঠিকানা কপি
     document.getElementById('copyAddressBtn').addEventListener('click', function() {
       document.getElementById('perVillage').value = document.getElementById('preVillage').value;
       document.getElementById('perPost').value = document.getElementById('prePost').value;
@@ -302,7 +307,6 @@
       document.getElementById('perDistrict').value = document.getElementById('preDistrict').value;
     });
 
-    // রিয়েল-টাইম তালিকা
     db.collection("students").onSnapshot((snapshot) => {
       const tbody = document.getElementById('studentTableBody');
       tbody.innerHTML = "";
@@ -324,7 +328,7 @@
       });
     });
 
-    // নতুন ছাত্র ভর্তি
+    // নতুন ছাত্র ভর্তি (নিবন্ধন ও NID সহ)
     document.getElementById('addStudentForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const sId = document.getElementById('sId').value.trim();
@@ -334,10 +338,13 @@
 
       const studentData = {
         studentId: sId,
+        studentRegNo: document.getElementById('studentRegNo').value.trim(),
         password: document.getElementById('sPass').value,
         name: document.getElementById('name').value.trim(),
         father: document.getElementById('father').value.trim(),
+        fatherNid: document.getElementById('fatherNid').value.trim(),
         mother: document.getElementById('mother').value.trim(),
+        motherNid: document.getElementById('motherNid').value.trim(),
         phone: document.getElementById('phone').value.trim(),
         dob: document.getElementById('dob').value,
         department: document.getElementById('dept').value,
@@ -378,84 +385,49 @@
       });
     });
 
-    // মাসিক বেতন জমার রেকর্ড তৈরি (লজিক)
     document.getElementById('feePaymentForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const sId = document.getElementById('feeStudentId').value.trim();
       const month = document.getElementById('feeMonth').value;
+      const year = document.getElementById('feeYear').value;
       const amount = document.getElementById('feeAmount').value;
       const date = document.getElementById('feeDate').value;
+      const remainingDue = document.getElementById('feeRemainingDue').value.trim();
       const btn = document.getElementById('feeSubmitBtn');
 
       btn.innerText = "জমা হচ্ছে...";
       btn.disabled = true;
 
-      // ছাত্রের আন্ডারে "fee_records" সাব-কালেকশনে রেকর্ড রাখা হচ্ছে
       db.collection("students").doc(sId).collection("fee_records").add({
         month: month,
+        year: year,
         amount: amount + " ৳",
         date: date,
         timestamp: new Date()
       }).then(() => {
-        alert(sId + " এর " + month + " মাসের বেতন সফলভাবে জমা হয়েছে!");
+        return db.collection("students").doc(sId).update({
+          due: remainingDue
+        });
+      }).then(() => {
+        alert("বেতন জমা এবং বকেয়া আপডেট সফল হয়েছে!");
         document.getElementById('feeAmount').value = "";
-        // সার্চ বক্সে অটো বসিয়ে হিস্ট্রি দেখানো
-        document.getElementById('searchFeeId').value = sId;
-        loadFeeHistory(sId);
+        document.getElementById('feeRemainingDue').value = "";
       }).catch((err) => {
         alert("ত্রুটি: " + err.message);
       }).finally(() => {
-        btn.innerText = "বেতন জমা নিশ্চিত করুন ও রেকর্ড রাখুন";
+        btn.innerText = "বেতন জমা নিশ্চিত করুন ও বকেয়া আপডেট করুন";
         btn.disabled = false;
       });
     });
 
-    // ছাত্রের বেতনের রেকর্ড খোঁজা ও দেখানো
-    function loadFeeHistory(sId) {
-      const historyBody = document.getElementById('feeHistoryBody');
-      historyBody.innerHTML = `<tr><td colspan="3" class="text-center">লোড হচ্ছে...</td></tr>`;
-
-      db.collection("students").doc(sId).collection("fee_records").orderBy("date", "desc").get()
-        .then((snapshot) => {
-          historyBody.innerHTML = "";
-          if (snapshot.empty) {
-            historyBody.innerHTML = `<tr><td colspan="3" class="text-center text-muted">এই ছাত্রের কোনো বেতন জমার রেকর্ড নেই</td></tr>`;
-            return;
-          }
-          snapshot.forEach((doc) => {
-            const f = doc.data();
-            historyBody.innerHTML += `
-              <tr>
-                <td><strong>${f.month}</strong></td>
-                <td><span class="badge bg-success">${f.amount}</span></td>
-                <td>${f.date}</td>
-              </tr>
-            `;
-          });
-        }).catch((err) => {
-          historyBody.innerHTML = `<tr><td colspan="3" class="text-center text-danger">খুঁজতে সমস্যা হয়েছে!</td></tr>`;
-        });
-    }
-
-    document.getElementById('searchFeeBtn').addEventListener('click', function() {
-      const sId = document.getElementById('searchFeeId').value.trim();
-      if (sId) {
-        loadFeeHistory(sId);
-      } else {
-        alert("Student ID লিখুন!");
-      }
-    });
-
-    // রেজাল্ট ও ফি আপডেট
-    document.getElementById('updateDataForm').addEventListener('submit', function(e) {
+    document.getElementById('updateResultForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      const id = document.getElementById('updateId').value.trim();
+      const id = document.getElementById('academicId').value.trim();
       db.collection("students").doc(id).update({
-        result: document.getElementById('updateRes').value.trim(),
-        due: document.getElementById('updateDue').value.trim(),
-        attendance: document.getElementById('updateAtt').value.trim()
+        result: document.getElementById('academicRes').value.trim(),
+        attendance: document.getElementById('academicAtt').value.trim()
       }).then(() => {
-        alert("তথ্য আপডেট সফল হয়েছে!");
+        alert("ফলাফল ও উপস্থিতি আপডেট সফল হয়েছে!");
         this.reset();
       }).catch((err) => {
         alert("আইডি পাওয়া যায়নি: " + err.message);
