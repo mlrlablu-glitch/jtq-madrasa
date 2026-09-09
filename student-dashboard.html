@@ -3,12 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ছাত্র ড্যাশবোর্ড - JTQ মাদ্রাসা</title>
+  <title>ছাত্র ড্যাশবোর্ড ও পড়া ট্র্যাকার - JTQ মাদ্রাসা</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
   
   <style>
+    .diary-table th, .diary-table td {
+      text-align: center;
+      vertical-align: middle;
+      padding: 6px 3px;
+      font-size: 12px;
+    }
+    .diary-table th {
+      background-color: #f1f8f4;
+    }
     @media print {
       @page {
         size: A4 portrait;
@@ -61,156 +70,221 @@
   </nav>
 
   <div class="container py-4">
-    <div class="d-flex justify-content-end mb-3 no-print">
-      <button class="btn btn-success fw-semibold shadow-sm" onclick="window.print()">
-        <i class="fa-solid fa-file-pdf me-2"></i>A4 সাইজে প্রত্যয়নপত্র প্রিন্ট
-      </button>
-    </div>
+    
+    <!-- ট্যাব নেভিগেশন -->
+    <ul class="nav nav-pills nav-fill mb-4 p-2 bg-white rounded shadow-sm no-print" id="dashboardTabs">
+      <li class="nav-item">
+        <button class="nav-link active fw-bold" id="tabProfileBtn" onclick="switchTab('profile')">
+          <i class="fa-solid fa-id-card me-2"></i>আমার বিবরণী ও প্রত্যয়ন পত্র
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link fw-bold text-dark" id="tabSabakBtn" onclick="switchTab('sabak')">
+          <i class="fa-solid fa-book-journal-whills me-2 text-success"></i>দৈনিক, সাপ্তাহিক ও মাসিক সবক রেকর্ড
+        </button>
+      </li>
+    </ul>
 
-    <!-- মূল A4 প্রফেশনাল প্রত্যয়নপত্র -->
-    <div class="card border-0 shadow-sm p-4 mx-auto bg-white" id="printableA4" style="max-width: 850px;">
-      
-      <div class="text-center border-bottom border-success border-2 pb-2 mb-3">
-        <h3 class="fw-bold text-success mb-1">জামিয়া তাসলিমুল কুরআন ইসলামিয়া</h3>
-        <p class="text-muted small mb-1">দ্বীনি ও আধুনিক শিক্ষার এক অনন্য সমন্বয়</p>
-        <span class="badge bg-success px-3 py-1 fs-6">শিক্ষার্থী বিবরণী ও প্রত্যয়ন পত্র</span>
+    <!-- ১. বিবরণী ও প্রত্যয়ন পত্র সেকশন (নিবন্ধন নম্বরসহ) -->
+    <div id="profileSection">
+      <div class="d-flex justify-content-end mb-3 no-print">
+        <button class="btn btn-success fw-semibold shadow-sm" onclick="window.print()">
+          <i class="fa-solid fa-file-pdf me-2"></i>A4 সাইজে প্রত্যয়নপত্র প্রিন্ট
+        </button>
       </div>
 
-      <!-- ছাত্রের বিস্তারিত টেবিল ও ছবি -->
-      <div class="row g-3 align-items-start mb-3">
-        <div class="col-8">
-          <table class="table table-bordered table-sm mb-0 small">
+      <div class="card border-0 shadow-sm p-4 mx-auto bg-white" id="printableA4" style="max-width: 850px;">
+        <div class="text-center border-bottom border-success border-2 pb-2 mb-3">
+          <h3 class="fw-bold text-success mb-1">জামিয়া তাসলিমুল কুরআন ইসলামিয়া</h3>
+          <p class="text-muted small mb-1">দ্বীনি ও আধুনিক শিক্ষার এক অনন্য সমন্বয়</p>
+          <span class="badge bg-success px-3 py-1 fs-6">শিক্ষার্থী বিবরণী ও প্রত্যয়ন পত্র</span>
+        </div>
+
+        <div class="row g-3 align-items-start mb-3">
+          <div class="col-8">
+            <table class="table table-bordered table-sm mb-0 small">
+              <tbody>
+                <tr><th class="bg-light text-secondary w-35">শিক্ষার্থীর নাম:</th><td class="fw-bold text-dark fs-6" id="dashName">...</td></tr>
+                <tr><th class="bg-light text-secondary">Student ID:</th><td class="fw-bold text-success" id="dashId">...</td></tr>
+                <tr><th class="bg-light text-secondary">জন্ম নিবন্ধন নম্বর:</th><td class="fw-bold text-primary" id="dashStudentReg">...</td></tr>
+                <tr><th class="bg-light text-secondary">বিভাগ:</th><td class="fw-bold" id="dashDept">...</td></tr>
+                <tr><th class="bg-light text-secondary">শ্রেণি রোল:</th><td class="fw-bold" id="dashRoll">...</td></tr>
+                <tr><th class="bg-light text-secondary">পিতার নাম:</th><td id="dashFather">...</td></tr>
+                <tr><th class="bg-light text-secondary">পিতার NID / নিবন্ধন:</th><td id="dashFatherNid">...</td></tr>
+                <tr><th class="bg-light text-secondary">মাতার নাম:</th><td id="dashMother">...</td></tr>
+                <tr><th class="bg-light text-secondary">মাতার NID / নিবন্ধন:</th><td id="dashMotherNid">...</td></tr>
+                <tr><th class="bg-light text-secondary">জন্ম তারিখ:</th><td id="dashDob">...</td></tr>
+                <tr><th class="bg-light text-secondary">রক্তের গ্রুপ:</th><td class="fw-bold text-danger" id="dashBlood">...</td></tr>
+                <tr><th class="bg-light text-secondary">যোগাযোগের মোবাইল:</th><td id="dashPhone">...</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-4 text-center">
+            <img id="dashPhoto" src="https://via.placeholder.com/130" class="img-thumbnail border-success mb-1" alt="Student Photo" style="width: 130px; height: 145px; object-fit: cover;">
+            <div class="small text-muted">শিক্ষার্থীর ছবি</div>
+          </div>
+        </div>
+
+        <!-- ঠিকানা -->
+        <div class="mb-3">
+          <h6 class="fw-bold text-dark border-bottom pb-1 mb-2 small">ঠিকানা সংক্রান্ত তথ্য</h6>
+          <table class="table table-bordered table-sm small mb-2">
             <tbody>
+              <tr class="table-light"><th colspan="5" class="text-success"><i class="fa-solid fa-location-dot me-1"></i> বর্তমান ঠিকানা</th></tr>
               <tr>
-                <th class="bg-light text-secondary w-35">শিক্ষার্থীর নাম:</th>
-                <td class="fw-bold text-dark fs-6" id="dashName">...</td>
+                <th class="bg-light text-muted">গ্রাম/মহল্লা:</th><td id="preVillageText">...</td>
+                <th class="bg-light text-muted">ডাকঘর:</th><td colspan="2" id="prePostText">...</td>
               </tr>
               <tr>
-                <th class="bg-light text-secondary">Student ID:</th>
-                <td class="fw-bold text-success" id="dashId">...</td>
+                <th class="bg-light text-muted">ইউনিয়ন/ওয়ার্ড:</th><td id="preUnionText">...</td>
+                <th class="bg-light text-muted">থানা/উপজেলা:</th><td id="preThanaText">...</td>
+              </tr>
+              <tr><th class="bg-light text-muted">জেলা:</th><td colspan="4" class="fw-semibold" id="preDistrictText">...</td></tr>
+            </tbody>
+          </table>
+
+          <table class="table table-bordered table-sm small mb-0">
+            <tbody>
+              <tr class="table-light"><th colspan="5" class="text-secondary"><i class="fa-solid fa-house-chimney me-1"></i> স্থায়ী ঠিকানা</th></tr>
+              <tr>
+                <th class="bg-light text-muted">গ্রাম/মহল্লা:</th><td id="perVillageText">...</td>
+                <th class="bg-light text-muted">ডাকঘর:</th><td colspan="2" id="perPostText">...</td>
               </tr>
               <tr>
-                <th class="bg-light text-secondary">বিভাগ:</th>
-                <td class="fw-bold" id="dashDept">...</td>
+                <th class="bg-light text-muted">ইউনিয়ন/ওয়ার্ড:</th><td id="perUnionText">...</td>
+                <th class="bg-light text-muted">থানা/উপজেলা:</th><td id="perThanaText">...</td>
               </tr>
-              <tr>
-                <th class="bg-light text-secondary">শ্রেণি রোল:</th>
-                <td class="fw-bold" id="dashRoll">...</td>
-              </tr>
-              <tr>
-                <th class="bg-light text-secondary">পিতার নাম:</th>
-                <td id="dashFather">...</td>
-              </tr>
-              <tr>
-                <th class="bg-light text-secondary">মাতার নাম:</th>
-                <td id="dashMother">...</td>
-              </tr>
-              <tr>
-                <th class="bg-light text-secondary">জন্ম তারিখ:</th>
-                <td id="dashDob">...</td>
-              </tr>
-              <tr>
-                <th class="bg-light text-secondary">রক্তের গ্রুপ:</th>
-                <td class="fw-bold text-danger" id="dashBlood">...</td>
-              </tr>
-              <tr>
-                <th class="bg-light text-secondary">অভিভাবকের মোবাইল:</th>
-                <td id="dashPhone">...</td>
-              </tr>
+              <tr><th class="bg-light text-muted">জেলা:</th><td colspan="4" class="fw-semibold" id="perDistrictText">...</td></tr>
             </tbody>
           </table>
         </div>
-        <div class="col-4 text-center">
-          <img id="dashPhoto" src="https://via.placeholder.com/130" class="img-thumbnail border-success mb-1" alt="Student Photo" style="width: 130px; height: 145px; object-fit: cover;">
-          <div class="small text-muted">শিক্ষার্থীর ছবি</div>
-        </div>
-      </div>
 
-      <!-- ঠিকানা সেকশন -->
-      <div class="mb-3">
-        <h6 class="fw-bold text-dark border-bottom pb-1 mb-2 small">ঠিকানা সংক্রান্ত তথ্য</h6>
-        <table class="table table-bordered table-sm small mb-2">
-          <tbody>
-            <tr class="table-light">
-              <th colspan="5" class="text-success"><i class="fa-solid fa-location-dot me-1"></i> বর্তমান ঠিকানা</th>
-            </tr>
-            <tr>
-              <th class="bg-light text-muted">গ্রাম/মহল্লা:</th>
-              <td id="preVillageText">...</td>
-              <th class="bg-light text-muted">ডাকঘর:</th>
-              <td colspan="2" id="prePostText">...</td>
-            </tr>
-            <tr>
-              <th class="bg-light text-muted">ইউনিয়ন/ওয়ার্ড:</th>
-              <td id="preUnionText">...</td>
-              <th class="bg-light text-muted">থানা/উপজেলা:</th>
-              <td id="preThanaText">...</td>
-            </tr>
-            <tr>
-              <th class="bg-light text-muted">জেলা:</th>
-              <td colspan="4" class="fw-semibold" id="preDistrictText">...</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <table class="table table-bordered table-sm small mb-0">
-          <tbody>
-            <tr class="table-light">
-              <th colspan="5" class="text-secondary"><i class="fa-solid fa-house-chimney me-1"></i> স্থায়ী ঠিকানা</th>
-            </tr>
-            <tr>
-              <th class="bg-light text-muted">গ্রাম/মহল্লা:</th>
-              <td id="perVillageText">...</td>
-              <th class="bg-light text-muted">ডাকঘর:</th>
-              <td colspan="2" id="perPostText">...</td>
-            </tr>
-            <tr>
-              <th class="bg-light text-muted">ইউনিয়ন/ওয়ার্ড:</th>
-              <td id="perUnionText">...</td>
-              <th class="bg-light text-muted">থানা/উপজেলা:</th>
-              <td id="perThanaText">...</td>
-            </tr>
-            <tr>
-              <th class="bg-light text-muted">জেলা:</th>
-              <td colspan="4" class="fw-semibold" id="perDistrictText">...</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- ফলাফল ও বকেয়া -->
-      <h6 class="fw-bold text-dark border-bottom pb-1 mb-2 small">প্রাতিষ্ঠানিক অগ্রগতি ও ফি সংক্রান্ত তথ্য</h6>
-      <div class="row g-2 mb-3">
-        <div class="col-4">
-          <div class="p-2 border rounded text-center bg-light">
-            <small class="text-muted d-block">মোট উপস্থিতি</small>
-            <h5 class="fw-bold text-success my-1" id="dashAtt">১০০%</h5>
+        <!-- ফলাফল ও বকেয়া -->
+        <h6 class="fw-bold text-dark border-bottom pb-1 mb-2 small">প্রাতিষ্ঠানিক অগ্রগতি ও ফি সংক্রান্ত তথ্য</h6>
+        <div class="row g-2 mb-3">
+          <div class="col-4">
+            <div class="p-2 border rounded text-center bg-light">
+              <small class="text-muted d-block">মোট উপস্থিতি</small>
+              <h5 class="fw-bold text-success my-1" id="dashAtt">১০০%</h5>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="p-2 border rounded text-center bg-light">
+              <small class="text-muted d-block">ফলাফল / মান</small>
+              <h5 class="fw-bold text-primary my-1" id="dashRes">...</h5>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="p-2 border rounded text-center bg-light">
+              <small class="text-muted d-block">বর্তমান বকেয়া ফি</small>
+              <h5 class="fw-bold text-danger my-1" id="dashDue">০.০০ ৳</h5>
+            </div>
           </div>
         </div>
-        <div class="col-4">
-          <div class="p-2 border rounded text-center bg-light">
-            <small class="text-muted d-block">ফলাফল / মান</small>
-            <h5 class="fw-bold text-primary my-1" id="dashRes">...</h5>
-          </div>
+
+        <div class="border rounded p-2 mb-3 bg-light small text-secondary">
+          এই মর্মে প্রত্যয়ন করা যাচ্ছে যে, উপরোক্ত শিক্ষার্থী জামিয়া তাসলিমুল কুরআন ইসলামিয়ার একজন নিয়মিত ছাত্র। প্রতিষ্ঠানের যাবতীয় নিয়ম-শৃঙ্খলা মেনে সে যথারীতি শিক্ষা গ্রহণ করছে।
         </div>
-        <div class="col-4">
-          <div class="p-2 border rounded text-center bg-light">
-            <small class="text-muted d-block">বর্তমান বকেয়া ফি</small>
-            <h5 class="fw-bold text-danger my-1" id="dashDue">০.০০ ৳</h5>
+
+        <div class="row text-center mt-3 pt-2">
+          <div class="col-4"><div class="border-top border-dark pt-1 small fw-semibold">হিসাব শাখা</div></div>
+          <div class="col-4"><div class="border-top border-dark pt-1 small fw-semibold">শিক্ষা সচিব</div></div>
+          <div class="col-4"><div class="border-top border-dark pt-1 small fw-semibold">মুহতামিম / প্রিন্সিপাল</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ২. সবক ডায়েরি সেকশন (নাম, আইডি, ক্লাস, রোল, সময়কাল সহ) -->
+    <div id="sabakSection" style="display: none;">
+      
+      <!-- ফিল্টার বক্স -->
+      <div class="card border-0 shadow-sm p-4 bg-white mb-4 no-print border-top border-success border-4">
+        <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-filter me-2 text-success"></i>পড়ার তথ্য ফিল্টার করুন</h5>
+        
+        <div class="row g-2 align-items-end">
+          <div class="col-md-4">
+            <label class="form-label small fw-semibold">ফিল্টারের ধরন</label>
+            <select class="form-select form-select-sm" id="filterType" onchange="toggleFilterInputs()">
+              <option value="recent">সর্বশেষ ৭ দিন (সাপ্তাহিক)</option>
+              <option value="daily">নির্দিষ্ট দিন (দৈনিক)</option>
+              <option value="monthly">মাসিক ভিত্তিতে</option>
+            </select>
+          </div>
+
+          <div class="col-md-4" id="dailyInputDiv" style="display: none;">
+            <label class="form-label small fw-semibold">তারিখ নির্বাচন করুন</label>
+            <input type="date" class="form-control form-control-sm" id="filterSpecificDate">
+          </div>
+
+          <div class="col-md-4" id="monthlyInputDiv" style="display: none;">
+            <label class="form-label small fw-semibold">মাসের নাম</label>
+            <select class="form-select form-select-sm" id="filterMonthName">
+              <option value="জানুয়ারি">জানুয়ারি</option>
+              <option value="ফেব্রুয়ারি">ফেব্রুয়ারি</option>
+              <option value="মার্চ">মার্চ</option>
+              <option value="এপ্রিল">এপ্রিল</option>
+              <option value="মে">মে</option>
+              <option value="জুন">জুন</option>
+              <option value="জুলাই">জুলাই</option>
+              <option value="আগস্ট">আগস্ট</option>
+              <option value="সেপ্টেম্বর" selected>সেপ্টেম্বর</option>
+              <option value="অক্টোবর">অক্টোবর</option>
+              <option value="নভেম্বর">নভেম্বর</option>
+              <option value="ডিসেম্বর">ডিসেম্বর</option>
+            </select>
+          </div>
+
+          <div class="col-md-4">
+            <button class="btn btn-success btn-sm w-100 fw-semibold" onclick="applySabakFilter()">
+              <i class="fa-solid fa-magnifying-glass me-1"></i> তথ্য দেখুন
+            </button>
           </div>
         </div>
       </div>
 
-      <!-- প্রাতিষ্ঠানিক প্রত্যয়ন -->
-      <div class="border rounded p-2 mb-3 bg-light small text-secondary">
-        এই মর্মে প্রত্যয়ন করা যাচ্ছে যে, উপরোক্ত শিক্ষার্থী জামিয়া তাসলিমুল কুরআন ইসলামিয়ার একজন নিয়মিত ছাত্র। প্রতিষ্ঠানের যাবতীয় নিয়ম-শৃঙ্খলা মেনে সে যথারীতি শিক্ষা গ্রহণ করছে।
-      </div>
+      <!-- ছাত্রের ডায়েরি হেডার (নাম -> আইডি -> ক্লাস -> রোল -> সময়কাল) -->
+      <div class="card border-0 shadow-sm p-4 bg-white">
+        <div class="border border-dark p-2 text-center position-relative mb-2">
+          <span class="fs-5 fw-bold bg-dark text-white px-4 py-1 rounded-pill" id="tableHeaderTitle">পড়ার বিবরণী</span>
+          <div class="d-flex flex-wrap justify-content-between mt-2 px-2 small fw-semibold">
+            <div>ছাত্রের নাম: <span class="border-bottom border-dark px-1 fw-bold text-dark" id="diaryStudentName">...</span></div>
+            <div>আইডি: <span class="border-bottom border-dark px-1 fw-bold text-success" id="diaryStudentId">...</span></div>
+            <div>শ্রেণি/বিভাগ: <span class="border-bottom border-dark px-1 fw-bold text-dark" id="diaryStudentClass">...</span></div>
+            <div>রোল: <span class="border-bottom border-dark px-1 fw-bold text-dark" id="diaryStudentRoll">...</span></div>
+            <div>সময়কাল: <span class="border-bottom border-dark px-1 fw-bold text-primary" id="diaryPeriod">...</span></div>
+          </div>
+        </div>
 
-      <!-- স্বাক্ষর -->
-      <div class="row text-center mt-3 pt-2">
-        <div class="col-4"><div class="border-top border-dark pt-1 small fw-semibold">হিসাব শাখা</div></div>
-        <div class="col-4"><div class="border-top border-dark pt-1 small fw-semibold">শিক্ষা সচিব</div></div>
-        <div class="col-4"><div class="border-top border-dark pt-1 small fw-semibold">মুহতামিম / প্রিন্সিপাল</div></div>
+        <div class="table-responsive">
+          <table class="table table-bordered border-dark diary-table mb-2">
+            <thead>
+              <tr>
+                <th rowspan="2" style="width: 75px;">বার</th>
+                <th colspan="2">সবক</th>
+                <th colspan="4">সাত সবক</th>
+                <th colspan="4">আমুখতা</th>
+                <th rowspan="2">দৈনিক<br>তিলাওয়াত</th>
+                <th rowspan="2" style="min-width: 130px;">শিক্ষক<br>(নাম ও মোবাইল)</th>
+                <th rowspan="2" style="width: 85px;">তারিখ</th>
+              </tr>
+              <tr>
+                <th>পারা ও পৃষ্ঠা</th>
+                <th>সময়</th>
+                <th>পারা ও পৃষ্ঠা</th>
+                <th>সময়</th>
+                <th>পরিমাণ</th>
+                <th>ভুল</th>
+                <th>পারা ও পৃষ্ঠা</th>
+                <th>সময়</th>
+                <th>পরিমাণ</th>
+                <th>ভুল</th>
+              </tr>
+            </thead>
+            <tbody id="studentDiaryBody">
+              <tr><td colspan="14" class="text-muted">পড়ার তথ্য লোড হচ্ছে...</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
     </div>
@@ -227,20 +301,70 @@
       window.location.href = 'student-login.html';
     }
 
-    // ছাত্রের প্রোফাইল লোড
+    function switchTab(tab) {
+      const pSec = document.getElementById('profileSection');
+      const sSec = document.getElementById('sabakSection');
+      const pBtn = document.getElementById('tabProfileBtn');
+      const sBtn = document.getElementById('tabSabakBtn');
+
+      if (tab === 'profile') {
+        pSec.style.display = 'block';
+        sSec.style.display = 'none';
+        pBtn.classList.add('active');
+        pBtn.classList.remove('text-dark');
+        sBtn.classList.remove('active');
+        sBtn.classList.add('text-dark');
+      } else {
+        pSec.style.display = 'none';
+        sSec.style.display = 'block';
+        sBtn.classList.add('active');
+        sBtn.classList.remove('text-dark');
+        pBtn.classList.remove('active');
+        pBtn.classList.add('text-dark');
+        applySabakFilter();
+      }
+    }
+
+    function toggleFilterInputs() {
+      const type = document.getElementById('filterType').value;
+      document.getElementById('dailyInputDiv').style.display = (type === 'daily') ? 'block' : 'none';
+      document.getElementById('monthlyInputDiv').style.display = (type === 'monthly') ? 'block' : 'none';
+    }
+
+    function formatAMPM(timeStr) {
+      if (!timeStr || timeStr === "-") return "-";
+      let [hours, minutes] = timeStr.split(':');
+      hours = parseInt(hours);
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+      return `${hours}:${minutes} ${ampm}`;
+    }
+
+    // ছাত্রের প্রোফাইল ও নিবন্ধন নম্বর লোড
     db.collection("students").doc(currentId).get().then((doc) => {
       if (doc.exists) {
         const s = doc.data();
         document.getElementById('navName').innerText = "ছাত্র: " + s.name;
         document.getElementById('dashName').innerText = s.name;
         document.getElementById('dashId').innerText = s.studentId;
+        document.getElementById('dashStudentReg').innerText = s.studentRegNo || "দেওয়া হয়নি";
+        
         document.getElementById('dashDept').innerText = s.department;
         document.getElementById('dashRoll').innerText = s.roll;
         document.getElementById('dashFather').innerText = s.father;
+        document.getElementById('dashFatherNid').innerText = s.fatherNid || "দেওয়া হয়নি";
         document.getElementById('dashMother').innerText = s.mother || "দেওয়া হয়নি";
+        document.getElementById('dashMotherNid').innerText = s.motherNid || "দেওয়া হয়নি";
         document.getElementById('dashDob').innerText = s.dob || "দেওয়া হয়নি";
         document.getElementById('dashBlood').innerText = s.bloodGroup || "অজানা";
         document.getElementById('dashPhone').innerText = s.phone || "দেওয়া হয়নি";
+
+        // ডায়েরি হেডারের ফিল্ডগুলো পূরণ
+        document.getElementById('diaryStudentName').innerText = s.name;
+        document.getElementById('diaryStudentId').innerText = s.studentId;
+        document.getElementById('diaryStudentClass').innerText = s.department;
+        document.getElementById('diaryStudentRoll').innerText = s.roll;
         
         if (s.photo) {
           document.getElementById('dashPhoto').src = s.photo;
@@ -265,6 +389,76 @@
         document.getElementById('dashDue').innerText = s.due || "০.০০ ৳";
       }
     });
+
+    // সবকের ফিল্টার লজিক (মাসিক তথ্য নির্ভুলভাবে আসার সহজ সমাধান)
+    function applySabakFilter() {
+      const type = document.getElementById('filterType').value;
+      const tbody = document.getElementById('studentDiaryBody');
+      tbody.innerHTML = `<tr><td colspan="14">তথ্য লোড হচ্ছে...</td></tr>`;
+
+      let query = db.collection("students").doc(currentId).collection("daily_sabak");
+
+      if (type === 'daily') {
+        const specificDate = document.getElementById('filterSpecificDate').value;
+        if (!specificDate) {
+          alert("একটি তারিখ নির্বাচন করুন!");
+          return;
+        }
+        query = query.where("date", "==", specificDate);
+        document.getElementById('tableHeaderTitle').innerText = "দৈনিক পড়ার তথ্য";
+        document.getElementById('diaryPeriod').innerText = specificDate;
+      } else if (type === 'monthly') {
+        const month = document.getElementById('filterMonthName').value;
+        // ইনডেক্সিং এরর এড়াতে শুধু মাস দিয়ে নিখুঁত কুয়েরি
+        query = query.where("month", "==", month);
+        document.getElementById('tableHeaderTitle').innerText = "মাসিক বিবরণী";
+        document.getElementById('diaryPeriod').innerText = month + " মাস";
+      } else {
+        query = query.orderBy("date", "desc").limit(7);
+        document.getElementById('tableHeaderTitle').innerText = "সাপ্তাহিক তথ্য (শেষ ৭ দিন)";
+        document.getElementById('diaryPeriod').innerText = "চলতি সপ্তাহ";
+      }
+
+      query.get().then((snapshot) => {
+        tbody.innerHTML = "";
+        if (snapshot.empty) {
+          tbody.innerHTML = `<tr><td colspan="14" class="text-muted">এই সময়ে কোনো পড়া পাওয়া যায়নি।</td></tr>`;
+          return;
+        }
+
+        snapshot.forEach((doc) => {
+          const r = doc.data();
+          const teacherDetails = r.teacherName ? `<strong>${r.teacherName}</strong><br><small class="text-muted">${r.teacherPhone || ''}</small>` : '<small class="text-success">যাচাইকৃত</small>';
+
+          const sabakText = (r.sabakPara && r.sabakPara !== '-') ? `পারা: ${r.sabakPara}<br>পৃষ্ঠা: ${r.sabakPage || '-'}` : '-';
+          const satText = (r.satPara && r.satPara !== '-') ? `পারা: ${r.satPara}<br>পৃষ্ঠা: ${r.satPage || '-'}` : '-';
+          const amukhText = (r.amukhPara && r.amukhPara !== '-') ? `পারা: ${r.amukhPara}<br>পৃষ্ঠা: ${r.amukhPage || '-'}` : '-';
+
+          tbody.innerHTML += `
+            <tr>
+              <td class="fw-bold">${r.day}</td>
+              <td>${sabakText}</td>
+              <td><span class="badge bg-light text-dark border">${formatAMPM(r.sabakTime)}</span></td>
+              <td>${satText}</td>
+              <td><span class="badge bg-light text-dark border">${formatAMPM(r.satTime)}</span></td>
+              <td>${r.satAmount || '-'}</td>
+              <td class="text-danger fw-bold">${r.satMistake || '-'}</td>
+              <td>${amukhText}</td>
+              <td><span class="badge bg-light text-dark border">${formatAMPM(r.amukhTime)}</span></td>
+              <td>${r.amukhAmount || '-'}</td>
+              <td class="text-danger fw-bold">${r.amukhMistake || '-'}</td>
+              <td>${r.dailyTilawat || '-'}</td>
+              <td>${teacherDetails}</td>
+              <td>${r.date}</td>
+            </tr>
+          `;
+        });
+      }).catch(err => {
+        tbody.innerHTML = `<tr><td colspan="14" class="text-danger">ত্রুটি: ${err.message}</td></tr>`;
+      });
+    }
+
+    document.getElementById('filterSpecificDate').value = new Date().toISOString().split('T')[0];
 
     document.getElementById('logoutBtn').addEventListener('click', function() {
       localStorage.removeItem('studentSession');
