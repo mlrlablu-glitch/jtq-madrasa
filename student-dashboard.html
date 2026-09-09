@@ -68,7 +68,7 @@
     </div>
 
     <!-- মূল A4 প্রফেশনাল প্রত্যয়নপত্র -->
-    <div class="card border-0 shadow-sm p-4 mx-auto bg-white mb-4" id="printableA4" style="max-width: 850px;">
+    <div class="card border-0 shadow-sm p-4 mx-auto bg-white" id="printableA4" style="max-width: 850px;">
       
       <div class="text-center border-bottom border-success border-2 pb-2 mb-3">
         <h3 class="fw-bold text-success mb-1">জামিয়া তাসলিমুল কুরআন ইসলামিয়া</h3>
@@ -215,26 +215,6 @@
 
     </div>
 
-    <!-- ছাত্রের দেওয়া সকল মাসের বেতনের হিস্ট্রি টেবিল (প্রিন্টের বাইরে থাকবে) -->
-    <div class="card border-0 shadow-sm p-4 mx-auto bg-white no-print" style="max-width: 850px;">
-      <h6 class="fw-bold text-dark mb-3"><i class="fa-solid fa-clock-rotate-left me-2 text-success"></i>আমার পরিশোধিত বেতন ও রশিদের তালিকা</h6>
-      <div class="table-responsive">
-        <table class="table table-bordered table-hover align-middle small mb-0">
-          <thead class="table-light">
-            <tr>
-              <th>পরিশোধিত মাস</th>
-              <th>পরিশোধের পরিমাণ</th>
-              <th>জমার তারিখ</th>
-              <th>স্ট্যাটাস</th>
-            </tr>
-          </thead>
-          <tbody id="studentPaidHistory">
-            <tr><td colspan="4" class="text-center text-muted">বেতনের তথ্য লোড হচ্ছে...</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -247,7 +227,7 @@
       window.location.href = 'student-login.html';
     }
 
-    // ছাত্রের প্রোফাইল আনা
+    // ছাত্রের প্রোফাইল লোড
     db.collection("students").doc(currentId).get().then((doc) => {
       if (doc.exists) {
         const s = doc.data();
@@ -285,28 +265,6 @@
         document.getElementById('dashDue').innerText = s.due || "০.০০ ৳";
       }
     });
-
-    // এই ছাত্রের পূর্ববর্তী সকল বেতন রেকর্ড আনা
-    db.collection("students").doc(currentId).collection("fee_records").orderBy("date", "desc").get()
-      .then((snapshot) => {
-        const paidTable = document.getElementById('studentPaidHistory');
-        paidTable.innerHTML = "";
-        if (snapshot.empty) {
-          paidTable.innerHTML = `<tr><td colspan="4" class="text-center text-muted">এখনো কোনো বেতন জমার রেকর্ড নেই।</td></tr>`;
-          return;
-        }
-        snapshot.forEach((doc) => {
-          const f = doc.data();
-          paidTable.innerHTML += `
-            <tr>
-              <td><strong>${f.month}</strong></td>
-              <td><span class="text-success fw-bold">${f.amount}</span></td>
-              <td>${f.date}</td>
-              <td><span class="badge bg-success"><i class="fa-solid fa-check me-1"></i>পরিশোধিত</span></td>
-            </tr>
-          `;
-        });
-      });
 
     document.getElementById('logoutBtn').addEventListener('click', function() {
       localStorage.removeItem('studentSession');
