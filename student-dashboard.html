@@ -22,34 +22,54 @@
       background-color: #198754 !important;
       color: #fff !important;
     }
+
+    /* মানি রসিদ ভাউচার ডিজাইন */
+    .money-receipt-box {
+      border: 2px dashed #0f5132;
+      border-radius: 10px;
+      padding: 24px;
+      background: #ffffff;
+      position: relative;
+    }
+    .receipt-watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 70px;
+      color: rgba(25, 135, 84, 0.05);
+      font-weight: 900;
+      pointer-events: none;
+      user-select: none;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .paid-seal {
+      display: inline-block;
+      padding: 4px 16px;
+      border: 2px solid #198754;
+      color: #198754;
+      font-weight: 800;
+      border-radius: 6px;
+      transform: rotate(-10deg);
+      letter-spacing: 1px;
+    }
+
+    /* প্রিন্ট সেটিংস */
     @media print {
-      @page {
-        size: A4 portrait;
-        margin: 8mm;
-      }
-      html, body {
-        width: 210mm;
-        height: 297mm;
-        background: #fff !important;
-        margin: 0 !important;
-        padding: 0 !important;
-      }
       body * {
         visibility: hidden;
       }
-      #printableA4, #printableA4 * {
+      #printableReceiptArea, #printableReceiptArea * {
         visibility: visible;
       }
-      #printableA4 {
+      #printableReceiptArea {
         position: absolute;
         left: 0;
         top: 0;
         width: 100% !important;
-        min-height: 275mm;
-        padding: 18px !important;
-        border: 2px solid #0f5132 !important;
-        border-radius: 6px;
-        box-sizing: border-box;
+        margin: 0 !important;
+        padding: 15px !important;
       }
       .no-print {
         display: none !important;
@@ -89,7 +109,7 @@
       </li>
       <li class="nav-item">
         <button class="nav-link fw-bold text-dark" id="tabFeeBtn" onclick="switchTab('fee')">
-          <i class="fa-solid fa-money-check-dollar me-1 text-primary"></i> ৩. অনলাইন ফি ও অনুদান প্রদান
+          <i class="fa-solid fa-money-check-dollar me-1 text-primary"></i> ৩. অনলাইন ফি ও স্বয়ংক্রিয় রসিদ
         </button>
       </li>
     </ul>
@@ -134,7 +154,6 @@
           </div>
         </div>
 
-        <!-- ঠিকানা -->
         <div class="mb-3">
           <h6 class="fw-bold text-dark border-bottom pb-1 mb-2 small">ঠিকানা সংক্রান্ত তথ্য</h6>
           <table class="table table-bordered table-sm small mb-2">
@@ -168,7 +187,6 @@
           </table>
         </div>
 
-        <!-- ফলাফল ও বকেয়া -->
         <h6 class="fw-bold text-dark border-bottom pb-1 mb-2 small">প্রাতিষ্ঠানিক অগ্রগতি ও ফি সংক্রান্ত তথ্য</h6>
         <div class="row g-2 mb-3">
           <div class="col-4">
@@ -226,18 +244,12 @@
           <div class="col-md-4" id="monthlyInputDiv" style="display: none;">
             <label class="form-label small fw-semibold">মাসের নাম</label>
             <select class="form-select form-select-sm" id="filterMonthName">
-              <option value="জানুয়ারি">জানুয়ারি</option>
-              <option value="ফেব্রুয়ারি">ফেব্রুয়ারি</option>
-              <option value="মার্চ">মার্চ</option>
-              <option value="এপ্রিল">এপ্রিল</option>
-              <option value="মে">মে</option>
-              <option value="জুন">জুন</option>
-              <option value="জুলাই">জুলাই</option>
-              <option value="আগস্ট">আগস্ট</option>
-              <option value="সেপ্টেম্বর" selected>সেপ্টেম্বর</option>
-              <option value="অক্টোবর">অক্টোবর</option>
-              <option value="নভেম্বর">নভেম্বর</option>
-              <option value="ডিসেম্বর">ডিসেম্বর</option>
+              <option value="জানুয়ারি">জানুয়ারি</option><option value="ফেব্রুয়ারি">ফেব্রুয়ারি</option>
+              <option value="মার্চ">মার্চ</option><option value="এপ্রিল">এপ্রিল</option>
+              <option value="মে">মে</option><option value="জুন">জুন</option>
+              <option value="জুলাই">জুলাই</option><option value="আগস্ট">আগস্ট</option>
+              <option value="সেপ্টেম্বর" selected>সেপ্টেম্বর</option><option value="অক্টোবর">অক্টোবর</option>
+              <option value="নভেম্বর">নভেম্বর</option><option value="ডিসেম্বর">ডিসেম্বর</option>
             </select>
           </div>
 
@@ -270,20 +282,13 @@
                 <th colspan="4">সাত সবক</th>
                 <th colspan="4">আমুখতা</th>
                 <th rowspan="2">দৈনিক<br>তিলাওয়াত</th>
-                <th rowspan="2" style="min-width: 130px;">শিক্ষক<br>(নাম ও মোবাইল)</th>
+                <th rowspan="2" style="min-width: 130px;">শিক্ষক</th>
                 <th rowspan="2" style="width: 85px;">তারিখ</th>
               </tr>
               <tr>
-                <th>পারা ও পৃষ্ঠা</th>
-                <th>সময়</th>
-                <th>পারা ও পৃষ্ঠা</th>
-                <th>সময়</th>
-                <th>পরিমাণ</th>
-                <th>ভুল</th>
-                <th>পারা ও পৃষ্ঠা</th>
-                <th>সময়</th>
-                <th>পরিমাণ</th>
-                <th>ভুল</th>
+                <th>পারা ও পৃষ্ঠা</th><th>সময়</th>
+                <th>পারা ও পৃষ্ঠা</th><th>সময়</th><th>পরিমাণ</th><th>ভুল</th>
+                <th>পারা ও পৃষ্ঠা</th><th>সময়</th><th>পরিমাণ</th><th>ভুল</th>
               </tr>
             </thead>
             <tbody id="studentDiaryBody">
@@ -294,22 +299,21 @@
       </div>
     </div>
 
-    <!-- ৩. অনলাইন ফি ও অনুদান পরিশোধ ফরম (ফি ধরন অপশনসহ) -->
+    <!-- ৩. অনলাইন ফি ও স্বয়ংক্রিয় রসিদ সেকশন -->
     <div id="feeSection" style="display: none;">
       
-      <div class="card border-0 shadow-sm p-4 bg-white mb-4 border-top border-primary border-4">
+      <!-- ফি প্রদানের ফরম -->
+      <div class="card border-0 shadow-sm p-4 bg-white mb-4 border-top border-primary border-4 no-print">
         <div class="d-flex justify-content-between align-items-center mb-3">
-          <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-receipt me-2 text-primary"></i>অনলাইন ফি ও অনুদান পরিশোধ ফরম</h5>
+          <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-receipt me-2 text-primary"></i>অনলাইন ফি ও অনুদান জমা ফরম</h5>
           <span class="badge bg-danger fs-6">মোট বকেয়া: <span id="paymentCurrentDue">০.০০ ৳</span></span>
         </div>
 
         <div class="alert alert-info py-2 px-3 small mb-3">
-          <i class="fa-solid fa-circle-info me-1"></i> <strong>মাদ্রাসার পেমেন্ট গ্রহণ নম্বর:</strong> বিকাশ/নগদ/রকেট: <strong>017XXXXXXXX</strong> | ব্যাংক অ্যাকাউন্ট: <strong>ইসলামী ব্যাংক, হিসাব নং: ২০৫০XXXXXXXXX</strong>
+          <i class="fa-solid fa-circle-info me-1"></i> <strong>মাদ্রাসার পেমেন্ট নম্বর:</strong> বিকাশ/নগদ/রকেট: <strong>01700-000000</strong> | ব্যাংক: <strong>ইসলামী ব্যাংক, হিসাব নং: ২০৫০XXXXXXXXX</strong>
         </div>
 
         <form id="onlinePaymentForm">
-          
-          <!-- প্রথম সারি: ফি-র ধরন এবং বিবরণ -->
           <div class="row g-2 mb-3 p-2 border rounded bg-light">
             <div class="col-md-4">
               <label class="form-label small fw-bold text-primary"><i class="fa-solid fa-tags me-1"></i>টাকা প্রদানের উদ্দেশ্য / ফি-র ধরন</label>
@@ -322,43 +326,32 @@
               </select>
             </div>
 
-            <!-- অন্যান্য ফির ক্ষেত্রে নাম লেখার ইনপুট -->
             <div class="col-md-8" id="otherPurposeDiv" style="display: none;">
               <label class="form-label small fw-semibold">কোন বাবদ টাকা দেওয়া হচ্ছে লিখুন</label>
-              <input type="text" class="form-control form-control-sm" id="otherPurposeText" placeholder="যেমন: নতুন কিতাব ক্রয় / খাবার খরচ ইত্যাদি">
+              <input type="text" class="form-control form-control-sm" id="otherPurposeText" placeholder="যেমন: নতুন কিতাব ক্রয় / খাবার খরচ">
             </div>
 
-            <!-- মাসিক বেতনের ক্ষেত্রে মাস ও সাল -->
             <div class="col-md-4" id="monthSelectDiv">
               <label class="form-label small fw-semibold">কোন মাসের বেতন?</label>
               <select class="form-select form-select-sm" id="payMonth">
-                <option value="জানুয়ারি">জানুয়ারি</option>
-                <option value="ফেব্রুয়ারি">ফেব্রুয়ারি</option>
-                <option value="মার্চ">মার্চ</option>
-                <option value="এপ্রিল">এপ্রিল</option>
-                <option value="মে">মে</option>
-                <option value="জুন">জুন</option>
-                <option value="জুলাই">জুলাই</option>
-                <option value="আগস্ট">আগস্ট</option>
-                <option value="সেপ্টেম্বর" selected>সেপ্টেম্বর</option>
-                <option value="অক্টোবর">অক্টোবর</option>
-                <option value="নভেম্বর">নভেম্বর</option>
-                <option value="ডিসেম্বর">ডিসেম্বর</option>
+                <option value="জানুয়ারি">জানুয়ারি</option><option value="ফেব্রুয়ারি">ফেব্রুয়ারি</option>
+                <option value="মার্চ">মার্চ</option><option value="এপ্রিল">এপ্রিল</option>
+                <option value="মে">মে</option><option value="জুন">জুন</option>
+                <option value="জুলাই">জুলাই</option><option value="আগস্ট">আগস্ট</option>
+                <option value="সেপ্টেম্বর" selected>সেপ্টেম্বর</option><option value="অক্টোবর">অক্টোবর</option>
+                <option value="নভেম্বর">নভেম্বর</option><option value="ডিসেম্বর">ডিসেম্বর</option>
               </select>
             </div>
 
             <div class="col-md-4" id="yearSelectDiv">
               <label class="form-label small fw-semibold">সাল / বছর</label>
               <select class="form-select form-select-sm" id="payYear">
-                <option value="২০২৫">২০২৫</option>
-                <option value="২০২৬" selected>২০২৬</option>
-                <option value="২০২৭">২০২৭</option>
-                <option value="২০২৮">২০২৮</option>
+                <option value="২০২৫">২০২৫</option><option value="২০২৬" selected>২০২৬</option>
+                <option value="২০২৭">২০২৭</option><option value="২০২৮">২০২৮</option>
               </select>
             </div>
           </div>
 
-          <!-- দ্বিতীয় সারি: টাকার পরিমাণ ও তারিখ -->
           <div class="row g-2 mb-3">
             <div class="col-md-6">
               <label class="form-label small fw-semibold">টাকার পরিমাণ (টাকা)</label>
@@ -370,7 +363,6 @@
             </div>
           </div>
 
-          <!-- তৃতীয় সারি: পেমেন্ট মাধ্যম -->
           <div class="row g-2 mb-3">
             <div class="col-md-4">
               <label class="form-label small fw-semibold">কীভাবে টাকা পাঠিয়েছেন?</label>
@@ -382,10 +374,9 @@
               </select>
             </div>
 
-            <!-- মোবাইল ব্যাংকিং তথ্য -->
             <div class="col-md-4" id="mfsSenderDiv">
               <label class="form-label small fw-semibold" id="mfsSenderLabel">প্রেরকের বিকাশ নম্বর</label>
-              <input type="tel" class="form-control form-control-sm" id="paySenderNumber" placeholder="যে নম্বর থেকে টাকা পাঠিয়েছেন">
+              <input type="tel" class="form-control form-control-sm" id="paySenderNumber" placeholder="01XXXXXXXXX">
             </div>
 
             <div class="col-md-4" id="mfsTrxDiv">
@@ -394,20 +385,10 @@
             </div>
           </div>
 
-          <!-- ব্যাংক ট্রান্সফার ফিল্ড -->
           <div class="row g-2 mb-3 p-2 border rounded bg-light" id="bankDetailsDiv" style="display: none;">
-            <div class="col-md-4">
-              <label class="form-label small fw-semibold">ব্যাংকের নাম</label>
-              <input type="text" class="form-control form-control-sm" id="payBankName" placeholder="যেমন: ইসলামী ব্যাংক">
-            </div>
-            <div class="col-md-4">
-              <label class="form-label small fw-semibold">প্রেরকের ব্যাংক হিসাব নম্বর</label>
-              <input type="text" class="form-control form-control-sm" id="payBankAccountNo" placeholder="অ্যাকাউন্ট নম্বর">
-            </div>
-            <div class="col-md-4">
-              <label class="form-label small fw-semibold">শাখা / ব্রাঞ্চের নাম</label>
-              <input type="text" class="form-control form-control-sm" id="payBankBranch" placeholder="যেমন: বাইপাইল শাখা">
-            </div>
+            <div class="col-md-4"><label class="form-label small fw-semibold">ব্যাংকের নাম</label><input type="text" class="form-control form-control-sm" id="payBankName" placeholder="যেমন: ইসলামী ব্যাংক"></div>
+            <div class="col-md-4"><label class="form-label small fw-semibold">হিসাব নম্বর</label><input type="text" class="form-control form-control-sm" id="payBankAccountNo" placeholder="অ্যাকাউন্ট নম্বর"></div>
+            <div class="col-md-4"><label class="form-label small fw-semibold">শাখা / ব্রাঞ্চ</label><input type="text" class="form-control form-control-sm" id="payBankBranch" placeholder="যেমন: বাইপাইল শাখা"></div>
           </div>
 
           <button type="submit" class="btn btn-primary btn-sm px-4 fw-semibold" id="submitPaymentBtn">
@@ -416,23 +397,24 @@
         </form>
       </div>
 
-      <!-- ছাত্রের ট্র্যাকিং ও অনলাইন রশিদের তালিকা -->
-      <div class="card border-0 shadow-sm p-4 bg-white">
-        <h6 class="fw-bold text-dark mb-3"><i class="fa-solid fa-clock-rotate-left me-2 text-primary"></i>আমার জমা দেওয়া ফি ও অনুদানের ট্র্যাকিং রশিদ</h6>
+      <!-- ছাত্রের ট্র্যাকিং ও অনলাইন রসিদ ডাউনলোড তালিকা -->
+      <div class="card border-0 shadow-sm p-4 bg-white no-print">
+        <h6 class="fw-bold text-dark mb-3"><i class="fa-solid fa-file-invoice-dollar me-2 text-success"></i>আমার পরিশোধিত ফি ও মানি রসিদ (Invoice)</h6>
         <div class="table-responsive">
           <table class="table table-bordered table-hover align-middle small text-center mb-0">
             <thead class="table-light">
               <tr>
-                <th>টাকা প্রদানের উদ্দেশ্য / খাত</th>
+                <th>খাত / উদ্দেশ্য</th>
                 <th>পরিমাণ</th>
-                <th>পেমেন্ট মাধ্যম</th>
-                <th>প্রেরক নম্বর / অ্যাকাউন্ট ও TrxID</th>
-                <th>টাকা পাঠানোর তারিখ</th>
+                <th>মাধ্যম</th>
+                <th>প্রেরক ও TrxID</th>
+                <th>তারিখ</th>
                 <th>স্ট্যাটাস</th>
+                <th>অফিসিয়াল রসিদ</th>
               </tr>
             </thead>
             <tbody id="onlinePaymentHistoryBody">
-              <tr><td colspan="6" class="text-center text-muted">পেমেন্ট ইতিহাস লোড হচ্ছে...</td></tr>
+              <tr><td colspan="7" class="text-center text-muted">পেমেন্ট ইতিহাস লোড হচ্ছে...</td></tr>
             </tbody>
           </table>
         </div>
@@ -442,6 +424,115 @@
 
   </div>
 
+  <!-- মানি রসিদ প্রিন্ট মোডাল (Popup Invoice) -->
+  <div class="modal fade" id="receiptModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content border-0 shadow-lg">
+        <div class="modal-header bg-success text-white py-2 no-print">
+          <h6 class="modal-title fw-bold"><i class="fa-solid fa-receipt me-2"></i>অফিসিয়াল মানি রসিদ ও ভাউচার</h6>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        
+        <div class="modal-body p-4" id="printableReceiptArea">
+          <div class="money-receipt-box position-relative">
+            <div class="receipt-watermark">PAID</div>
+            
+            <!-- রসিদ হেডার -->
+            <div class="text-center border-bottom border-success border-2 pb-2 mb-3">
+              <h3 class="fw-bold text-success mb-0">জামিয়া তাসলিমুল কুরআন ইসলামিয়া</h3>
+              <p class="text-muted small mb-1">বাইপাইল, আশুলিয়া, সাভার, ঢাকা | মোবাইল: 01700-000000</p>
+              <span class="badge bg-success px-3 py-1 fs-6">অফিসিয়াল মানি রসিদ / ক্যাশ ভাউচার</span>
+            </div>
+
+            <!-- ইনভয়েস মেটা তথ্য -->
+            <div class="d-flex justify-content-between align-items-center mb-3 small">
+              <div><strong>রসিদ নম্বর:</strong> <span class="text-danger fw-bold" id="rcptInvoiceNo">JTQ-INV-0000</span></div>
+              <div><strong>পরিশোধের তারিখ:</strong> <span class="text-dark fw-bold" id="rcptDate">-</span></div>
+            </div>
+
+            <!-- ছাত্রের তথ্য টেবিল -->
+            <table class="table table-bordered table-sm small mb-3">
+              <tbody>
+                <tr>
+                  <th class="bg-light w-25">শিক্ষার্থীর নাম:</th>
+                  <td class="fw-bold text-dark" id="rcptStudentName">...</td>
+                  <th class="bg-light w-25">Student ID:</th>
+                  <td class="fw-bold text-success" id="rcptStudentId">...</td>
+                </tr>
+                <tr>
+                  <th class="bg-light">শ্রেণি / বিভাগ:</th>
+                  <td id="rcptDept">...</td>
+                  <th class="bg-light">শ্রেণি রোল:</th>
+                  <td id="rcptRoll">...</td>
+                </tr>
+                <tr>
+                  <th class="bg-light">পিতার নাম:</th>
+                  <td id="rcptFather">...</td>
+                  <th class="bg-light">অভিভাবকের মোবাইল:</th>
+                  <td id="rcptPhone">...</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- পেমেন্ট বিবরণী টেবিল -->
+            <table class="table table-bordered table-sm text-center small mb-3">
+              <thead class="table-light">
+                <tr>
+                  <th>ক্রমিক</th>
+                  <th>ফি প্রদানের উদ্দেশ্য / খাত</th>
+                  <th>পেমেন্ট মেথড ও বিবরণ</th>
+                  <th>পরিশোধিত টাকার পরিমাণ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>০১</td>
+                  <td class="fw-bold text-start ps-3" id="rcptPurpose">-</td>
+                  <td id="rcptMethodDetail">-</td>
+                  <td class="fw-bold text-success fs-6" id="rcptAmount">০ ৳</td>
+                </tr>
+                <tr class="table-light">
+                  <th colspan="3" class="text-end pe-3">সর্বমোট গৃহীত টাকা:</th>
+                  <th class="text-success fs-6 fw-bold" id="rcptTotalAmount">০ ৳</th>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- বকেয়া ও সিল -->
+            <div class="d-flex justify-content-between align-items-center mb-4 p-2 bg-light rounded border">
+              <div>
+                <span class="small text-muted d-block">অনুমোদন পরবর্তী বর্তমান বকেয়া:</span>
+                <strong class="text-danger fs-6" id="rcptRemainingDue">০.০০ ৳</strong>
+              </div>
+              <div class="text-center">
+                <div class="paid-seal">ফি পরিশোধিত (PAID)</div>
+              </div>
+            </div>
+
+            <!-- স্বাক্ষর সেকশন -->
+            <div class="row text-center mt-5 pt-3">
+              <div class="col-4"><div class="border-top border-dark pt-1 small fw-bold">প্রদানকারী / অভিভাবক</div></div>
+              <div class="col-4"><div class="border-top border-dark pt-1 small fw-bold">হিসাবরক্ষক</div></div>
+              <div class="col-4"><div class="border-top border-dark pt-1 small fw-bold">মুহতামিম / প্রিন্সিপাল</div></div>
+            </div>
+            
+            <div class="text-center text-muted mt-3" style="font-size: 10px;">
+              * এটি একটি কম্পিউটার জেনারেটেড ডিজিটাল রসিদ। কোনো স্বাক্ষরের প্রয়োজন নেই।
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer no-print py-2">
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">বন্ধ করুন</button>
+          <button type="button" class="btn btn-success btn-sm fw-bold" onclick="window.print()">
+            <i class="fa-solid fa-print me-1"></i> রসিদ প্রিন্ট / PDF ডাউনলোড
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <script src="js/firebase-config.js"></script>
@@ -451,6 +542,8 @@
     if (!currentId) {
       window.location.href = 'student-login.html';
     }
+
+    let globalStudentData = {};
 
     function switchTab(tab) {
       const pSec = document.getElementById('profileSection');
@@ -468,23 +561,16 @@
       });
 
       if (tab === 'profile') {
-        pSec.style.display = 'block';
-        pBtn.classList.add('active');
-        pBtn.classList.remove('text-dark');
+        pSec.style.display = 'block'; pBtn.classList.add('active'); pBtn.classList.remove('text-dark');
       } else if (tab === 'sabak') {
-        sSec.style.display = 'block';
-        sBtn.classList.add('active');
-        sBtn.classList.remove('text-dark');
+        sSec.style.display = 'block'; sBtn.classList.add('active'); sBtn.classList.remove('text-dark');
         applySabakFilter();
       } else if (tab === 'fee') {
-        fSec.style.display = 'block';
-        fBtn.classList.add('active');
-        fBtn.classList.remove('text-dark');
+        fSec.style.display = 'block'; fBtn.classList.add('active'); fBtn.classList.remove('text-dark');
         loadOnlinePaymentHistory();
       }
     }
 
-    // ফি ক্যাটাগরি পরিবর্তনের লজিক
     function toggleFeeCategory() {
       const cat = document.getElementById('feeCategory').value;
       const monthDiv = document.getElementById('monthSelectDiv');
@@ -492,17 +578,11 @@
       const otherDiv = document.getElementById('otherPurposeDiv');
 
       if (cat === "মাসিক বেতন") {
-        monthDiv.style.display = 'block';
-        yearDiv.style.display = 'block';
-        otherDiv.style.display = 'none';
+        monthDiv.style.display = 'block'; yearDiv.style.display = 'block'; otherDiv.style.display = 'none';
       } else if (cat === "অন্যান্য বিবিধ") {
-        monthDiv.style.display = 'none';
-        yearDiv.style.display = 'none';
-        otherDiv.style.display = 'block';
+        monthDiv.style.display = 'none'; yearDiv.style.display = 'none'; otherDiv.style.display = 'block';
       } else {
-        monthDiv.style.display = 'none';
-        yearDiv.style.display = 'block';
-        otherDiv.style.display = 'none';
+        monthDiv.style.display = 'none'; yearDiv.style.display = 'block'; otherDiv.style.display = 'none';
       }
     }
 
@@ -529,35 +609,33 @@
 
     document.getElementById('payDate').value = new Date().toISOString().split('T')[0];
 
-    // প্রোফাইল লোড
+    // ছাত্র প্রোফাইল লোড
     db.collection("students").doc(currentId).get().then((doc) => {
       if (doc.exists) {
-        const s = doc.data();
-        document.getElementById('navName').innerText = "ছাত্র: " + s.name;
-        document.getElementById('dashName').innerText = s.name;
+        globalStudentData = doc.data();
+        const s = globalStudentData;
+        document.getElementById('navName').innerText = "ছাত্র: " + (s.nameBn || s.name);
+        document.getElementById('dashName').innerText = s.nameBn || s.name;
         document.getElementById('dashId').innerText = s.studentId;
         document.getElementById('dashStudentReg').innerText = s.studentRegNo || "দেওয়া হয়নি";
-        
         document.getElementById('dashDept').innerText = s.department;
         document.getElementById('dashRoll').innerText = s.roll;
-        document.getElementById('dashFather').innerText = s.father;
+        document.getElementById('dashFather').innerText = s.fatherBn || s.father;
         document.getElementById('dashFatherNid').innerText = s.fatherNid || "দেওয়া হয়নি";
-        document.getElementById('dashMother').innerText = s.mother || "দেওয়া হয়নি";
+        document.getElementById('dashMother').innerText = s.motherBn || s.mother || "দেওয়া হয়নি";
         document.getElementById('dashMotherNid').innerText = s.motherNid || "দেওয়া হয়নি";
         document.getElementById('dashDob').innerText = s.dob || "দেওয়া হয়নি";
         document.getElementById('dashBlood').innerText = s.bloodGroup || "অজানা";
         document.getElementById('dashPhone').innerText = s.phone || "দেওয়া হয়নি";
 
-        document.getElementById('diaryStudentName').innerText = s.name;
+        document.getElementById('diaryStudentName').innerText = s.nameBn || s.name;
         document.getElementById('diaryStudentId').innerText = s.studentId;
         document.getElementById('diaryStudentDept').innerText = s.department;
         document.getElementById('diaryStudentRoll').innerText = s.roll;
 
         document.getElementById('paymentCurrentDue').innerText = s.due || "০.০০ ৳";
         
-        if (s.photo) {
-          document.getElementById('dashPhoto').src = s.photo;
-        }
+        if (s.photo) document.getElementById('dashPhoto').src = s.photo;
 
         const pre = s.presentAddress || {};
         document.getElementById('preVillageText').innerText = pre.village || "-";
@@ -579,7 +657,7 @@
       }
     });
 
-    // অনলাইন পেমেন্ট সাবমিশন
+    // পেমেন্ট সাবমিট
     document.getElementById('onlinePaymentForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const feeCategory = document.getElementById('feeCategory').value;
@@ -592,13 +670,9 @@
       const btn = document.getElementById('submitPaymentBtn');
 
       let categoryDisplay = feeCategory;
-      if (feeCategory === "মাসিক বেতন") {
-        categoryDisplay = `মাসিক বেতন (${month} ${year})`;
-      } else if (feeCategory === "অন্যান্য বিবিধ" && otherPurpose) {
-        categoryDisplay = `অন্যান্য (${otherPurpose})`;
-      } else if (feeCategory !== "মাসিক বেতন") {
-        categoryDisplay = `${feeCategory} (${year})`;
-      }
+      if (feeCategory === "মাসিক বেতন") categoryDisplay = `মাসিক বেতন (${month} ${year})`;
+      else if (feeCategory === "অন্যান্য বিবিধ" && otherPurpose) categoryDisplay = `অন্যান্য (${otherPurpose})`;
+      else if (feeCategory !== "মাসিক বেতন") categoryDisplay = `${feeCategory} (${year})`;
 
       let senderDetail = "";
       if (method.includes("ব্যাংক")) {
@@ -612,8 +686,7 @@
         senderDetail = `নম্বর: ${sNum}, TrxID: ${trx}`;
       }
 
-      btn.disabled = true;
-      btn.innerText = "সাবমিট হচ্ছে...";
+      btn.disabled = true; btn.innerText = "সাবমিট হচ্ছে...";
 
       const paymentRecord = {
         studentId: currentId,
@@ -628,11 +701,10 @@
 
       db.collection("students").doc(currentId).collection("online_fee_submissions").add(paymentRecord)
         .then(() => {
-          alert("আপনার " + categoryDisplay + "-এর তথ্য সফলভাবে জমা হয়েছে! মাদ্রাসা কর্তৃপক্ষ যাচাই করে আপডেট করে দেবে।");
+          alert("আপনার " + categoryDisplay + "-এর তথ্য সফলভাবে জমা হয়েছে! অ্যাডমিন অনুমোদন করলেই রসিদ তৈরি হবে।");
           document.getElementById('payAmount').value = "";
           document.getElementById('payTrxId').value = "";
           document.getElementById('paySenderNumber').value = "";
-          document.getElementById('otherPurposeText').value = "";
           loadOnlinePaymentHistory();
         }).catch(err => {
           alert("ত্রুটি: " + err.message);
@@ -642,21 +714,38 @@
         });
     });
 
-    // পেমেন্ট ইতিহাস লোড
+    let currentPaymentsMap = {};
+
+    // পেমেন্ট হিস্ট্রি ও ইনভয়েস বোতাম লোড
     function loadOnlinePaymentHistory() {
       const tbody = document.getElementById('onlinePaymentHistoryBody');
-      tbody.innerHTML = `<tr><td colspan="6" class="text-center">লোড হচ্ছে...</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="7" class="text-center">লোড হচ্ছে...</td></tr>`;
+      currentPaymentsMap = {};
 
       db.collection("students").doc(currentId).collection("online_fee_submissions").orderBy("submittedAt", "desc").get()
         .then(snapshot => {
           tbody.innerHTML = "";
           if (snapshot.empty) {
-            tbody.innerHTML = `<tr><td colspan="6" class="text-muted">এখনো কোনো ফি বা অনুদান জমার রেকর্ড নেই।</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="7" class="text-muted">এখনো কোনো ফি জমার রেকর্ড নেই।</td></tr>`;
             return;
           }
           snapshot.forEach(doc => {
             const p = doc.data();
-            const statusBadge = p.status.includes("অনুমোদিত") ? 'bg-success' : 'bg-warning text-dark';
+            currentPaymentsMap[doc.id] = p;
+
+            const isApproved = p.status && p.status.includes("অনুমোদিত");
+            const statusBadge = isApproved ? 'bg-success' : 'bg-warning text-dark';
+            
+            // অনুমোদিত হলেই রসিদ বাটন সক্রিয় হবে
+            let printAction = `<span class="text-muted small">অনুমোদনের পর দৃশ্যমান</span>`;
+            if (isApproved) {
+              printAction = `
+                <button class="btn btn-sm btn-outline-success fw-bold" onclick="showInvoiceModal('${doc.id}')">
+                  <i class="fa-solid fa-print me-1"></i> রসিদ দেখুন
+                </button>
+              `;
+            }
+
             tbody.innerHTML += `
               <tr>
                 <td><strong>${p.category || 'মাসিক বেতন'}</strong></td>
@@ -665,12 +754,39 @@
                 <td class="small text-start">${p.senderDetail}</td>
                 <td>${p.date}</td>
                 <td><span class="badge ${statusBadge}">${p.status}</span></td>
+                <td>${printAction}</td>
               </tr>
             `;
           });
         }).catch(err => {
-          tbody.innerHTML = `<tr><td colspan="6" class="text-danger">তথ্য আনতে সমস্যা হয়েছে: ${err.message}</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="7" class="text-danger">তথ্য আনতে সমস্যা হয়েছে: ${err.message}</td></tr>`;
         });
+    }
+
+    // মানি রসিদ মোডাল পপুলেট ও প্রদর্শন
+    function showInvoiceModal(docId) {
+      const p = currentPaymentsMap[docId];
+      if (!p) return;
+
+      const shortId = docId.substring(0, 5).toUpperCase();
+      document.getElementById('rcptInvoiceNo').innerText = `JTQ-${new Date().getFullYear()}-${shortId}`;
+      document.getElementById('rcptDate').innerText = p.date || new Date().toISOString().split('T')[0];
+
+      document.getElementById('rcptStudentName').innerText = globalStudentData.nameBn || globalStudentData.name || "-";
+      document.getElementById('rcptStudentId').innerText = globalStudentData.studentId || currentId;
+      document.getElementById('rcptDept').innerText = globalStudentData.department || "-";
+      document.getElementById('rcptRoll').innerText = globalStudentData.roll || "-";
+      document.getElementById('rcptFather').innerText = globalStudentData.fatherBn || globalStudentData.father || "-";
+      document.getElementById('rcptPhone').innerText = globalStudentData.phone || "-";
+
+      document.getElementById('rcptPurpose').innerText = p.category || "মাসিক বেতন";
+      document.getElementById('rcptMethodDetail').innerText = `${p.method} (${p.senderDetail || '-'})`;
+      document.getElementById('rcptAmount').innerText = p.amount;
+      document.getElementById('rcptTotalAmount').innerText = p.amount;
+      document.getElementById('rcptRemainingDue').innerText = globalStudentData.due || "০.০০ ৳";
+
+      const receiptModal = new bootstrap.Modal(document.getElementById('receiptModal'));
+      receiptModal.show();
     }
 
     // সবক ফিল্টার লজিক
@@ -699,10 +815,7 @@
 
       if (type === 'daily') {
         const specificDate = document.getElementById('filterSpecificDate').value;
-        if (!specificDate) {
-          alert("একটি তারিখ নির্বাচন করুন!");
-          return;
-        }
+        if (!specificDate) { alert("একটি তারিখ নির্বাচন করুন!"); return; }
         query = query.where("date", "==", specificDate);
         document.getElementById('tableHeaderTitle').innerText = "দৈনিক পড়ার তথ্য";
         document.getElementById('diaryPeriod').innerText = specificDate;
@@ -727,7 +840,6 @@
         snapshot.forEach((doc) => {
           const r = doc.data();
           const teacherDetails = r.teacherName ? `<strong>${r.teacherName}</strong><br><small class="text-muted">${r.teacherPhone || ''}</small>` : '<small class="text-success">যাচাইকৃত</small>';
-
           const sabakText = (r.sabakPara && r.sabakPara !== '-') ? `পারা: ${r.sabakPara}<br>পৃষ্ঠা: ${r.sabakPage || '-'}` : '-';
           const satText = (r.satPara && r.satPara !== '-') ? `পারা: ${r.satPara}<br>পৃষ্ঠা: ${r.satPage || '-'}` : '-';
           const amukhText = (r.amukhPara && r.amukhPara !== '-') ? `পারা: ${r.amukhPara}<br>পৃষ্ঠা: ${r.amukhPage || '-'}` : '-';
