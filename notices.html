@@ -81,7 +81,7 @@
   <div class="container py-4">
     <div class="row g-4">
       
-      <!-- বাম পাশ: নোটিশ ফিল্টার ও নোটিশের তালিকা -->
+      <!-- বাম পাশ: নোটিশ ফিল্টার ও নোটিশের তালিকা (নতুন নোটিশ সবার আগে) -->
       <div class="col-lg-8">
         
         <!-- ফিল্টার পিলস -->
@@ -98,54 +98,6 @@
         <div id="noticeContainer" class="d-flex flex-column gap-3">
           <div class="text-center py-5 text-muted">
             <div class="spinner-border spinner-border-sm text-success me-2"></div>নোটিশ লোড হচ্ছে...
-          </div>
-        </div>
-
-        <!-- অ্যাডমিন দ্বারা দ্রুত নোটিশ প্রকাশ ফরম (টগলযোগ্য) -->
-        <div class="card border-0 shadow-sm p-4 bg-white mt-4 border-top border-dark border-3">
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <h6 class="fw-bold text-dark mb-0"><i class="fa-solid fa-pen-to-square me-2 text-primary"></i>প্রশাসনের জন্য: নতুন নোটিশ জারি করুন</h6>
-            <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#adminNoticeBox">ফর্ম খুলুন</button>
-          </div>
-          
-          <div class="collapse mt-3" id="adminNoticeBox">
-            <form id="newNoticeForm">
-              <div class="row g-2 mb-2">
-                <div class="col-md-8">
-                  <label class="form-label small fw-semibold">নোটিশের শিরোনাম</label>
-                  <input type="text" class="form-control form-control-sm" id="noticeTitle" placeholder="যেমন: প্রথম সাময়িক পরীক্ষার সময়সূচি প্রকাশ" required>
-                </div>
-                <div class="col-md-4">
-                  <label class="form-label small fw-semibold">ক্যাটাগরি</label>
-                  <select class="form-select form-select-sm" id="noticeCategory" required>
-                    <option value="exam">পরীক্ষা সংক্রান্ত</option>
-                    <option value="holiday">মাদ্রাসা ছুটি</option>
-                    <option value="admission">ভর্তি সংক্রান্ত</option>
-                    <option value="general">সাধারণ / জরুরি</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="mb-2">
-                <label class="form-label small fw-semibold">নোটিশের মূল বক্তব্য ও বিস্তারিত</label>
-                <textarea class="form-control form-control-sm" id="noticeBody" rows="3" placeholder="বিস্তারিত লিখুন..." required></textarea>
-              </div>
-
-              <div class="row g-2 mb-3">
-                <div class="col-md-6">
-                  <label class="form-label small fw-semibold">কার্যকর তারিখ / সময়সীমা</label>
-                  <input type="text" class="form-control form-control-sm" id="noticeDates" placeholder="যেমন: ১৫ই সেপ্টেম্বর থেকে ২০শে সেপ্টেম্বর">
-                </div>
-                <div class="col-md-6">
-                  <label class="form-label small fw-semibold">অ্যাডমিন পাসওয়ার্ড</label>
-                  <input type="password" class="form-control form-control-sm" id="adminKey" placeholder="পাসওয়ার্ড লিখুন" required>
-                </div>
-              </div>
-
-              <button type="submit" class="btn btn-success btn-sm fw-bold px-3" id="postNoticeBtn">
-                <i class="fa-solid fa-cloud-arrow-up me-1"></i> নোটিশ পোস্ট করুন
-              </button>
-            </form>
           </div>
         </div>
 
@@ -234,65 +186,37 @@
   <script>
     let allNotices = [];
 
-    // নোটিশ লোড
-    function fetchNotices() {
-      db.collection("notices").orderBy("timestamp", "desc").get().then((snapshot) => {
+    // নোটিশ লোড (সর্বশেষ নোটিশ সবার উপরে আসবে)
+    function fetchLiveNotices() {
+      const container = document.getElementById('noticeContainer');
+      
+      db.collection("notices").get().then((snapshot) => {
         allNotices = [];
         if (snapshot.empty) {
-          // ডিফল্ট প্রাথমিক নোটিশগুলো যদি ডেটাবেজ খালি থাকে
-          insertDefaultNotices();
+          container.innerHTML = `<div class="card p-4 text-center text-muted bg-white border-0 shadow-sm">বর্তমানে কোনো নোটিশ নেই।</div>`;
           return;
         }
+
         snapshot.forEach((doc) => {
-          allNotices.push({ id: doc.id, ...doc.data() });
+          const data = doc.data();
+          let parsedTime = new Date(0);
+          if (data.timestamp) {
+            parsedTime = data.timestamp.toDate ? data.timestamp.toDate() : new Date(data.timestamp);
+          }
+          allNotices.push({
+            id: doc.id,
+            ...data,
+            realTime: parsedTime
+          });
         });
+
+        // নতুন থেকে পুরাতন সাজানো (Latest first)
+        allNotices.sort((a, b) => b.realTime - a.realTime);
+
         renderNotices(allNotices);
       }).catch(err => {
-        console.log(err);
-        // ফায়ারবেস সংযোগ না পেলেও ব্যাকআপ প্রদর্শনী
-        renderDefaultNotices();
+        container.innerHTML = `<div class="card p-4 text-center text-danger bg-white border-0 shadow-sm">নোটিশ লোড করতে সমস্যা হয়েছে: ${err.message}</div>`;
       });
-    }
-
-    // প্রাথমিক স্যাম্পল নোটিশ
-    const defaultData = [
-      {
-        id: "d1",
-        category: "exam",
-        title: "প্রথম সাময়িক পরীক্ষা ২০২৬ এর সময়সূচি ও রুটিন প্রকাশ",
-        body: "সকল বিভাগের (মক্তব, নাজেরা ও হিফজ) শিক্ষার্থীদের জানানো যাচ্ছে যে, আগামী ২০শে সেপ্টেম্বর ২০২৬ থেকে প্রথম সাময়িক পরীক্ষা অনুষ্ঠিত হবে। পরীক্ষার পূর্বেই সকল বকেয়া বেতন পরিশোধ করতে অনুরোধ করা হলো।",
-        dates: "২০শে সেপ্টেম্বর - ২৫শে সেপ্টেম্বর",
-        dateText: "সেপ্টেম্বর ২০২৬",
-        badge: "পরীক্ষা সংক্রান্ত"
-      },
-      {
-        id: "d2",
-        category: "holiday",
-        title: "পবিত্র ঈদুল ফিতর ও বার্ষিক ছুটি সংক্রান্ত বিজ্ঞপ্তি",
-        body: "পবিত্র ঈদুল ফিতর উপলক্ষে মাদ্রাসা আগামী নির্দিষ্ট তারিখ পর্যন্ত বন্ধ থাকবে। ছুটির পর নির্ধারিত দিনে শিক্ষার্থীদের যথাসময়ে মাদ্রাসায় উপস্থিত থাকার জন্য নির্দেশ দেওয়া হলো।",
-        dates: "ছুটির মেয়াদ: ১০ দিন",
-        dateText: "ছুটি নোটিশ",
-        badge: "মাদ্রাসা ছুটি"
-      },
-      {
-        id: "d3",
-        category: "admission",
-        title: "নতুন শিক্ষাবর্ষে নূরানী ও হিফজ বিভাগে ভর্তি চলছে",
-        body: "অভিজ্ঞ হাফেজ ও উস্তাদদের তত্ত্বাবধানে তাজবীদভিত্তিক বিশুদ্ধ হিফজ ও নাজেরা বিভাগে সীমিত আসনে নতুন ছাত্র ভর্তি নেওয়া হচ্ছে। আগ্রহী অভিভাবকগণ সরাসরি মাদ্রাসার অফিস কক্ষে যোগাযোগ করুন।",
-        dates: "সকাল ৯:০০টা - বিকাল ৫:০০টা",
-        dateText: "ভর্তি চলছে",
-        badge: "ভর্তি বিজ্ঞপ্তি"
-      }
-    ];
-
-    function insertDefaultNotices() {
-      allNotices = [...defaultData];
-      renderNotices(allNotices);
-    }
-
-    function renderDefaultNotices() {
-      allNotices = [...defaultData];
-      renderNotices(allNotices);
     }
 
     function renderNotices(list) {
@@ -303,28 +227,28 @@
         return;
       }
 
-      list.forEach((n) => {
+      list.forEach((n, idx) => {
         let badgeColor = "bg-success";
-        let categoryName = "সাধারণ";
+        let categoryName = "সাধারণ / জরুরি";
         if (n.category === "exam") { badgeColor = "bg-primary"; categoryName = "পরীক্ষা সংক্রান্ত"; }
         else if (n.category === "holiday") { badgeColor = "bg-danger"; categoryName = "ছুটির নোটিশ"; }
         else if (n.category === "admission") { badgeColor = "bg-warning text-dark"; categoryName = "ভর্তি বিজ্ঞপ্তি"; }
+
+        // প্রথম ও সর্বশেষ নোটিশে "নতুন" ব্যাজ
+        const newBadge = idx === 0 ? '<span class="badge bg-danger ms-2">নতুন নোটিশ</span>' : '';
 
         container.innerHTML += `
           <div class="card p-3 shadow-sm notice-card ${n.category}">
             <div class="d-flex justify-content-between align-items-start mb-2">
               <div>
-                <span class="badge ${badgeColor} mb-1">${categoryName}</span>
-                <h6 class="fw-bold text-dark mb-0">${n.title}</h6>
+                <span class="badge ${badgeColor} mb-1">${categoryName}</span>${newBadge}
+                <h6 class="fw-bold text-dark mb-0 mt-1">${n.title}</h6>
               </div>
               <small class="text-muted text-nowrap"><i class="fa-regular fa-clock me-1"></i>${n.dateText || 'হালনাগাদ'}</small>
             </div>
-            <p class="small text-secondary mb-2">${n.body}</p>
+            <p class="small text-secondary mb-2" style="white-space: pre-line;">${n.body}</p>
             <div class="d-flex justify-content-between align-items-center pt-2 border-top">
-              <span class="small text-muted"><i class="fa-solid fa-calendar-day me-1 text-success"></i>${n.dates || 'অফিস চলাকালীন প্রযোজ্য'}</span>
-              <button class="btn btn-sm btn-link text-danger p-0 text-decoration-none" onclick="deleteNotice('${n.id}')" title="মুছে ফেলুন">
-                <i class="fa-solid fa-trash-can"></i>
-              </button>
+              <span class="small text-muted"><i class="fa-solid fa-calendar-day me-1 text-success"></i>কার্যকর সময়: <strong class="text-dark">${n.dates || 'অফিস চলাকালীন প্রযোজ্য'}</strong></span>
             </div>
           </div>
         `;
@@ -344,56 +268,7 @@
       }
     }
 
-    // অ্যাডমিন নোটিশ পোস্ট
-    document.getElementById('newNoticeForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const pass = document.getElementById('adminKey').value;
-      if (pass !== 'admin@123' && pass !== 'jtq@12345') {
-        alert("ভুল অ্যাডমিন পাসওয়ার্ড!");
-        return;
-      }
-
-      const btn = document.getElementById('postNoticeBtn');
-      btn.disabled = true; btn.innerText = "পোস্ট হচ্ছে...";
-
-      const noticeObj = {
-        title: document.getElementById('noticeTitle').value.trim(),
-        category: document.getElementById('noticeCategory').value,
-        body: document.getElementById('noticeBody').value.trim(),
-        dates: document.getElementById('noticeDates').value.trim(),
-        dateText: new Date().toLocaleDateString('bn-BD'),
-        timestamp: new Date()
-      };
-
-      db.collection("notices").add(noticeObj).then(() => {
-        alert("নতুন নোটিশ সফলভাবে বোর্ডে যুক্ত হয়েছে!");
-        this.reset();
-        bootstrap.Collapse.getInstance(document.getElementById('adminNoticeBox')).hide();
-        fetchNotices();
-      }).catch(err => {
-        alert("ত্রুটি: " + err.message);
-      }).finally(() => {
-        btn.disabled = false;
-        btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up me-1"></i> নোটিশ পোস্ট করুন`;
-      });
-    });
-
-    // নোটিশ ডিলিট
-    function deleteNotice(id) {
-      const pass = prompt("নোটিশটি মুছে ফেলতে অ্যাডমিন পাসওয়ার্ড লিখুন:");
-      if (pass === 'admin@123' || pass === 'jtq@12345') {
-        db.collection("notices").doc(id).delete().then(() => {
-          alert("নোটিশটি মুছে ফেলা হয়েছে।");
-          fetchNotices();
-        }).catch(err => {
-          alert("ত্রুটি: " + err.message);
-        });
-      } else if (pass !== null) {
-        alert("ভুল পাসওয়ার্ড!");
-      }
-    }
-
-    fetchNotices();
+    fetchLiveNotices();
   </script>
 </body>
 </html>
