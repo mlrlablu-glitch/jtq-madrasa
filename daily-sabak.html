@@ -89,7 +89,6 @@
           </div>
         </div>
 
-        <!-- উপস্থিতি রেডিও বাটন -->
         <div class="row g-2 mb-3 p-2 border rounded bg-light align-items-center">
           <div class="col-md-4">
             <label class="form-label small fw-bold text-dark mb-0">
@@ -105,7 +104,7 @@
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="attendanceStatus" id="attAbsent" value="অনুপস্থিত">
                 <label class="form-check-label small fw-bold text-danger" for="attAbsent">
-                  অনুপস্থিত (Absent) <small class="badge bg-danger">এসএমএস যাবে</small>
+                  অনুপস্থিত (Absent) <small class="badge bg-danger">SMS যাবে</small>
                 </label>
               </div>
               <div class="form-check">
@@ -127,7 +126,6 @@
           </div>
         </div>
 
-        <!-- ১. সবক -->
         <div id="sectionSabak" class="p-3 border rounded bg-light mb-3">
           <span class="badge bg-success mb-2 fs-6"><i class="fa-solid fa-book-open me-1"></i> ১. সবক ইনপুট</span>
           <div class="row g-2">
@@ -137,7 +135,6 @@
           </div>
         </div>
 
-        <!-- ২. সাত সবক -->
         <div id="sectionSatSabak" class="p-3 border rounded bg-light mb-3" style="display: none;">
           <span class="badge bg-primary mb-2 fs-6"><i class="fa-solid fa-book me-1"></i> ২. সাত সবক ইনপুট</span>
           <div class="row g-2">
@@ -149,7 +146,6 @@
           </div>
         </div>
 
-        <!-- ৩. আমুখতা -->
         <div id="sectionAmukh" class="p-3 border rounded bg-light mb-3" style="display: none;">
           <span class="badge bg-secondary mb-2 fs-6"><i class="fa-solid fa-book-quran me-1"></i> ৩. আমুখতা ও তিলাওয়াত ইনপুট</span>
           <div class="row g-2 mb-2">
@@ -221,25 +217,50 @@
           </tbody>
         </table>
       </div>
+    </div>
+  </div>
 
-      <div class="border border-dark p-2 mt-2">
-        <div class="row g-2 align-items-center small">
-          <div class="col-md-6 border-end border-dark">
-            <span class="fw-bold">বণ্টনকৃত সাপ্তাহিক শবীনার পারাসমূহ :</span>
-            <input type="text" class="form-control form-control-sm border-0 border-bottom rounded-0 mt-1" id="weeklyDistPara" placeholder="এখানে লিখুন...">
+  <!-- শিক্ষক বেতন জমার পপআপ মোডাল (Teacher Salary Notification Modal) -->
+  <div class="modal fade" id="teacherSalaryNotifyModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg text-center p-3">
+        <div class="modal-body p-4">
+          <div class="text-success mb-3">
+            <i class="fa-solid fa-gift fa-3x animate__animated animate__bounce"></i>
           </div>
-          <div class="col-md-6">
-            <div class="fw-bold mb-1">তিলাওয়াতকৃত সাপ্তাহিক শবীনার পারা :</div>
-            <div class="row g-1">
-              <div class="col-6"><input type="text" class="form-control form-control-sm" id="whichPara" placeholder="কোন্ কোন্ পারা"></div>
-              <div class="col-6"><input type="text" class="form-control form-control-sm" id="lokmaCount" placeholder="মোট লোকমার সংখ্যা"></div>
+          <h4 class="fw-bold text-dark mb-1">মুহতারাম উস্তাদজি!</h4>
+          <p class="text-muted small mb-3">মাদ্রাসা প্রশাসন কর্তৃক আপনার মাসিক বেতন পরিশোধ করা হয়েছে।</p>
+
+          <div class="p-3 border rounded bg-light mb-3 text-start">
+            <div class="d-flex justify-content-between mb-1 small">
+              <span class="text-muted">পরিশোধিত মাস:</span>
+              <strong class="text-primary fs-6" id="notifySalaryMonth">সেপ্টেম্বর ২০২৬</strong>
+            </div>
+            <div class="d-flex justify-content-between mb-1 small">
+              <span class="text-muted">টাকার পরিমাণ:</span>
+              <strong class="text-success fs-5 fw-bold" id="notifySalaryAmount">১২,০০০ ৳</strong>
+            </div>
+            <div class="d-flex justify-content-between mb-1 small">
+              <span class="text-muted">পরিশোধের মাধ্যম:</span>
+              <span class="badge bg-secondary" id="notifySalaryMethod">ক্যাশ (নগদ)</span>
+            </div>
+            <div class="d-flex justify-content-between small">
+              <span class="text-muted">পরিশোধের তারিখ:</span>
+              <span class="fw-semibold text-dark" id="notifySalaryDate">...</span>
             </div>
           </div>
+
+          <input type="hidden" id="notifySalaryDocId">
+
+          <button type="button" class="btn btn-success btn-lg w-100 fw-bold shadow-sm" id="btnAcknowledgeSalary" onclick="acknowledgeSalaryReceive()">
+            <i class="fa-solid fa-check-circle me-1"></i> আলহামদুলিল্লাহ, বেতন গ্রহণ করলাম
+          </button>
         </div>
       </div>
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <script src="js/firebase-config.js"></script>
@@ -252,12 +273,15 @@
 
     const tName = localStorage.getItem('teacherName') || "শিক্ষক";
     const tPhone = localStorage.getItem('teacherPhone') || "";
+    const tId = localStorage.getItem('teacherId') || "TCH-01";
+
     document.getElementById('topTeacherName').innerText = tName;
     document.getElementById('teacherName').value = tName;
     document.getElementById('teacherPhone').value = tPhone;
 
     document.getElementById('teacherLogoutBtn').addEventListener('click', function() {
       localStorage.removeItem('teacherSession');
+      localStorage.removeItem('teacherId');
       window.location.href = 'teacher-login.html';
     });
 
@@ -293,7 +317,59 @@
       else if (this.value === 'amukhTilawat') secAmukh.style.display = 'block';
     });
 
-    // উপস্থিতি ও পড়া সংরক্ষণ + অটো এসএমএস লজিক
+    // ================= নতুন বেতন প্রদানের পপআপ মেসেজ চেকার =================
+    function checkTeacherSalaryNotification() {
+      if (!tId) return;
+
+      db.collection("teachers").doc(tId).collection("salary_payments")
+        .where("status", "==", "প্রদান করা হয়েছে (অপেক্ষমান)")
+        .orderBy("paidAt", "desc").limit(1).get().then(snapshot => {
+          if (!snapshot.empty) {
+            const doc = snapshot.docs[0];
+            const sal = doc.data();
+
+            document.getElementById('notifySalaryDocId').value = doc.id;
+            document.getElementById('notifySalaryMonth').innerText = sal.monthYear || `${sal.month} ${sal.year}`;
+            document.getElementById('notifySalaryAmount').innerText = `${sal.amount.toLocaleString('bn-BD')} ৳`;
+            document.getElementById('notifySalaryMethod').innerText = sal.method || 'ক্যাশ';
+            document.getElementById('notifySalaryDate').innerText = sal.date || '-';
+
+            const notifyModal = new bootstrap.Modal(document.getElementById('teacherSalaryNotifyModal'));
+            notifyModal.show();
+          }
+        }).catch(err => {
+          console.log("Salary notify check:", err.message);
+        });
+    }
+
+    // শিক্ষক কর্তৃক বেতন গ্রহণ নিশ্চিতকরণ
+    async function acknowledgeSalaryReceive() {
+      const docId = document.getElementById('notifySalaryDocId').value;
+      const btn = document.getElementById('btnAcknowledgeSalary');
+      if (!docId) return;
+
+      btn.disabled = true;
+      btn.innerText = "গৃহীত হচ্ছে...";
+
+      try {
+        await db.collection("teachers").doc(tId).collection("salary_payments").doc(docId).update({
+          status: "গৃহীত (Received)",
+          receivedAt: new Date()
+        });
+        alert("শুকরিয়া উস্তাদজি! আপনার বেতন গ্রহণ সম্পন্ন ও সিস্টেমে নিশ্চিত হয়েছে।");
+        bootstrap.Modal.getInstance(document.getElementById('teacherSalaryNotifyModal')).hide();
+      } catch (err) {
+        alert("ত্রুটি: " + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fa-solid fa-check-circle me-1"></i> আলহামদুলিল্লাহ, বেতন গ্রহণ করলাম`;
+      }
+    }
+
+    // পেজ লোড হলেই স্বয়ংক্রিয়ভাবে বেতন নোটিফিকেশন চেক করবে
+    checkTeacherSalaryNotification();
+
+    // উপস্থিতি ও পড়া সংরক্ষণ লজিক
     document.getElementById('sabakForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       const sId = document.getElementById('inpStudentId').value.trim();
@@ -308,7 +384,6 @@
       btn.disabled = true; btn.innerText = "সংরক্ষণ ও যাচাই হচ্ছে...";
 
       try {
-        // ১. ছাত্রের ফোন ও নাম সংগ্রহ
         const studentDoc = await db.collection("students").doc(sId).get();
         if (!studentDoc.exists) {
           alert("এই Student ID পাওয়া যায়নি!");
@@ -347,10 +422,9 @@
         await db.collection("students").doc(sId).collection("daily_sabak").doc(date).set(updatePayload, { merge: true });
         await db.collection("students").doc(sId).update({ lastAttendanceStatus: attendance, lastAttendanceDate: date });
 
-        // ২. যদি শিক্ষার্থী "অনুপস্থিত" হয় তবেই স্বয়ংক্রিয় এসএমএস পাঠানো হবে
         if (attendance === "অনুপস্থিত") {
           sendAbsenceSMS(guardianPhone, studentName);
-          alert(`পড়া সংরক্ষিত হয়েছে! শিক্ষার্থী অনুপস্থিত থাকায় অভিভাবক (${guardianPhone})-কে স্বয়ংক্রিয় এসএমএস নোটিফিকেশন পাঠানো হয়েছে।`);
+          alert(`পড়া সংরক্ষিত হয়েছে! শিক্ষার্থী অনুপস্থিত থাকায় অভিভাবক (${guardianPhone})-কে SMS নোটিফিকেশন পাঠানো হয়েছে।`);
         } else {
           alert("পড়া ও উপস্থিতি সফলভাবে সংরক্ষিত হয়েছে!");
         }
