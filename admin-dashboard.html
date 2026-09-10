@@ -26,7 +26,8 @@
       border-radius: 8px;
     }
     .teacher-table th, .teacher-table td,
-    .ledger-table th, .ledger-table td {
+    .ledger-table th, .ledger-table td,
+    .app-table th, .app-table td {
       white-space: nowrap;
       vertical-align: middle;
       padding: 8px 6px;
@@ -63,6 +64,9 @@
         <i class="fa-solid fa-gauge-high me-2"></i>JTQ মাদ্রাসা অ্যাডমিন কন্ট্রোল
       </a>
       <div class="d-flex gap-2">
+        <a href="admission-apply.html" target="_blank" class="btn btn-warning btn-sm text-dark fw-bold">
+          <i class="fa-solid fa-globe me-1"></i> অনলাইন ভর্তি ফরম লিংক
+        </a>
         <a href="id-admit-card.html" class="btn btn-outline-info btn-sm">
           <i class="fa-solid fa-id-badge me-1"></i> আইডি ও প্রবেশপত্র
         </a>
@@ -78,7 +82,7 @@
 
   <div class="container py-4">
     
-    <!-- ৭টি প্রধান ট্যাব নেভিগেশন -->
+    <!-- ৮টি প্রধান ট্যাব নেভিগেশন (অনলাইন আবেদন যাচাই সহ) -->
     <ul class="nav nav-pills nav-fill mb-4 p-2 bg-white rounded shadow-sm gap-1" id="adminTabs">
       <li class="nav-item">
         <button class="nav-link active fw-bold small" id="tabAdmissionBtn" onclick="switchAdminTab('admission')">
@@ -86,33 +90,38 @@
         </button>
       </li>
       <li class="nav-item">
+        <button class="nav-link fw-bold text-dark small" id="tabAppReviewBtn" onclick="switchAdminTab('appReview')">
+          <i class="fa-solid fa-address-book me-1 text-primary"></i> ২. অনলাইন ভর্তি আবেদনসমূহ
+        </button>
+      </li>
+      <li class="nav-item">
         <button class="nav-link fw-bold text-dark small" id="tabExamBtn" onclick="switchAdminTab('exam')">
-          <i class="fa-solid fa-square-poll-vertical me-1 text-primary"></i> ২. পরীক্ষার ফলাফল
+          <i class="fa-solid fa-square-poll-vertical me-1 text-primary"></i> ৩. পরীক্ষার ফলাফল
         </button>
       </li>
       <li class="nav-item">
         <button class="nav-link fw-bold text-dark small" id="tabSearchBtn" onclick="switchAdminTab('search')">
-          <i class="fa-solid fa-magnifying-glass-chart me-1 text-warning"></i> ৩. ছাত্র হিস্ট্রি
+          <i class="fa-solid fa-magnifying-glass-chart me-1 text-warning"></i> ৪. ছাত্র হিস্ট্রি
         </button>
       </li>
       <li class="nav-item">
         <button class="nav-link fw-bold text-dark small" id="tabFeeApprovalBtn" onclick="switchAdminTab('feeApproval')">
-          <i class="fa-solid fa-money-bill-circle-check me-1 text-danger"></i> ৪. ফি অনুমোদন
+          <i class="fa-solid fa-money-bill-circle-check me-1 text-danger"></i> ৫. ফি অনুমোদন
         </button>
       </li>
       <li class="nav-item">
         <button class="nav-link fw-bold text-dark small" id="tabTeacherBtn" onclick="switchAdminTab('teachers')">
-          <i class="fa-solid fa-chalkboard-user me-1 text-success"></i> ৫. শিক্ষক ও বেতন
+          <i class="fa-solid fa-chalkboard-user me-1 text-success"></i> ৬. শিক্ষক ও বেতন
         </button>
       </li>
       <li class="nav-item">
         <button class="nav-link fw-bold text-dark small" id="tabNoticeBtn" onclick="switchAdminTab('noticeManage')">
-          <i class="fa-solid fa-bullhorn me-1 text-info"></i> ৬. নোটিশ জারি
+          <i class="fa-solid fa-bullhorn me-1 text-info"></i> ৭. নোটিশ জারি
         </button>
       </li>
       <li class="nav-item">
         <button class="nav-link fw-bold text-dark small" id="tabAccountsBtn" onclick="switchAdminTab('accounts')">
-          <i class="fa-solid fa-scale-balanced me-1 text-success"></i> ৭. আয়-ব্যয় ও হিসাব
+          <i class="fa-solid fa-scale-balanced me-1 text-success"></i> ৮. আয়-ব্যয় ও হিসাব
         </button>
       </li>
     </ul>
@@ -158,7 +167,6 @@
                 </div>
               </div>
 
-              <!-- মাসিক নির্ধারিত বেতন ইনপুট -->
               <div class="p-3 border rounded bg-light mb-3 border-start border-danger border-4">
                 <div class="row g-2 align-items-center">
                   <div class="col-md-6">
@@ -264,12 +272,14 @@
           </div>
         </div>
 
-        <!-- ডানে: ভর্তি হওয়া শিক্ষার্থীর তালিকা (মুছে ফেলার ডিলিট অপশনসহ) -->
         <div class="col-lg-5">
           <div class="card border-0 shadow-sm p-4 bg-white mb-4 sticky-top" style="top: 20px;">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-users me-2 text-primary"></i>ভর্তি হওয়া শিক্ষার্থী</h5>
-              <a href="student-list.html" class="btn btn-outline-success btn-sm">পূর্ণ তালিকা</a>
+              <!-- এক্সেল এক্সপোর্ট বোতাম -->
+              <button class="btn btn-success btn-sm fw-bold shadow-sm" onclick="exportStudentsToExcel()">
+                <i class="fa-solid fa-file-excel me-1"></i> এক্সেল ডাউনলোড
+              </button>
             </div>
             <div class="table-responsive">
               <table class="table table-hover align-middle small text-center mb-0">
@@ -292,7 +302,42 @@
       </div>
     </div>
 
-    <!-- ================= ২. পরীক্ষার ফলাফল ================= -->
+    <!-- ================= ২. অনলাইন ভর্তি আবেদনসমূহ (নতুন সংযোজন) ================= -->
+    <div id="appReviewSection" style="display: none;">
+      <div class="card border-0 shadow-sm p-4 bg-white border-top border-primary border-4">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+          <div>
+            <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-address-book me-2 text-primary"></i>অনলাইনে আসা নতুন ভর্তি আবেদনসমূহ</h5>
+            <small class="text-muted">অভিভাবকদের পাঠানো আবেদন যাচাই করে সরাসরি ভর্তি করুন অথবা বাতিল করুন।</small>
+          </div>
+          <button class="btn btn-primary btn-sm fw-semibold" onclick="loadAdmissionApplications()">
+            <i class="fa-solid fa-rotate me-1"></i> তালিকা রিফ্রেশ
+          </button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover app-table align-middle text-center mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>ছবি</th>
+                <th>ট্র্যাকিং আইডি</th>
+                <th>শিক্ষার্থীর নাম</th>
+                <th>বিভাগ ও ব্যবস্থা</th>
+                <th>পিতার নাম ও মোবাইল</th>
+                <th>জন্ম নিবন্ধন নং</th>
+                <th>আবেদনের তারিখ</th>
+                <th>অ্যাকশন (ভর্তি / বাতিল)</th>
+              </tr>
+            </thead>
+            <tbody id="applicantTableBody">
+              <tr><td colspan="8" class="text-muted py-3">আবেদন লোড হচ্ছে...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= ৩. পরীক্ষার ফলাফল ================= -->
     <div id="examSection" style="display: none;">
       <div class="row justify-content-center">
         <div class="col-lg-9">
@@ -334,7 +379,7 @@
       </div>
     </div>
 
-    <!-- ================= ৩. শিক্ষার্থী অনুসন্ধান ================= -->
+    <!-- ================= ৪. শিক্ষার্থী অনুসন্ধান ================= -->
     <div id="searchSection" style="display: none;">
       <div class="card border-0 shadow-sm p-4 bg-white mb-4 border-top border-warning border-4">
         <h4 class="fw-bold text-dark mb-2"><i class="fa-solid fa-magnifying-glass me-2 text-warning"></i>শিক্ষার্থী তথ্য ও অগ্রগতি অনুসন্ধান</h4>
@@ -382,7 +427,7 @@
       </div>
     </div>
 
-    <!-- ================= ৪. অনলাইন ফি যাচাই ও অনুমোদন ================= -->
+    <!-- ================= ৫. অনলাইন ফি যাচাই ও অনুমোদন ================= -->
     <div id="feeApprovalSection" style="display: none;">
       <div class="card border-0 shadow-sm p-4 bg-white border-top border-danger border-4">
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
@@ -405,7 +450,7 @@
       </div>
     </div>
 
-    <!-- ================= ৫. শিক্ষক তালিকা ও বেতন প্রদান ================= -->
+    <!-- ================= ৬. শিক্ষক তালিকা ও বেতন প্রদান ================= -->
     <div id="teacherSection" style="display: none;">
       <div class="row g-4">
         <div class="col-lg-4">
@@ -434,8 +479,11 @@
         <div class="col-lg-8">
           <div class="card border-0 shadow-sm p-4 bg-white">
             <div class="d-flex justify-content-between align-items-center mb-3">
-              <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-users-rectangle me-2 text-primary"></i>মাদ্রাসার শিক্ষকবৃন্দ ও বেতন প্রদান</h5>
-              <span class="badge bg-success" id="totalTeachersCount">০ জন</span>
+              <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-users-rectangle me-2 text-primary"></i>মাদ্রাসার শিক্ষকবৃন্দ ও বেতন</h5>
+              <!-- শিক্ষক এক্সেল এক্সপোর্ট -->
+              <button class="btn btn-success btn-sm fw-bold shadow-sm" onclick="exportTeachersToExcel()">
+                <i class="fa-solid fa-file-excel me-1"></i> শিক্ষক তালিকা এক্সেল
+              </button>
             </div>
             <div class="table-responsive">
               <table class="table table-bordered table-hover teacher-table text-center align-middle mb-0">
@@ -452,7 +500,7 @@
       </div>
     </div>
 
-    <!-- ================= ৬. নোটিশ জারি ================= -->
+    <!-- ================= ৭. নোটিশ জারি ================= -->
     <div id="noticeManageSection" style="display: none;">
       <div class="row g-4">
         <div class="col-lg-5">
@@ -484,7 +532,7 @@
       </div>
     </div>
 
-    <!-- ================= ৭. আয়-ব্যয় ও হিসাবরক্ষণ ================= -->
+    <!-- ================= ৮. আয়-ব্যয় ও হিসাবরক্ষণ ================= -->
     <div id="accountsSection" style="display: none;">
       <div class="row g-3 mb-4">
         <div class="col-md-4">
@@ -574,8 +622,11 @@
         <div class="col-lg-7">
           <div class="card border-0 shadow-sm p-4 bg-white">
             <div class="d-flex justify-content-between align-items-center mb-3">
-              <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-book-bookmark me-2 text-primary"></i>মাদ্রাসার সামগ্রিক লেনদেন খতিয়ান (Ledger)</h5>
-              <button class="btn btn-outline-success btn-sm" onclick="loadAccountsData()"><i class="fa-solid fa-rotate me-1"></i> রিফ্রেশ</button>
+              <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-book-bookmark me-2 text-primary"></i>মাদ্রাসার লেনদেন খতিয়ান (Ledger)</h5>
+              <!-- লেজার এক্সেল এক্সপোর্ট বোতাম -->
+              <button class="btn btn-success btn-sm fw-bold shadow-sm" onclick="exportLedgerToExcel()">
+                <i class="fa-solid fa-file-excel me-1"></i> খতিয়ান এক্সেল ডাউনলোড
+              </button>
             </div>
             <div class="table-responsive">
               <table class="table table-bordered table-hover ledger-table text-center mb-0">
@@ -710,8 +761,10 @@
     document.getElementById('expDate').value = new Date().toISOString().split('T')[0];
     document.getElementById('salPayDate').value = new Date().toISOString().split('T')[0];
 
+    // ৮টি ট্যাব সুইচার
     function switchAdminTab(tab) {
       const aSec = document.getElementById('admissionSection');
+      const appSec = document.getElementById('appReviewSection');
       const eSec = document.getElementById('examSection');
       const sSec = document.getElementById('searchSection');
       const fSec = document.getElementById('feeApprovalSection');
@@ -720,6 +773,7 @@
       const accSec = document.getElementById('accountsSection');
       
       const aBtn = document.getElementById('tabAdmissionBtn');
+      const appBtn = document.getElementById('tabAppReviewBtn');
       const eBtn = document.getElementById('tabExamBtn');
       const sBtn = document.getElementById('tabSearchBtn');
       const fBtn = document.getElementById('tabFeeApprovalBtn');
@@ -727,14 +781,17 @@
       const nBtn = document.getElementById('tabNoticeBtn');
       const accBtn = document.getElementById('tabAccountsBtn');
 
-      [aSec, eSec, sSec, fSec, tSec, nSec, accSec].forEach(el => el.style.display = 'none');
-      [aBtn, eBtn, sBtn, fBtn, tBtn, nBtn, accBtn].forEach(btn => {
+      [aSec, appSec, eSec, sSec, fSec, tSec, nSec, accSec].forEach(el => el.style.display = 'none');
+      [aBtn, appBtn, eBtn, sBtn, fBtn, tBtn, nBtn, accBtn].forEach(btn => {
         btn.classList.remove('active');
         btn.classList.add('text-dark');
       });
 
       if (tab === 'admission') {
         aSec.style.display = 'block'; aBtn.classList.add('active'); aBtn.classList.remove('text-dark');
+      } else if (tab === 'appReview') {
+        appSec.style.display = 'block'; appBtn.classList.add('active'); appBtn.classList.remove('text-dark');
+        loadAdmissionApplications();
       } else if (tab === 'exam') {
         eSec.style.display = 'block'; eBtn.classList.add('active'); eBtn.classList.remove('text-dark');
       } else if (tab === 'search') {
@@ -754,7 +811,7 @@
       }
     }
 
-    // ================== ১. ছাত্র ভর্তি ও তালিকা (ডিলিট বাটনসহ) ==================
+    // ================== ১. ছাত্র ভর্তি ও তালিকা ==================
     let base64Image = "";
     document.getElementById('studentPhotoInput').addEventListener('change', function(e) {
       const file = e.target.files[0];
@@ -776,7 +833,6 @@
       document.getElementById('perDistrict').value = document.getElementById('preDistrict').value;
     });
 
-    // ছাত্র তালিকা রেন্ডার (ডানপাশে লাল ডিলিট বাটন যুক্ত)
     db.collection("students").onSnapshot((snapshot) => {
       const tbody = document.getElementById('studentTableBody');
       tbody.innerHTML = "";
@@ -804,16 +860,10 @@
       });
     });
 
-    // ছাত্র মুছে ফেলার ফাংশন (Delete Student)
     function deleteStudent(studentId, studentName) {
-      if (!confirm(`আপনি কি নিশ্চিত যে শিক্ষার্থী "${studentName}" (${studentId})-কে মাদ্রাসা রেজিস্টার থেকে সম্পূর্ণ মুছে ফেলতে চান?`)) {
-        return;
-      }
-
+      if (!confirm(`আপনি কি নিশ্চিত যে শিক্ষার্থী "${studentName}" (${studentId})-কে মুছে ফেলতে চান?`)) return;
       db.collection("students").doc(studentId).delete().then(() => {
-        alert(`শিক্ষার্থী "${studentName}" (${studentId})-এর তথ্য সফলভাবে মুছে ফেলা হয়েছে।`);
-      }).catch((err) => {
-        alert("ত্রুটি: " + err.message);
+        alert(`শিক্ষার্থী "${studentName}"-এর তথ্য মুছে ফেলা হয়েছে।`);
       });
     }
 
@@ -884,7 +934,206 @@
       });
     });
 
-    // ================== ২. পরীক্ষা কোড ==================
+    // ================== ২. অনলাইন ভর্তি আবেদন যাচাই ও সরাসরি ভর্তি ==================
+    let applicantsCache = [];
+
+    async function loadAdmissionApplications() {
+      const tbody = document.getElementById('applicantTableBody');
+      tbody.innerHTML = `<tr><td colspan="8" class="text-muted py-3"><div class="spinner-border spinner-border-sm text-primary me-2"></div>আবেদন লোড হচ্ছে...</td></tr>`;
+      applicantsCache = [];
+
+      try {
+        const snap = await db.collection("admission_applications").where("status", "==", "অপেক্ষমান (Pending)").get();
+        tbody.innerHTML = "";
+        if (snap.empty) {
+          tbody.innerHTML = `<tr><td colspan="8" class="text-muted py-3">বর্তমানে কোনো নতুন অপেক্ষমান ভর্তি আবেদন নেই।</td></tr>`;
+          return;
+        }
+
+        snap.forEach(doc => {
+          const app = doc.data();
+          applicantsCache.push(app);
+
+          tbody.innerHTML += `
+            <tr>
+              <td><img src="${app.photo}" class="rounded-circle" style="width:38px; height:38px; object-fit:cover;"></td>
+              <td><code class="fw-bold text-danger">${app.trackingId}</code></td>
+              <td class="fw-bold text-dark text-start px-2">${app.nameBn}<br><small class="text-muted">${app.nameEn || ''}</small></td>
+              <td><span class="badge bg-success">${app.department}</span><br><small class="badge bg-light text-dark border">${app.residency || 'অনাবাসিক'}</small></td>
+              <td class="text-start">${app.fatherBn}<br><a href="tel:${app.phone}" class="fw-bold text-success">${app.phone}</a></td>
+              <td><small>${app.studentRegNo || '-'}</small></td>
+              <td><small class="text-muted">${app.submittedAt ? (app.submittedAt.toDate ? app.submittedAt.toDate().toLocaleDateString('bn-BD') : '') : '-'}</small></td>
+              <td>
+                <div class="d-flex gap-1 justify-content-center">
+                  <button class="btn btn-sm btn-success fw-bold px-2 py-1" onclick="approveAndEnrollApplicant('${app.trackingId}')" title="ভর্তি নিশ্চিত করুন">
+                    <i class="fa-solid fa-check me-1"></i>ভর্তি করুন
+                  </button>
+                  <button class="btn btn-sm btn-outline-danger fw-bold px-2 py-1" onclick="rejectApplicant('${app.trackingId}')" title="বাতিল করুন">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          `;
+        });
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="8" class="text-danger">ত্রুটি: ${err.message}</td></tr>`;
+      }
+    }
+
+    // আবেদনকারীকে সরাসরি মূল ছাত্র তালিকায় ভর্তি করা
+    async function approveAndEnrollApplicant(trackingId) {
+      const app = applicantsCache.find(a => a.trackingId === trackingId);
+      if (!app) return;
+
+      const currentYear = new Date().getFullYear();
+      const defaultId = `JTQ-${currentYear}-${Math.floor(1000 + Math.random() * 9000)}`;
+      const assignedId = prompt(`শিক্ষার্থীর জন্য Student ID নির্ধারণ করুন:`, defaultId);
+      if (!assignedId) return;
+
+      const rollNumber = prompt(`শ্রেণি রোল নম্বর লিখুন:`, "০১");
+
+      try {
+        const studentObj = {
+          studentId: assignedId.trim(),
+          admissionDate: new Date().toISOString().split('T')[0],
+          monthlyFeeRate: 1000,
+          nameBn: app.nameBn,
+          nameEn: app.nameEn || "",
+          nameAr: app.nameAr || "",
+          name: app.nameBn,
+          fatherBn: app.fatherBn,
+          fatherEn: app.fatherEn || "",
+          father: app.fatherBn,
+          fatherNid: app.fatherNid || "",
+          motherBn: app.motherBn,
+          motherEn: app.motherEn || "",
+          mother: app.motherBn,
+          motherNid: app.motherNid || "",
+          studentRegNo: app.studentRegNo || "",
+          phone: app.phone,
+          dob: app.dob || "",
+          department: app.department,
+          roll: rollNumber || "০১",
+          bloodGroup: app.bloodGroup || "অজানা",
+          photo: app.photo || "https://via.placeholder.com/130",
+          password: "jtq@" + (app.phone ? app.phone.slice(-4) : "12345"),
+          presentAddress: app.presentAddress || {},
+          permanentAddress: app.permanentAddress || {},
+          attendance: "১০০%",
+          result: "অপেক্ষমান",
+          due: "০.০০ ৳"
+        };
+
+        // ১. মূল ছাত্রদের তালিকায় যুক্ত করা
+        await db.collection("students").doc(assignedId.trim()).set(studentObj);
+
+        // ২. আবেদন স্ট্যাটাস সম্পন্ন করা
+        await db.collection("admission_applications").doc(trackingId).update({
+          status: "ভর্তি সম্পন্ন (Enrolled)",
+          assignedStudentId: assignedId.trim(),
+          enrolledAt: new Date()
+        });
+
+        alert(`মাশাআল্লাহ! শিক্ষার্থী "${app.nameBn}" সফলভাবে ভর্তি হয়েছেন।\nStudent ID: ${assignedId}\nলগইন পাসওয়ার্ড: ${studentObj.password}`);
+        loadAdmissionApplications();
+      } catch (err) {
+        alert("ত্রুটি: " + err.message);
+      }
+    }
+
+    async function rejectApplicant(trackingId) {
+      if (!confirm("আপনি কি নিশ্চিত যে এই আবেদনটি বাতিল করতে চান?")) return;
+      try {
+        await db.collection("admission_applications").doc(trackingId).update({
+          status: "বাতিল (Rejected)",
+          rejectedAt: new Date()
+        });
+        alert("আবেদনটি বাতিল করা হয়েছে।");
+        loadAdmissionApplications();
+      } catch (err) {
+        alert("ত্রুটি: " + err.message);
+      }
+    }
+
+    // ================== এক্সেল / সিএসভি এক্সপোর্ট ইঞ্জিন ==================
+    function downloadCSV(csvContent, fileName) {
+      const blob = new Blob(["\uFEFF" + csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.setAttribute("download", fileName);
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    // ১. শিক্ষার্থী রেজিস্টার এক্সেল এক্সপোর্ট
+    async function exportStudentsToExcel() {
+      try {
+        const snap = await db.collection("students").get();
+        if (snap.empty) { alert("কোনো শিক্ষার্থীর তথ্য পাওয়া যায়নি!"); return; }
+
+        let csv = "Student ID,নাম (বাংলা),Name (English),বিভাগ,রোল,মোবাইল,পিতার নাম,মাতার নাম,জন্ম নিবন্ধন,রক্তের গ্রুপ,ভর্তির তারিখ,বকেয়া\n";
+        snap.forEach(doc => {
+          const d = doc.data();
+          csv += `"${d.studentId || ''}","${d.nameBn || d.name || ''}","${d.nameEn || ''}","${d.department || ''}","${d.roll || ''}","${d.phone || ''}","${d.fatherBn || d.father || ''}","${d.motherBn || d.mother || ''}","${d.studentRegNo || ''}","${d.bloodGroup || ''}","${d.admissionDate || ''}","${d.due || '০ ৳'}"\n`;
+        });
+
+        downloadCSV(csv, `JTQ_Student_Register_${new Date().toISOString().split('T')[0]}.csv`);
+      } catch (err) {
+        alert("এক্সপোর্ট ত্রুটি: " + err.message);
+      }
+    }
+
+    // ২. শিক্ষক তালিকা এক্সেল এক্সপোর্ট
+    async function exportTeachersToExcel() {
+      try {
+        const snap = await db.collection("teachers").get();
+        if (snap.empty) { alert("কোনো শিক্ষকের তথ্য পাওয়া যায়নি!"); return; }
+
+        let csv = "শিক্ষক আইডি,নাম,পদবি,বিভাগ,মূল বেতন (টাকা),মোবাইল,পাসওয়ার্ড,যোগদানের তারিখ\n";
+        snap.forEach(doc => {
+          const d = doc.data();
+          csv += `"${d.teacherId || ''}","${d.name || ''}","${d.designation || ''}","${d.department || ''}","${d.salary || 0}","${d.phone || ''}","${d.password || ''}","${d.joiningDate || ''}"\n`;
+        });
+
+        downloadCSV(csv, `JTQ_Teachers_List_${new Date().toISOString().split('T')[0]}.csv`);
+      } catch (err) {
+        alert("এক্সপোর্ট ত্রুটি: " + err.message);
+      }
+    }
+
+    // ৩. মাদ্রাসার আয়-ব্যয় খতিয়ান এক্সেল এক্সপোর্ট
+    async function exportLedgerToExcel() {
+      try {
+        let csv = "তারিখ,লেনদেনের ধরন,খাত ও বিবরণ,মাধ্যম,টাকার পরিমাণ\n";
+
+        // আয়
+        const studentsSnap = await db.collection("students").get();
+        for (const sDoc of studentsSnap.docs) {
+          const sName = sDoc.data().nameBn || sDoc.data().name || sDoc.id;
+          const feeSnap = await sDoc.ref.collection("online_fee_submissions").where("status", "==", "অনুমোদিত (Approved)").get();
+          feeSnap.forEach(f => {
+            const fd = f.data();
+            csv += `"${fd.date || ''}","আয় (Income)","${fd.purpose || fd.category} - ছাত্র: ${sName}","${fd.method || ''}","+${fd.amount}"\n`;
+          });
+        }
+
+        // ব্যয়
+        const expSnap = await db.collection("accounts_expenses").get();
+        expSnap.forEach(e => {
+          const ed = e.data();
+          csv += `"${ed.date || ''}","ব্যয় (Expense)","${ed.category} - গ্রহীতা: ${ed.recipient} (${ed.note || ''})","${ed.method || ''}","-${ed.amount} ৳"\n`;
+        });
+
+        downloadCSV(csv, `JTQ_Accounts_Ledger_${new Date().toISOString().split('T')[0]}.csv`);
+      } catch (err) {
+        alert("এক্সপোর্ট ত্রুটি: " + err.message);
+      }
+    }
+
+    // ================== ৩. পরীক্ষা কোড ==================
     document.getElementById('examPublishDate').value = new Date().toISOString().split('T')[0];
 
     function fetchCurrentExamData() {
@@ -948,7 +1197,7 @@
         });
     });
 
-    // ================== ৩. শিক্ষার্থী অনুসন্ধান ==================
+    // ================== ৪. শিক্ষার্থী অনুসন্ধান ==================
     document.getElementById('searchProfileForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const sId = document.getElementById('searchStudentId').value.trim();
@@ -997,7 +1246,6 @@
         document.getElementById('sumTotalDue').innerText = "বকেয়া: " + (s.due || "০.০০ ৳");
 
         loadExamReports(sId);
-        loadSabakHistory(sId);
       }).catch((err) => {
         alert("ত্রুটি: " + err.message);
       }).finally(() => {
@@ -1019,43 +1267,7 @@
       });
     }
 
-    function loadSabakHistory(sId) {
-      const tbody = document.getElementById('viewSabakTableBody');
-      tbody.innerHTML = `<tr><td colspan="6">লোড হচ্ছে...</td></tr>`;
-
-      db.collection("students").doc(sId).collection("daily_sabak").orderBy("date", "desc").limit(7).get().then((snapshot) => {
-        tbody.innerHTML = "";
-        if (snapshot.empty) {
-          tbody.innerHTML = `<tr><td colspan="6" class="text-muted">কোনো রেকর্ড নেই</td></tr>`;
-          document.getElementById('sumSabakActive').innerText = "কোনো সবক নেই";
-          document.getElementById('sumLastSabakRead').innerText = "পড়া অনিয়মিত";
-          return;
-        }
-
-        let isFirst = true;
-        snapshot.forEach((doc) => {
-          const r = doc.data();
-          if (isFirst) {
-            document.getElementById('sumSabakActive').innerText = "নিয়মিত পড়ছে";
-            document.getElementById('sumLastSabakRead').innerText = `পারা: ${r.sabakPara || '-'}, পৃষ্ঠা: ${r.sabakPage || '-'}`;
-            document.getElementById('sumLastSabakDate').innerText = r.date;
-            isFirst = false;
-          }
-          tbody.innerHTML += `
-            <tr>
-              <td><strong>${r.date}</strong><br><small class="text-muted">${r.day}</small></td>
-              <td><span class="badge bg-success">পারা: ${r.sabakPara || '-'}, পৃষ্ঠা: ${r.sabakPage || '-'}` + `</span></td>
-              <td>পারা: ${r.satPara || '-'}, পৃষ্ঠা: ${r.satPage || '-'}</td>
-              <td>পারা: ${r.amukhPara || '-'}, পৃষ্ঠা: ${r.amukhPage || '-'}</td>
-              <td>${r.dailyTilawat || '-'}</td>
-              <td>${r.teacherName || '-'}</td>
-            </tr>
-          `;
-        });
-      });
-    }
-
-    // ================== ৪. অনলাইন ফি অনুমোদন ==================
+    // ================== ৫. অনলাইন ফি অনুমোদন ==================
     let pendingFeeList = [];
 
     async function loadPendingOnlinePayments() {
@@ -1239,7 +1451,7 @@
       }
     }
 
-    // ================== ৫. শিক্ষক তালিকা ==================
+    // ================== ৬. শিক্ষক তালিকা ==================
     let teacherBase64 = "";
     document.getElementById('teacherPhotoInput').addEventListener('change', function(e) {
       const file = e.target.files[0];
@@ -1396,7 +1608,7 @@
       }
     });
 
-    // ================== ৬. নোটিশ জারি ==================
+    // ================== ৭. নোটিশ জারি ==================
     document.getElementById('adminNoticePublishForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const btn = document.getElementById('admPublishNoticeBtn');
@@ -1455,7 +1667,7 @@
       });
     }
 
-    // ================== ৭. হিসাবরক্ষণ লোড ==================
+    // ================== ৮. হিসাবরক্ষণ ও চার্ট ==================
     let barChartInstance = null;
     let pieChartInstance = null;
 
