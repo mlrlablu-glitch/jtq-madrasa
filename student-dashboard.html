@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ছাত্র ড্যাশবোর্ড ও অনলাইন ফি - JTQ মাদ্রাসা</title>
+  <title>ছাত্র ড্যাশবোর্ড ও হিফজ ট্র্যাকার - JTQ মাদ্রাসা</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
@@ -15,12 +15,41 @@
       padding: 6px 3px;
       font-size: 12px;
     }
-    .diary-table th {
-      background-color: #f1f8f4;
-    }
+    .diary-table th { background-color: #f1f8f4; }
     .nav-pills .nav-link.active {
       background-color: #198754 !important;
       color: #fff !important;
+    }
+
+    /* হিফজ ট্র্যাকার ও গ্রিড স্টাইল */
+    .para-grid-card {
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      padding: 10px 6px;
+      text-align: center;
+      background: #ffffff;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+    .para-grid-card.completed {
+      background: #d1e7dd;
+      border-color: #198754;
+      color: #0f5132;
+      box-shadow: 0 2px 6px rgba(25, 135, 84, 0.2);
+    }
+    .para-grid-card.running {
+      background: #cfe2ff;
+      border-color: #0d6efd;
+      color: #084298;
+      box-shadow: 0 2px 6px rgba(13, 110, 253, 0.2);
+    }
+    .para-number {
+      font-size: 16px;
+      font-weight: 800;
+    }
+    .para-status-text {
+      font-size: 11px;
+      font-weight: 600;
     }
 
     /* মানি রসিদ ভাউচার ডিজাইন */
@@ -54,16 +83,18 @@
       transform: rotate(-10deg);
       letter-spacing: 1px;
     }
+    .fee-history-table th, .fee-history-table td {
+      white-space: nowrap;
+      vertical-align: middle;
+      font-size: 12px;
+      padding: 8px 6px;
+    }
 
-    /* প্রিন্ট সেটিংস */
     @media print {
-      body * {
-        visibility: hidden;
-      }
-      #printableReceiptArea, #printableReceiptArea * {
-        visibility: visible;
-      }
-      #printableReceiptArea {
+      body * { visibility: hidden; }
+      #printableA4, #printableA4 *,
+      #printableReceiptArea, #printableReceiptArea * { visibility: visible; }
+      #printableA4, #printableReceiptArea {
         position: absolute;
         left: 0;
         top: 0;
@@ -71,9 +102,7 @@
         margin: 0 !important;
         padding: 15px !important;
       }
-      .no-print {
-        display: none !important;
-      }
+      .no-print { display: none !important; }
     }
   </style>
 </head>
@@ -95,26 +124,31 @@
 
   <div class="container py-4">
     
-    <!-- ৩টি প্রধান ট্যাব নেভিগেশন -->
-    <ul class="nav nav-pills nav-fill mb-4 p-2 bg-white rounded shadow-sm no-print" id="dashboardTabs">
+    <!-- ৪টি প্রধান ট্যাব নেভিগেশন (হিফজ ট্র্যাকার সহ) -->
+    <ul class="nav nav-pills nav-fill mb-4 p-2 bg-white rounded shadow-sm no-print gap-1" id="dashboardTabs">
       <li class="nav-item">
-        <button class="nav-link active fw-bold" id="tabProfileBtn" onclick="switchTab('profile')">
-          <i class="fa-solid fa-id-card me-1"></i> ১. আমার বিবরণী ও প্রত্যয়ন পত্র
+        <button class="nav-link active fw-bold small" id="tabProfileBtn" onclick="switchTab('profile')">
+          <i class="fa-solid fa-id-card me-1"></i> ১. আমার বিবরণী ও প্রত্যয়ন
         </button>
       </li>
       <li class="nav-item">
-        <button class="nav-link fw-bold text-dark" id="tabSabakBtn" onclick="switchTab('sabak')">
-          <i class="fa-solid fa-book-journal-whills me-1 text-success"></i> ২. দৈনিক, সাপ্তাহিক ও মাসিক সবক রেকর্ড
+        <button class="nav-link fw-bold text-dark small" id="tabHifzBtn" onclick="switchTab('hifz')">
+          <i class="fa-solid fa-book-quran me-1 text-success"></i> ২. হিফজ প্রগ্রেস ট্র্যাকার (৩০ পারা)
         </button>
       </li>
       <li class="nav-item">
-        <button class="nav-link fw-bold text-dark" id="tabFeeBtn" onclick="switchTab('fee')">
-          <i class="fa-solid fa-money-check-dollar me-1 text-primary"></i> ৩. অনলাইন ফি ও স্বয়ংক্রিয় রসিদ
+        <button class="nav-link fw-bold text-dark small" id="tabSabakBtn" onclick="switchTab('sabak')">
+          <i class="fa-solid fa-book-journal-whills me-1 text-warning"></i> ৩. দৈনিক ও সাপ্তাহিক সবক
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link fw-bold text-dark small" id="tabFeeBtn" onclick="switchTab('fee')">
+          <i class="fa-solid fa-money-check-dollar me-1 text-primary"></i> ৪. অনলাইন ফি ও রসিদ
         </button>
       </li>
     </ul>
 
-    <!-- ১. বিবরণী ও প্রত্যয়ন পত্র সেকশন -->
+    <!-- ================= ১. বিবরণী ও প্রত্যয়ন পত্র ================= -->
     <div id="profileSection">
       <div class="d-flex justify-content-end mb-3 no-print">
         <button class="btn btn-success fw-semibold shadow-sm" onclick="window.print()">
@@ -221,7 +255,74 @@
       </div>
     </div>
 
-    <!-- ২. সবক ডায়েরি সেকশন -->
+    <!-- ================= ২. হিফজ প্রগ্রেস ট্র্যাকার (৩০ পারা) - নতুন আকর্ষণীয় ফিচার ================= -->
+    <div id="hifzSection" style="display: none;">
+      
+      <!-- প্রগ্রেস কার্ড ও পার্সেন্টেজ বার -->
+      <div class="card border-0 shadow-sm p-4 bg-white mb-4 border-top border-success border-4">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+          <div>
+            <h4 class="fw-bold text-dark mb-1">
+              <i class="fa-solid fa-book-quran text-success me-2"></i>পবিত্র কুরআনুল কারীম হিফজ প্রগ্রেস ট্র্যাকার
+            </h4>
+            <p class="text-muted small mb-0">প্রতিটি পারার অগ্রগতি সরাসরি শিক্ষক দ্বারা নিরীক্ষিত ও সংরক্ষিত</p>
+          </div>
+          <span class="badge bg-success fs-6 px-3 py-2" id="hifzCompletionBadge">০ পারা সম্পন্ন</span>
+        </div>
+
+        <!-- মোটিভেশনাল টেক্সট ব্যানার -->
+        <div class="alert alert-success d-flex align-items-center p-3 mb-3">
+          <i class="fa-solid fa-star-and-crescent fa-2x text-success me-3"></i>
+          <div>
+            <h6 class="fw-bold text-success mb-1" id="hifzMotivationalText">আলহামদুলিল্লাহ, হিফজ যাত্রা অব্যাহত রয়েছে!</h6>
+            <small class="text-muted">পবিত্র কুরআন মুখস্থ করা আল্লাহর বিশেষ নিয়ামত। নিয়মিত পুনরাবৃত্তি ও আমুখতা ইয়াদ রাখার চাবিকাঠি।</small>
+          </div>
+        </div>
+
+        <!-- লাইভ প্রগ্রেস বার -->
+        <div class="mb-2">
+          <div class="d-flex justify-content-between small fw-bold mb-1">
+            <span>হিফজ সম্পন্নতার হার:</span>
+            <span class="text-success" id="hifzPercentageText">০%</span>
+          </div>
+          <div class="progress" style="height: 22px; border-radius: 50px; background-color: #e9ecef;">
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success fw-bold" id="hifzProgressBar" role="progressbar" style="width: 0%;">
+              ০%
+            </div>
+          </div>
+        </div>
+
+        <!-- ইনডিকেটর নির্দেশিকা -->
+        <div class="d-flex flex-wrap gap-3 mt-3 pt-2 border-top small">
+          <div class="d-flex align-items-center gap-1">
+            <span class="badge bg-success" style="width: 14px; height: 14px; padding: 0;"> </span>
+            <span class="text-muted">হিফজ সম্পন্ন (Passed)</span>
+          </div>
+          <div class="d-flex align-items-center gap-1">
+            <span class="badge bg-primary" style="width: 14px; height: 14px; padding: 0;"> </span>
+            <span class="text-muted">বর্তমানে চলমান (Running)</span>
+          </div>
+          <div class="d-flex align-items-center gap-1">
+            <span class="badge bg-light border" style="width: 14px; height: 14px; padding: 0;"> </span>
+            <span class="text-muted">অবশিষ্ট পারা (Upcoming)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ৩০টি পারার ভিজ্যুয়াল গ্রিড ছক -->
+      <div class="card border-0 shadow-sm p-4 bg-white">
+        <h6 class="fw-bold text-dark border-bottom pb-2 mb-3">
+          <i class="fa-solid fa-grid-2 me-2 text-success"></i>পবিত্র কুরআনের ৩০ পারার ছক
+        </h6>
+
+        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 row-cols-lg-6 g-3" id="quran30ParaGrid">
+          <!-- জাভাস্ক্রিপ্ট দিয়ে ৩০টি পারার কার্ড ডায়নামিক তৈরি হবে -->
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ================= ৩. সবক ডায়েরি সেকশন ================= -->
     <div id="sabakSection" style="display: none;">
       <div class="card border-0 shadow-sm p-4 bg-white mb-4 no-print border-top border-success border-4">
         <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-filter me-2 text-success"></i>পড়ার তথ্য ফিল্টার করুন</h5>
@@ -299,10 +400,9 @@
       </div>
     </div>
 
-    <!-- ৩. অনলাইন ফি ও স্বয়ংক্রিয় রসিদ সেকশন -->
+    <!-- ================= ৪. অনলাইন ফি ও স্বয়ংক্রিয় রসিদ সেকশন ================= -->
     <div id="feeSection" style="display: none;">
       
-      <!-- ফি প্রদানের ফরম -->
       <div class="card border-0 shadow-sm p-4 bg-white mb-4 border-top border-primary border-4 no-print">
         <div class="d-flex justify-content-between align-items-center mb-3">
           <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-receipt me-2 text-primary"></i>অনলাইন ফি ও অনুদান জমা ফরম</h5>
@@ -310,7 +410,7 @@
         </div>
 
         <div class="alert alert-info py-2 px-3 small mb-3">
-          <i class="fa-solid fa-circle-info me-1"></i> <strong>মাদ্রাসার পেমেন্ট নম্বর:</strong> বিকাশ/নগদ/রকেট: <strong>01700-000000</strong> | ব্যাংক: <strong>ইসলামী ব্যাংক, হিসাব নং: ২০৫০XXXXXXXXX</strong>
+          <i class="fa-solid fa-circle-info me-1"></i> <strong>মাদ্রাসার পেমেন্ট নম্বর:</strong> বিকাশ/নগদ/রকেট: <strong>01700-000000</strong> | ব্যাংক: <strong>ইসলামী ব্যাংক, হিসাব নং: ২০৫০XXXXXXXXX</strong> | <strong>হাতে হাতে জমা:</strong> মাদ্রাসা হিসাব শাখায় রশিদসহ জমা দিন।
         </div>
 
         <form id="onlinePaymentForm">
@@ -354,23 +454,24 @@
 
           <div class="row g-2 mb-3">
             <div class="col-md-6">
-              <label class="form-label small fw-semibold">টাকার পরিমাণ (টাকা)</label>
+              <label class="form-label small fw-semibold">পরিশোধিত টাকার পরিমাণ (টাকা)</label>
               <input type="number" class="form-control form-control-sm" id="payAmount" placeholder="যেমন: ১০০০" required>
             </div>
             <div class="col-md-6">
-              <label class="form-label small fw-semibold">টাকা পাঠানোর তারিখ</label>
+              <label class="form-label small fw-semibold">টাকা জমা / পাঠানোর তারিখ</label>
               <input type="date" class="form-control form-control-sm" id="payDate" required>
             </div>
           </div>
 
           <div class="row g-2 mb-3">
             <div class="col-md-4">
-              <label class="form-label small fw-semibold">কীভাবে টাকা পাঠিয়েছেন?</label>
+              <label class="form-label small fw-semibold">কীভাবে টাকা পাঠিয়েছেন বা দিয়েছেন?</label>
               <select class="form-select form-select-sm fw-bold border-primary" id="payMethod" onchange="togglePaymentFields()" required>
                 <option value="বিকাশ (bKash)">বিকাশ (bKash)</option>
                 <option value="নগদ (Nagad)">নগদ (Nagad)</option>
                 <option value="রকেট (Rocket)">রকেট (Rocket)</option>
                 <option value="ব্যাংক ট্রান্সফার (Bank)">ব্যাংক ট্রান্সফার (Bank Transfer)</option>
+                <option value="হাতে হাতে ক্যাশ জমা (Hand Cash)">হাতে হাতে ক্যাশ জমা (Hand Cash)</option>
               </select>
             </div>
 
@@ -382,6 +483,11 @@
             <div class="col-md-4" id="mfsTrxDiv">
               <label class="form-label small fw-semibold">ট্রানজেকশন আইডি (TrxID)</label>
               <input type="text" class="form-control form-control-sm" id="payTrxId" placeholder="যেমন: BL72XXXXXX">
+            </div>
+
+            <div class="col-md-8" id="handCashDiv" style="display: none;">
+              <label class="form-label small fw-semibold">কার কাছে ক্যাশ টাকা জমা দিয়েছেন?</label>
+              <input type="text" class="form-control form-control-sm" id="payReceivedBy" placeholder="যেমন: অফিস সহকারী / মুহতামিম সাহেব বরাবর">
             </div>
           </div>
 
@@ -397,24 +503,26 @@
         </form>
       </div>
 
-      <!-- ছাত্রের ট্র্যাকিং ও অনলাইন রসিদ ডাউনলোড তালিকা -->
       <div class="card border-0 shadow-sm p-4 bg-white no-print">
-        <h6 class="fw-bold text-dark mb-3"><i class="fa-solid fa-file-invoice-dollar me-2 text-success"></i>আমার পরিশোধিত ফি ও মানি রসিদ (Invoice)</h6>
+        <h6 class="fw-bold text-dark mb-3"><i class="fa-solid fa-file-invoice-dollar me-2 text-success"></i>আমার পরিশোধিত ফি ও মানি রসিদ (Payment History)</h6>
         <div class="table-responsive">
-          <table class="table table-bordered table-hover align-middle small text-center mb-0">
+          <table class="table table-bordered table-hover fee-history-table align-middle text-center mb-0">
             <thead class="table-light">
               <tr>
-                <th>খাত / উদ্দেশ্য</th>
-                <th>পরিমাণ</th>
-                <th>মাধ্যম</th>
-                <th>প্রেরক ও TrxID</th>
-                <th>তারিখ</th>
+                <th>ক্রমিক</th>
+                <th>ফি প্রদানের উদ্দেশ্য</th>
+                <th>মাস ও সাল</th>
+                <th>পেমেন্ট মেথড</th>
+                <th>Payment Number / হিসাব</th>
+                <th>TrxID / বিবরণ</th>
+                <th>পরিশোধিত টাকার পরিমাণ</th>
+                <th>জমার তারিখ</th>
                 <th>স্ট্যাটাস</th>
                 <th>অফিসিয়াল রসিদ</th>
               </tr>
             </thead>
             <tbody id="onlinePaymentHistoryBody">
-              <tr><td colspan="7" class="text-center text-muted">পেমেন্ট ইতিহাস লোড হচ্ছে...</td></tr>
+              <tr><td colspan="10" class="text-center text-muted">পেমেন্ট ইতিহাস লোড হচ্ছে...</td></tr>
             </tbody>
           </table>
         </div>
@@ -424,7 +532,7 @@
 
   </div>
 
-  <!-- মানি রসিদ প্রিন্ট মোডাল (Popup Invoice) -->
+  <!-- মানি রসিদ প্রিন্ট মোডাল -->
   <div class="modal fade" id="receiptModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content border-0 shadow-lg">
@@ -437,20 +545,17 @@
           <div class="money-receipt-box position-relative">
             <div class="receipt-watermark">PAID</div>
             
-            <!-- রসিদ হেডার -->
             <div class="text-center border-bottom border-success border-2 pb-2 mb-3">
               <h3 class="fw-bold text-success mb-0">জামিয়া তাসলিমুল কুরআন ইসলামিয়া</h3>
               <p class="text-muted small mb-1">বাইপাইল, আশুলিয়া, সাভার, ঢাকা | মোবাইল: 01700-000000</p>
               <span class="badge bg-success px-3 py-1 fs-6">অফিসিয়াল মানি রসিদ / ক্যাশ ভাউচার</span>
             </div>
 
-            <!-- ইনভয়েস মেটা তথ্য -->
             <div class="d-flex justify-content-between align-items-center mb-3 small">
               <div><strong>রসিদ নম্বর:</strong> <span class="text-danger fw-bold" id="rcptInvoiceNo">JTQ-INV-0000</span></div>
               <div><strong>পরিশোধের তারিখ:</strong> <span class="text-dark fw-bold" id="rcptDate">-</span></div>
             </div>
 
-            <!-- ছাত্রের তথ্য টেবিল -->
             <table class="table table-bordered table-sm small mb-3">
               <tbody>
                 <tr>
@@ -474,31 +579,35 @@
               </tbody>
             </table>
 
-            <!-- পেমেন্ট বিবরণী টেবিল -->
             <table class="table table-bordered table-sm text-center small mb-3">
               <thead class="table-light">
                 <tr>
                   <th>ক্রমিক</th>
-                  <th>ফি প্রদানের উদ্দেশ্য / খাত</th>
-                  <th>পেমেন্ট মেথড ও বিবরণ</th>
+                  <th>ফি প্রদানের উদ্দেশ্য</th>
+                  <th>মাস ও সাল</th>
+                  <th>পেমেন্ট মেথড</th>
+                  <th>Payment No / হিসাব</th>
+                  <th>TrxID / বিবরণ</th>
                   <th>পরিশোধিত টাকার পরিমাণ</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>০১</td>
-                  <td class="fw-bold text-start ps-3" id="rcptPurpose">-</td>
-                  <td id="rcptMethodDetail">-</td>
+                  <td class="fw-bold text-start ps-2" id="rcptPurpose">-</td>
+                  <td id="rcptMonthYear">-</td>
+                  <td><span class="badge bg-light text-dark border" id="rcptMethod">-</span></td>
+                  <td id="rcptPaymentNumber">-</td>
+                  <td id="rcptTrxId">-</td>
                   <td class="fw-bold text-success fs-6" id="rcptAmount">০ ৳</td>
                 </tr>
                 <tr class="table-light">
-                  <th colspan="3" class="text-end pe-3">সর্বমোট গৃহীত টাকা:</th>
+                  <th colspan="6" class="text-end pe-3">সর্বমোট গৃহীত টাকা:</th>
                   <th class="text-success fs-6 fw-bold" id="rcptTotalAmount">০ ৳</th>
                 </tr>
               </tbody>
             </table>
 
-            <!-- বকেয়া ও সিল -->
             <div class="d-flex justify-content-between align-items-center mb-4 p-2 bg-light rounded border">
               <div>
                 <span class="small text-muted d-block">অনুমোদন পরবর্তী বর্তমান বকেয়া:</span>
@@ -509,7 +618,6 @@
               </div>
             </div>
 
-            <!-- স্বাক্ষর সেকশন -->
             <div class="row text-center mt-5 pt-3">
               <div class="col-4"><div class="border-top border-dark pt-1 small fw-bold">প্রদানকারী / অভিভাবক</div></div>
               <div class="col-4"><div class="border-top border-dark pt-1 small fw-bold">হিসাবরক্ষক</div></div>
@@ -547,21 +655,26 @@
 
     function switchTab(tab) {
       const pSec = document.getElementById('profileSection');
+      const hSec = document.getElementById('hifzSection');
       const sSec = document.getElementById('sabakSection');
       const fSec = document.getElementById('feeSection');
       
       const pBtn = document.getElementById('tabProfileBtn');
+      const hBtn = document.getElementById('tabHifzBtn');
       const sBtn = document.getElementById('tabSabakBtn');
       const fBtn = document.getElementById('tabFeeBtn');
 
-      [pSec, sSec, fSec].forEach(el => el.style.display = 'none');
-      [pBtn, sBtn, fBtn].forEach(btn => {
+      [pSec, hSec, sSec, fSec].forEach(el => el.style.display = 'none');
+      [pBtn, hBtn, sBtn, fBtn].forEach(btn => {
         btn.classList.remove('active');
         btn.classList.add('text-dark');
       });
 
       if (tab === 'profile') {
         pSec.style.display = 'block'; pBtn.classList.add('active'); pBtn.classList.remove('text-dark');
+      } else if (tab === 'hifz') {
+        hSec.style.display = 'block'; hBtn.classList.add('active'); hBtn.classList.remove('text-dark');
+        renderQuran30ParaGrid();
       } else if (tab === 'sabak') {
         sSec.style.display = 'block'; sBtn.classList.add('active'); sBtn.classList.remove('text-dark');
         applySabakFilter();
@@ -571,43 +684,80 @@
       }
     }
 
-    function toggleFeeCategory() {
-      const cat = document.getElementById('feeCategory').value;
-      const monthDiv = document.getElementById('monthSelectDiv');
-      const yearDiv = document.getElementById('yearSelectDiv');
-      const otherDiv = document.getElementById('otherPurposeDiv');
+    // ================= ৩০ পারা ভিজ্যুয়াল গ্রিড ও প্রগ্রেস ক্যালকুলেটর =================
+    // ৩০ পারার প্রারম্ভিক নামসমূহ
+    const paraNames = [
+      "আলিফ লাম মীম", "সাইয়াকুলু", "তিলকার রুসুল", "লান তানালু", "ওয়াল মুহসানাতু",
+      "লা ইয়ুহিব্বুল্লাহ", "ওয়া ইজা সামিয়ু", "ওয়া লাও আন্নানা", "ক্বালা আল-মালাউ", "ওয়া আ'লামু",
+      "ইয়া’তাজিরুনা", "ওয়ামা মিন দা-ব্বাহ", "ওয়ামা উবাররিউ", "রুবামা", "সুবহানাল্লাজি",
+      "ক্বালা আলাম", "ইক্বতারা বা", "ক্বাদ্ আফলাহা", "ওয়াক্বালা ল্লাজিনা", "আম্মান খালাক্বা",
+      "উতলু মা উহিয়া", "ওয়া মাইঁ-ইয়াক্বনুত", "ওয়ামালিয়া", "ফামান আজলামু", "ইলাইহি ইউরাদ্দু",
+      "হা-মীম", "ক্বালা ফামা খাতবুকুম", "ক্বাদ্ সামিআল্লাহু", "তাবারাকাল্লাজি", "আম্মা ইয়াতাসা-আলুন"
+    ];
 
-      if (cat === "মাসিক বেতন") {
-        monthDiv.style.display = 'block'; yearDiv.style.display = 'block'; otherDiv.style.display = 'none';
-      } else if (cat === "অন্যান্য বিবিধ") {
-        monthDiv.style.display = 'none'; yearDiv.style.display = 'none'; otherDiv.style.display = 'block';
-      } else {
-        monthDiv.style.display = 'none'; yearDiv.style.display = 'block'; otherDiv.style.display = 'none';
-      }
+    function toBn(num) {
+      const bnDigits = {'0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯'};
+      return num.toString().replace(/[0-9]/g, match => bnDigits[match]);
     }
 
-    function togglePaymentFields() {
-      const method = document.getElementById('payMethod').value;
-      const mfsSenderLabel = document.getElementById('mfsSenderLabel');
-      const mfsSenderDiv = document.getElementById('mfsSenderDiv');
-      const mfsTrxDiv = document.getElementById('mfsTrxDiv');
-      const bankDiv = document.getElementById('bankDetailsDiv');
+    function renderQuran30ParaGrid() {
+      const gridContainer = document.getElementById('quran30ParaGrid');
+      gridContainer.innerHTML = "";
 
-      if (method.includes("ব্যাংক")) {
-        mfsSenderDiv.style.display = 'none';
-        mfsTrxDiv.style.display = 'none';
-        bankDiv.style.display = 'flex';
+      // ফায়ারবেস থেকে হিফজ ডেটা (যেমন: completedParas: [1, 2, 3, 4, 5], runningPara: 6)
+      const completedParas = globalStudentData.completedParas || [];
+      const runningPara = globalStudentData.runningPara || (completedParas.length < 30 ? completedParas.length + 1 : 0);
+
+      const totalCompleted = completedParas.length;
+      const percentage = Math.round((totalCompleted / 30) * 100);
+
+      // প্রগ্রেস বার ও টেক্সট আপডেট
+      document.getElementById('hifzCompletionBadge').innerText = `${toBn(totalCompleted)} পারা সম্পন্ন`;
+      document.getElementById('hifzPercentageText').innerText = `${toBn(percentage)}%`;
+      const pBar = document.getElementById('hifzProgressBar');
+      pBar.style.width = `${percentage}%`;
+      pBar.innerText = `${toBn(percentage)}%`;
+
+      // মোটিভেশনাল টেক্সট
+      if (totalCompleted === 30) {
+        document.getElementById('hifzMotivationalText').innerHTML = `মাশাআল্লাহ! পবিত্র কুরআনের ৩০ পারা হিফজ সম্পন্ন হয়েছে! 🎉`;
+      } else if (totalCompleted > 0) {
+        document.getElementById('hifzMotivationalText').innerHTML = `আলহামদুলিল্লাহ, মোট ৩০ পারার মধ্যে <strong>${toBn(totalCompleted)} পারা</strong> হিফজ সম্পন্ন হয়েছে (${toBn(percentage)}%)`;
       } else {
-        mfsSenderDiv.style.display = 'block';
-        mfsTrxDiv.style.display = 'block';
-        bankDiv.style.display = 'none';
-        if(method.includes("বিকাশ")) mfsSenderLabel.innerText = "প্রেরকের বিকাশ নম্বর";
-        else if(method.includes("নগদ")) mfsSenderLabel.innerText = "প্রেরকের নগদ নম্বর";
-        else if(method.includes("রকেট")) mfsSenderLabel.innerText = "প্রেরকের রকেট নম্বর";
+        document.getElementById('hifzMotivationalText').innerHTML = `বিসমিল্লাহির রহমানির রহিম, হিফজের সূচনা অব্যাহত রয়েছে!`;
+      }
+
+      // ১ থেকে ৩০ পারার কার্ড তৈরি
+      for (let p = 1; p <= 30; p++) {
+        const isDone = completedParas.includes(p);
+        const isRun = (p === runningPara && !isDone);
+
+        let cardClass = "para-grid-card";
+        let statusBadge = '<span class="text-muted para-status-text">অবশিষ্ট</span>';
+        let icon = '<i class="fa-regular fa-circle text-muted mb-1"></i>';
+
+        if (isDone) {
+          cardClass += " completed";
+          statusBadge = '<span class="text-success para-status-text"><i class="fa-solid fa-check-double me-1"></i>সম্পন্ন</span>';
+          icon = '<i class="fa-solid fa-circle-check text-success mb-1"></i>';
+        } else if (isRun) {
+          cardClass += " running";
+          statusBadge = '<span class="text-primary para-status-text"><i class="fa-solid fa-spinner fa-spin me-1"></i>চলমান</span>';
+          icon = '<i class="fa-solid fa-book-open text-primary mb-1"></i>';
+        }
+
+        gridContainer.innerHTML += `
+          <div class="col">
+            <div class="${cardClass}">
+              <div>${icon}</div>
+              <div class="para-number">${toBn(p)} পারা</div>
+              <div class="small text-truncate text-secondary" style="font-size: 11px;">${paraNames[p-1]}</div>
+              <div class="mt-1">${statusBadge}</div>
+            </div>
+          </div>
+        `;
       }
     }
-
-    document.getElementById('payDate').value = new Date().toISOString().split('T')[0];
 
     // ছাত্র প্রোফাইল লোড
     db.collection("students").doc(currentId).get().then((doc) => {
@@ -634,7 +784,6 @@
         document.getElementById('diaryStudentRoll').innerText = s.roll;
 
         document.getElementById('paymentCurrentDue').innerText = s.due || "০.০০ ৳";
-        
         if (s.photo) document.getElementById('dashPhoto').src = s.photo;
 
         const pre = s.presentAddress || {};
@@ -654,8 +803,52 @@
         document.getElementById('dashAtt').innerText = s.attendance || "১০০%";
         document.getElementById('dashRes').innerText = s.result || "অপেক্ষমান";
         document.getElementById('dashDue').innerText = s.due || "০.০০ ৳";
+
+        // প্রাথমিক গ্রিড রেন্ডার
+        renderQuran30ParaGrid();
       }
     });
+
+    // পেমেন্ট ফিল্ড টগল
+    function togglePaymentFields() {
+      const method = document.getElementById('payMethod').value;
+      const mfsSenderLabel = document.getElementById('mfsSenderLabel');
+      const mfsSenderDiv = document.getElementById('mfsSenderDiv');
+      const mfsTrxDiv = document.getElementById('mfsTrxDiv');
+      const bankDiv = document.getElementById('bankDetailsDiv');
+      const handCashDiv = document.getElementById('handCashDiv');
+
+      if (method.includes("হাতে হাতে")) {
+        mfsSenderDiv.style.display = 'none'; mfsTrxDiv.style.display = 'none'; bankDiv.style.display = 'none';
+        handCashDiv.style.display = 'block';
+      } else if (method.includes("ব্যাংক")) {
+        mfsSenderDiv.style.display = 'none'; mfsTrxDiv.style.display = 'none'; bankDiv.style.display = 'flex';
+        handCashDiv.style.display = 'none';
+      } else {
+        mfsSenderDiv.style.display = 'block'; mfsTrxDiv.style.display = 'block'; bankDiv.style.display = 'none';
+        handCashDiv.style.display = 'none';
+        if(method.includes("বিকাশ")) mfsSenderLabel.innerText = "প্রেরকের বিকাশ নম্বর";
+        else if(method.includes("নগদ")) mfsSenderLabel.innerText = "প্রেরকের নগদ নম্বর";
+        else if(method.includes("রকেট")) mfsSenderLabel.innerText = "প্রেরকের রকেট নম্বর";
+      }
+    }
+
+    function toggleFeeCategory() {
+      const cat = document.getElementById('feeCategory').value;
+      const monthDiv = document.getElementById('monthSelectDiv');
+      const yearDiv = document.getElementById('yearSelectDiv');
+      const otherDiv = document.getElementById('otherPurposeDiv');
+
+      if (cat === "মাসিক বেতন") {
+        monthDiv.style.display = 'block'; yearDiv.style.display = 'block'; otherDiv.style.display = 'none';
+      } else if (cat === "অন্যান্য বিবিধ") {
+        monthDiv.style.display = 'none'; yearDiv.style.display = 'none'; otherDiv.style.display = 'block';
+      } else {
+        monthDiv.style.display = 'none'; yearDiv.style.display = 'block'; otherDiv.style.display = 'none';
+      }
+    }
+
+    document.getElementById('payDate').value = new Date().toISOString().split('T')[0];
 
     // পেমেন্ট সাবমিট
     document.getElementById('onlinePaymentForm').addEventListener('submit', function(e) {
@@ -669,42 +862,50 @@
       const method = document.getElementById('payMethod').value;
       const btn = document.getElementById('submitPaymentBtn');
 
-      let categoryDisplay = feeCategory;
-      if (feeCategory === "মাসিক বেতন") categoryDisplay = `মাসিক বেতন (${month} ${year})`;
-      else if (feeCategory === "অন্যান্য বিবিধ" && otherPurpose) categoryDisplay = `অন্যান্য (${otherPurpose})`;
-      else if (feeCategory !== "মাসিক বেতন") categoryDisplay = `${feeCategory} (${year})`;
+      let purposeDisplay = (feeCategory === "মাসিক বেতন") ? "মাসিক বেতন" : (feeCategory === "অন্যান্য বিবিধ" && otherPurpose) ? `অন্যান্য (${otherPurpose})` : feeCategory;
+      let monthYearDisplay = (feeCategory === "মাসিক বেতন") ? `${month} ${year}` : year;
 
-      let senderDetail = "";
-      if (method.includes("ব্যাংক")) {
+      let paymentNumber = "-";
+      let trxId = "-";
+
+      if (method.includes("হাতে হাতে")) {
+        paymentNumber = "ক্যাশ জমা (অফিস)";
+        trxId = document.getElementById('payReceivedBy').value.trim() || "ক্যাশ গ্রহণকারী";
+      } else if (method.includes("ব্যাংক")) {
         const bName = document.getElementById('payBankName').value.trim();
         const bAcc = document.getElementById('payBankAccountNo').value.trim();
         const bBranch = document.getElementById('payBankBranch').value.trim();
-        senderDetail = `ব্যাংক: ${bName}, হিসাব: ${bAcc}, শাখা: ${bBranch}`;
+        paymentNumber = `হিসাব: ${bAcc}`;
+        trxId = `${bName} (${bBranch})`;
       } else {
-        const sNum = document.getElementById('paySenderNumber').value.trim();
-        const trx = document.getElementById('payTrxId').value.trim();
-        senderDetail = `নম্বর: ${sNum}, TrxID: ${trx}`;
+        paymentNumber = document.getElementById('paySenderNumber').value.trim() || "-";
+        trxId = document.getElementById('payTrxId').value.trim() || "-";
       }
 
       btn.disabled = true; btn.innerText = "সাবমিট হচ্ছে...";
 
       const paymentRecord = {
         studentId: currentId,
-        category: categoryDisplay,
+        purpose: purposeDisplay,
+        monthYear: monthYearDisplay,
+        category: `${purposeDisplay} (${monthYearDisplay})`,
         amount: amount + " ৳",
         date: date,
         method: method,
-        senderDetail: senderDetail,
+        paymentNumber: paymentNumber,
+        trxId: trxId,
+        senderDetail: `নম্বর/হিসাব: ${paymentNumber}, TrxID/শাখা: ${trxId}`,
         status: "অপেক্ষমান (Pending)",
         submittedAt: new Date()
       };
 
       db.collection("students").doc(currentId).collection("online_fee_submissions").add(paymentRecord)
         .then(() => {
-          alert("আপনার " + categoryDisplay + "-এর তথ্য সফলভাবে জমা হয়েছে! অ্যাডমিন অনুমোদন করলেই রসিদ তৈরি হবে।");
+          alert("আপনার ফি প্রদানের তথ্য সফলভাবে জমা হয়েছে! অ্যাডমিন অনুমোদন করলেই রসিদ প্রিন্ট করা যাবে।");
           document.getElementById('payAmount').value = "";
           document.getElementById('payTrxId').value = "";
           document.getElementById('paySenderNumber').value = "";
+          document.getElementById('payReceivedBy').value = "";
           loadOnlinePaymentHistory();
         }).catch(err => {
           alert("ত্রুটি: " + err.message);
@@ -716,19 +917,19 @@
 
     let currentPaymentsMap = {};
 
-    // পেমেন্ট হিস্ট্রি ও ইনভয়েস বোতাম লোড
     function loadOnlinePaymentHistory() {
       const tbody = document.getElementById('onlinePaymentHistoryBody');
-      tbody.innerHTML = `<tr><td colspan="7" class="text-center">লোড হচ্ছে...</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="10" class="text-center">লোড হচ্ছে...</td></tr>`;
       currentPaymentsMap = {};
 
       db.collection("students").doc(currentId).collection("online_fee_submissions").orderBy("submittedAt", "desc").get()
         .then(snapshot => {
           tbody.innerHTML = "";
           if (snapshot.empty) {
-            tbody.innerHTML = `<tr><td colspan="7" class="text-muted">এখনো কোনো ফি জমার রেকর্ড নেই।</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="10" class="text-muted">এখনো কোনো ফি জমার রেকর্ড নেই।</td></tr>`;
             return;
           }
+          let count = 1;
           snapshot.forEach(doc => {
             const p = doc.data();
             currentPaymentsMap[doc.id] = p;
@@ -736,11 +937,10 @@
             const isApproved = p.status && p.status.includes("অনুমোদিত");
             const statusBadge = isApproved ? 'bg-success' : 'bg-warning text-dark';
             
-            // অনুমোদিত হলেই রসিদ বাটন সক্রিয় হবে
             let printAction = `<span class="text-muted small">অনুমোদনের পর দৃশ্যমান</span>`;
             if (isApproved) {
               printAction = `
-                <button class="btn btn-sm btn-outline-success fw-bold" onclick="showInvoiceModal('${doc.id}')">
+                <button class="btn btn-sm btn-outline-success fw-bold" onclick="showInvoiceModal('${doc.id}', ${count})">
                   <i class="fa-solid fa-print me-1"></i> রসিদ দেখুন
                 </button>
               `;
@@ -748,23 +948,26 @@
 
             tbody.innerHTML += `
               <tr>
-                <td><strong>${p.category || 'মাসিক বেতন'}</strong></td>
-                <td><span class="text-success fw-bold">${p.amount}</span></td>
-                <td><span class="badge bg-light text-dark border">${p.method}</span></td>
-                <td class="small text-start">${p.senderDetail}</td>
+                <td><strong>${toBn(count)}</strong></td>
+                <td class="fw-bold text-dark text-start ps-2">${p.purpose || p.category || 'মাসিক বেতন'}</td>
+                <td><span class="badge bg-light text-dark border">${p.monthYear || '-'}</span></td>
+                <td><span class="badge bg-secondary">${p.method || '-'}</span></td>
+                <td class="text-start">${p.paymentNumber || p.senderDetail || '-'}</td>
+                <td><code>${p.trxId || '-'}</code></td>
+                <td><span class="text-success fw-bold fs-6">${p.amount}</span></td>
                 <td>${p.date}</td>
                 <td><span class="badge ${statusBadge}">${p.status}</span></td>
                 <td>${printAction}</td>
               </tr>
             `;
+            count++;
           });
         }).catch(err => {
-          tbody.innerHTML = `<tr><td colspan="7" class="text-danger">তথ্য আনতে সমস্যা হয়েছে: ${err.message}</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="10" class="text-danger">তথ্য আনতে সমস্যা হয়েছে: ${err.message}</td></tr>`;
         });
     }
 
-    // মানি রসিদ মোডাল পপুলেট ও প্রদর্শন
-    function showInvoiceModal(docId) {
+    function showInvoiceModal(docId, serial) {
       const p = currentPaymentsMap[docId];
       if (!p) return;
 
@@ -779,8 +982,11 @@
       document.getElementById('rcptFather').innerText = globalStudentData.fatherBn || globalStudentData.father || "-";
       document.getElementById('rcptPhone').innerText = globalStudentData.phone || "-";
 
-      document.getElementById('rcptPurpose').innerText = p.category || "মাসিক বেতন";
-      document.getElementById('rcptMethodDetail').innerText = `${p.method} (${p.senderDetail || '-'})`;
+      document.getElementById('rcptPurpose').innerText = p.purpose || p.category || "মাসিক বেতন";
+      document.getElementById('rcptMonthYear').innerText = p.monthYear || "-";
+      document.getElementById('rcptMethod').innerText = p.method || "-";
+      document.getElementById('rcptPaymentNumber').innerText = p.paymentNumber || "-";
+      document.getElementById('rcptTrxId').innerText = p.trxId || "-";
       document.getElementById('rcptAmount').innerText = p.amount;
       document.getElementById('rcptTotalAmount').innerText = p.amount;
       document.getElementById('rcptRemainingDue').innerText = globalStudentData.due || "০.০০ ৳";
@@ -789,7 +995,7 @@
       receiptModal.show();
     }
 
-    // সবক ফিল্টার লজিক
+    // সবক ফিল্টার
     function toggleFilterInputs() {
       const type = document.getElementById('filterType').value;
       document.getElementById('dailyInputDiv').style.display = (type === 'daily') ? 'block' : 'none';
