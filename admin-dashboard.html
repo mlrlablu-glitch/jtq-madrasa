@@ -25,6 +25,12 @@
       border: 3px solid #198754;
       border-radius: 8px;
     }
+    .teacher-table th, .teacher-table td {
+      white-space: nowrap;
+      vertical-align: middle;
+      padding: 8px 6px;
+      font-size: 12.5px;
+    }
   </style>
 </head>
 <body class="bg-light">
@@ -48,26 +54,31 @@
 
   <div class="container py-4">
     
-    <!-- ৪টি প্রধান ট্যাব নেভিগেশন -->
-    <ul class="nav nav-pills nav-fill mb-4 p-2 bg-white rounded shadow-sm" id="adminTabs">
+    <!-- ৫টি প্রধান ট্যাব নেভিগেশন -->
+    <ul class="nav nav-pills nav-fill mb-4 p-2 bg-white rounded shadow-sm gap-1" id="adminTabs">
       <li class="nav-item">
-        <button class="nav-link active fw-bold" id="tabAdmissionBtn" onclick="switchAdminTab('admission')">
-          <i class="fa-solid fa-user-plus me-1"></i> ১. ছাত্র ভর্তি ও রেজিস্টার
+        <button class="nav-link active fw-bold small" id="tabAdmissionBtn" onclick="switchAdminTab('admission')">
+          <i class="fa-solid fa-user-plus me-1"></i> ১. ছাত্র ভর্তি
         </button>
       </li>
       <li class="nav-item">
-        <button class="nav-link fw-bold text-dark" id="tabExamBtn" onclick="switchAdminTab('exam')">
-          <i class="fa-solid fa-square-poll-vertical me-1 text-primary"></i> ২. ৩টি পরীক্ষার ফলাফল
+        <button class="nav-link fw-bold text-dark small" id="tabExamBtn" onclick="switchAdminTab('exam')">
+          <i class="fa-solid fa-square-poll-vertical me-1 text-primary"></i> ২. পরীক্ষার ফলাফল
         </button>
       </li>
       <li class="nav-item">
-        <button class="nav-link fw-bold text-dark" id="tabSearchBtn" onclick="switchAdminTab('search')">
-          <i class="fa-solid fa-magnifying-glass-chart me-1 text-warning"></i> ৩. পূর্ণাঙ্গ হিস্ট্রি অনুসন্ধান
+        <button class="nav-link fw-bold text-dark small" id="tabSearchBtn" onclick="switchAdminTab('search')">
+          <i class="fa-solid fa-magnifying-glass-chart me-1 text-warning"></i> ৩. ছাত্র হিস্ট্রি
         </button>
       </li>
       <li class="nav-item">
-        <button class="nav-link fw-bold text-dark position-relative" id="tabFeeApprovalBtn" onclick="switchAdminTab('feeApproval')">
-          <i class="fa-solid fa-money-bill-circle-check me-1 text-danger"></i> ৪. অনলাইন ফি যাচাই ও অনুমোদন
+        <button class="nav-link fw-bold text-dark small" id="tabFeeApprovalBtn" onclick="switchAdminTab('feeApproval')">
+          <i class="fa-solid fa-money-bill-circle-check me-1 text-danger"></i> ৪. ফি অনুমোদন
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link fw-bold text-dark small" id="tabTeacherBtn" onclick="switchAdminTab('teachers')">
+          <i class="fa-solid fa-chalkboard-user me-1 text-success"></i> ৫. শিক্ষক তালিকা ও এন্ট্রি
         </button>
       </li>
     </ul>
@@ -80,7 +91,6 @@
             <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-user-plus me-2 text-success"></i>পূর্ণাঙ্গ ছাত্র ভর্তি ফরম</h5>
             <form id="addStudentForm">
               
-              <!-- ছবি আপলোড -->
               <div class="row g-3 align-items-center mb-3 p-2 border rounded bg-light">
                 <div class="col-auto">
                   <img id="imagePreview" src="https://via.placeholder.com/90" class="img-thumbnail rounded" style="width: 85px; height: 95px; object-fit: cover;">
@@ -91,7 +101,6 @@
                 </div>
               </div>
 
-              <!-- ১. Student ID ও ভর্তির তারিখ -->
               <div class="row g-2 mb-3">
                 <div class="col-md-6">
                   <div class="p-2 border rounded bg-light border-start border-success border-4 h-100">
@@ -107,7 +116,6 @@
                 </div>
               </div>
 
-              <!-- ২. শিক্ষার্থীর নাম (বাংলা, ইংরেজি, আরবি) -->
               <div class="border rounded p-3 mb-3 bg-white shadow-sm">
                 <span class="badge bg-success mb-2">শিক্ষার্থীর নাম</span>
                 <div class="row g-2">
@@ -126,7 +134,6 @@
                 </div>
               </div>
 
-              <!-- ৩. পিতার বিবরণ -->
               <div class="border rounded p-3 mb-3 bg-white shadow-sm">
                 <span class="badge bg-primary mb-2">পিতার বিবরণ</span>
                 <div class="row g-2 mb-2">
@@ -135,11 +142,10 @@
                   <div class="col-md-4"><label class="form-label small fw-semibold">اسم الأب (بالعربية)</label><input type="text" class="form-control form-control-sm text-end" dir="rtl" id="fatherAr" placeholder="اسم الأب" required></div>
                 </div>
                 <div class="row g-2">
-                  <div class="col-md-12"><label class="form-label small fw-semibold">পিতার NID নম্বর</label><input type="text" class="form-control form-control-sm" id="fatherNid" placeholder="ভোটার আইডি বা জন্ম নিবন্ধন নম্বর" required></div>
+                  <div class="col-md-12"><label class="form-label small fw-semibold">পিতার NID নম্বর</label><input type="text" class="form-control form-control-sm" id="fatherNid" placeholder="ভোটার আইডি নম্বর" required></div>
                 </div>
               </div>
 
-              <!-- ৪. মাতার বিবরণ -->
               <div class="border rounded p-3 mb-3 bg-white shadow-sm">
                 <span class="badge bg-secondary mb-2">মাতার বিবরণ</span>
                 <div class="row g-2 mb-2">
@@ -148,11 +154,10 @@
                   <div class="col-md-4"><label class="form-label small fw-semibold">اسم الأم (بالعربية)</label><input type="text" class="form-control form-control-sm text-end" dir="rtl" id="motherAr" placeholder="اسم الأم" required></div>
                 </div>
                 <div class="row g-2">
-                  <div class="col-md-12"><label class="form-label small fw-semibold">মাতার NID নম্বর</label><input type="text" class="form-control form-control-sm" id="motherNid" placeholder="ভোটার আইডি বা জন্ম নিবন্ধন নম্বর" required></div>
+                  <div class="col-md-12"><label class="form-label small fw-semibold">মাতার NID নম্বর</label><input type="text" class="form-control form-control-sm" id="motherNid" placeholder="ভোটার আইডি নম্বর" required></div>
                 </div>
               </div>
 
-              <!-- ৫. অন্যান্য প্রাতিষ্ঠানিক তথ্য -->
               <div class="row g-2 mb-2">
                 <div class="col-md-6">
                   <label class="form-label small fw-semibold">ছাত্রের জন্ম নিবন্ধন নম্বর</label>
@@ -197,7 +202,6 @@
                 </div>
               </div>
 
-              <!-- বর্তমান ঠিকানা -->
               <div class="border rounded p-3 mb-3 bg-light">
                 <span class="badge bg-success mb-2">বর্তমান ঠিকানা</span>
                 <div class="row g-2">
@@ -209,7 +213,6 @@
                 </div>
               </div>
 
-              <!-- স্থায়ী ঠিকানা -->
               <div class="border rounded p-3 mb-3 bg-light">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                   <span class="badge bg-secondary">স্থায়ী ঠিকানা</span>
@@ -245,12 +248,7 @@
             <div class="table-responsive">
               <table class="table table-hover align-middle small text-center">
                 <thead class="table-light">
-                  <tr>
-                    <th>ছবি</th>
-                    <th>আইডি</th>
-                    <th>বিভাগ</th>
-                    <th>রোল</th>
-                  </tr>
+                  <tr><th>ছবি</th><th>আইডি</th><th>বিভাগ</th><th>রোল</th></tr>
                 </thead>
                 <tbody id="studentTableBody">
                   <tr><td colspan="4" class="text-center text-muted">তথ্য লোড হচ্ছে...</td></tr>
@@ -262,16 +260,12 @@
       </div>
     </div>
 
-    <!-- ================= ২. বার্ষিক ৩টি পরীক্ষার ফলাফল আপডেট সেকশন ================= -->
+    <!-- ================= ২. পরীক্ষার ফলাফল ================= -->
     <div id="examSection" style="display: none;">
       <div class="row justify-content-center">
         <div class="col-lg-9">
           <div class="card border-0 shadow-sm p-4 bg-white mb-4 border-top border-primary border-4">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-square-poll-vertical me-2 text-primary"></i>বার্ষিক ৩টি পরীক্ষার ফলাফল ও হাজিরা আপডেট ফরম</h5>
-              <span class="badge bg-primary">১ম, ২য় ও ৩য় বার্ষিক পরীক্ষা</span>
-            </div>
-
+            <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-square-poll-vertical me-2 text-primary"></i>বার্ষিক ৩টি পরীক্ষার ফলাফল ও হাজিরা আপডেট ফরম</h5>
             <form id="threeExamsUpdateForm">
               <div class="row g-3 mb-3 p-3 bg-light rounded border">
                 <div class="col-md-6">
@@ -281,119 +275,56 @@
                 <div class="col-md-6">
                   <label class="form-label small fw-bold text-dark">কোন পরীক্ষার ফলাফল আপডেট করবেন?</label>
                   <select class="form-select form-select-sm fw-bold border-primary" id="examTermSelect" onchange="fetchCurrentExamData()">
-                    <option value="term1">১. প্রথম সাময়িক পরীক্ষা (1st Term)</option>
-                    <option value="term2">২. দ্বিতীয় সাময়িক পরীক্ষা (2nd Term)</option>
-                    <option value="term3">৩. তৃতীয় সাময়িক / বার্ষিক পরীক্ষা (Final Annual)</option>
+                    <option value="term1">১. প্রথম সাময়িক পরীক্ষা</option>
+                    <option value="term2">২. দ্বিতীয় সাময়িক পরীক্ষা</option>
+                    <option value="term3">৩. তৃতীয় সাময়িক / বার্ষিক পরীক্ষা</option>
                   </select>
                 </div>
               </div>
 
               <div class="border rounded p-3 mb-3 bg-white shadow-sm">
                 <h6 class="fw-bold text-primary mb-3" id="examSectionTitle">১ম সাময়িক পরীক্ষার ফলাফল ইনপুট</h6>
-                
                 <div class="row g-2 mb-2">
-                  <div class="col-md-6">
-                    <label class="form-label small fw-semibold">ফলাফল / প্রাপ্ত মান (Grade / Division)</label>
-                    <input type="text" class="form-control form-control-sm" id="examGrade" placeholder="যেমন: মুমতাজ / A+" required>
-                  </div>
-                  <div class="col-md-6">
-                    <label class="form-label small fw-semibold">মোট প্রাপ্ত নম্বর (Total Marks)</label>
-                    <input type="text" class="form-control form-control-sm" id="examTotalMarks" placeholder="যেমন: ৪৮৫ / ৫০০" required>
-                  </div>
+                  <div class="col-md-6"><label class="form-label small fw-semibold">ফলাফল / প্রাপ্ত মান</label><input type="text" class="form-control form-control-sm" id="examGrade" placeholder="যেমন: মুমতাজ / A+" required></div>
+                  <div class="col-md-6"><label class="form-label small fw-semibold">মোট প্রাপ্ত নম্বর</label><input type="text" class="form-control form-control-sm" id="examTotalMarks" placeholder="যেমন: ৪৮৫ / ৫০০" required></div>
                 </div>
-
                 <div class="row g-2 mb-2">
-                  <div class="col-md-4">
-                    <label class="form-label small fw-semibold">মেধা স্থান (Position)</label>
-                    <input type="text" class="form-control form-control-sm" id="examPosition" placeholder="যেমন: ১ম / ২য়">
-                  </div>
-                  <div class="col-md-4">
-                    <label class="form-label small fw-semibold">ক্লাস উপস্থিতি (Attendance %)</label>
-                    <input type="text" class="form-control form-control-sm" id="examAttendance" placeholder="যেমন: ৯৫%" required>
-                  </div>
-                  <div class="col-md-4">
-                    <label class="form-label small fw-semibold">ফলাফল প্রকাশের তারিখ</label>
-                    <input type="date" class="form-control form-control-sm" id="examPublishDate" required>
-                  </div>
+                  <div class="col-md-4"><label class="form-label small fw-semibold">মেধা স্থান</label><input type="text" class="form-control form-control-sm" id="examPosition" placeholder="যেমন: ১ম"></div>
+                  <div class="col-md-4"><label class="form-label small fw-semibold">উপস্থিতি %</label><input type="text" class="form-control form-control-sm" id="examAttendance" placeholder="যেমন: ৯৫%" required></div>
+                  <div class="col-md-4"><label class="form-label small fw-semibold">প্রকাশের তারিখ</label><input type="date" class="form-control form-control-sm" id="examPublishDate" required></div>
                 </div>
-
                 <div class="mb-2">
-                  <label class="form-label small fw-semibold">উস্তাদজির মন্তব্য (Teacher's Remarks)</label>
-                  <input type="text" class="form-control form-control-sm" id="examRemarks" placeholder="যেমন: মাশাআল্লাহ, হিফজের ইয়াদ চমৎকার।">
+                  <label class="form-label small fw-semibold">মন্তব্য</label>
+                  <input type="text" class="form-control form-control-sm" id="examRemarks" placeholder="উস্তাদজির মন্তব্য">
                 </div>
               </div>
-
-              <button type="submit" class="btn btn-primary btn-sm px-4 fw-semibold" id="saveExamBtn">
-                <i class="fa-solid fa-cloud-arrow-up me-1"></i> পরীক্ষার ফলাফল সেভ ও আপডেট করুন
-              </button>
+              <button type="submit" class="btn btn-primary btn-sm px-4 fw-semibold" id="saveExamBtn">ফলাফল সেভ ও আপডেট করুন</button>
             </form>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ================= ৩. শিক্ষার্থীর পূর্ণাঙ্গ হিস্ট্রি অনুসন্ধান সেকশন ================= -->
+    <!-- ================= ৩. শিক্ষার্থী অনুসন্ধান ================= -->
     <div id="searchSection" style="display: none;">
       <div class="card border-0 shadow-sm p-4 bg-white mb-4 border-top border-warning border-4">
         <h4 class="fw-bold text-dark mb-2"><i class="fa-solid fa-magnifying-glass me-2 text-warning"></i>শিক্ষার্থী তথ্য ও অগ্রগতি অনুসন্ধান</h4>
-        <p class="text-muted small mb-3">Student ID লিখলেই ভর্তির তথ্য, ৩টি পরীক্ষার ফলাফল, শেষ মাসের বেতন, পরীক্ষার ফি এবং নিয়মিত সবকের ডায়রি চলে আসবে।</p>
-        
         <form id="searchProfileForm" class="row g-2 align-items-center">
-          <div class="col-md-8">
-            <input type="text" class="form-control form-control-lg fw-bold" id="searchStudentId" placeholder="Student ID লিখুন (যেমন: JTQ-2026-0001)" required>
-          </div>
-          <div class="col-md-4">
-            <button type="submit" class="btn btn-warning btn-lg w-100 fw-bold text-dark shadow-sm" id="searchBtn">
-              <i class="fa-solid fa-chart-line me-1"></i> পূর্ণাঙ্গ তথ্য লোড করুন
-            </button>
-          </div>
+          <div class="col-md-8"><input type="text" class="form-control form-control-lg fw-bold" id="searchStudentId" placeholder="Student ID লিখুন" required></div>
+          <div class="col-md-4"><button type="submit" class="btn btn-warning btn-lg w-100 fw-bold text-dark shadow-sm" id="searchBtn">পূর্ণাঙ্গ তথ্য লোড করুন</button></div>
         </form>
       </div>
 
-      <!-- ফলাফল ভিউ -->
       <div id="studentDetailsView" style="display: none;">
-        <!-- সারসংক্ষেপ কার্ড -->
         <div class="row g-3 mb-4">
-          <div class="col-md-3">
-            <div class="status-card h-100 border-start border-success border-4 shadow-sm">
-              <span class="text-muted small fw-semibold d-block mb-1">সর্বশেষ পরিশোধিত বেতন</span>
-              <h5 class="fw-bold text-success mb-1" id="sumLastTuition">লোড হচ্ছে...</h5>
-              <small class="text-muted d-block" id="sumTuitionDate">-</small>
-              <span class="badge bg-danger mt-2" id="sumTotalDue">বকেয়া: ০.০০ ৳</span>
-            </div>
-          </div>
-
-          <div class="col-md-3">
-            <div class="status-card h-100 border-start border-primary border-4 shadow-sm">
-              <span class="text-muted small fw-semibold d-block mb-1">সর্বশেষ পরীক্ষার ফি</span>
-              <h5 class="fw-bold text-primary mb-1" id="sumLastExamFee">লোড হচ্ছে...</h5>
-              <small class="text-muted d-block" id="sumExamFeeDate">-</small>
-              <span class="badge bg-light text-dark border mt-2" id="sumExamFeeStatus">স্ট্যাটাস: -</span>
-            </div>
-          </div>
-
-          <div class="col-md-3">
-            <div class="status-card h-100 border-start border-warning border-4 shadow-sm">
-              <span class="text-muted small fw-semibold d-block mb-1">সবক (পড়া নিয়মিত দিচ্ছে কি না)</span>
-              <h5 class="fw-bold text-dark mb-1" id="sumSabakActive">যাচাই হচ্ছে...</h5>
-              <small class="text-muted d-block" id="sumLastSabakRead">শেষ পড়া: -</small>
-              <span class="badge bg-success mt-2" id="sumLastSabakDate">তারিখ: -</span>
-            </div>
-          </div>
-
-          <div class="col-md-3">
-            <div class="status-card h-100 border-start border-info border-4 shadow-sm">
-              <span class="text-muted small fw-semibold d-block mb-1">উপস্থিতি ও মান</span>
-              <h5 class="fw-bold text-info mb-1" id="sumAttendance">১০০%</h5>
-              <small class="text-muted d-block" id="sumResult">ফলাফল: অপেক্ষমান</small>
-              <span class="badge bg-dark mt-2" id="sumStudentDeptRoll">বিভাগ: - | রোল: -</span>
-            </div>
-          </div>
+          <div class="col-md-3"><div class="status-card h-100 border-start border-success border-4 shadow-sm"><span class="text-muted small fw-semibold d-block">সর্বশেষ বেতন</span><h5 class="fw-bold text-success mb-1" id="sumLastTuition">...</h5><small class="text-muted d-block" id="sumTuitionDate">-</small><span class="badge bg-danger mt-2" id="sumTotalDue">বকেয়া: ০.০০ ৳</span></div></div>
+          <div class="col-md-3"><div class="status-card h-100 border-start border-primary border-4 shadow-sm"><span class="text-muted small fw-semibold d-block">পরীক্ষার ফি</span><h5 class="fw-bold text-primary mb-1" id="sumLastExamFee">...</h5><small class="text-muted d-block" id="sumExamFeeDate">-</small><span class="badge bg-light text-dark border mt-2" id="sumExamFeeStatus">-</span></div></div>
+          <div class="col-md-3"><div class="status-card h-100 border-start border-warning border-4 shadow-sm"><span class="text-muted small fw-semibold d-block">সবক অগ্রগতি</span><h5 class="fw-bold text-dark mb-1" id="sumSabakActive">...</h5><small class="text-muted d-block" id="sumLastSabakRead">-</small><span class="badge bg-success mt-2" id="sumLastSabakDate">-</span></div></div>
+          <div class="col-md-3"><div class="status-card h-100 border-start border-info border-4 shadow-sm"><span class="text-muted small fw-semibold d-block">উপস্থিতি</span><h5 class="fw-bold text-info mb-1" id="sumAttendance">...</h5><small class="text-muted d-block" id="sumResult">-</small><span class="badge bg-dark mt-2" id="sumStudentDeptRoll">-</span></div></div>
         </div>
 
-        <!-- ভর্তির তথ্য -->
         <div class="card border-0 shadow-sm p-4 bg-white mb-4">
-          <h5 class="fw-bold text-dark border-bottom pb-2 mb-3"><i class="fa-solid fa-address-card me-2 text-success"></i>শিক্ষার্থীর মূল ভর্তি তথ্য</h5>
+          <h5 class="fw-bold text-dark border-bottom pb-2 mb-3"><i class="fa-solid fa-address-card me-2 text-success"></i>ভর্তির মূল বিবরণ</h5>
           <div class="row g-4 align-items-start">
             <div class="col-md-3 text-center">
               <img id="viewPhoto" src="https://via.placeholder.com/130" class="profile-photo mb-2" alt="Student Photo">
@@ -405,44 +336,14 @@
               <div class="table-responsive">
                 <table class="table table-bordered table-sm small mb-0">
                   <tbody>
-                    <tr>
-                      <th class="bg-light w-25">নাম (বাংলা):</th><td class="fw-bold text-dark" id="tblNameBn">...</td>
-                      <th class="bg-light w-25">Name (English):</th><td id="tblNameEn">...</td>
-                    </tr>
-                    <tr>
-                      <th class="bg-light">الاسم (بالعربية):</th><td class="fw-bold text-end" dir="rtl" id="tblNameAr">...</td>
-                      <th class="bg-light">শ্রেণি রোল নম্বর:</th><td class="fw-bold" id="tblRoll">...</td>
-                    </tr>
-                    <tr>
-                      <th class="bg-light">পিতার নাম (বাংলা):</th><td id="tblFatherBn">...</td>
-                      <th class="bg-light">Father's Name (En):</th><td id="tblFatherEn">...</td>
-                    </tr>
-                    <tr>
-                      <th class="bg-light">اسم الأব (بالعربية):</th><td class="text-end" dir="rtl" id="tblFatherAr">...</td>
-                      <th class="bg-light">পিতার NID নম্বর:</th><td id="tblFatherNid">...</td>
-                    </tr>
-                    <tr>
-                      <th class="bg-light">মাতার নাম (বাংলা):</th><td id="tblMotherBn">...</td>
-                      <th class="bg-light">Mother's Name (En):</th><td id="tblMotherEn">...</td>
-                    </tr>
-                    <tr>
-                      <th class="bg-light">اسم الأم (بالعربية):</th><td class="text-end" dir="rtl" id="tblMotherAr">...</td>
-                      <th class="bg-light">মাতার NID নম্বর:</th><td id="tblMotherNid">...</td>
-                    </tr>
-                    <tr>
-                      <th class="bg-light">জন্ম নিবন্ধন কার্ড নং:</th><td class="fw-bold text-primary" id="tblRegNo">...</td>
-                      <th class="bg-light">জন্ম তারিখ ও রক্ত:</th><td id="tblDobBlood">...</td>
-                    </tr>
-                    <tr>
-                      <th class="bg-light">অভিভাবকের মোবাইল:</th><td id="tblPhone">...</td>
-                      <th class="bg-light">ভর্তির তারিখ:</th><td class="fw-bold text-success" id="tblAdmissionDate">...</td>
-                    </tr>
-                    <tr>
-                      <th class="bg-light">বর্তমান ঠিকানা:</th><td colspan="3" id="tblPresentAddress">...</td>
-                    </tr>
-                    <tr>
-                      <th class="bg-light">স্থায়ী ঠিকানা:</th><td colspan="3" id="tblPermanentAddress">...</td>
-                    </tr>
+                    <tr><th class="bg-light w-25">নাম (বাংলা):</th><td class="fw-bold" id="tblNameBn">...</td><th class="bg-light w-25">Name (En):</th><td id="tblNameEn">...</td></tr>
+                    <tr><th class="bg-light">الاسم (بالعربية):</th><td class="fw-bold text-end" dir="rtl" id="tblNameAr">...</td><th class="bg-light">শ্রেণি রোল:</th><td class="fw-bold" id="tblRoll">...</td></tr>
+                    <tr><th class="bg-light">পিতার নাম:</th><td id="tblFatherBn">...</td><th class="bg-light">পিতার NID:</th><td id="tblFatherNid">...</td></tr>
+                    <tr><th class="bg-light">মাতার নাম:</th><td id="tblMotherBn">...</td><th class="bg-light">মাতার NID:</th><td id="tblMotherNid">...</td></tr>
+                    <tr><th class="bg-light">জন্ম নিবন্ধন:</th><td class="fw-bold text-primary" id="tblRegNo">...</td><th class="bg-light">জন্ম ও রক্ত:</th><td id="tblDobBlood">...</td></tr>
+                    <tr><th class="bg-light">মোবাইল:</th><td id="tblPhone">...</td><th class="bg-light">ভর্তির তারিখ:</th><td class="fw-bold text-success" id="tblAdmissionDate">...</td></tr>
+                    <tr><th class="bg-light">বর্তমান ঠিকানা:</th><td colspan="3" id="tblPresentAddress">...</td></tr>
+                    <tr><th class="bg-light">স্থায়ী ঠিকানা:</th><td colspan="3" id="tblPermanentAddress">...</td></tr>
                   </tbody>
                 </table>
               </div>
@@ -450,123 +351,167 @@
           </div>
         </div>
 
-        <!-- বার্ষিক ৩টি পরীক্ষার ফলাফল -->
         <div class="card border-0 shadow-sm p-4 bg-white mb-4">
-          <h5 class="fw-bold text-dark border-bottom pb-2 mb-3"><i class="fa-solid fa-square-poll-vertical me-2 text-primary"></i>বার্ষিক ৩টি পরীক্ষার পূর্ণাঙ্গ রিপোর্ট</h5>
+          <h5 class="fw-bold text-dark border-bottom pb-2 mb-3"><i class="fa-solid fa-square-poll-vertical me-2 text-primary"></i>৩টি পরীক্ষার ফলাফল</h5>
           <div class="row g-3">
-            <div class="col-md-4"><div class="p-3 border rounded bg-light text-center"><span class="badge bg-primary mb-2">১ম সাময়িক পরীক্ষা</span><h5 class="fw-bold text-dark my-1" id="repTerm1Grade">অপেক্ষমান</h5><div class="small text-muted" id="repTerm1Marks">নম্বর: -</div><div class="small text-muted" id="repTerm1Pos">স্থান: - | উপস্থিতি: -</div><small class="text-secondary d-block mt-2 italic" id="repTerm1Remarks">-</small></div></div>
-            <div class="col-md-4"><div class="p-3 border rounded bg-light text-center"><span class="badge bg-success mb-2">২য় সাময়িক পরীক্ষা</span><h5 class="fw-bold text-dark my-1" id="repTerm2Grade">অপেক্ষমান</h5><div class="small text-muted" id="repTerm2Marks">নম্বর: -</div><div class="small text-muted" id="repTerm2Pos">স্থান: - | উপস্থিতি: -</div><small class="text-secondary d-block mt-2 italic" id="repTerm2Remarks">-</small></div></div>
-            <div class="col-md-4"><div class="p-3 border rounded bg-light text-center"><span class="badge bg-dark mb-2">৩য় / বার্ষিক পরীক্ষা</span><h5 class="fw-bold text-dark my-1" id="repTerm3Grade">অপেক্ষমান</h5><div class="small text-muted" id="repTerm3Marks">নম্বর: -</div><div class="small text-muted" id="repTerm3Pos">স্থান: - | উপস্থিতি: -</div><small class="text-secondary d-block mt-2 italic" id="repTerm3Remarks">-</small></div></div>
+            <div class="col-md-4"><div class="p-3 border rounded bg-light text-center"><span class="badge bg-primary mb-2">১ম সাময়িক</span><h5 class="fw-bold my-1" id="repTerm1Grade">...</h5><div class="small text-muted" id="repTerm1Marks">-</div><div class="small text-muted" id="repTerm1Pos">-</div><small class="text-secondary d-block mt-2 italic" id="repTerm1Remarks">-</small></div></div>
+            <div class="col-md-4"><div class="p-3 border rounded bg-light text-center"><span class="badge bg-success mb-2">২য় সাময়িক</span><h5 class="fw-bold my-1" id="repTerm2Grade">...</h5><div class="small text-muted" id="repTerm2Marks">-</div><div class="small text-muted" id="repTerm2Pos">-</div><small class="text-secondary d-block mt-2 italic" id="repTerm2Remarks">-</small></div></div>
+            <div class="col-md-4"><div class="p-3 border rounded bg-light text-center"><span class="badge bg-dark mb-2">৩য় / বার্ষিক</span><h5 class="fw-bold my-1" id="repTerm3Grade">...</h5><div class="small text-muted" id="repTerm3Marks">-</div><div class="small text-muted" id="repTerm3Pos">-</div><small class="text-secondary d-block mt-2 italic" id="repTerm3Remarks">-</small></div></div>
           </div>
         </div>
 
-        <!-- সবক ডায়রি -->
         <div class="card border-0 shadow-sm p-4 bg-white mb-4">
-          <h5 class="fw-bold text-dark border-bottom pb-2 mb-3"><i class="fa-solid fa-book-journal-whills me-2 text-warning"></i>সাম্প্রতিক পড়ার রেকর্ড</h5>
-          <div class="table-responsive">
-            <table class="table table-bordered table-sm text-center small align-middle">
-              <thead class="table-light">
-                <tr><th>তারিখ ও বার</th><th>সবক</th><th>সাত সবক</th><th>আমুখতা</th><th>তিলাওয়াত</th><th>শিক্ষক</th></tr>
-              </thead>
-              <tbody id="viewSabakTableBody">
-                <tr><td colspan="6" class="text-muted">তথ্য লোড হচ্ছে...</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <h5 class="fw-bold text-dark border-bottom pb-2 mb-3"><i class="fa-solid fa-book-journal-whills me-2 text-warning"></i>পড়ার ডায়রি রেকর্ড</h5>
+          <div class="table-responsive"><table class="table table-bordered table-sm text-center small align-middle"><thead class="table-light"><tr><th>তারিখ ও বার</th><th>সবক</th><th>সাত সবক</th><th>আমুখতা</th><th>তিলাওয়াত</th><th>শিক্ষক</th></tr></thead><tbody id="viewSabakTableBody"><tr><td colspan="6">তথ্য লোড হচ্ছে...</td></tr></tbody></table></div>
         </div>
 
-        <!-- ফি ইতিহাস -->
         <div class="card border-0 shadow-sm p-4 bg-white">
           <h5 class="fw-bold text-dark border-bottom pb-2 mb-3"><i class="fa-solid fa-file-invoice-dollar me-2 text-primary"></i>ফি জমার ইতিহাস</h5>
-          <div class="table-responsive">
-            <table class="table table-bordered table-sm text-center small align-middle">
-              <thead class="table-light">
-                <tr><th>খাত / মাস</th><th>পরিমাণ</th><th>মাধ্যম ও TrxID</th><th>তারিখ</th><th>স্ট্যাটাস</th></tr>
-              </thead>
-              <tbody id="viewPaymentTableBody">
-                <tr><td colspan="5" class="text-muted">তথ্য লোড হচ্ছে...</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="table-responsive"><table class="table table-bordered table-sm text-center small align-middle"><thead class="table-light"><tr><th>খাত / মাস</th><th>পরিমাণ</th><th>মাধ্যম ও TrxID</th><th>তারিখ</th><th>স্ট্যাটাস</th></tr></thead><tbody id="viewPaymentTableBody"><tr><td colspan="5">তথ্য লোড হচ্ছে...</td></tr></tbody></table></div>
         </div>
-
       </div>
     </div>
 
-    <!-- ================= ৪. অনলাইন ফি যাচাই ও অনুমোদন সেকশন ================= -->
+    <!-- ================= ৪. অনলাইন ফি যাচাই ও অনুমোদন ================= -->
     <div id="feeApprovalSection" style="display: none;">
       <div class="card border-0 shadow-sm p-4 bg-white border-top border-danger border-4">
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
-          <div>
-            <h5 class="fw-bold text-dark mb-1"><i class="fa-solid fa-cash-register me-2 text-danger"></i>অনলাইনে পাঠানো বেতন ও ফি অনুমোদন প্যানেল</h5>
-            <p class="text-muted small mb-0">অভিভাবকদের পাঠানো TrxID/ব্যাংক স্টেটমেন্ট মিলিয়ে অনুমোদন করুন এবং বকেয়া সমন্বয় করুন।</p>
-          </div>
-          <button class="btn btn-success btn-sm fw-semibold shadow-sm" onclick="loadPendingOnlinePayments()">
-            <i class="fa-solid fa-rotate me-1"></i> তালিকা রিফ্রেশ করুন
-          </button>
+          <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-cash-register me-2 text-danger"></i>অনলাইন ফি অনুমোদন প্যানেল</h5>
+          <button class="btn btn-success btn-sm fw-semibold" onclick="loadPendingOnlinePayments()"><i class="fa-solid fa-rotate me-1"></i> তালিকা রিফ্রেশ</button>
         </div>
-
-        <!-- সার্চ বক্স -->
         <div class="input-group input-group-sm mb-3" style="max-width: 350px;">
           <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-          <input type="text" class="form-control" id="feeFilterId" placeholder="শিক্ষার্থীর নাম বা Student ID দিয়ে খুঁজুন..." onkeyup="filterPendingFees()">
+          <input type="text" class="form-control" id="feeFilterId" placeholder="নাম বা ID দিয়ে খুঁজুন..." onkeyup="filterPendingFees()">
         </div>
-
         <div class="table-responsive">
           <table class="table table-bordered table-hover align-middle small text-center">
-            <thead class="table-light">
-              <tr>
-                <th>শিক্ষার্থীর তথ্য</th>
-                <th>খাত ও বিবরণ</th>
-                <th>পরিমাণ</th>
-                <th>মাধ্যম</th>
-                <th>প্রেরক নম্বর / হিসাব ও TrxID</th>
-                <th>টাকা পাঠানোর তারিখ</th>
-                <th>বর্তমান স্ট্যাটাস</th>
-                <th>অ্যাকশন (অনুমোদন / বাতিল)</th>
-              </tr>
-            </thead>
-            <tbody id="pendingFeesTableBody">
-              <tr><td colspan="8" class="text-muted">তথ্য লোড হচ্ছে...</td></tr>
-            </tbody>
+            <thead class="table-light"><tr><th>শিক্ষার্থী</th><th>খাত</th><th>পরিমাণ</th><th>মাধ্যম</th><th>TrxID / হিসাব</th><th>তারিখ</th><th>স্ট্যাটাস</th><th>অ্যাকশন</th></tr></thead>
+            <tbody id="pendingFeesTableBody"><tr><td colspan="8">তথ্য লোড হচ্ছে...</td></tr></tbody>
           </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= ৫. শিক্ষক তালিকা ও এন্ট্রি সেকশন (সম্পূর্ণ আলাদা কলামসমূহ) ================= -->
+    <div id="teacherSection" style="display: none;">
+      <div class="row g-4">
+        <!-- বামে: নতুন শিক্ষক যোগ করার ফর্ম -->
+        <div class="col-lg-4">
+          <div class="card border-0 shadow-sm p-4 bg-white border-top border-success border-4">
+            <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-user-tie me-2 text-success"></i>নতুন শিক্ষক যোগ করুন</h5>
+            <form id="addTeacherForm">
+              
+              <div class="row g-3 align-items-center mb-3 p-2 border rounded bg-light">
+                <div class="col-auto">
+                  <img id="tImagePreview" src="https://via.placeholder.com/80" class="img-thumbnail rounded-circle" style="width: 75px; height: 75px; object-fit: cover;">
+                </div>
+                <div class="col">
+                  <label class="form-label small fw-semibold mb-1">শিক্ষকের ছবি</label>
+                  <input type="file" class="form-control form-control-sm" id="teacherPhotoInput" accept="image/*">
+                </div>
+              </div>
+
+              <div class="mb-2">
+                <label class="form-label small fw-semibold">শিক্ষক আইডি (Teacher ID)</label>
+                <input type="text" class="form-control form-control-sm fw-bold" id="tId" placeholder="যেমন: TCH-01" required>
+              </div>
+
+              <div class="mb-2">
+                <label class="form-label small fw-semibold">শিক্ষকের পুরো নাম</label>
+                <input type="text" class="form-control form-control-sm" id="teacherFullName" placeholder="যেমন: হাফেজ মাওলানা আব্দুর রহমান" required>
+              </div>
+
+              <div class="mb-2">
+                <label class="form-label small fw-semibold">পদবি (Designation)</label>
+                <input type="text" class="form-control form-control-sm" id="teacherDesignation" placeholder="যেমন: হিফজ প্রধান" required>
+              </div>
+
+              <div class="mb-2">
+                <label class="form-label small fw-semibold">দায়িত্বপ্রাপ্ত বিভাগ</label>
+                <select class="form-select form-select-sm" id="teacherDept" required>
+                  <option value="হিফজ বিভাগ">হিফজ বিভাগ</option>
+                  <option value="নাজেরা বিভাগ">নাজেরা বিভাগ</option>
+                  <option value="নূরানী বিভাগ">নূরানী বিভাগ</option>
+                  <option value="মক্তব বিভাগ">মক্তব বিভাগ</option>
+                  <option value="কিতাব বিভাগ">কিতাব বিভাগ</option>
+                </select>
+              </div>
+
+              <div class="mb-2">
+                <label class="form-label small fw-semibold">মোবাইল নম্বর</label>
+                <input type="tel" class="form-control form-control-sm" id="teacherMobile" placeholder="017XXXXXXXX" required>
+              </div>
+
+              <div class="mb-2">
+                <label class="form-label small fw-semibold">লগইন পাসওয়ার্ড</label>
+                <input type="text" class="form-control form-control-sm" id="teacherLoginPass" value="teacher@123" required>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label small fw-semibold">শিক্ষাগত যোগ্যতা</label>
+                <input type="text" class="form-control form-control-sm" id="teacherEdu" placeholder="যেমন: দাওরায়ে হাদীস, হাফেজ">
+              </div>
+
+              <button type="submit" class="btn btn-success btn-sm w-100 fw-bold shadow-sm" id="saveTeacherBtn">
+                <i class="fa-solid fa-user-check me-1"></i> শিক্ষক তথ্য সংরক্ষণ করুন
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- ডানে: সকল শিক্ষকের আলাদা আলাদা কলামের টেবিল -->
+        <div class="col-lg-8">
+          <div class="card border-0 shadow-sm p-4 bg-white">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-users-rectangle me-2 text-primary"></i>মাদ্রাসার সম্মানিত শিক্ষক ও উস্তাদবৃন্দ</h5>
+              <span class="badge bg-success" id="totalTeachersCount">০ জন</span>
+            </div>
+
+            <!-- ৮টি আলাদা আলাদা কলামের টেবিল -->
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover teacher-table text-center align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>ছবি</th>
+                    <th>শিক্ষক আইডি</th>
+                    <th>শিক্ষকের নাম</th>
+                    <th>পদবি</th>
+                    <th>বিভাগ</th>
+                    <th>মোবাইল নম্বর</th>
+                    <th>লগইন পাসওয়ার্ড</th>
+                    <th>অ্যাকশন</th>
+                  </tr>
+                </thead>
+                <tbody id="teacherTableBody">
+                  <tr><td colspan="8" class="text-muted">শিক্ষক তালিকা লোড হচ্ছে...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
   </div>
 
-  <!-- ফি অনুমোদন ও বকেয়া সমন্বয় মডাল -->
+  <!-- ফি অনুমোদন মডাল -->
   <div class="modal fade" id="approveModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content border-0 shadow">
         <div class="modal-header bg-success text-white py-2">
-          <h6 class="modal-title fw-bold"><i class="fa-solid fa-circle-check me-2"></i>ফি অনুমোদন ও বকেয়া সমন্বয়</h6>
+          <h6 class="modal-title fw-bold">ফি অনুমোদন ও বকেয়া সমন্বয়</h6>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body p-4">
           <input type="hidden" id="modalStudentId">
           <input type="hidden" id="modalDocId">
-          
-          <div class="mb-2">
-            <label class="form-label small fw-semibold">শিক্ষার্থীর নাম ও আইডি:</label>
-            <input type="text" class="form-control form-control-sm fw-bold bg-light" id="modalDisplayId" readonly>
-          </div>
-          <div class="mb-2">
-            <label class="form-label small fw-semibold">পরিশোধিত অর্থ ও খাত:</label>
-            <input type="text" class="form-control form-control-sm fw-bold text-success bg-light" id="modalDisplayAmount" readonly>
-          </div>
+          <div class="mb-2"><label class="small fw-semibold">শিক্ষার্থী:</label><input type="text" class="form-control form-control-sm bg-light" id="modalDisplayId" readonly></div>
+          <div class="mb-2"><label class="small fw-semibold">অর্থ ও খাত:</label><input type="text" class="form-control form-control-sm bg-light text-success fw-bold" id="modalDisplayAmount" readonly></div>
           <div class="mb-3">
-            <div class="d-flex justify-content-between mb-1">
-              <label class="form-label small fw-bold text-danger mb-0">অনুমোদনের পর নতুন মোট বকেয়া (Due):</label>
-              <small class="text-muted">বর্তমান বকেয়া: <span class="fw-bold text-dark" id="modalCurrentDue">০.০০ ৳</span></small>
-            </div>
-            <input type="text" class="form-control form-control-sm border-danger fw-bold" id="modalNewDue" placeholder="যেমন: ০.০০ ৳ বা ৫০০ ৳" required>
-            <small class="text-muted" style="font-size: 11px;">টাকা সম্পূর্ণ পরিশোধ হয়ে থাকলে বক্সে <strong>০.০০ ৳</strong> লিখুন।</small>
+            <div class="d-flex justify-content-between"><label class="small fw-bold text-danger">নতুন মোট বকেয়া:</label><small>বর্তমান: <span id="modalCurrentDue">০.০০ ৳</span></small></div>
+            <input type="text" class="form-control form-control-sm border-danger fw-bold" id="modalNewDue" required>
           </div>
-          <button type="button" class="btn btn-success w-100 fw-bold shadow-sm" id="confirmApproveBtn" onclick="submitFeeApproval()">
-            <i class="fa-solid fa-check-double me-1"></i> অনুমোদন চূড়ান্ত করুন ও বকেয়া আপডেট করুন
-          </button>
+          <button type="button" class="btn btn-success w-100 fw-bold" id="confirmApproveBtn" onclick="submitFeeApproval()">অনুমোদন চূড়ান্ত করুন</button>
         </div>
       </div>
     </div>
@@ -589,45 +534,42 @@
 
     document.getElementById('admissionDate').value = new Date().toISOString().split('T')[0];
 
-    // ৪টি ট্যাব সুইচার
+    // ৫টি ট্যাব সুইচার
     function switchAdminTab(tab) {
       const aSec = document.getElementById('admissionSection');
       const eSec = document.getElementById('examSection');
       const sSec = document.getElementById('searchSection');
       const fSec = document.getElementById('feeApprovalSection');
+      const tSec = document.getElementById('teacherSection');
       
       const aBtn = document.getElementById('tabAdmissionBtn');
       const eBtn = document.getElementById('tabExamBtn');
       const sBtn = document.getElementById('tabSearchBtn');
       const fBtn = document.getElementById('tabFeeApprovalBtn');
+      const tBtn = document.getElementById('tabTeacherBtn');
 
-      [aSec, eSec, sSec, fSec].forEach(el => el.style.display = 'none');
-      [aBtn, eBtn, sBtn, fBtn].forEach(btn => {
+      [aSec, eSec, sSec, fSec, tSec].forEach(el => el.style.display = 'none');
+      [aBtn, eBtn, sBtn, fBtn, tBtn].forEach(btn => {
         btn.classList.remove('active');
         btn.classList.add('text-dark');
       });
 
       if (tab === 'admission') {
-        aSec.style.display = 'block';
-        aBtn.classList.add('active');
-        aBtn.classList.remove('text-dark');
+        aSec.style.display = 'block'; aBtn.classList.add('active'); aBtn.classList.remove('text-dark');
       } else if (tab === 'exam') {
-        eSec.style.display = 'block';
-        eBtn.classList.add('active');
-        eBtn.classList.remove('text-dark');
+        eSec.style.display = 'block'; eBtn.classList.add('active'); eBtn.classList.remove('text-dark');
       } else if (tab === 'search') {
-        sSec.style.display = 'block';
-        sBtn.classList.add('active');
-        sBtn.classList.remove('text-dark');
+        sSec.style.display = 'block'; sBtn.classList.add('active'); sBtn.classList.remove('text-dark');
       } else if (tab === 'feeApproval') {
-        fSec.style.display = 'block';
-        fBtn.classList.add('active');
-        fBtn.classList.remove('text-dark');
+        fSec.style.display = 'block'; fBtn.classList.add('active'); fBtn.classList.remove('text-dark');
         loadPendingOnlinePayments();
+      } else if (tab === 'teachers') {
+        tSec.style.display = 'block'; tBtn.classList.add('active'); tBtn.classList.remove('text-dark');
+        loadTeachersList();
       }
     }
 
-    // ================== ১. ভর্তি কোড ==================
+    // ================== ১. ছাত্র ভর্তি ==================
     let base64Image = "";
     document.getElementById('studentPhotoInput').addEventListener('change', function(e) {
       const file = e.target.files[0];
@@ -686,19 +628,16 @@
         nameEn: document.getElementById('nameEn').value.trim(),
         nameAr: document.getElementById('nameAr').value.trim(),
         name: document.getElementById('nameBn').value.trim(),
-
         fatherBn: document.getElementById('fatherBn').value.trim(),
         fatherEn: document.getElementById('fatherEn').value.trim(),
         fatherAr: document.getElementById('fatherAr').value.trim(),
         father: document.getElementById('fatherBn').value.trim(),
         fatherNid: document.getElementById('fatherNid').value.trim(),
-
         motherBn: document.getElementById('motherBn').value.trim(),
         motherEn: document.getElementById('motherEn').value.trim(),
         motherAr: document.getElementById('motherAr').value.trim(),
         mother: document.getElementById('motherBn').value.trim(),
         motherNid: document.getElementById('motherNid').value.trim(),
-
         studentRegNo: document.getElementById('studentRegNo').value.trim(),
         phone: document.getElementById('phone').value.trim(),
         dob: document.getElementById('dob').value,
@@ -707,7 +646,6 @@
         bloodGroup: document.getElementById('bloodGroup').value,
         photo: base64Image || "https://via.placeholder.com/130",
         password: document.getElementById('sPass').value,
-
         presentAddress: {
           village: document.getElementById('preVillage').value.trim(),
           post: document.getElementById('prePost').value.trim(),
@@ -749,11 +687,9 @@
       const sId = document.getElementById('examTargetId').value.trim();
       const term = document.getElementById('examTermSelect').value;
       const title = document.getElementById('examSectionTitle');
-
       if (term === 'term1') title.innerText = "১ম সাময়িক পরীক্ষার ফলাফল ইনপুট";
       else if (term === 'term2') title.innerText = "২য় সাময়িক পরীক্ষার ফলাফল ইনপুট";
       else if (term === 'term3') title.innerText = "৩য় সাময়িক / বার্ষিক পরীক্ষার ফলাফল ইনপুট";
-
       if (!sId) return;
 
       db.collection("students").doc(sId).collection("exam_results").doc(term).get().then(doc => {
@@ -780,9 +716,7 @@
       const sId = document.getElementById('examTargetId').value.trim();
       const term = document.getElementById('examTermSelect').value;
       const btn = document.getElementById('saveExamBtn');
-
-      btn.innerText = "সংরক্ষণ হচ্ছে...";
-      btn.disabled = true;
+      btn.innerText = "সংরক্ষণ হচ্ছে..."; btn.disabled = true;
 
       const examData = {
         term: term,
@@ -816,15 +750,14 @@
       e.preventDefault();
       const sId = document.getElementById('searchStudentId').value.trim();
       const btn = document.getElementById('searchBtn');
-      btn.innerText = "খোঁজা হচ্ছে...";
-      btn.disabled = true;
+      btn.innerText = "খোঁজা হচ্ছে..."; btn.disabled = true;
       loadFullStudentProfile(sId, btn);
     });
 
     function loadFullStudentProfile(sId, btn) {
       db.collection("students").doc(sId).get().then((doc) => {
         if (!doc.exists) {
-          alert("এই Student ID (" + sId + ") দিয়ে কোনো শিক্ষার্থীর তথ্য পাওয়া যায়নি!");
+          alert("এই Student ID দিয়ে কোনো শিক্ষার্থীর তথ্য পাওয়া যায়নি!");
           document.getElementById('studentDetailsView').style.display = 'none';
           return;
         }
@@ -841,26 +774,19 @@
         document.getElementById('tblNameEn').innerText = s.nameEn || "-";
         document.getElementById('tblNameAr').innerText = s.nameAr || "-";
         document.getElementById('tblRoll').innerText = s.roll || "-";
-
         document.getElementById('tblFatherBn').innerText = s.fatherBn || s.father || "-";
-        document.getElementById('tblFatherEn').innerText = s.fatherEn || "-";
-        document.getElementById('tblFatherAr').innerText = s.fatherAr || "-";
         document.getElementById('tblFatherNid').innerText = s.fatherNid || "-";
-
         document.getElementById('tblMotherBn').innerText = s.motherBn || s.mother || "-";
-        document.getElementById('tblMotherEn').innerText = s.motherEn || "-";
-        document.getElementById('tblMotherAr').innerText = s.motherAr || "-";
         document.getElementById('tblMotherNid').innerText = s.motherNid || "-";
-
         document.getElementById('tblRegNo').innerText = s.studentRegNo || "-";
         document.getElementById('tblDobBlood').innerText = (s.dob || "-") + " | রক্ত: " + (s.bloodGroup || "অজানা");
         document.getElementById('tblPhone').innerText = s.phone || "-";
         document.getElementById('tblAdmissionDate').innerText = s.admissionDate || "-";
 
         const pre = s.presentAddress || {};
-        document.getElementById('tblPresentAddress').innerText = `গ্রাম: ${pre.village || '-'}, ডাক: ${pre.post || '-'}, ইউনিয়ন: ${pre.union || '-'}, থানা: ${pre.thana || '-'}, জেলা: ${pre.district || '-'}`;
+        document.getElementById('tblPresentAddress').innerText = `${pre.village || '-'}, ডাক: ${pre.post || '-'}, থানা: ${pre.thana || '-'}, জেলা: ${pre.district || '-'}`;
         const per = s.permanentAddress || {};
-        document.getElementById('tblPermanentAddress').innerText = `গ্রাম: ${per.village || '-'}, ডাক: ${per.post || '-'}, ইউনিয়ন: ${per.union || '-'}, থানা: ${per.thana || '-'}, জেলা: ${per.district || '-'}`;
+        document.getElementById('tblPermanentAddress').innerText = `${per.village || '-'}, ডাক: ${per.post || '-'}, থানা: ${per.thana || '-'}, জেলা: ${per.district || '-'}`;
 
         document.getElementById('sumAttendance').innerText = s.attendance || "১০০%";
         document.getElementById('sumResult').innerText = "ফলাফল: " + (s.result || "অপেক্ষমান");
@@ -874,8 +800,7 @@
       }).catch((err) => {
         alert("ত্রুটি: " + err.message);
       }).finally(() => {
-        btn.innerText = "পূর্ণাঙ্গ তথ্য লোড করুন";
-        btn.disabled = false;
+        btn.innerText = "পূর্ণাঙ্গ তথ্য লোড করুন"; btn.disabled = false;
       });
     }
 
@@ -886,13 +811,13 @@
           if (doc.exists) {
             const d = doc.data();
             document.getElementById(`repTerm${num}Grade`).innerText = d.grade || "অপেক্ষমান";
-            document.getElementById(`repTerm${num}Marks`).innerText = `মোট নম্বর: ${d.marks || '-'}`;
-            document.getElementById(`repTerm${num}Pos`).innerText = `মেধা স্থান: ${d.position || '-'} | হাজিরা: ${d.attendance || '-'}`;
+            document.getElementById(`repTerm${num}Marks`).innerText = `মোট: ${d.marks || '-'}`;
+            document.getElementById(`repTerm${num}Pos`).innerText = `স্থান: ${d.position || '-'} | হাজিরা: ${d.attendance || '-'}`;
             document.getElementById(`repTerm${num}Remarks`).innerText = d.remarks ? `"${d.remarks}"` : "";
           } else {
             document.getElementById(`repTerm${num}Grade`).innerText = "অনুষ্ঠিত হয়নি";
-            document.getElementById(`repTerm${num}Marks`).innerText = "নম্বর: -";
-            document.getElementById(`repTerm${num}Pos`).innerText = "স্থান: - | উপস্থিতি: -";
+            document.getElementById(`repTerm${num}Marks`).innerText = "মোট: -";
+            document.getElementById(`repTerm${num}Pos`).innerText = "স্থান: - | হাজিরা: -";
             document.getElementById(`repTerm${num}Remarks`).innerText = "";
           }
         });
@@ -901,119 +826,104 @@
 
     function loadSabakHistory(sId) {
       const tbody = document.getElementById('viewSabakTableBody');
-      tbody.innerHTML = `<tr><td colspan="6" class="text-muted">পড়ার রেকর্ড লোড হচ্ছে...</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="6">লোড হচ্ছে...</td></tr>`;
 
-      db.collection("students").doc(sId).collection("daily_sabak").orderBy("date", "desc").limit(7).get()
-        .then((snapshot) => {
-          tbody.innerHTML = "";
-          if (snapshot.empty) {
-            tbody.innerHTML = `<tr><td colspan="6" class="text-muted">কোনো সবক এন্ট্রি নেই।</td></tr>`;
-            document.getElementById('sumSabakActive').innerText = "কোনো সবক নেই";
-            document.getElementById('sumLastSabakRead').innerText = "পড়া অনিয়মিত";
-            document.getElementById('sumLastSabakDate').innerText = "তারিখ: -";
-            return;
+      db.collection("students").doc(sId).collection("daily_sabak").orderBy("date", "desc").limit(7).get().then((snapshot) => {
+        tbody.innerHTML = "";
+        if (snapshot.empty) {
+          tbody.innerHTML = `<tr><td colspan="6" class="text-muted">কোনো রেকর্ড নেই</td></tr>`;
+          document.getElementById('sumSabakActive').innerText = "কোনো সবক নেই";
+          document.getElementById('sumLastSabakRead').innerText = "পড়া অনিয়মিত";
+          return;
+        }
+
+        let isFirst = true;
+        snapshot.forEach((doc) => {
+          const r = doc.data();
+          if (isFirst) {
+            document.getElementById('sumSabakActive').innerText = "নিয়মিত পড়ছে";
+            document.getElementById('sumLastSabakRead').innerText = `পারা: ${r.sabakPara || '-'}, পৃষ্ঠা: ${r.sabakPage || '-'}`;
+            document.getElementById('sumLastSabakDate').innerText = r.date;
+            isFirst = false;
           }
-
-          let isFirst = true;
-          snapshot.forEach((doc) => {
-            const r = doc.data();
-            if (isFirst) {
-              document.getElementById('sumSabakActive').innerText = "নিয়মিত পড়ছে";
-              document.getElementById('sumLastSabakRead').innerText = `শেষ সবক পারা: ${r.sabakPara || '-'}, পৃষ্ঠা: ${r.sabakPage || '-'}`;
-              document.getElementById('sumLastSabakDate').innerText = `তারিখ: ${r.date}`;
-              isFirst = false;
-            }
-
-            const sabakInfo = (r.sabakPara && r.sabakPara !== '-') ? `পারা: ${r.sabakPara}, পৃষ্ঠা: ${r.sabakPage || '-'}` : '-';
-            const satInfo = (r.satPara && r.satPara !== '-') ? `পারা: ${r.satPara}, পৃষ্ঠা: ${r.satPage || '-'} (ভুল: ${r.satMistake || '০'})` : '-';
-            const amukhInfo = (r.amukhPara && r.amukhPara !== '-') ? `পারা: ${r.amukhPara}, পৃষ্ঠা: ${r.amukhPage || '-'} (ভুল: ${r.amukhMistake || '০'})` : '-';
-            const teacher = r.teacherName ? `${r.teacherName} (${r.teacherPhone || ''})` : 'যাচাইকৃত';
-
-            tbody.innerHTML += `
-              <tr>
-                <td><strong>${r.date}</strong><br><small class="text-muted">${r.day}</small></td>
-                <td><span class="badge bg-success">${sabakInfo}</span></td>
-                <td>${satInfo}</td>
-                <td>${amukhInfo}</td>
-                <td>${r.dailyTilawat || '-'}</td>
-                <td><small>${teacher}</small></td>
-              </tr>
-            `;
-          });
+          tbody.innerHTML += `
+            <tr>
+              <td><strong>${r.date}</strong><br><small class="text-muted">${r.day}</small></td>
+              <td><span class="badge bg-success">পারা: ${r.sabakPara || '-'}, পৃষ্ঠা: ${r.sabakPage || '-'}</span></td>
+              <td>পারা: ${r.satPara || '-'}, পৃষ্ঠা: ${r.satPage || '-'}</td>
+              <td>পারা: ${r.amukhPara || '-'}, পৃষ্ঠা: ${r.amukhPage || '-'}</td>
+              <td>${r.dailyTilawat || '-'}</td>
+              <td>${r.teacherName || '-'}</td>
+            </tr>
+          `;
         });
+      });
     }
 
     function loadFeeHistory(sId) {
       const tbody = document.getElementById('viewPaymentTableBody');
-      tbody.innerHTML = `<tr><td colspan="5" class="text-muted">ফি রেকর্ড লোড হচ্ছে...</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="5">লোড হচ্ছে...</td></tr>`;
 
-      db.collection("students").doc(sId).collection("online_fee_submissions").orderBy("submittedAt", "desc").get()
-        .then((snapshot) => {
-          tbody.innerHTML = "";
-          let lastTuition = null;
-          let lastExam = null;
+      db.collection("students").doc(sId).collection("online_fee_submissions").orderBy("submittedAt", "desc").get().then((snapshot) => {
+        tbody.innerHTML = "";
+        let lastTuition = null, lastExam = null;
 
-          if (!snapshot.empty) {
-            snapshot.forEach((doc) => {
-              const p = doc.data();
-              const cat = p.category || "মাসিক বেতন";
+        if (!snapshot.empty) {
+          snapshot.forEach((doc) => {
+            const p = doc.data();
+            const cat = p.category || "মাসিক বেতন";
+            if (!lastTuition && (cat.includes("মাসিক বেতন") || p.month)) lastTuition = p;
+            if (!lastExam && cat.includes("পরীক্ষা")) lastExam = p;
 
-              if (!lastTuition && (cat.includes("মাসিক বেতন") || p.month)) lastTuition = p;
-              if (!lastExam && cat.includes("পরীক্ষা")) lastExam = p;
+            tbody.innerHTML += `
+              <tr>
+                <td><strong>${cat}</strong></td>
+                <td><span class="text-success fw-bold">${p.amount}</span></td>
+                <td>${p.method}<br><small class="text-muted">${p.senderDetail || '-'}</small></td>
+                <td>${p.date}</td>
+                <td><span class="badge ${p.status && p.status.includes('অনুমোদিত') ? 'bg-success' : 'bg-warning text-dark'}">${p.status || 'অপেক্ষমান'}</span></td>
+              </tr>
+            `;
+          });
+        }
 
-              tbody.innerHTML += `
-                <tr>
-                  <td><strong>${cat}</strong></td>
-                  <td><span class="text-success fw-bold">${p.amount}</span></td>
-                  <td>${p.method}<br><small class="text-muted">${p.senderDetail || '-'}</small></td>
-                  <td>${p.date}</td>
-                  <td><span class="badge ${p.status && p.status.includes('অনুমোদিত') ? 'bg-success' : 'bg-warning text-dark'}">${p.status || 'অপেক্ষমান'}</span></td>
-                </tr>
-              `;
-            });
-          }
+        if (lastTuition) {
+          document.getElementById('sumLastTuition').innerText = lastTuition.month ? `${lastTuition.month} ${lastTuition.year || ''}` : lastTuition.category;
+          document.getElementById('sumTuitionDate').innerText = "পরিশোধ: " + lastTuition.date;
+        } else {
+          document.getElementById('sumLastTuition').innerText = "রেকর্ড নেই";
+          document.getElementById('sumTuitionDate').innerText = "এখনো বেতন দেয়নি";
+        }
 
-          if (lastTuition) {
-            document.getElementById('sumLastTuition').innerText = lastTuition.month ? `${lastTuition.month} ${lastTuition.year || ''}` : lastTuition.category;
-            document.getElementById('sumTuitionDate').innerText = "পরিশোধ: " + lastTuition.date;
-          } else {
-            document.getElementById('sumLastTuition').innerText = "রেকর্ড নেই";
-            document.getElementById('sumTuitionDate').innerText = "এখনো বেতন দেয়নি";
-          }
+        if (lastExam) {
+          document.getElementById('sumLastExamFee').innerText = "পরিশোধিত (" + lastExam.amount + ")";
+          document.getElementById('sumExamFeeDate').innerText = "তারিখ: " + lastExam.date;
+          document.getElementById('sumExamFeeStatus').innerText = lastExam.status;
+        } else {
+          document.getElementById('sumLastExamFee').innerText = "ফি দেয়নি / বকেয়া";
+          document.getElementById('sumExamFeeDate').innerText = "-";
+          document.getElementById('sumExamFeeStatus').innerText = "অপেক্ষমান";
+        }
 
-          if (lastExam) {
-            document.getElementById('sumLastExamFee').innerText = "পরিশোধিত (" + lastExam.amount + ")";
-            document.getElementById('sumExamFeeDate').innerText = "তারিখ: " + lastExam.date;
-            document.getElementById('sumExamFeeStatus').innerText = lastExam.status;
-          } else {
-            document.getElementById('sumLastExamFee').innerText = "ফি দেয়নি / বকেয়া";
-            document.getElementById('sumExamFeeDate').innerText = "-";
-            document.getElementById('sumExamFeeStatus').innerText = "অপেক্ষমান";
-          }
-
-          if (snapshot.empty) {
-            tbody.innerHTML = `<tr><td colspan="5" class="text-muted">কোনো জমার রেকর্ড পাওয়া যায়নি।</td></tr>`;
-          }
-        });
+        if (snapshot.empty) tbody.innerHTML = `<tr><td colspan="5" class="text-muted">কোনো জমার রেকর্ড নেই।</td></tr>`;
+      });
     }
 
-    // ================== ৪. অনলাইন ফি যাচাই ও অনুমোদন কোড (সম্পূর্ণ নির্ভরযোগ্য ও ডায়নামিক) ==================
+    // ================== ৪. অনলাইন ফি যাচাই ও অনুমোদন ==================
     let pendingFeeList = [];
 
     async function loadPendingOnlinePayments() {
       const tbody = document.getElementById('pendingFeesTableBody');
-      tbody.innerHTML = `<tr><td colspan="8" class="text-muted py-3"><div class="spinner-border spinner-border-sm text-success me-2"></div>অনলাইন ফি রেকর্ড লোড হচ্ছে...</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="8" class="text-muted py-3"><div class="spinner-border spinner-border-sm text-success me-2"></div>লোড হচ্ছে...</td></tr>`;
       pendingFeeList = [];
 
       try {
-        // ১. সকল শিক্ষার্থীর তথ্য সংগ্রহ
         const studentsSnap = await db.collection("students").get();
         if (studentsSnap.empty) {
-          tbody.innerHTML = `<tr><td colspan="8" class="text-muted">কোনো শিক্ষার্থী পাওয়া যায়নি।</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="8" class="text-muted py-3">কোনো রেকর্ড নেই</td></tr>`;
           return;
         }
 
-        // ২. প্রতিটি শিক্ষার্থীর online_fee_submissions থেকে ডাটা সংগ্রহ
         const fetchPromises = [];
         studentsSnap.forEach((studentDoc) => {
           const sId = studentDoc.id;
@@ -1025,9 +935,7 @@
             subSnap.forEach((doc) => {
               const data = doc.data();
               let parsedTime = new Date(0);
-              if (data.submittedAt) {
-                parsedTime = data.submittedAt.toDate ? data.submittedAt.toDate() : new Date(data.submittedAt);
-              }
+              if (data.submittedAt) parsedTime = data.submittedAt.toDate ? data.submittedAt.toDate() : new Date(data.submittedAt);
 
               pendingFeeList.push({
                 docId: doc.id,
@@ -1048,14 +956,10 @@
         });
 
         await Promise.all(fetchPromises);
-
-        // ৩. তারিখ অনুযায়ী নতুন থেকে পুরাতন সাজানো (ক্লায়েন্ট সাইড সাজানো - কোনো ফায়ারবেস ইনডেক্স এরর হবে না)
         pendingFeeList.sort((a, b) => b.submittedAt - a.submittedAt);
-
         renderPendingFeesTable(pendingFeeList);
       } catch (err) {
-        console.error(err);
-        tbody.innerHTML = `<tr><td colspan="8" class="text-danger py-3">তথ্য লোড করতে সমস্যা হয়েছে: ${err.message}</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="8" class="text-danger py-3">ত্রুটি: ${err.message}</td></tr>`;
       }
     }
 
@@ -1063,7 +967,7 @@
       const tbody = document.getElementById('pendingFeesTableBody');
       tbody.innerHTML = "";
       if (list.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="8" class="text-muted py-3">এখনো কোনো অনলাইন ফি জমার আবেদন আসেনি।</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="8" class="text-muted py-3">কোনো অনলাইন আবেদন নেই।</td></tr>`;
         return;
       }
 
@@ -1071,9 +975,9 @@
         const isApproved = item.status && item.status.includes("অনুমোদিত");
         const isRejected = item.status && item.status.includes("বাতিল");
 
-        let statusBadge = '<span class="badge bg-warning text-dark">অপেক্ষমান (Pending)</span>';
-        if (isApproved) statusBadge = '<span class="badge bg-success">অনুমোদিত (Approved)</span>';
-        else if (isRejected) statusBadge = '<span class="badge bg-danger">বাতিলকৃত (Rejected)</span>';
+        let statusBadge = '<span class="badge bg-warning text-dark">অপেক্ষমান</span>';
+        if (isApproved) statusBadge = '<span class="badge bg-success">অনুমোদিত</span>';
+        else if (isRejected) statusBadge = '<span class="badge bg-danger">বাতিল</span>';
 
         let actionBtns = "";
         if (!isApproved && !isRejected) {
@@ -1088,17 +992,17 @@
             </div>
           `;
         } else if (isApproved) {
-          actionBtns = `<span class="text-success small fw-bold"><i class="fa-solid fa-circle-check me-1"></i>অনুমোদিত</span>`;
+          actionBtns = `<span class="text-success small fw-bold">অনুমোদিত</span>`;
         } else {
-          actionBtns = `<span class="text-danger small fw-bold"><i class="fa-solid fa-ban me-1"></i>বাতিল করা হয়েছে</span>`;
+          actionBtns = `<span class="text-danger small fw-bold">বাতিলকৃত</span>`;
         }
 
         tbody.innerHTML += `
           <tr>
-            <td><strong>${item.studentName}</strong><br><small class="text-success fw-bold">${item.studentId}</small></td>
-            <td><span class="badge bg-light text-dark border">${item.category}</span></td>
-            <td class="text-primary fw-bold fs-6">${item.amount}</td>
-            <td><span class="badge bg-secondary">${item.method}</span></td>
+            <td><strong>${item.studentName}</strong><br><small class="text-success">${item.studentId}</small></td>
+            <td>${item.category}</td>
+            <td class="text-primary fw-bold">${item.amount}</td>
+            <td>${item.method}</td>
             <td class="text-start small">${item.senderDetail}</td>
             <td>${item.date}</td>
             <td>${statusBadge}</td>
@@ -1110,84 +1014,153 @@
 
     function filterPendingFees() {
       const kw = document.getElementById('feeFilterId').value.toLowerCase().trim();
-      const filtered = pendingFeeList.filter(item => 
-        item.studentId.toLowerCase().includes(kw) || 
-        item.studentName.toLowerCase().includes(kw)
-      );
+      const filtered = pendingFeeList.filter(item => item.studentId.toLowerCase().includes(kw) || item.studentName.toLowerCase().includes(kw));
       renderPendingFeesTable(filtered);
     }
 
-    // অনুমোদন মডাল ওপেন
     function openApproveModal(sId, sName, docId, amount, cat, currentDue) {
       document.getElementById('modalStudentId').value = sId;
       document.getElementById('modalDocId').value = docId;
       document.getElementById('modalDisplayId').value = `${sName} (${sId})`;
       document.getElementById('modalDisplayAmount').value = `${amount} [${cat}]`;
       document.getElementById('modalCurrentDue').innerText = currentDue;
-      document.getElementById('modalNewDue').value = "০.০০ ৳"; // ডিফল্ট
-
-      const modalEl = document.getElementById('approveModal');
-      const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+      document.getElementById('modalNewDue').value = "০.০০ ৳";
+      const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('approveModal'));
       modal.show();
     }
 
-    // অনুমোদন চূড়ান্ত ও বকেয়া আপডেট
     async function submitFeeApproval() {
       const sId = document.getElementById('modalStudentId').value;
       const docId = document.getElementById('modalDocId').value;
       const newDue = document.getElementById('modalNewDue').value.trim();
       const btn = document.getElementById('confirmApproveBtn');
 
-      if (!newDue) {
-        alert("অনুমোদনের পর নতুন বকেয়া কত থাকবে তা লিখুন (যেমন: ০.০০ ৳)");
-        return;
-      }
-
-      btn.disabled = true;
-      btn.innerText = "অনুমোদন হচ্ছে...";
+      if (!newDue) { alert("নতুন বকেয়া লিখুন (যেমন: ০.০০ ৳)"); return; }
+      btn.disabled = true; btn.innerText = "অনুমোদন হচ্ছে...";
 
       try {
-        // ১. ফি স্ট্যাটাস 'অনুমোদিত' করা
         await db.collection("students").doc(sId).collection("online_fee_submissions").doc(docId).update({
-          status: "অনুমোদিত (Approved)",
-          approvedAt: new Date()
+          status: "অনুমোদিত (Approved)", approvedAt: new Date()
         });
-
-        // ২. শিক্ষার্থীর মূল প্রোফাইলে নতুন বকেয়া আপডেট
-        await db.collection("students").doc(sId).update({
-          due: newDue
-        });
-
-        alert("ফি সফলভাবে অনুমোদিত হয়েছে এবং শিক্ষার্থীর বকেয়া হালনাগাদ করা হয়েছে!");
-        
-        const modalEl = document.getElementById('approveModal');
-        const modal = bootstrap.Modal.getInstance(modalEl);
-        if (modal) modal.hide();
-
+        await db.collection("students").doc(sId).update({ due: newDue });
+        alert("ফি সফলভাবে অনুমোদিত হয়েছে!");
+        bootstrap.Modal.getInstance(document.getElementById('approveModal')).hide();
         loadPendingOnlinePayments();
       } catch (err) {
         alert("ত্রুটি: " + err.message);
       } finally {
-        btn.disabled = false;
-        btn.innerHTML = `<i class="fa-solid fa-check-double me-1"></i> অনুমোদন চূড়ান্ত করুন ও বকেয়া আপডেট করুন`;
+        btn.disabled = false; btn.innerText = "অনুমোদন চূড়ান্ত করুন";
       }
     }
 
-    // ভুয়া বা ভুল পেমেন্ট বাতিল করার অপশন
     async function rejectFee(sId, docId) {
-      if (!confirm("আপনি কি নিশ্চিত যে এই আবেদনটি বাতিল করতে চান? (ভুল তথ্য বা ভুয়া ট্রানজেকশনের কারণে)")) {
-        return;
-      }
+      if (!confirm("আপনি কি নিশ্চিত যে আবেদনটি বাতিল করতে চান?")) return;
       try {
         await db.collection("students").doc(sId).collection("online_fee_submissions").doc(docId).update({
-          status: "বাতিলকৃত (Rejected)",
-          rejectedAt: new Date()
+          status: "বাতিলকৃত (Rejected)", rejectedAt: new Date()
         });
         alert("আবেদনটি বাতিল করা হয়েছে।");
         loadPendingOnlinePayments();
       } catch (err) {
         alert("ত্রুটি: " + err.message);
       }
+    }
+
+    // ================== ৫. শিক্ষক তালিকা ও এন্ট্রি কোড (আলাদা আলাদা কলামে প্রদর্শন) ==================
+    let teacherBase64 = "";
+    document.getElementById('teacherPhotoInput').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          teacherBase64 = event.target.result;
+          document.getElementById('tImagePreview').src = teacherBase64;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // নতুন শিক্ষক যুক্ত করা
+    document.getElementById('addTeacherForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const tId = document.getElementById('tId').value.trim();
+      const btn = document.getElementById('saveTeacherBtn');
+      btn.disabled = true; btn.innerText = "সংরক্ষণ হচ্ছে...";
+
+      const teacherData = {
+        teacherId: tId,
+        name: document.getElementById('teacherFullName').value.trim(),
+        designation: document.getElementById('teacherDesignation').value.trim(),
+        department: document.getElementById('teacherDept').value,
+        phone: document.getElementById('teacherMobile').value.trim(),
+        password: document.getElementById('teacherLoginPass').value.trim(),
+        education: document.getElementById('teacherEdu').value.trim() || "-",
+        photo: teacherBase64 || "https://via.placeholder.com/80",
+        joiningDate: new Date().toISOString().split('T')[0],
+        timestamp: new Date()
+      };
+
+      db.collection("teachers").doc(tId).set(teacherData).then(() => {
+        alert("সম্মানিত শিক্ষক সফলভাবে তালিকায় যুক্ত হয়েছেন!");
+        this.reset();
+        document.getElementById('tImagePreview').src = "https://via.placeholder.com/80";
+        teacherBase64 = "";
+        document.getElementById('teacherLoginPass').value = "teacher@123";
+        loadTeachersList();
+      }).catch(err => {
+        alert("ত্রুটি: " + err.message);
+      }).finally(() => {
+        btn.disabled = false; btn.innerHTML = `<i class="fa-solid fa-user-check me-1"></i> শিক্ষক তথ্য সংরক্ষণ করুন`;
+      });
+    });
+
+    // শিক্ষক তালিকা লোড (আলাদা ৮টি কলামে)
+    function loadTeachersList() {
+      const tbody = document.getElementById('teacherTableBody');
+      tbody.innerHTML = `<tr><td colspan="8" class="text-muted">শিক্ষকদের তথ্য লোড হচ্ছে...</td></tr>`;
+
+      db.collection("teachers").orderBy("timestamp", "desc").get().then((snapshot) => {
+        tbody.innerHTML = "";
+        document.getElementById('totalTeachersCount').innerText = `${snapshot.size} জন`;
+
+        if (snapshot.empty) {
+          tbody.innerHTML = `<tr><td colspan="8" class="text-muted py-3">এখনো কোনো শিক্ষক যুক্ত করা হয়নি। বামের ফর্ম থেকে যুক্ত করুন।</td></tr>`;
+          return;
+        }
+
+        snapshot.forEach((doc) => {
+          const t = doc.data();
+          tbody.innerHTML += `
+            <tr>
+              <td><img src="${t.photo}" class="rounded-circle" style="width: 38px; height: 38px; object-fit: cover;"></td>
+              <td class="fw-bold text-success">${t.teacherId}</td>
+              <td class="fw-bold text-dark text-start px-2">${t.name}</td>
+              <td><span class="badge bg-light text-dark border">${t.designation}</span></td>
+              <td><span class="badge bg-secondary">${t.department}</span></td>
+              <td><a href="tel:${t.phone}" class="text-decoration-none fw-bold text-success"><i class="fa-solid fa-phone me-1"></i>${t.phone}</a></td>
+              <td><code class="text-dark fw-bold">${t.password || 'teacher@123'}</code></td>
+              <td>
+                <button class="btn btn-sm btn-outline-danger" onclick="deleteTeacher('${t.teacherId}')" title="মুছে ফেলুন">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+          `;
+        });
+      }).catch(err => {
+        tbody.innerHTML = `<tr><td colspan="8" class="text-danger py-3">ত্রুটি: ${err.message}</td></tr>`;
+      });
+    }
+
+    // শিক্ষক ডিলিট করা
+    function deleteTeacher(tId) {
+      if (!confirm("আপনি কি নিশ্চিত যে এই শিক্ষককে তালিকা থেকে বাদ দিতে চান?")) return;
+      db.collection("teachers").doc(tId).delete().then(() => {
+        alert("শিক্ষকের তথ্য মুছে ফেলা হয়েছে।");
+        loadTeachersList();
+      }).catch(err => {
+        alert("ত্রুটি: " + err.message);
+      });
     }
   </script>
 </body>
