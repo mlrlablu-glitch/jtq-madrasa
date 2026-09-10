@@ -25,13 +25,36 @@
       border: 3px solid #198754;
       border-radius: 8px;
     }
-    .teacher-table th, .teacher-table td {
+    .teacher-table th, .teacher-table td,
+    .ledger-table th, .ledger-table td {
       white-space: nowrap;
       vertical-align: middle;
       padding: 8px 6px;
-      font-size: 12.5px;
+      font-size: 12px;
+    }
+    .accounts-metric-card {
+      border-radius: 12px;
+      padding: 20px;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    .accounts-metric-card.income {
+      background: linear-gradient(135deg, #198754, #0f5132);
+      border-left: 5px solid #20c997;
+    }
+    .accounts-metric-card.expense {
+      background: linear-gradient(135deg, #dc3545, #842029);
+      border-left: 5px solid #ffc107;
+    }
+    .accounts-metric-card.balance {
+      background: linear-gradient(135deg, #0d6efd, #052c65);
+      border-left: 5px solid #0dcaf0;
     }
   </style>
+  <!-- চার্ট লাইব্রেরি -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-light">
 
@@ -42,25 +65,22 @@
         <i class="fa-solid fa-gauge-high me-2"></i>JTQ মাদ্রাসা অ্যাডমিন কন্ট্রোল
       </a>
       <div class="d-flex gap-2">
-        <a href="notices.html" target="_blank" class="btn btn-outline-info btn-sm">
-          <i class="fa-solid fa-bullhorn me-1"></i> লাইভ নোটিশ বোর্ড
+        <a href="id-admit-card.html" class="btn btn-outline-info btn-sm">
+          <i class="fa-solid fa-id-badge me-1"></i> আইডি ও প্রবেশপত্র
         </a>
-        <a href="student-list.html" class="btn btn-outline-warning btn-sm">
-          <i class="fa-solid fa-users me-1"></i> শিক্ষার্থী রেজিস্টার
+        <a href="notices.html" target="_blank" class="btn btn-outline-light btn-sm">
+          <i class="fa-solid fa-bullhorn me-1"></i> নোটিশ বোর্ড
         </a>
         <button class="btn btn-outline-danger btn-sm" id="adminLogout">
           <i class="fa-solid fa-right-from-bracket me-1"></i> লগআউট
         </button>
       </div>
-      <a href="id-admit-card.html" class="btn btn-outline-info btn-sm">
-      <i class="fa-solid fa-id-badge me-1"></i> আইডি কার্ড ও প্রবেশপত্র
-      </a>
     </div>
   </nav>
 
   <div class="container py-4">
     
-    <!-- ৬টি প্রধান ট্যাব নেভিগেশন -->
+    <!-- ৭টি প্রধান ট্যাব নেভিগেশন (হিসাবরক্ষণ সহ) -->
     <ul class="nav nav-pills nav-fill mb-4 p-2 bg-white rounded shadow-sm gap-1" id="adminTabs">
       <li class="nav-item">
         <button class="nav-link active fw-bold small" id="tabAdmissionBtn" onclick="switchAdminTab('admission')">
@@ -79,7 +99,7 @@
       </li>
       <li class="nav-item">
         <button class="nav-link fw-bold text-dark small" id="tabFeeApprovalBtn" onclick="switchAdminTab('feeApproval')">
-          <i class="fa-solid fa-money-bill-circle-check me-1 text-danger"></i> ৪. ফি অনুমোদন ও SMS
+          <i class="fa-solid fa-money-bill-circle-check me-1 text-danger"></i> ৪. ফি অনুমোদন
         </button>
       </li>
       <li class="nav-item">
@@ -90,6 +110,11 @@
       <li class="nav-item">
         <button class="nav-link fw-bold text-dark small" id="tabNoticeBtn" onclick="switchAdminTab('noticeManage')">
           <i class="fa-solid fa-bullhorn me-1 text-info"></i> ৬. নোটিশ জারি
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link fw-bold text-dark small" id="tabAccountsBtn" onclick="switchAdminTab('accounts')">
+          <i class="fa-solid fa-scale-balanced me-1 text-success"></i> ৭. আয়-ব্যয় ও হিসাবরক্ষণ
         </button>
       </li>
     </ul>
@@ -130,18 +155,9 @@
               <div class="border rounded p-3 mb-3 bg-white shadow-sm">
                 <span class="badge bg-success mb-2">শিক্ষার্থীর নাম</span>
                 <div class="row g-2">
-                  <div class="col-md-4">
-                    <label class="form-label small fw-semibold">বাংলায় নাম</label>
-                    <input type="text" class="form-control form-control-sm" id="nameBn" placeholder="মোহাম্মদ আব্দুল্লাহ" required>
-                  </div>
-                  <div class="col-md-4">
-                    <label class="form-label small fw-semibold">Name (English)</label>
-                    <input type="text" class="form-control form-control-sm" id="nameEn" placeholder="Md. Abdullah" required>
-                  </div>
-                  <div class="col-md-4">
-                    <label class="form-label small fw-semibold">الاسم (بالعربية)</label>
-                    <input type="text" class="form-control form-control-sm text-end" dir="rtl" id="nameAr" placeholder="محمد عبد الله" required>
-                  </div>
+                  <div class="col-md-4"><label class="form-label small fw-semibold">বাংলায় নাম</label><input type="text" class="form-control form-control-sm" id="nameBn" placeholder="মোহাম্মদ আব্দুল্লাহ" required></div>
+                  <div class="col-md-4"><label class="form-label small fw-semibold">Name (English)</label><input type="text" class="form-control form-control-sm" id="nameEn" placeholder="Md. Abdullah" required></div>
+                  <div class="col-md-4"><label class="form-label small fw-semibold">الاسم (بالعربية)</label><input type="text" class="form-control form-control-sm text-end" dir="rtl" id="nameAr" placeholder="محمد عبد الله" required></div>
                 </div>
               </div>
 
@@ -170,21 +186,12 @@
               </div>
 
               <div class="row g-2 mb-2">
-                <div class="col-md-6">
-                  <label class="form-label small fw-semibold">ছাত্রের জন্ম নিবন্ধন নম্বর</label>
-                  <input type="text" class="form-control form-control-sm" id="studentRegNo" placeholder="১৭ ডিজিট জন্ম নিবন্ধন" required>
-                </div>
-                <div class="col-md-6">
-                  <label class="form-label small fw-semibold">অভিভাবকের মোবাইল নম্বর (SMS যাবে)</label>
-                  <input type="tel" class="form-control form-control-sm" id="phone" placeholder="017XXXXXXXX" required>
-                </div>
+                <div class="col-md-6"><label class="form-label small fw-semibold">ছাত্রের জন্ম নিবন্ধন নম্বর</label><input type="text" class="form-control form-control-sm" id="studentRegNo" placeholder="১৭ ডিজিট জন্ম নিবন্ধন" required></div>
+                <div class="col-md-6"><label class="form-label small fw-semibold">অভিভাবকের মোবাইল নম্বর (SMS যাবে)</label><input type="tel" class="form-control form-control-sm" id="phone" placeholder="017XXXXXXXX" required></div>
               </div>
 
               <div class="row g-2 mb-2">
-                <div class="col-md-6">
-                  <label class="form-label small fw-semibold">জন্ম তারিখ</label>
-                  <input type="date" class="form-control form-control-sm" id="dob" required>
-                </div>
+                <div class="col-md-6"><label class="form-label small fw-semibold">জন্ম তারিখ</label><input type="date" class="form-control form-control-sm" id="dob" required></div>
                 <div class="col-md-6">
                   <label class="form-label small fw-semibold">রক্তের গ্রুপ</label>
                   <select class="form-select form-select-sm" id="bloodGroup">
@@ -207,10 +214,7 @@
                     <option value="মক্তব">মক্তব</option>
                   </select>
                 </div>
-                <div class="col-md-6">
-                  <label class="form-label small fw-semibold">শ্রেণি রোল নম্বর</label>
-                  <input type="number" class="form-control form-control-sm" id="roll" placeholder="যেমন: ০১" required>
-                </div>
+                <div class="col-md-6"><label class="form-label small fw-semibold">শ্রেণি রোল নম্বর</label><input type="number" class="form-control form-control-sm" id="roll" placeholder="যেমন: ০১" required></div>
               </div>
 
               <div class="border rounded p-3 mb-3 bg-light">
@@ -243,9 +247,7 @@
                 <input type="text" class="form-control form-control-sm" id="sPass" value="jtq@12345" required>
               </div>
 
-              <button type="submit" class="btn btn-success btn-sm w-100 fw-semibold" id="submitBtn">
-                ছাত্র ভর্তি সম্পন্ন করুন
-              </button>
+              <button type="submit" class="btn btn-success btn-sm w-100 fw-semibold" id="submitBtn">ছাত্র ভর্তি সম্পন্ন করুন</button>
             </form>
           </div>
         </div>
@@ -258,12 +260,8 @@
             </div>
             <div class="table-responsive">
               <table class="table table-hover align-middle small text-center">
-                <thead class="table-light">
-                  <tr><th>ছবি</th><th>আইডি</th><th>বিভাগ</th><th>রোল</th></tr>
-                </thead>
-                <tbody id="studentTableBody">
-                  <tr><td colspan="4" class="text-center text-muted">তথ্য লোড হচ্ছে...</td></tr>
-                </tbody>
+                <thead class="table-light"><tr><th>ছবি</th><th>আইডি</th><th>বিভাগ</th><th>রোল</th></tr></thead>
+                <tbody id="studentTableBody"><tr><td colspan="4" class="text-center text-muted">তথ্য লোড হচ্ছে...</td></tr></tbody>
               </table>
             </div>
           </div>
@@ -304,10 +302,7 @@
                   <div class="col-md-4"><label class="form-label small fw-semibold">উপস্থিতি %</label><input type="text" class="form-control form-control-sm" id="examAttendance" placeholder="যেমন: ৯৫%" required></div>
                   <div class="col-md-4"><label class="form-label small fw-semibold">প্রকাশের তারিখ</label><input type="date" class="form-control form-control-sm" id="examPublishDate" required></div>
                 </div>
-                <div class="mb-2">
-                  <label class="form-label small fw-semibold">মন্তব্য</label>
-                  <input type="text" class="form-control form-control-sm" id="examRemarks" placeholder="উস্তাদজির মন্তব্য">
-                </div>
+                <div class="mb-2"><label class="form-label small fw-semibold">মন্তব্য</label><input type="text" class="form-control form-control-sm" id="examRemarks" placeholder="উস্তাদজির মন্তব্য"></div>
               </div>
               <button type="submit" class="btn btn-primary btn-sm px-4 fw-semibold" id="saveExamBtn">ফলাফল সেভ ও আপডেট করুন</button>
             </form>
@@ -365,20 +360,10 @@
         <div class="card border-0 shadow-sm p-4 bg-white mb-4">
           <h5 class="fw-bold text-dark border-bottom pb-2 mb-3"><i class="fa-solid fa-square-poll-vertical me-2 text-primary"></i>৩টি পরীক্ষার ফলাফল</h5>
           <div class="row g-3">
-            <div class="col-md-4"><div class="p-3 border rounded bg-light text-center"><span class="badge bg-primary mb-2">১ম সাময়িক</span><h5 class="fw-bold my-1" id="repTerm1Grade">...</h5><div class="small text-muted" id="repTerm1Marks">-</div><div class="small text-muted" id="repTerm1Pos">-</div><small class="text-secondary d-block mt-2 italic" id="repTerm1Remarks">-</small></div></div>
-            <div class="col-md-4"><div class="p-3 border rounded bg-light text-center"><span class="badge bg-success mb-2">২য় সাময়িক</span><h5 class="fw-bold my-1" id="repTerm2Grade">...</h5><div class="small text-muted" id="repTerm2Marks">-</div><div class="small text-muted" id="repTerm2Pos">-</div><small class="text-secondary d-block mt-2 italic" id="repTerm2Remarks">-</small></div></div>
-            <div class="col-md-4"><div class="p-3 border rounded bg-light text-center"><span class="badge bg-dark mb-2">৩য় / বার্ষিক</span><h5 class="fw-bold my-1" id="repTerm3Grade">...</h5><div class="small text-muted" id="repTerm3Marks">-</div><div class="small text-muted" id="repTerm3Pos">-</div><small class="text-secondary d-block mt-2 italic" id="repTerm3Remarks">-</small></div></div>
+            <div class="col-md-4"><div class="p-3 border rounded bg-light text-center"><span class="badge bg-primary mb-2">১ম সাময়িক</span><h5 class="fw-bold my-1" id="repTerm1Grade">...</h5><div class="small text-muted" id="repTerm1Marks">-</div><div class="small text-muted" id="repTerm1Pos">-</div></div></div>
+            <div class="col-md-4"><div class="p-3 border rounded bg-light text-center"><span class="badge bg-success mb-2">২য় সাময়িক</span><h5 class="fw-bold my-1" id="repTerm2Grade">...</h5><div class="small text-muted" id="repTerm2Marks">-</div><div class="small text-muted" id="repTerm2Pos">-</div></div></div>
+            <div class="col-md-4"><div class="p-3 border rounded bg-light text-center"><span class="badge bg-dark mb-2">৩য় / বার্ষিক</span><h5 class="fw-bold my-1" id="repTerm3Grade">...</h5><div class="small text-muted" id="repTerm3Marks">-</div><div class="small text-muted" id="repTerm3Pos">-</div></div></div>
           </div>
-        </div>
-
-        <div class="card border-0 shadow-sm p-4 bg-white mb-4">
-          <h5 class="fw-bold text-dark border-bottom pb-2 mb-3"><i class="fa-solid fa-book-journal-whills me-2 text-warning"></i>পড়ার ডায়রি রেকর্ড</h5>
-          <div class="table-responsive"><table class="table table-bordered table-sm text-center small align-middle"><thead class="table-light"><tr><th>তারিখ ও বার</th><th>সবক</th><th>সাত সবক</th><th>আমুখতা</th><th>তিলাওয়াত</th><th>শিক্ষক</th></tr></thead><tbody id="viewSabakTableBody"><tr><td colspan="6">তথ্য লোড হচ্ছে...</td></tr></tbody></table></div>
-        </div>
-
-        <div class="card border-0 shadow-sm p-4 bg-white">
-          <h5 class="fw-bold text-dark border-bottom pb-2 mb-3"><i class="fa-solid fa-file-invoice-dollar me-2 text-primary"></i>ফি জমার ইতিহাস</h5>
-          <div class="table-responsive"><table class="table table-bordered table-sm text-center small align-middle"><thead class="table-light"><tr><th>খাত / মাস</th><th>পরিমাণ</th><th>মাধ্যম ও TrxID</th><th>তারিখ</th><th>স্ট্যাটাস</th></tr></thead><tbody id="viewPaymentTableBody"><tr><td colspan="5">তথ্য লোড হচ্ছে...</td></tr></tbody></table></div>
         </div>
       </div>
     </div>
@@ -389,7 +374,7 @@
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
           <div>
             <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-cash-register me-2 text-danger"></i>অনলাইন ফি অনুমোদন ও স্বয়ংক্রিয় SMS</h5>
-            <small class="text-muted">আপনি চাইলে শুধুমাত্র অনুমোদন করতে পারেন অথবা অনুমোদনের সাথে SMS-ও পাঠাতে পারেন।</small>
+            <small class="text-muted">অনুমোদনের সাথে সাথে ফি মাদ্রাসার আয়ের তহবিলে যোগ হবে।</small>
           </div>
           <button class="btn btn-success btn-sm fw-semibold" onclick="loadPendingOnlinePayments()"><i class="fa-solid fa-rotate me-1"></i> তালিকা রিফ্রেশ</button>
         </div>
@@ -428,7 +413,6 @@
             </form>
           </div>
         </div>
-
         <div class="col-lg-8">
           <div class="card border-0 shadow-sm p-4 bg-white">
             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -463,7 +447,6 @@
             </form>
           </div>
         </div>
-
         <div class="col-lg-7">
           <div class="card border-0 shadow-sm p-4 bg-white">
             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -481,9 +464,170 @@
       </div>
     </div>
 
+    <!-- ================= ৭. আয়-ব্যয় ও হিসাবরক্ষণ (Accounts Module) - নতুন সংযোজন ================= -->
+    <div id="accountsSection" style="display: none;">
+      
+      <!-- ১. মূল আর্থিক সারাংশ মেট্রিক্স কার্ড -->
+      <div class="row g-3 mb-4">
+        <div class="col-md-4">
+          <div class="accounts-metric-card income">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <small class="text-white-50 text-uppercase fw-semibold" style="letter-spacing: 1px;">মোট অর্জিত আয়</small>
+                <h3 class="fw-bold my-1" id="accTotalIncome">০.০০ ৳</h3>
+                <small class="text-white-50">বেতন, ভর্তি ফি ও লিল্লাহ অনুদান</small>
+              </div>
+              <i class="fa-solid fa-hand-holding-dollar fa-3x text-white-50"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="accounts-metric-card expense">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <small class="text-white-50 text-uppercase fw-semibold" style="letter-spacing: 1px;">মোট সার্বিক ব্যয়</small>
+                <h3 class="fw-bold my-1" id="accTotalExpense">০.০০ ৳</h3>
+                <small class="text-white-50">বেতন-ভাতা, মেস ও ইউটিলিটি</small>
+              </div>
+              <i class="fa-solid fa-money-bill-trend-up fa-3x text-white-50"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="accounts-metric-card balance">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <small class="text-white-50 text-uppercase fw-semibold" style="letter-spacing: 1px;">বর্তমান নিট তহবিল উদ্বৃত্ত</small>
+                <h3 class="fw-bold my-1" id="accNetBalance">০.০০ ৳</h3>
+                <small class="text-white-50">মাদ্রাসার বর্তমান ব্যালেন্স</small>
+              </div>
+              <i class="fa-solid fa-vault fa-3x text-white-50"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ২. চার্ট ও গ্রাফ সেকশন -->
+      <div class="row g-4 mb-4">
+        <div class="col-lg-7">
+          <div class="card border-0 shadow-sm p-4 bg-white h-100">
+            <h6 class="fw-bold text-dark border-bottom pb-2 mb-3">
+              <i class="fa-solid fa-chart-column me-2 text-primary"></i>আয় বনাম ব্যয়ের মাসিক তুলনা
+            </h6>
+            <div style="height: 250px;">
+              <canvas id="incomeExpenseBarChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-5">
+          <div class="card border-0 shadow-sm p-4 bg-white h-100">
+            <h6 class="fw-bold text-dark border-bottom pb-2 mb-3">
+              <i class="fa-solid fa-chart-pie me-2 text-success"></i>ব্যয়ের খাতভিত্তিক বণ্টন (Expense Breakdown)
+            </h6>
+            <div style="height: 250px;">
+              <canvas id="expensePieChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ৩. নতুন ব্যয় ভাউচার এন্ট্রি ও লেজার টেবিল -->
+      <div class="row g-4">
+        <!-- বামে: ব্যয়ের ভাউচার ফরম -->
+        <div class="col-lg-5">
+          <div class="card border-0 shadow-sm p-4 bg-white border-top border-danger border-4">
+            <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-receipt me-2 text-danger"></i>নতুন ব্যয়ের ভাউচার এন্ট্রি</h5>
+            
+            <form id="addExpenseForm">
+              <div class="mb-2">
+                <label class="form-label small fw-semibold">ব্যয়ের খাত নির্বাচন করুন</label>
+                <select class="form-select form-select-sm fw-bold border-danger" id="expCategory" required>
+                  <option value="শিক্ষক ও স্টাফ বেতন-ভাতা">১. শিক্ষক ও স্টাফ বেতন-ভাতা</option>
+                  <option value="আবাসিক মেস ও খাবার খরচ">২. আবাসিক মেস ও খাবার খরচ</option>
+                  <option value="বিদ্যুৎ, গ্যাস ও পানি বিল">৩. বিদ্যুৎ, গ্যাস ও পানি বিল</option>
+                  <option value="মাদ্রাসা ভবন ভাড়া">৪. মাদ্রাসা ভবন ভাড়া</option>
+                  <option value="মেহমানদারি ও আপ্যায়ন">৫. মেহমানদারি ও আপ্যায়ন</option>
+                  <option value="কিতাব ও স্টেশনারি ক্রয়">৬. কিতাব ও স্টেশনারি ক্রয়</option>
+                  <option value="মেরামত ও রক্ষণাবেক্ষণ">৭. মেরামত ও রক্ষণাবেক্ষণ</option>
+                  <option value="বিবিধ অন্যান্য ব্যয়">৮. বিবিধ অন্যান্য ব্যয়</option>
+                </select>
+              </div>
+
+              <div class="row g-2 mb-2">
+                <div class="col-md-6">
+                  <label class="form-label small fw-semibold">টাকার পরিমাণ (টাকা)</label>
+                  <input type="number" class="form-control form-control-sm fw-bold" id="expAmount" placeholder="যেমন: ৫০০০" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small fw-semibold">পরিশোধের মাধ্যম</label>
+                  <select class="form-select form-select-sm" id="expMethod">
+                    <option value="ক্যাশ (নগদ)">ক্যাশ (নগদ)</option>
+                    <option value="ব্যাংক একাউন্ট">ব্যাংক একাউন্ট</option>
+                    <option value="বিকাশ / নগদ">বিকাশ / নগদ</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row g-2 mb-2">
+                <div class="col-md-6">
+                  <label class="form-label small fw-semibold">ভাউচার / ব্যয়ের তারিখ</label>
+                  <input type="date" class="form-control form-control-sm" id="expDate" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small fw-semibold">টাকা গ্রহণকারীর নাম / প্রতিষ্ঠান</label>
+                  <input type="text" class="form-control form-control-sm" id="expRecipient" placeholder="যেমন: উস্তাদজি / মুদি দোকান" required>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label small fw-semibold">ব্যয়ের সংক্ষিপ্ত বিবরণ / ভাউচার নং</label>
+                <input type="text" class="form-control form-control-sm" id="expNote" placeholder="যেমন: চলতি মাসের গ্যাস বিল ও তেল ক্রয়">
+              </div>
+
+              <button type="submit" class="btn btn-danger btn-sm w-100 fw-bold shadow-sm" id="saveExpenseBtn">
+                <i class="fa-solid fa-file-invoice-dollar me-1"></i> ব্যয়ের ভাউচার সংরক্ষণ করুন
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- ডানে: আয় ও ব্যয়ের লেজার রেজিস্টার -->
+        <div class="col-lg-7">
+          <div class="card border-0 shadow-sm p-4 bg-white">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-book-bookmark me-2 text-primary"></i>মাদ্রাসার সামগ্রিক লেনদেন খতিয়ান (Ledger)</h5>
+              <button class="btn btn-outline-success btn-sm" onclick="loadAccountsData()"><i class="fa-solid fa-rotate me-1"></i> রিফ্রেশ</button>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover ledger-table text-center mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>তারিখ</th>
+                    <th>ধরন</th>
+                    <th>খাত ও বিবরণ</th>
+                    <th>মাধ্যম</th>
+                    <th>টাকার পরিমাণ</th>
+                    <th>অ্যাকশন</th>
+                  </tr>
+                </thead>
+                <tbody id="accountsLedgerBody">
+                  <tr><td colspan="6" class="text-muted">হিসাবের তথ্য লোড হচ্ছে...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
   </div>
 
-  <!-- ফি অনুমোদন মডাল (দুটি পৃথক বাটন: ১. শুধু অনুমোদন, ২. অনুমোদন ও SMS পাঠান) -->
+  <!-- ফি অনুমোদন মডাল -->
   <div class="modal fade" id="approveModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content border-0 shadow">
@@ -510,14 +654,10 @@
             <i class="fa-solid fa-phone text-success me-1"></i> অভিভাবকের ফোন নম্বর: <strong id="modalPhonePreview" class="text-dark">...</strong>
           </div>
 
-          <!-- আপনার চাহিদামতো দুটি স্পষ্ট অপশন বাটন -->
           <div class="d-flex flex-column gap-2">
-            <!-- অপশন ১: শুধু অনুমোদন -->
             <button type="button" class="btn btn-outline-success fw-bold py-2" id="btnOnlyApprove" onclick="executeFeeApproval(false)">
               <i class="fa-solid fa-check me-1"></i> ১. শুধু অনুমোদন করুন (SMS ছাড়া)
             </button>
-
-            <!-- অপশন ২: অনুমোদন ও SMS পাঠান -->
             <button type="button" class="btn btn-success fw-bold py-2 shadow-sm" id="btnApproveWithSMS" onclick="executeFeeApproval(true)">
               <i class="fa-solid fa-paper-plane me-1"></i> ২. অনুমোদন ও SMS পাঠান
             </button>
@@ -544,7 +684,9 @@
     });
 
     document.getElementById('admissionDate').value = new Date().toISOString().split('T')[0];
+    document.getElementById('expDate').value = new Date().toISOString().split('T')[0];
 
+    // ৭টি ট্যাব সুইচার
     function switchAdminTab(tab) {
       const aSec = document.getElementById('admissionSection');
       const eSec = document.getElementById('examSection');
@@ -552,6 +694,7 @@
       const fSec = document.getElementById('feeApprovalSection');
       const tSec = document.getElementById('teacherSection');
       const nSec = document.getElementById('noticeManageSection');
+      const accSec = document.getElementById('accountsSection');
       
       const aBtn = document.getElementById('tabAdmissionBtn');
       const eBtn = document.getElementById('tabExamBtn');
@@ -559,9 +702,10 @@
       const fBtn = document.getElementById('tabFeeApprovalBtn');
       const tBtn = document.getElementById('tabTeacherBtn');
       const nBtn = document.getElementById('tabNoticeBtn');
+      const accBtn = document.getElementById('tabAccountsBtn');
 
-      [aSec, eSec, sSec, fSec, tSec, nSec].forEach(el => el.style.display = 'none');
-      [aBtn, eBtn, sBtn, fBtn, tBtn, nBtn].forEach(btn => {
+      [aSec, eSec, sSec, fSec, tSec, nSec, accSec].forEach(el => el.style.display = 'none');
+      [aBtn, eBtn, sBtn, fBtn, tBtn, nBtn, accBtn].forEach(btn => {
         btn.classList.remove('active');
         btn.classList.add('text-dark');
       });
@@ -581,6 +725,9 @@
       } else if (tab === 'noticeManage') {
         nSec.style.display = 'block'; nBtn.classList.add('active'); nBtn.classList.remove('text-dark');
         loadAdminNoticesList();
+      } else if (tab === 'accounts') {
+        accSec.style.display = 'block'; accBtn.classList.add('active'); accBtn.classList.remove('text-dark');
+        loadAccountsData();
       }
     }
 
@@ -807,8 +954,6 @@
 
         loadExamReports(sId);
         loadSabakHistory(sId);
-        loadFeeHistory(sId);
-
       }).catch((err) => {
         alert("ত্রুটি: " + err.message);
       }).finally(() => {
@@ -825,12 +970,6 @@
             document.getElementById(`repTerm${num}Grade`).innerText = d.grade || "অপেক্ষমান";
             document.getElementById(`repTerm${num}Marks`).innerText = `মোট: ${d.marks || '-'}`;
             document.getElementById(`repTerm${num}Pos`).innerText = `স্থান: ${d.position || '-'} | হাজিরা: ${d.attendance || '-'}`;
-            document.getElementById(`repTerm${num}Remarks`).innerText = d.remarks ? `"${d.remarks}"` : "";
-          } else {
-            document.getElementById(`repTerm${num}Grade`).innerText = "অনুষ্ঠিত হয়নি";
-            document.getElementById(`repTerm${num}Marks`).innerText = "মোট: -";
-            document.getElementById(`repTerm${num}Pos`).innerText = "স্থান: - | হাজিরা: -";
-            document.getElementById(`repTerm${num}Remarks`).innerText = "";
           }
         });
       });
@@ -844,8 +983,6 @@
         tbody.innerHTML = "";
         if (snapshot.empty) {
           tbody.innerHTML = `<tr><td colspan="6" class="text-muted">কোনো রেকর্ড নেই</td></tr>`;
-          document.getElementById('sumSabakActive').innerText = "কোনো সবক নেই";
-          document.getElementById('sumLastSabakRead').innerText = "পড়া অনিয়মিত";
           return;
         }
 
@@ -872,56 +1009,7 @@
       });
     }
 
-    function loadFeeHistory(sId) {
-      const tbody = document.getElementById('viewPaymentTableBody');
-      tbody.innerHTML = `<tr><td colspan="5">লোড হচ্ছে...</td></tr>`;
-
-      db.collection("students").doc(sId).collection("online_fee_submissions").orderBy("submittedAt", "desc").get().then((snapshot) => {
-        tbody.innerHTML = "";
-        let lastTuition = null, lastExam = null;
-
-        if (!snapshot.empty) {
-          snapshot.forEach((doc) => {
-            const p = doc.data();
-            const cat = p.purpose || p.category || "মাসিক বেতন";
-            if (!lastTuition && (cat.includes("মাসিক বেতন") || p.monthYear)) lastTuition = p;
-            if (!lastExam && cat.includes("পরীক্ষা")) lastExam = p;
-
-            tbody.innerHTML += `
-              <tr>
-                <td><strong>${cat}</strong></td>
-                <td><span class="text-success fw-bold">${p.amount}</span></td>
-                <td>${p.method}<br><small class="text-muted">${p.paymentNumber || '-'}</small></td>
-                <td>${p.date}</td>
-                <td><span class="badge ${p.status && p.status.includes('অনুমোদিত') ? 'bg-success' : 'bg-warning text-dark'}">${p.status || 'অপেক্ষমান'}</span></td>
-              </tr>
-            `;
-          });
-        }
-
-        if (lastTuition) {
-          document.getElementById('sumLastTuition').innerText = lastTuition.monthYear || lastTuition.category;
-          document.getElementById('sumTuitionDate').innerText = "পরিশোধ: " + lastTuition.date;
-        } else {
-          document.getElementById('sumLastTuition').innerText = "রেকর্ড নেই";
-          document.getElementById('sumTuitionDate').innerText = "এখনো বেতন দেয়নি";
-        }
-
-        if (lastExam) {
-          document.getElementById('sumLastExamFee').innerText = "পরিশোধিত (" + lastExam.amount + ")";
-          document.getElementById('sumExamFeeDate').innerText = "তারিখ: " + lastExam.date;
-          document.getElementById('sumExamFeeStatus').innerText = lastExam.status;
-        } else {
-          document.getElementById('sumLastExamFee').innerText = "ফি দেয়নি / বকেয়া";
-          document.getElementById('sumExamFeeDate').innerText = "-";
-          document.getElementById('sumExamFeeStatus').innerText = "অপেক্ষমান";
-        }
-
-        if (snapshot.empty) tbody.innerHTML = `<tr><td colspan="5" class="text-muted">কোনো জমার রেকর্ড নেই।</td></tr>`;
-      });
-    }
-
-    // ================== ৪. অনলাইন ফি যাচাই, অনুমোদন ও SMS অপশন ==================
+    // ================== ৪. অনলাইন ফি যাচাই ও অনুমোদন ==================
     let pendingFeeList = [];
 
     async function loadPendingOnlinePayments() {
@@ -1007,7 +1095,7 @@
             </div>
           `;
         } else if (isApproved) {
-          actionBtns = `<span class="text-success small fw-bold"><i class="fa-solid fa-circle-check me-1"></i>সম্পন্ন হয়েছে</span>`;
+          actionBtns = `<span class="text-success small fw-bold">সম্পন্ন হয়েছে</span>`;
         } else {
           actionBtns = `<span class="text-danger small fw-bold">বাতিলকৃত</span>`;
         }
@@ -1051,7 +1139,6 @@
       modal.show();
     }
 
-    // দুটি অপশন হ্যান্ডলার (shouldSendSMS: true বা false)
     async function executeFeeApproval(shouldSendSMS) {
       const sId = document.getElementById('modalStudentId').value;
       const docId = document.getElementById('modalDocId').value;
@@ -1065,15 +1152,11 @@
       const btnWithSMS = document.getElementById('btnApproveWithSMS');
 
       if (!newDue) { alert("নতুন বকেয়া লিখুন (যেমন: ০.০০ ৳)"); return; }
-
-      btnOnly.disabled = true;
-      btnWithSMS.disabled = true;
+      btnOnly.disabled = true; btnWithSMS.disabled = true;
 
       try {
         await db.collection("students").doc(sId).collection("online_fee_submissions").doc(docId).update({
-          status: "অনুমোদিত (Approved)", 
-          approvedAt: new Date(),
-          smsSent: shouldSendSMS
+          status: "অনুমোদিত (Approved)", approvedAt: new Date(), smsSent: shouldSendSMS
         });
         await db.collection("students").doc(sId).update({ due: newDue });
 
@@ -1082,7 +1165,7 @@
             sendFeeApprovalSMS(guardianPhone, studentName, purpose, amount, newDue);
             alert(`ফি অনুমোদিত হয়েছে এবং অভিভাবকের নম্বরে (${guardianPhone}) SMS প্রেরণ করা হয়েছে!`);
           } else {
-            alert("ফি অনুমোদিত হয়েছে, তবে অভিভাবকের ফোন নম্বর না থাকায় SMS পাঠানো যায়নি।");
+            alert("ফি অনুমোদিত হয়েছে, তবে ফোন নম্বর না থাকায় SMS পাঠানো যায়নি।");
           }
         } else {
           alert("ফি সফলভাবে অনুমোদিত হয়েছে (কোনো SMS পাঠানো হয়নি)।");
@@ -1093,8 +1176,7 @@
       } catch (err) {
         alert("ত্রুটি: " + err.message);
       } finally {
-        btnOnly.disabled = false;
-        btnWithSMS.disabled = false;
+        btnOnly.disabled = false; btnWithSMS.disabled = false;
       }
     }
 
@@ -1154,23 +1236,21 @@
       }).catch(err => {
         alert("ত্রুটি: " + err.message);
       }).finally(() => {
-        btn.disabled = false; btn.innerHTML = `<i class="fa-solid fa-user-check me-1"></i> শিক্ষক তথ্য সংরক্ষণ করুন`;
+        btn.disabled = false; btn.innerHTML = `শিক্ষক সংরক্ষণ করুন`;
       });
     });
 
     function loadTeachersList() {
       const tbody = document.getElementById('teacherTableBody');
-      tbody.innerHTML = `<tr><td colspan="8" class="text-muted">শিক্ষকদের তথ্য লোড হচ্ছে...</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="8">লোড হচ্ছে...</td></tr>`;
 
       db.collection("teachers").orderBy("timestamp", "desc").get().then((snapshot) => {
         tbody.innerHTML = "";
         document.getElementById('totalTeachersCount').innerText = `${snapshot.size} জন`;
-
         if (snapshot.empty) {
           tbody.innerHTML = `<tr><td colspan="8" class="text-muted py-3">এখনো কোনো শিক্ষক যুক্ত করা হয়নি।</td></tr>`;
           return;
         }
-
         snapshot.forEach((doc) => {
           const t = doc.data();
           tbody.innerHTML += `
@@ -1180,18 +1260,12 @@
               <td class="fw-bold text-dark text-start px-2">${t.name}</td>
               <td><span class="badge bg-light text-dark border">${t.designation}</span></td>
               <td><span class="badge bg-secondary">${t.department}</span></td>
-              <td><a href="tel:${t.phone}" class="text-decoration-none fw-bold text-success"><i class="fa-solid fa-phone me-1"></i>${t.phone}</a></td>
+              <td><a href="tel:${t.phone}" class="text-decoration-none fw-bold text-success">${t.phone}</a></td>
               <td><code class="text-dark fw-bold">${t.password || 'teacher@123'}</code></td>
-              <td>
-                <button class="btn btn-sm btn-outline-danger" onclick="deleteTeacher('${t.teacherId}')" title="মুছে ফেলুন">
-                  <i class="fa-solid fa-trash"></i>
-                </button>
-              </td>
+              <td><button class="btn btn-sm btn-outline-danger" onclick="deleteTeacher('${t.teacherId}')"><i class="fa-solid fa-trash"></i></button></td>
             </tr>
           `;
         });
-      }).catch(err => {
-        tbody.innerHTML = `<tr><td colspan="8" class="text-danger py-3">ত্রুটি: ${err.message}</td></tr>`;
       });
     }
 
@@ -1200,8 +1274,6 @@
       db.collection("teachers").doc(tId).delete().then(() => {
         alert("শিক্ষকের তথ্য মুছে ফেলা হয়েছে।");
         loadTeachersList();
-      }).catch(err => {
-        alert("ত্রুটি: " + err.message);
       });
     }
 
@@ -1225,58 +1297,253 @@
         alert("নতুন নোটিশ সফলভাবে লাইভ নোটিশ বোর্ডে জারি করা হয়েছে!");
         this.reset();
         loadAdminNoticesList();
-      }).catch(err => {
-        alert("ত্রুটি: " + err.message);
       }).finally(() => {
-        btn.disabled = false;
-        btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up me-1"></i> নোটিশ বোর্ডে প্রকাশ করুন`;
+        btn.disabled = false; btn.innerText = "নোটিশ বোর্ডে প্রকাশ করুন";
       });
     });
 
     function loadAdminNoticesList() {
       const tbody = document.getElementById('adminNoticeListBody');
-      tbody.innerHTML = `<tr><td colspan="5" class="text-muted">নোটিশ লোড হচ্ছে...</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="5">লোড হচ্ছে...</td></tr>`;
 
       db.collection("notices").orderBy("timestamp", "desc").get().then((snapshot) => {
         tbody.innerHTML = "";
         document.getElementById('totalNoticesCount').innerText = `${snapshot.size} টি`;
-
         if (snapshot.empty) {
           tbody.innerHTML = `<tr><td colspan="5" class="text-muted py-3">বর্তমানে কোনো নোটিশ জারি করা নেই।</td></tr>`;
           return;
         }
-
         snapshot.forEach((doc) => {
           const n = doc.data();
-          let catBadge = '<span class="badge bg-success">সাধারণ</span>';
-          if (n.category === 'exam') catBadge = '<span class="badge bg-primary">পরীক্ষা</span>';
-          else if (n.category === 'holiday') catBadge = '<span class="badge bg-danger">ছুটি</span>';
-          else if (n.category === 'admission') catBadge = '<span class="badge bg-warning text-dark">ভর্তি</span>';
-
           tbody.innerHTML += `
             <tr>
               <td><small class="text-muted">${n.dateText || '-'}</small></td>
-              <td>${catBadge}</td>
+              <td><span class="badge bg-primary">${n.category}</span></td>
               <td class="fw-bold text-start px-2">${n.title}</td>
               <td><small class="text-success fw-bold">${n.dates || '-'}</small></td>
-              <td>
-                <button class="btn btn-sm btn-outline-danger" onclick="deleteNoticeFromAdmin('${doc.id}')" title="মুছে ফেলুন">
-                  <i class="fa-solid fa-trash-can"></i>
-                </button>
-              </td>
+              <td><button class="btn btn-sm btn-outline-danger" onclick="deleteNoticeFromAdmin('${doc.id}')"><i class="fa-solid fa-trash-can"></i></button></td>
             </tr>
           `;
         });
-      }).catch(err => {
-        tbody.innerHTML = `<tr><td colspan="5" class="text-danger py-3">ত্রুটি: ${err.message}</td></tr>`;
       });
     }
 
     function deleteNoticeFromAdmin(id) {
-      if (!confirm("আপনি কি নিশ্চিত যে নোটিশটি প্রত্যাহার/মুছে ফেলতে চান?")) return;
+      if (!confirm("আপনি কি নিশ্চিত যে নোটিশটি মুছে ফেলতে চান?")) return;
       db.collection("notices").doc(id).delete().then(() => {
-        alert("নোটিশটি সফলভাবে মুছে ফেলা হয়েছে।");
+        alert("নোটিশ মুছে ফেলা হয়েছে।");
         loadAdminNoticesList();
+      });
+    }
+
+    // ================== ৭. আয়-ব্যয় ও হিসাবরক্ষণ (Accounts Module) লজিক ==================
+    let barChartInstance = null;
+    let pieChartInstance = null;
+
+    // নতুন ব্যয়ের ভাউচার সাবমিট
+    document.getElementById('addExpenseForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('saveExpenseBtn');
+      btn.disabled = true; btn.innerText = "ভাউচার সংরক্ষণ হচ্ছে...";
+
+      const expenseData = {
+        type: "expense",
+        category: document.getElementById('expCategory').value,
+        amount: parseFloat(document.getElementById('expAmount').value) || 0,
+        method: document.getElementById('expMethod').value,
+        date: document.getElementById('expDate').value,
+        recipient: document.getElementById('expRecipient').value.trim(),
+        note: document.getElementById('expNote').value.trim() || "-",
+        timestamp: new Date()
+      };
+
+      db.collection("accounts_expenses").add(expenseData).then(() => {
+        alert("ব্যয়ের ভাউচার সফলভাবে সংরক্ষণ করা হয়েছে!");
+        this.reset();
+        document.getElementById('expDate').value = new Date().toISOString().split('T')[0];
+        loadAccountsData();
+      }).catch(err => {
+        alert("ত্রুটি: " + err.message);
+      }).finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fa-solid fa-file-invoice-dollar me-1"></i> ব্যয়ের ভাউচার সংরক্ষণ করুন`;
+      });
+    });
+
+    // হিসাবের সম্পূর্ণ তথ্য লোড ও চার্ট আপডেট
+    async function loadAccountsData() {
+      const tbody = document.getElementById('accountsLedgerBody');
+      tbody.innerHTML = `<tr><td colspan="6" class="text-muted py-3"><div class="spinner-border spinner-border-sm text-success me-2"></div>হিসাব প্রস্তুত হচ্ছে...</td></tr>`;
+
+      let totalIncome = 0;
+      let totalExpense = 0;
+      const transactions = [];
+      const expenseCategoryMap = {};
+
+      try {
+        // ১. অনুমোদিত সকল আয় সংগ্রহ (online_fee_submissions থেকে)
+        const studentsSnap = await db.collection("students").get();
+        const incomePromises = [];
+
+        studentsSnap.forEach(studentDoc => {
+          const sName = studentDoc.data().nameBn || studentDoc.data().name || studentDoc.id;
+          const p = studentDoc.ref.collection("online_fee_submissions").where("status", "==", "অনুমোদিত (Approved)").get().then(snap => {
+            snap.forEach(doc => {
+              const d = doc.data();
+              // সংখ্যার মান পার্স করা
+              const rawAmt = parseFloat(d.amount.replace(/[^0-9.]/g, '')) || 0;
+              totalIncome += rawAmt;
+
+              let parsedTime = new Date(0);
+              if (d.submittedAt) parsedTime = d.submittedAt.toDate ? d.submittedAt.toDate() : new Date(d.submittedAt);
+
+              transactions.push({
+                id: doc.id,
+                type: "income",
+                category: d.purpose || d.category || "মাসিক বেতন",
+                note: `ছাত্র: ${sName} (${d.paymentNumber || ''})`,
+                amount: rawAmt,
+                method: d.method || "অনলাইন",
+                date: d.date || "-",
+                time: parsedTime
+              });
+            });
+          });
+          incomePromises.push(p);
+        });
+
+        await Promise.all(incomePromises);
+
+        // ২. সকল ব্যয় সংগ্রহ (accounts_expenses থেকে)
+        const expenseSnap = await db.collection("accounts_expenses").get();
+        expenseSnap.forEach(doc => {
+          const d = doc.data();
+          const amt = parseFloat(d.amount) || 0;
+          totalExpense += amt;
+
+          // পাই চার্টের জন্য ক্যাটাগরি যোগফল
+          expenseCategoryMap[d.category] = (expenseCategoryMap[d.category] || 0) + amt;
+
+          let parsedTime = new Date(0);
+          if (d.timestamp) parsedTime = d.timestamp.toDate ? d.timestamp.toDate() : new Date(d.timestamp);
+
+          transactions.push({
+            id: doc.id,
+            type: "expense",
+            category: d.category,
+            note: `গ্রহীতা: ${d.recipient} (${d.note || '-'})`,
+            amount: amt,
+            method: d.method || "ক্যাশ",
+            date: d.date || "-",
+            time: parsedTime
+          });
+        });
+
+        // ৩. ব্যালেন্স হিসাব
+        const netBalance = totalIncome - totalExpense;
+
+        document.getElementById('accTotalIncome').innerText = `${totalIncome.toLocaleString('bn-BD')} ৳`;
+        document.getElementById('accTotalExpense').innerText = `${totalExpense.toLocaleString('bn-BD')} ৳`;
+        document.getElementById('accNetBalance').innerText = `${netBalance.toLocaleString('bn-BD')} ৳`;
+
+        // ৪. লেনদেনগুলো নতুন থেকে পুরাতন সাজিয়ে টেবিলে দেখানো
+        transactions.sort((a, b) => b.time - a.time);
+
+        tbody.innerHTML = "";
+        if (transactions.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="6" class="text-muted py-3">এখনো কোনো আয় বা ব্যয়ের তথ্য পাওয়া যায়নি।</td></tr>`;
+        } else {
+          transactions.forEach(item => {
+            const isInc = item.type === "income";
+            const badge = isInc ? '<span class="badge bg-success"><i class="fa-solid fa-arrow-down me-1"></i>আয়</span>' : '<span class="badge bg-danger"><i class="fa-solid fa-arrow-up me-1"></i>ব্যয়</span>';
+            const amtClass = isInc ? 'text-success' : 'text-danger';
+            const sign = isInc ? '+' : '-';
+
+            let deleteBtn = "";
+            if (!isInc) {
+              deleteBtn = `<button class="btn btn-sm btn-outline-danger py-0 px-1" onclick="deleteExpenseEntry('${item.id}')" title="ভাউচার মুছুন"><i class="fa-solid fa-trash"></i></button>`;
+            } else {
+              deleteBtn = `<span class="badge bg-light text-dark border">ভেরিফায়েড</span>`;
+            }
+
+            tbody.innerHTML += `
+              <tr>
+                <td>${item.date}</td>
+                <td>${badge}</td>
+                <td class="text-start"><strong>${item.category}</strong><br><small class="text-muted">${item.note}</small></td>
+                <td><span class="badge bg-light text-dark border">${item.method}</span></td>
+                <td class="fw-bold ${amtClass} fs-6">${sign} ${item.amount.toLocaleString('bn-BD')} ৳</td>
+                <td>${deleteBtn}</td>
+              </tr>
+            `;
+          });
+        }
+
+        // ৫. চার্ট রেন্ডারিং
+        renderAccountsCharts(totalIncome, totalExpense, expenseCategoryMap);
+
+      } catch (err) {
+        console.error(err);
+        tbody.innerHTML = `<tr><td colspan="6" class="text-danger">হিসাব আনতে সমস্যা হয়েছে: ${err.message}</td></tr>`;
+      }
+    }
+
+    // চার্ট ড্রয়িং ফাংশন
+    function renderAccountsCharts(income, expense, catMap) {
+      // ১. বার চার্ট
+      const barCtx = document.getElementById('incomeExpenseBarChart').getContext('2d');
+      if (barChartInstance) barChartInstance.destroy();
+
+      barChartInstance = new Chart(barCtx, {
+        type: 'bar',
+        data: {
+          labels: ['মোট আয় (Income)', 'মোট ব্যয় (Expense)', 'উদ্বৃত্ত তহবিল (Balance)'],
+          datasets: [{
+            label: 'টাকার পরিমাণ (৳)',
+            data: [income, expense, (income - expense)],
+            backgroundColor: ['#198754', '#dc3545', '#0d6efd'],
+            borderRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } }
+        }
+      });
+
+      // ২. পাই / ডোনাট চার্ট (ব্যয়ের খাতসমূহ)
+      const pieCtx = document.getElementById('expensePieChart').getContext('2d');
+      if (pieChartInstance) pieChartInstance.destroy();
+
+      const catLabels = Object.keys(catMap);
+      const catData = Object.values(catMap);
+
+      pieChartInstance = new Chart(pieCtx, {
+        type: 'doughnut',
+        data: {
+          labels: catLabels.length ? catLabels : ['কোনো ব্যয় নেই'],
+          datasets: [{
+            data: catData.length ? catData : [1],
+            backgroundColor: ['#dc3545', '#ffc107', '#0dcaf0', '#fd7e14', '#6f42c1', '#20c997', '#d63384', '#6c757d']
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } }
+          }
+        }
+      });
+    }
+
+    // ব্যয় এন্ট্রি ডিলিট
+    function deleteExpenseEntry(docId) {
+      if (!confirm("আপনি কি নিশ্চিত যে ব্যয়ের ভাউচারটি মুছে ফেলতে চান?")) return;
+      db.collection("accounts_expenses").doc(docId).delete().then(() => {
+        alert("ব্যয়ের ভাউচার মুছে ফেলা হয়েছে।");
+        loadAccountsData();
       }).catch(err => {
         alert("ত্রুটি: " + err.message);
       });
