@@ -135,21 +135,20 @@
     <!-- মূল কনটেন্ট এরিয়া -->
     <div class="row g-4">
       
-      <!-- বাম পাশ: নোটিশ ফিল্টার ফোল্ডার ও তালিকা -->
+      <!-- বাম পাশ: নোটিশ ফিল্টার বাটন ও তালিকা -->
       <div class="col-lg-8">
         
-        <!-- ফিল্টার ফোল্ডার বাটনসমূহ -->
+        <!-- ফিল্টার বাটনসমূহ (ফোল্ডার লেখা বাদ দিয়ে পরিষ্কার করা হয়েছে) -->
         <div class="d-flex flex-wrap gap-2 mb-3 align-items-center">
-          <span class="small fw-bold text-muted me-1"><i class="fa-solid fa-folder-open me-1"></i></span>
           <button class="category-pill active" onclick="filterCategory('all', this)">সকল নোটিশ</button>
           <button class="category-pill" onclick="filterCategory('exam', this)"><i class="fa-solid fa-square-poll-vertical text-primary me-1"></i>পরীক্ষা সংক্রান্ত</button>
           <button class="category-pill" onclick="filterCategory('holiday', this)"><i class="fa-solid fa-calendar-xmark text-danger me-1"></i>মাদ্রাসা ছুটি</button>
-          <!-- ভর্তি বিজ্ঞপ্তি ফোল্ডার -->
+          <!-- ভর্তি বিজ্ঞপ্তি বাটন -->
           <button class="category-pill" onclick="filterCategory('admission', this)"><i class="fa-solid fa-user-plus text-warning me-1"></i>ভর্তি বিজ্ঞপ্তি</button>
           <button class="category-pill" onclick="filterCategory('general', this)"><i class="fa-solid fa-circle-info text-success me-1"></i>জরুরি নির্দেশনা</button>
         </div>
 
-        <!-- ভর্তি বিজ্ঞপ্তি ফোল্ডার ওপেন হলে এই পূর্ণাঙ্গ ইনফরমেশন বক্সটি দৃশ্যমান হবে -->
+        <!-- ভর্তি বিজ্ঞপ্তি সিলেক্ট করলে এই পূর্ণাঙ্গ ইনফরমেশন বক্সটি দৃশ্যমান হবে -->
         <div id="admissionFolderDetails" class="admission-folder-box p-4 mb-4" style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
             <h5 class="fw-bold text-warning mb-0"><i class="fa-solid fa-folder-open me-2"></i>ভর্তি সংক্রান্ত সকল তথ্যাবলী ও বিশেষ সুবিধাসমূহ</h5>
@@ -316,7 +315,7 @@
     setInterval(updateLiveDateTime, 1000);
     updateLiveDateTime();
 
-    // ================= নোটিশ লোড ও ক্যাটাগরি ফোল্ডার হ্যান্ডলিং =================
+    // ================= নোটিশ লোড ও ক্যাটাগরি হ্যান্ডলিং =================
     let allNotices = [];
 
     function fetchLiveNotices() {
@@ -353,7 +352,7 @@
       const container = document.getElementById('noticeContainer');
       container.innerHTML = "";
       if (list.length === 0) {
-        container.innerHTML = `<div class="card p-4 text-center text-muted bg-white border-0 shadow-sm">এই ফোল্ডারে বর্তমানে কোনো নোটিশ নেই।</div>`;
+        container.innerHTML = `<div class="card p-4 text-center text-muted bg-white border-0 shadow-sm">বর্তমানে কোনো নোটিশ নেই।</div>`;
         return;
       }
 
@@ -384,14 +383,13 @@
       });
     }
 
-    // ফোল্ডার ফিল্টারিং ও ভর্তি বক্স টগল লজিক
+    // ক্যাটাগরি ফিল্টার
     function filterCategory(cat, btn) {
       document.querySelectorAll('.category-pill').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
       const admissionFolderBox = document.getElementById('admissionFolderDetails');
 
-      // শুধুমাত্র "ভর্তি বিজ্ঞপ্তি" ফোল্ডার সিলেক্ট করলেই ভর্তি তথ্য বক্স ওপেন হবে
       if (cat === 'admission') {
         admissionFolderBox.style.display = 'block';
         const filtered = allNotices.filter(item => item.category === 'admission');
