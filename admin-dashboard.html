@@ -35,6 +35,7 @@
 </head>
 <body class="bg-light">
 
+  <!-- অ্যাডমিন হেডার -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
     <div class="container">
       <a class="navbar-brand fw-bold" href="admin-dashboard.html">
@@ -127,7 +128,7 @@
                 <span class="badge bg-success mb-2">শিক্ষার্থীর নাম</span>
                 <div class="row g-2">
                   <div class="col-md-4">
-                    <label class="form-label small fw-semibold">বাংলায় নাম</label>
+                    <label class="form-label small fw-semibold">বাংলায় নাম</label>
                     <input type="text" class="form-control form-control-sm" id="nameBn" placeholder="মোহাম্মদ আব্দুল্লাহ" required>
                   </div>
                   <div class="col-md-4">
@@ -385,7 +386,7 @@
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
           <div>
             <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-cash-register me-2 text-danger"></i>অনলাইন ফি অনুমোদন ও স্বয়ংক্রিয় SMS</h5>
-            <small class="text-muted">অনুমোদন নিশ্চিত করার সাথে সাথে অভিভাবকের মোবাইলে কনফার্মেশন SMS চলে যাবে।</small>
+            <small class="text-muted">আপনি চাইলে শুধুমাত্র অনুমোদন করতে পারেন অথবা অনুমোদনের সাথে SMS-ও পাঠাতে পারেন।</small>
           </div>
           <button class="btn btn-success btn-sm fw-semibold" onclick="loadPendingOnlinePayments()"><i class="fa-solid fa-rotate me-1"></i> তালিকা রিফ্রেশ</button>
         </div>
@@ -479,12 +480,12 @@
 
   </div>
 
-  <!-- ফি অনুমোদন মডাল -->
+  <!-- ফি অনুমোদন মডাল (দুটি পৃথক বাটন: ১. শুধু অনুমোদন, ২. অনুমোদন ও SMS পাঠান) -->
   <div class="modal fade" id="approveModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content border-0 shadow">
         <div class="modal-header bg-success text-white py-2">
-          <h6 class="modal-title fw-bold">ফি অনুমোদন ও স্বয়ংক্রিয় SMS নিশ্চিতকরণ</h6>
+          <h6 class="modal-title fw-bold"><i class="fa-solid fa-circle-check me-2"></i>ফি অনুমোদন ও SMS নির্বাচন</h6>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body p-4">
@@ -501,10 +502,23 @@
             <div class="d-flex justify-content-between"><label class="small fw-bold text-danger">নতুন মোট বকেয়া:</label><small>বর্তমান: <span id="modalCurrentDue">০.০০ ৳</span></small></div>
             <input type="text" class="form-control form-control-sm border-danger fw-bold" id="modalNewDue" required>
           </div>
-          <div class="alert alert-info py-2 px-3 small mb-3">
-            <i class="fa-solid fa-mobile-screen me-1"></i> অনুমোদনের সাথে সাথে অভিভাবকের ফোন (<strong id="modalPhonePreview">...</strong>)-এ কনফার্মেশন SMS চলে যাবে।
+          
+          <div class="p-2 rounded bg-light border mb-3 small">
+            <i class="fa-solid fa-phone text-success me-1"></i> অভিভাবকের ফোন নম্বর: <strong id="modalPhonePreview" class="text-dark">...</strong>
           </div>
-          <button type="button" class="btn btn-success w-100 fw-bold" id="confirmApproveBtn" onclick="submitFeeApproval()">অনুমোদন ও SMS পাঠান</button>
+
+          <!-- আপনার চাহিদামতো দুটি স্পষ্ট অপশন বাটন -->
+          <div class="d-flex flex-column gap-2">
+            <!-- অপশন ১: শুধু অনুমোদন -->
+            <button type="button" class="btn btn-outline-success fw-bold py-2" id="btnOnlyApprove" onclick="executeFeeApproval(false)">
+              <i class="fa-solid fa-check me-1"></i> ১. শুধু অনুমোদন করুন (SMS ছাড়া)
+            </button>
+
+            <!-- অপশন ২: অনুমোদন ও SMS পাঠান -->
+            <button type="button" class="btn btn-success fw-bold py-2 shadow-sm" id="btnApproveWithSMS" onclick="executeFeeApproval(true)">
+              <i class="fa-solid fa-paper-plane me-1"></i> ২. অনুমোদন ও SMS পাঠান
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -904,7 +918,7 @@
       });
     }
 
-    // ================== ৪. অনলাইন ফি যাচাই, অনুমোদন ও SMS পাঠানো ==================
+    // ================== ৪. অনলাইন ফি যাচাই, অনুমোদন ও SMS অপশন ==================
     let pendingFeeList = [];
 
     async function loadPendingOnlinePayments() {
@@ -990,7 +1004,7 @@
             </div>
           `;
         } else if (isApproved) {
-          actionBtns = `<span class="text-success small fw-bold"><i class="fa-solid fa-circle-check me-1"></i>অনুমোদিত ও SMS প্রেরিত</span>`;
+          actionBtns = `<span class="text-success small fw-bold"><i class="fa-solid fa-circle-check me-1"></i>সম্পন্ন হয়েছে</span>`;
         } else {
           actionBtns = `<span class="text-danger small fw-bold">বাতিলকৃত</span>`;
         }
@@ -1027,15 +1041,15 @@
       document.getElementById('modalDisplayId').value = `${sName} (${sId})`;
       document.getElementById('modalDisplayAmount').value = `${amount} [${cat}]`;
       document.getElementById('modalCurrentDue').innerText = currentDue;
-      document.getElementById('modalPhonePreview').innerText = sPhone || "নম্বর নেই";
+      document.getElementById('modalPhonePreview').innerText = sPhone || "নম্বর দেওয়া নেই";
       document.getElementById('modalNewDue').value = "০.০০ ৳";
 
       const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('approveModal'));
       modal.show();
     }
 
-    // ফি অনুমোদন চূড়ান্ত ও স্বয়ংক্রিয় SMS পাঠানো
-    async function submitFeeApproval() {
+    // দুটি অপশন হ্যান্ডলার (shouldSendSMS: true বা false)
+    async function executeFeeApproval(shouldSendSMS) {
       const sId = document.getElementById('modalStudentId').value;
       const docId = document.getElementById('modalDocId').value;
       const guardianPhone = document.getElementById('modalGuardianPhone').value;
@@ -1043,29 +1057,41 @@
       const amount = document.getElementById('modalRawAmount').value;
       const purpose = document.getElementById('modalRawPurpose').value;
       const newDue = document.getElementById('modalNewDue').value.trim();
-      const btn = document.getElementById('confirmApproveBtn');
+
+      const btnOnly = document.getElementById('btnOnlyApprove');
+      const btnWithSMS = document.getElementById('btnApproveWithSMS');
 
       if (!newDue) { alert("নতুন বকেয়া লিখুন (যেমন: ০.০০ ৳)"); return; }
-      btn.disabled = true; btn.innerText = "অনুমোদন ও SMS পাঠানো হচ্ছে...";
+
+      btnOnly.disabled = true;
+      btnWithSMS.disabled = true;
 
       try {
         await db.collection("students").doc(sId).collection("online_fee_submissions").doc(docId).update({
-          status: "অনুমোদিত (Approved)", approvedAt: new Date()
+          status: "অনুমোদিত (Approved)", 
+          approvedAt: new Date(),
+          smsSent: shouldSendSMS
         });
         await db.collection("students").doc(sId).update({ due: newDue });
 
-        // এসএমএস প্রেরণ
-        if (guardianPhone) {
-          sendFeeApprovalSMS(guardianPhone, studentName, purpose, amount, newDue);
+        if (shouldSendSMS) {
+          if (guardianPhone) {
+            sendFeeApprovalSMS(guardianPhone, studentName, purpose, amount, newDue);
+            alert(`ফি অনুমোদিত হয়েছে এবং অভিভাবকের নম্বরে (${guardianPhone}) SMS প্রেরণ করা হয়েছে!`);
+          } else {
+            alert("ফি অনুমোদিত হয়েছে, তবে অভিভাবকের ফোন নম্বর না থাকায় SMS পাঠানো যায়নি।");
+          }
+        } else {
+          alert("ফি সফলভাবে অনুমোদিত হয়েছে (কোনো SMS পাঠানো হয়নি)।");
         }
 
-        alert(`ফি সফলভাবে অনুমোদিত হয়েছে এবং অভিভাবকের মোবাইলে (${guardianPhone}) কনফার্মেশন SMS পাঠানো হয়েছে!`);
         bootstrap.Modal.getInstance(document.getElementById('approveModal')).hide();
         loadPendingOnlinePayments();
       } catch (err) {
         alert("ত্রুটি: " + err.message);
       } finally {
-        btn.disabled = false; btn.innerText = "অনুমোদন ও SMS পাঠান";
+        btnOnly.disabled = false;
+        btnWithSMS.disabled = false;
       }
     }
 
