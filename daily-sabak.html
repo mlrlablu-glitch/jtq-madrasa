@@ -44,10 +44,10 @@
 
   <div class="container-fluid py-4 px-3">
     
-    <div class="card border-0 shadow-sm p-4 bg-white mb-4 no-print border-top border-success border-4 mx-auto" style="max-width: 1100px;">
+    <div class="card border-0 shadow-sm p-4 bg-white mb-4 no-print border-top border-success border-4 mx-auto" style="max-width: 1150px;">
       <div class="d-flex justify-content-between align-items-center mb-3">
         <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-clipboard-user me-2 text-success"></i>দৈনিক পড়া ও উপস্থিতি ইনপুট ফরম</h5>
-        <span class="badge bg-success small"><i class="fa-solid fa-bell me-1"></i>স্বয়ংক্রিয় এসএমএস সক্রিয়</span>
+        <span class="badge bg-success small"><i class="fa-solid fa-bell me-1"></i>স্মার্ট উপস্থিতি ও SMS মডিউল</span>
       </div>
       
       <form id="sabakForm">
@@ -89,27 +89,47 @@
           </div>
         </div>
 
-        <div class="row g-2 mb-3 p-2 border rounded bg-light align-items-center">
-          <div class="col-md-4">
+        <!-- উপস্থিতি রেডিও বাটন (অনুপস্থিত SMS সহ এবং SMS ছাড়া দুটি আলাদা অপশন) -->
+        <div class="row g-2 mb-3 p-3 border rounded bg-light align-items-center">
+          <div class="col-md-3">
             <label class="form-label small fw-bold text-dark mb-0">
-              <i class="fa-solid fa-user-check me-1 text-success"></i>আজকের ক্লাসে শিক্ষার্থীর উপস্থিতি:
+              <i class="fa-solid fa-user-check me-1 text-success"></i>শিক্ষার্থীর উপস্থিতি নির্বাচন:
             </label>
           </div>
-          <div class="col-md-8">
-            <div class="d-flex gap-4">
+          <div class="col-md-9">
+            <div class="d-flex flex-wrap gap-3 align-items-center">
+              <!-- ১. উপস্থিত -->
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="attendanceStatus" id="attPresent" value="উপস্থিত" checked>
-                <label class="form-check-label small fw-bold text-success" for="attPresent">উপস্থিত (Present)</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="attendanceStatus" id="attAbsent" value="অনুপস্থিত">
-                <label class="form-check-label small fw-bold text-danger" for="attAbsent">
-                  অনুপস্থিত (Absent) <small class="badge bg-danger">SMS যাবে</small>
+                <label class="form-check-label small fw-bold text-success" for="attPresent">
+                  <i class="fa-solid fa-circle-check me-1"></i>উপস্থিত (Present)
                 </label>
               </div>
+
+              <!-- ২. অনুপস্থিত SMS সহ -->
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="attendanceStatus" id="attAbsentWithSMS" value="অনুপস্থিত_SMS_সহ">
+                <label class="form-check-label small fw-bold text-danger" for="attAbsentWithSMS">
+                  <i class="fa-solid fa-paper-plane me-1"></i>অনুপস্থিত (SMS সহ)
+                  <span class="badge bg-danger ms-1">SMS যাবে</span>
+                </label>
+              </div>
+
+              <!-- ৩. অনুপস্থিত SMS ছাড়া -->
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="attendanceStatus" id="attAbsentNoSMS" value="অনুপস্থিত_SMS_ছাড়া">
+                <label class="form-check-label small fw-bold text-dark" for="attAbsentNoSMS">
+                  <i class="fa-solid fa-comment-slash me-1 text-secondary"></i>অনুপস্থিত (SMS ছাড়া)
+                  <span class="badge bg-secondary ms-1">SMS যাবে না</span>
+                </label>
+              </div>
+
+              <!-- ৪. ছুটিতে -->
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="attendanceStatus" id="attLeave" value="ছুটিতে">
-                <label class="form-check-label small fw-bold text-warning" for="attLeave">ছুটিতে (Leave)</label>
+                <label class="form-check-label small fw-bold text-warning" for="attLeave">
+                  <i class="fa-solid fa-clock-rotate-left me-1"></i>ছুটিতে (Leave)
+                </label>
               </div>
             </div>
           </div>
@@ -220,7 +240,7 @@
     </div>
   </div>
 
-  <!-- শিক্ষক বেতন জমার পপআপ মোডাল (Teacher Salary Notification Modal) -->
+  <!-- শিক্ষক বেতন জমার পপআপ মোডাল -->
   <div class="modal fade" id="teacherSalaryNotifyModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content border-0 shadow-lg text-center p-3">
@@ -317,7 +337,7 @@
       else if (this.value === 'amukhTilawat') secAmukh.style.display = 'block';
     });
 
-    // ================= নতুন বেতন প্রদানের পপআপ মেসেজ চেকার =================
+    // বেতন জমার নোটিফিকেশন চেকার
     function checkTeacherSalaryNotification() {
       if (!tId) return;
 
@@ -342,7 +362,6 @@
         });
     }
 
-    // শিক্ষক কর্তৃক বেতন গ্রহণ নিশ্চিতকরণ
     async function acknowledgeSalaryReceive() {
       const docId = document.getElementById('notifySalaryDocId').value;
       const btn = document.getElementById('btnAcknowledgeSalary');
@@ -366,10 +385,9 @@
       }
     }
 
-    // পেজ লোড হলেই স্বয়ংক্রিয়ভাবে বেতন নোটিফিকেশন চেক করবে
     checkTeacherSalaryNotification();
 
-    // উপস্থিতি ও পড়া সংরক্ষণ লজিক
+    // উপস্থিতি ও পড়া সংরক্ষণ লজিক (অনুপস্থিত SMS সহ এবং SMS ছাড়া অপশন হ্যান্ডলার)
     document.getElementById('sabakForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       const sId = document.getElementById('inpStudentId').value.trim();
@@ -378,10 +396,24 @@
       const month = document.getElementById('inpMonth').value;
       const year = document.getElementById('inpYear').value;
       const lessonType = document.getElementById('lessonTypeSelect').value;
-      const attendance = document.querySelector('input[name="attendanceStatus"]:checked').value;
+      const attOption = document.querySelector('input[name="attendanceStatus"]:checked').value;
       const btn = document.getElementById('saveSabakBtn');
 
       btn.disabled = true; btn.innerText = "সংরক্ষণ ও যাচাই হচ্ছে...";
+
+      // উপস্থিতি লেবেল নির্ধারণ
+      let attendanceLabel = "উপস্থিত";
+      let shouldSendAbsenceSMS = false;
+
+      if (attOption === "অনুপস্থিত_SMS_সহ") {
+        attendanceLabel = "অনুপস্থিত";
+        shouldSendAbsenceSMS = true;
+      } else if (attOption === "অনুপস্থিত_SMS_ছাড়া") {
+        attendanceLabel = "অনুপস্থিত";
+        shouldSendAbsenceSMS = false;
+      } else if (attOption === "ছুটিতে") {
+        attendanceLabel = "ছুটিতে";
+      }
 
       try {
         const studentDoc = await db.collection("students").doc(sId).get();
@@ -397,7 +429,9 @@
 
         let updatePayload = {
           date: date, day: day, month: month, year: year,
-          attendance: attendance, teacherName: tName, teacherPhone: tPhone, timestamp: new Date()
+          attendance: attendanceLabel,
+          attendanceDetail: attOption,
+          teacherName: tName, teacherPhone: tPhone, timestamp: new Date()
         };
 
         if (lessonType === 'sabak') {
@@ -420,11 +454,14 @@
         }
 
         await db.collection("students").doc(sId).collection("daily_sabak").doc(date).set(updatePayload, { merge: true });
-        await db.collection("students").doc(sId).update({ lastAttendanceStatus: attendance, lastAttendanceDate: date });
+        await db.collection("students").doc(sId).update({ lastAttendanceStatus: attendanceLabel, lastAttendanceDate: date });
 
-        if (attendance === "অনুপস্থিত") {
+        // SMS কন্ডিশন যাচাই
+        if (shouldSendAbsenceSMS) {
           sendAbsenceSMS(guardianPhone, studentName);
-          alert(`পড়া সংরক্ষিত হয়েছে! শিক্ষার্থী অনুপস্থিত থাকায় অভিভাবক (${guardianPhone})-কে SMS নোটিফিকেশন পাঠানো হয়েছে।`);
+          alert(`পড়া সংরক্ষিত হয়েছে! শিক্ষার্থী অনুপস্থিত থাকায় অভিভাবকের নম্বরে (${guardianPhone}) স্বয়ংক্রিয় SMS পাঠানো হয়েছে।`);
+        } else if (attOption === "অনুপস্থিত_SMS_ছাড়া") {
+          alert("পড়া সংরক্ষিত হয়েছে! শিক্ষার্থী অনুপস্থিত হিসেবে নথিভুক্ত হয়েছে (কোনো SMS পাঠানো হয়নি)।");
         } else {
           alert("পড়া ও উপস্থিতি সফলভাবে সংরক্ষিত হয়েছে!");
         }
@@ -466,8 +503,15 @@
             lastPeriod = `${r.month} ${r.year || ''}`;
 
             let attBadge = '<span class="badge bg-success">উপস্থিত</span>';
-            if (r.attendance === 'অনুপস্থিত') attBadge = '<span class="badge bg-danger">অনুপস্থিত</span>';
-            else if (r.attendance === 'ছুটিতে') attBadge = '<span class="badge bg-warning text-dark">ছুটি</span>';
+            if (r.attendance === 'অনুপস্থিত') {
+              if (r.attendanceDetail === 'অনুপস্থিত_SMS_সহ') {
+                attBadge = '<span class="badge bg-danger">অনুপস্থিত (SMS সহ)</span>';
+              } else {
+                attBadge = '<span class="badge bg-secondary">অনুপস্থিত (SMS ছাড়া)</span>';
+              }
+            } else if (r.attendance === 'ছুটিতে') {
+              attBadge = '<span class="badge bg-warning text-dark">ছুটি</span>';
+            }
 
             tbody.innerHTML += `
               <tr>
