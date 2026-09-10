@@ -124,7 +124,7 @@
 
   <div class="container py-4">
     
-    <!-- ৪টি প্রধান ট্যাব নেভিগেশন (হিফজ ট্র্যাকার সহ) -->
+    <!-- ৪টি প্রধান ট্যাব নেভিগেশন -->
     <ul class="nav nav-pills nav-fill mb-4 p-2 bg-white rounded shadow-sm no-print gap-1" id="dashboardTabs">
       <li class="nav-item">
         <button class="nav-link active fw-bold small" id="tabProfileBtn" onclick="switchTab('profile')">
@@ -255,10 +255,8 @@
       </div>
     </div>
 
-    <!-- ================= ২. হিফজ প্রগ্রেস ট্র্যাকার (৩০ পারা) - নতুন আকর্ষণীয় ফিচার ================= -->
+    <!-- ================= ২. হিফজ প্রগ্রেস ট্র্যাকার ================= -->
     <div id="hifzSection" style="display: none;">
-      
-      <!-- প্রগ্রেস কার্ড ও পার্সেন্টেজ বার -->
       <div class="card border-0 shadow-sm p-4 bg-white mb-4 border-top border-success border-4">
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
           <div>
@@ -270,7 +268,6 @@
           <span class="badge bg-success fs-6 px-3 py-2" id="hifzCompletionBadge">০ পারা সম্পন্ন</span>
         </div>
 
-        <!-- মোটিভেশনাল টেক্সট ব্যানার -->
         <div class="alert alert-success d-flex align-items-center p-3 mb-3">
           <i class="fa-solid fa-star-and-crescent fa-2x text-success me-3"></i>
           <div>
@@ -279,7 +276,6 @@
           </div>
         </div>
 
-        <!-- লাইভ প্রগ্রেস বার -->
         <div class="mb-2">
           <div class="d-flex justify-content-between small fw-bold mb-1">
             <span>হিফজ সম্পন্নতার হার:</span>
@@ -292,34 +288,19 @@
           </div>
         </div>
 
-        <!-- ইনডিকেটর নির্দেশিকা -->
         <div class="d-flex flex-wrap gap-3 mt-3 pt-2 border-top small">
-          <div class="d-flex align-items-center gap-1">
-            <span class="badge bg-success" style="width: 14px; height: 14px; padding: 0;"> </span>
-            <span class="text-muted">হিফজ সম্পন্ন (Passed)</span>
-          </div>
-          <div class="d-flex align-items-center gap-1">
-            <span class="badge bg-primary" style="width: 14px; height: 14px; padding: 0;"> </span>
-            <span class="text-muted">বর্তমানে চলমান (Running)</span>
-          </div>
-          <div class="d-flex align-items-center gap-1">
-            <span class="badge bg-light border" style="width: 14px; height: 14px; padding: 0;"> </span>
-            <span class="text-muted">অবশিষ্ট পারা (Upcoming)</span>
-          </div>
+          <div class="d-flex align-items-center gap-1"><span class="badge bg-success" style="width: 14px; height: 14px; padding: 0;"> </span><span class="text-muted">হিফজ সম্পন্ন (Passed)</span></div>
+          <div class="d-flex align-items-center gap-1"><span class="badge bg-primary" style="width: 14px; height: 14px; padding: 0;"> </span><span class="text-muted">বর্তমানে চলমান (Running)</span></div>
+          <div class="d-flex align-items-center gap-1"><span class="badge bg-light border" style="width: 14px; height: 14px; padding: 0;"> </span><span class="text-muted">অবশিষ্ট পারা (Upcoming)</span></div>
         </div>
       </div>
 
-      <!-- ৩০টি পারার ভিজ্যুয়াল গ্রিড ছক -->
       <div class="card border-0 shadow-sm p-4 bg-white">
         <h6 class="fw-bold text-dark border-bottom pb-2 mb-3">
           <i class="fa-solid fa-grid-2 me-2 text-success"></i>পবিত্র কুরআনের ৩০ পারার ছক
         </h6>
-
-        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 row-cols-lg-6 g-3" id="quran30ParaGrid">
-          <!-- জাভাস্ক্রিপ্ট দিয়ে ৩০টি পারার কার্ড ডায়নামিক তৈরি হবে -->
-        </div>
+        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 row-cols-lg-6 g-3" id="quran30ParaGrid"></div>
       </div>
-
     </div>
 
     <!-- ================= ৩. সবক ডায়েরি সেকশন ================= -->
@@ -400,7 +381,7 @@
       </div>
     </div>
 
-    <!-- ================= ৪. অনলাইন ফি ও স্বয়ংক্রিয় রসিদ সেকশন ================= -->
+    <!-- ================= ৪. অনলাইন ফি ও স্বয়ংক্রিয় রসিদ সেকশন (পরীক্ষার নাম সহ) ================= -->
     <div id="feeSection" style="display: none;">
       
       <div class="card border-0 shadow-sm p-4 bg-white mb-4 border-top border-primary border-4 no-print">
@@ -426,11 +407,23 @@
               </select>
             </div>
 
-            <div class="col-md-8" id="otherPurposeDiv" style="display: none;">
+            <!-- পরীক্ষার ফির ক্ষেত্রে: কোন পরীক্ষা ড্রপডাউন -->
+            <div class="col-md-4" id="examTypeDiv" style="display: none;">
+              <label class="form-label small fw-semibold text-primary">কোন পরীক্ষা?</label>
+              <select class="form-select form-select-sm fw-bold" id="payExamName">
+                <option value="১ম সাময়িক পরীক্ষা">১ম সাময়িক পরীক্ষা</option>
+                <option value="২য় সাময়িক পরীক্ষা">২য় সাময়িক পরীক্ষা</option>
+                <option value="৩য় সাময়িক / বার্ষিক পরীক্ষা">৩য় সাময়িক / বার্ষিক পরীক্ষা</option>
+              </select>
+            </div>
+
+            <!-- অন্যান্য ফির ক্ষেত্রে টেক্সট বক্স -->
+            <div class="col-md-4" id="otherPurposeDiv" style="display: none;">
               <label class="form-label small fw-semibold">কোন বাবদ টাকা দেওয়া হচ্ছে লিখুন</label>
               <input type="text" class="form-control form-control-sm" id="otherPurposeText" placeholder="যেমন: নতুন কিতাব ক্রয় / খাবার খরচ">
             </div>
 
+            <!-- মাসিক বেতনের ক্ষেত্রে মাস ড্রপডাউন -->
             <div class="col-md-4" id="monthSelectDiv">
               <label class="form-label small fw-semibold">কোন মাসের বেতন?</label>
               <select class="form-select form-select-sm" id="payMonth">
@@ -443,6 +436,7 @@
               </select>
             </div>
 
+            <!-- বছর / সাল -->
             <div class="col-md-4" id="yearSelectDiv">
               <label class="form-label small fw-semibold">সাল / বছর</label>
               <select class="form-select form-select-sm" id="payYear">
@@ -511,7 +505,7 @@
               <tr>
                 <th>ক্রমিক</th>
                 <th>ফি প্রদানের উদ্দেশ্য</th>
-                <th>মাস ও সাল</th>
+                <th>পরীক্ষা / মাস ও সাল</th>
                 <th>পেমেন্ট মেথড</th>
                 <th>Payment Number / হিসাব</th>
                 <th>TrxID / বিবরণ</th>
@@ -584,7 +578,7 @@
                 <tr>
                   <th>ক্রমিক</th>
                   <th>ফি প্রদানের উদ্দেশ্য</th>
-                  <th>মাস ও সাল</th>
+                  <th>পরীক্ষা / মাস ও সাল</th>
                   <th>পেমেন্ট মেথড</th>
                   <th>Payment No / হিসাব</th>
                   <th>TrxID / বিবরণ</th>
@@ -684,8 +678,6 @@
       }
     }
 
-    // ================= ৩০ পারা ভিজ্যুয়াল গ্রিড ও প্রগ্রেস ক্যালকুলেটর =================
-    // ৩০ পারার প্রারম্ভিক নামসমূহ
     const paraNames = [
       "আলিফ লাম মীম", "সাইয়াকুলু", "তিলকার রুসুল", "লান তানালু", "ওয়াল মুহসানাতু",
       "লা ইয়ুহিব্বুল্লাহ", "ওয়া ইজা সামিয়ু", "ওয়া লাও আন্নানা", "ক্বালা আল-মালাউ", "ওয়া আ'লামু",
@@ -704,21 +696,17 @@
       const gridContainer = document.getElementById('quran30ParaGrid');
       gridContainer.innerHTML = "";
 
-      // ফায়ারবেস থেকে হিফজ ডেটা (যেমন: completedParas: [1, 2, 3, 4, 5], runningPara: 6)
       const completedParas = globalStudentData.completedParas || [];
       const runningPara = globalStudentData.runningPara || (completedParas.length < 30 ? completedParas.length + 1 : 0);
-
       const totalCompleted = completedParas.length;
       const percentage = Math.round((totalCompleted / 30) * 100);
 
-      // প্রগ্রেস বার ও টেক্সট আপডেট
       document.getElementById('hifzCompletionBadge').innerText = `${toBn(totalCompleted)} পারা সম্পন্ন`;
       document.getElementById('hifzPercentageText').innerText = `${toBn(percentage)}%`;
       const pBar = document.getElementById('hifzProgressBar');
       pBar.style.width = `${percentage}%`;
       pBar.innerText = `${toBn(percentage)}%`;
 
-      // মোটিভেশনাল টেক্সট
       if (totalCompleted === 30) {
         document.getElementById('hifzMotivationalText').innerHTML = `মাশাআল্লাহ! পবিত্র কুরআনের ৩০ পারা হিফজ সম্পন্ন হয়েছে! 🎉`;
       } else if (totalCompleted > 0) {
@@ -727,7 +715,6 @@
         document.getElementById('hifzMotivationalText').innerHTML = `বিসমিল্লাহির রহমানির রহিম, হিফজের সূচনা অব্যাহত রয়েছে!`;
       }
 
-      // ১ থেকে ৩০ পারার কার্ড তৈরি
       for (let p = 1; p <= 30; p++) {
         const isDone = completedParas.includes(p);
         const isRun = (p === runningPara && !isDone);
@@ -804,12 +791,11 @@
         document.getElementById('dashRes').innerText = s.result || "অপেক্ষমান";
         document.getElementById('dashDue').innerText = s.due || "০.০০ ৳";
 
-        // প্রাথমিক গ্রিড রেন্ডার
         renderQuran30ParaGrid();
       }
     });
 
-    // পেমেন্ট ফিল্ড টগল
+    // পেমেন্ট ফিল্ড টগল (হ্যান্ড ক্যাশ সহ)
     function togglePaymentFields() {
       const method = document.getElementById('payMethod').value;
       const mfsSenderLabel = document.getElementById('mfsSenderLabel');
@@ -833,18 +819,34 @@
       }
     }
 
+    // ফি ক্যাটাগরি পরিবর্তনের লজিক (পরীক্ষার ফি-র ড্রপডাউন সহ)
     function toggleFeeCategory() {
       const cat = document.getElementById('feeCategory').value;
       const monthDiv = document.getElementById('monthSelectDiv');
       const yearDiv = document.getElementById('yearSelectDiv');
+      const examDiv = document.getElementById('examTypeDiv');
       const otherDiv = document.getElementById('otherPurposeDiv');
 
       if (cat === "মাসিক বেতন") {
-        monthDiv.style.display = 'block'; yearDiv.style.display = 'block'; otherDiv.style.display = 'none';
+        monthDiv.style.display = 'block';
+        yearDiv.style.display = 'block';
+        examDiv.style.display = 'none';
+        otherDiv.style.display = 'none';
+      } else if (cat === "পরীক্ষার ফি") {
+        monthDiv.style.display = 'none';
+        yearDiv.style.display = 'block';
+        examDiv.style.display = 'block'; // পরীক্ষার নাম প্রদর্শন
+        otherDiv.style.display = 'none';
       } else if (cat === "অন্যান্য বিবিধ") {
-        monthDiv.style.display = 'none'; yearDiv.style.display = 'none'; otherDiv.style.display = 'block';
+        monthDiv.style.display = 'none';
+        yearDiv.style.display = 'none';
+        examDiv.style.display = 'none';
+        otherDiv.style.display = 'block';
       } else {
-        monthDiv.style.display = 'none'; yearDiv.style.display = 'block'; otherDiv.style.display = 'none';
+        monthDiv.style.display = 'none';
+        yearDiv.style.display = 'block';
+        examDiv.style.display = 'none';
+        otherDiv.style.display = 'none';
       }
     }
 
@@ -856,14 +858,29 @@
       const feeCategory = document.getElementById('feeCategory').value;
       const month = document.getElementById('payMonth').value;
       const year = document.getElementById('payYear').value;
+      const examName = document.getElementById('payExamName').value;
       const otherPurpose = document.getElementById('otherPurposeText').value.trim();
       const amount = document.getElementById('payAmount').value;
       const date = document.getElementById('payDate').value;
       const method = document.getElementById('payMethod').value;
       const btn = document.getElementById('submitPaymentBtn');
 
-      let purposeDisplay = (feeCategory === "মাসিক বেতন") ? "মাসিক বেতন" : (feeCategory === "অন্যান্য বিবিধ" && otherPurpose) ? `অন্যান্য (${otherPurpose})` : feeCategory;
-      let monthYearDisplay = (feeCategory === "মাসিক বেতন") ? `${month} ${year}` : year;
+      let purposeDisplay = feeCategory;
+      let monthYearDisplay = "-";
+
+      if (feeCategory === "মাসিক বেতন") {
+        purposeDisplay = "মাসিক বেতন";
+        monthYearDisplay = `${month} ${year}`;
+      } else if (feeCategory === "পরীক্ষার ফি") {
+        purposeDisplay = "পরীক্ষার ফি";
+        monthYearDisplay = `${examName} - ${year}`; // পরীক্ষার নাম ও বছর
+      } else if (feeCategory === "অন্যান্য বিবিধ" && otherPurpose) {
+        purposeDisplay = `অন্যান্য (${otherPurpose})`;
+        monthYearDisplay = year;
+      } else {
+        purposeDisplay = feeCategory;
+        monthYearDisplay = year;
+      }
 
       let paymentNumber = "-";
       let trxId = "-";
@@ -901,7 +918,7 @@
 
       db.collection("students").doc(currentId).collection("online_fee_submissions").add(paymentRecord)
         .then(() => {
-          alert("আপনার ফি প্রদানের তথ্য সফলভাবে জমা হয়েছে! অ্যাডমিন অনুমোদন করলেই রসিদ প্রিন্ট করা যাবে।");
+          alert("আপনার " + purposeDisplay + " (" + monthYearDisplay + ")-এর তথ্য সফলভাবে জমা হয়েছে! অ্যাডমিন অনুমোদন করলেই রসিদ প্রিন্ট করা যাবে।");
           document.getElementById('payAmount').value = "";
           document.getElementById('payTrxId').value = "";
           document.getElementById('paySenderNumber').value = "";
