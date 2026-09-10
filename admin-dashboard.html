@@ -42,6 +42,9 @@
         <i class="fa-solid fa-gauge-high me-2"></i>JTQ মাদ্রাসা অ্যাডমিন কন্ট্রোল
       </a>
       <div class="d-flex gap-2">
+        <a href="notices.html" target="_blank" class="btn btn-outline-info btn-sm">
+          <i class="fa-solid fa-bullhorn me-1"></i> লাইভ নোটিশ বোর্ড
+        </a>
         <a href="student-list.html" class="btn btn-outline-warning btn-sm">
           <i class="fa-solid fa-users me-1"></i> শিক্ষার্থী রেজিস্টার
         </a>
@@ -54,7 +57,7 @@
 
   <div class="container py-4">
     
-    <!-- ৫টি প্রধান ট্যাব নেভিগেশন -->
+    <!-- ৬টি প্রধান ট্যাব নেভিগেশন -->
     <ul class="nav nav-pills nav-fill mb-4 p-2 bg-white rounded shadow-sm gap-1" id="adminTabs">
       <li class="nav-item">
         <button class="nav-link active fw-bold small" id="tabAdmissionBtn" onclick="switchAdminTab('admission')">
@@ -78,12 +81,17 @@
       </li>
       <li class="nav-item">
         <button class="nav-link fw-bold text-dark small" id="tabTeacherBtn" onclick="switchAdminTab('teachers')">
-          <i class="fa-solid fa-chalkboard-user me-1 text-success"></i> ৫. শিক্ষক তালিকা ও এন্ট্রি
+          <i class="fa-solid fa-chalkboard-user me-1 text-success"></i> ৫. শিক্ষক তালিকা
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link fw-bold text-dark small" id="tabNoticeBtn" onclick="switchAdminTab('noticeManage')">
+          <i class="fa-solid fa-bullhorn me-1 text-info"></i> ৬. নোটিশ জারি ও নিয়ন্ত্রণ
         </button>
       </li>
     </ul>
 
-    <!-- ================= ১. ছাত্র ভর্তি সেকশন ================= -->
+    <!-- ================= ১. ছাত্র ভর্তি ================= -->
     <div id="admissionSection">
       <div class="row g-4">
         <div class="col-lg-7">
@@ -120,7 +128,7 @@
                 <span class="badge bg-success mb-2">শিক্ষার্থীর নাম</span>
                 <div class="row g-2">
                   <div class="col-md-4">
-                    <label class="form-label small fw-semibold">বাংলায় নাম</label>
+                    <label class="form-label small fw-semibold">বাংলায় নাম</label>
                     <input type="text" class="form-control form-control-sm" id="nameBn" placeholder="মোহাম্মদ আব্দুল্লাহ" required>
                   </div>
                   <div class="col-md-4">
@@ -392,10 +400,9 @@
       </div>
     </div>
 
-    <!-- ================= ৫. শিক্ষক তালিকা ও এন্ট্রি সেকশন (সম্পূর্ণ আলাদা কলামসমূহ) ================= -->
+    <!-- ================= ৫. শিক্ষক তালিকা ও এন্ট্রি ================= -->
     <div id="teacherSection" style="display: none;">
       <div class="row g-4">
-        <!-- বামে: নতুন শিক্ষক যোগ করার ফর্ম -->
         <div class="col-lg-4">
           <div class="card border-0 shadow-sm p-4 bg-white border-top border-success border-4">
             <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-user-tie me-2 text-success"></i>নতুন শিক্ষক যোগ করুন</h5>
@@ -459,7 +466,6 @@
           </div>
         </div>
 
-        <!-- ডানে: সকল শিক্ষকের আলাদা আলাদা কলামের টেবিল -->
         <div class="col-lg-8">
           <div class="card border-0 shadow-sm p-4 bg-white">
             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -467,23 +473,85 @@
               <span class="badge bg-success" id="totalTeachersCount">০ জন</span>
             </div>
 
-            <!-- ৮টি আলাদা আলাদা কলামের টেবিল -->
             <div class="table-responsive">
               <table class="table table-bordered table-hover teacher-table text-center align-middle mb-0">
                 <thead class="table-light">
                   <tr>
-                    <th>ছবি</th>
-                    <th>শিক্ষক আইডি</th>
-                    <th>শিক্ষকের নাম</th>
-                    <th>পদবি</th>
-                    <th>বিভাগ</th>
-                    <th>মোবাইল নম্বর</th>
-                    <th>লগইন পাসওয়ার্ড</th>
-                    <th>অ্যাকশন</th>
+                    <th>ছবি</th><th>শিক্ষক আইডি</th><th>শিক্ষকের নাম</th><th>পদবি</th><th>বিভাগ</th><th>মোবাইল</th><th>পাসওয়ার্ড</th><th>অ্যাকশন</th>
                   </tr>
                 </thead>
                 <tbody id="teacherTableBody">
                   <tr><td colspan="8" class="text-muted">শিক্ষক তালিকা লোড হচ্ছে...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= ৬. নোটিশ জারি ও নিয়ন্ত্রণ (নতুন সংযোজন) ================= -->
+    <div id="noticeManageSection" style="display: none;">
+      <div class="row g-4">
+        <!-- বামে: নোটিশ জারির ফর্ম -->
+        <div class="col-lg-5">
+          <div class="card border-0 shadow-sm p-4 bg-white border-top border-info border-4">
+            <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-bullhorn me-2 text-info"></i>নতুন নোটিশ জারি করুন</h5>
+            <form id="adminNoticePublishForm">
+              
+              <div class="mb-2">
+                <label class="form-label small fw-semibold">নোটিশের শিরোনাম</label>
+                <input type="text" class="form-control form-control-sm" id="admNoticeTitle" placeholder="যেমন: পবিত্র মাহে রমজানের ছুটির নোটিশ" required>
+              </div>
+
+              <div class="mb-2">
+                <label class="form-label small fw-semibold">নোটিশের ক্যাটাগরি</label>
+                <select class="form-select form-select-sm" id="admNoticeCategory" required>
+                  <option value="exam">১. পরীক্ষা সংক্রান্ত</option>
+                  <option value="holiday">২. মাদ্রাসা ছুটি</option>
+                  <option value="admission">৩. ভর্তি সংক্রান্ত</option>
+                  <option value="general">৪. সাধারণ / জরুরি নির্দেশনা</option>
+                </select>
+              </div>
+
+              <div class="mb-2">
+                <label class="form-label small fw-semibold">কার্যকর তারিখ / সময়সীমা</label>
+                <input type="text" class="form-control form-control-sm" id="admNoticeDates" placeholder="যেমন: ১০ই রমজান থেকে ৫ই শাওয়াল পর্যন্ত" required>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label small fw-semibold">নোটিশের পূর্ণাঙ্গ বিবরণ</label>
+                <textarea class="form-control form-control-sm" id="admNoticeBody" rows="4" placeholder="নোটিশের বিস্তারিত বক্তব্য এখানে লিখুন..." required></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-info text-white w-100 fw-bold shadow-sm" id="admPublishNoticeBtn">
+                <i class="fa-solid fa-cloud-arrow-up me-1"></i> নোটিশ বোর্ডে প্রকাশ করুন
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- ডানে: প্রকাশিত সকল নোটিশের তালিকা ও নিয়ন্ত্রণ -->
+        <div class="col-lg-7">
+          <div class="card border-0 shadow-sm p-4 bg-white">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-list-check me-2 text-primary"></i>প্রকাশিত নোটিশের তালিকা</h5>
+              <span class="badge bg-info text-white" id="totalNoticesCount">০ টি</span>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover align-middle small text-center mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>তারিখ</th>
+                    <th>ক্যাটাগরি</th>
+                    <th>শিরোনাম</th>
+                    <th>কার্যকর সময়</th>
+                    <th>অ্যাকশন</th>
+                  </tr>
+                </thead>
+                <tbody id="adminNoticeListBody">
+                  <tr><td colspan="5" class="text-muted">নোটিশ লোড হচ্ছে...</td></tr>
                 </tbody>
               </table>
             </div>
@@ -534,22 +602,24 @@
 
     document.getElementById('admissionDate').value = new Date().toISOString().split('T')[0];
 
-    // ৫টি ট্যাব সুইচার
+    // ৬টি ট্যাব সুইচার
     function switchAdminTab(tab) {
       const aSec = document.getElementById('admissionSection');
       const eSec = document.getElementById('examSection');
       const sSec = document.getElementById('searchSection');
       const fSec = document.getElementById('feeApprovalSection');
       const tSec = document.getElementById('teacherSection');
+      const nSec = document.getElementById('noticeManageSection');
       
       const aBtn = document.getElementById('tabAdmissionBtn');
       const eBtn = document.getElementById('tabExamBtn');
       const sBtn = document.getElementById('tabSearchBtn');
       const fBtn = document.getElementById('tabFeeApprovalBtn');
       const tBtn = document.getElementById('tabTeacherBtn');
+      const nBtn = document.getElementById('tabNoticeBtn');
 
-      [aSec, eSec, sSec, fSec, tSec].forEach(el => el.style.display = 'none');
-      [aBtn, eBtn, sBtn, fBtn, tBtn].forEach(btn => {
+      [aSec, eSec, sSec, fSec, tSec, nSec].forEach(el => el.style.display = 'none');
+      [aBtn, eBtn, sBtn, fBtn, tBtn, nBtn].forEach(btn => {
         btn.classList.remove('active');
         btn.classList.add('text-dark');
       });
@@ -566,6 +636,9 @@
       } else if (tab === 'teachers') {
         tSec.style.display = 'block'; tBtn.classList.add('active'); tBtn.classList.remove('text-dark');
         loadTeachersList();
+      } else if (tab === 'noticeManage') {
+        nSec.style.display = 'block'; nBtn.classList.add('active'); nBtn.classList.remove('text-dark');
+        loadAdminNoticesList();
       }
     }
 
@@ -618,8 +691,7 @@
       const sId = document.getElementById('sId').value.trim();
       const admDate = document.getElementById('admissionDate').value;
       const submitBtn = document.getElementById('submitBtn');
-      submitBtn.innerText = "সংরক্ষণ হচ্ছে...";
-      submitBtn.disabled = true;
+      submitBtn.innerText = "সংরক্ষণ হচ্ছে..."; submitBtn.disabled = true;
 
       const studentData = {
         studentId: sId,
@@ -675,8 +747,7 @@
       }).catch((err) => {
         alert("ত্রুটি: " + err.message);
       }).finally(() => {
-        submitBtn.innerText = "ছাত্র ভর্তি সম্পন্ন করুন";
-        submitBtn.disabled = false;
+        submitBtn.innerText = "ছাত্র ভর্তি সম্পন্ন করুন"; submitBtn.disabled = false;
       });
     });
 
@@ -740,8 +811,7 @@
         }).catch(err => {
           alert("ত্রুটি: " + err.message);
         }).finally(() => {
-          btn.innerText = "পরীক্ষার ফলাফল সেভ ও আপডেট করুন";
-          btn.disabled = false;
+          btn.innerText = "পরীক্ষার ফলাফল সেভ ও আপডেট করুন"; btn.disabled = false;
         });
     });
 
@@ -1066,7 +1136,7 @@
       }
     }
 
-    // ================== ৫. শিক্ষক তালিকা ও এন্ট্রি কোড (আলাদা আলাদা কলামে প্রদর্শন) ==================
+    // ================== ৫. শিক্ষক তালিকা ও এন্ট্রি ==================
     let teacherBase64 = "";
     document.getElementById('teacherPhotoInput').addEventListener('change', function(e) {
       const file = e.target.files[0];
@@ -1080,7 +1150,6 @@
       }
     });
 
-    // নতুন শিক্ষক যুক্ত করা
     document.getElementById('addTeacherForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const tId = document.getElementById('tId').value.trim();
@@ -1114,7 +1183,6 @@
       });
     });
 
-    // শিক্ষক তালিকা লোড (আলাদা ৮টি কলামে)
     function loadTeachersList() {
       const tbody = document.getElementById('teacherTableBody');
       tbody.innerHTML = `<tr><td colspan="8" class="text-muted">শিক্ষকদের তথ্য লোড হচ্ছে...</td></tr>`;
@@ -1124,7 +1192,7 @@
         document.getElementById('totalTeachersCount').innerText = `${snapshot.size} জন`;
 
         if (snapshot.empty) {
-          tbody.innerHTML = `<tr><td colspan="8" class="text-muted py-3">এখনো কোনো শিক্ষক যুক্ত করা হয়নি। বামের ফর্ম থেকে যুক্ত করুন।</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="8" class="text-muted py-3">এখনো কোনো শিক্ষক যুক্ত করা হয়নি।</td></tr>`;
           return;
         }
 
@@ -1152,12 +1220,88 @@
       });
     }
 
-    // শিক্ষক ডিলিট করা
     function deleteTeacher(tId) {
       if (!confirm("আপনি কি নিশ্চিত যে এই শিক্ষককে তালিকা থেকে বাদ দিতে চান?")) return;
       db.collection("teachers").doc(tId).delete().then(() => {
         alert("শিক্ষকের তথ্য মুছে ফেলা হয়েছে।");
         loadTeachersList();
+      }).catch(err => {
+        alert("ত্রুটি: " + err.message);
+      });
+    }
+
+    // ================== ৬. নোটিশ জারি ও নিয়ন্ত্রণ কোড (নতুন) ==================
+    document.getElementById('adminNoticePublishForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('admPublishNoticeBtn');
+      btn.disabled = true; btn.innerText = "নোটিশ প্রকাশ হচ্ছে...";
+
+      const now = new Date();
+      const noticeData = {
+        title: document.getElementById('admNoticeTitle').value.trim(),
+        category: document.getElementById('admNoticeCategory').value,
+        dates: document.getElementById('admNoticeDates').value.trim(),
+        body: document.getElementById('admNoticeBody').value.trim(),
+        dateText: now.toLocaleDateString('bn-BD'),
+        timestamp: now // সর্বশেষ নোটিশ সবার উপরে তোলার জন্য
+      };
+
+      db.collection("notices").add(noticeData).then(() => {
+        alert("নতুন নোটিশ সফলভাবে লাইভ নোটিশ বোর্ডে জারি করা হয়েছে!");
+        this.reset();
+        loadAdminNoticesList();
+      }).catch(err => {
+        alert("ত্রুটি: " + err.message);
+      }).finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up me-1"></i> নোটিশ বোর্ডে প্রকাশ করুন`;
+      });
+    });
+
+    function loadAdminNoticesList() {
+      const tbody = document.getElementById('adminNoticeListBody');
+      tbody.innerHTML = `<tr><td colspan="5" class="text-muted">নোটিশ লোড হচ্ছে...</td></tr>`;
+
+      db.collection("notices").orderBy("timestamp", "desc").get().then((snapshot) => {
+        tbody.innerHTML = "";
+        document.getElementById('totalNoticesCount').innerText = `${snapshot.size} টি`;
+
+        if (snapshot.empty) {
+          tbody.innerHTML = `<tr><td colspan="5" class="text-muted py-3">বর্তমানে কোনো নোটিশ জারি করা নেই।</td></tr>`;
+          return;
+        }
+
+        snapshot.forEach((doc) => {
+          const n = doc.data();
+          let catBadge = '<span class="badge bg-success">সাধারণ</span>';
+          if (n.category === 'exam') catBadge = '<span class="badge bg-primary">পরীক্ষা</span>';
+          else if (n.category === 'holiday') catBadge = '<span class="badge bg-danger">ছুটি</span>';
+          else if (n.category === 'admission') catBadge = '<span class="badge bg-warning text-dark">ভর্তি</span>';
+
+          tbody.innerHTML += `
+            <tr>
+              <td><small class="text-muted">${n.dateText || '-'}</small></td>
+              <td>${catBadge}</td>
+              <td class="fw-bold text-start px-2">${n.title}</td>
+              <td><small class="text-success fw-bold">${n.dates || '-'}</small></td>
+              <td>
+                <button class="btn btn-sm btn-outline-danger" onclick="deleteNoticeFromAdmin('${doc.id}')" title="মুছে ফেলুন">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </td>
+            </tr>
+          `;
+        });
+      }).catch(err => {
+        tbody.innerHTML = `<tr><td colspan="5" class="text-danger py-3">ত্রুটি: ${err.message}</td></tr>`;
+      });
+    }
+
+    function deleteNoticeFromAdmin(id) {
+      if (!confirm("আপনি কি নিশ্চিত যে নোটিশটি প্রত্যাহার/মুছে ফেলতে চান?")) return;
+      db.collection("notices").doc(id).delete().then(() => {
+        alert("নোটিশটি সফলভাবে মুছে ফেলা হয়েছে।");
+        loadAdminNoticesList();
       }).catch(err => {
         alert("ত্রুটি: " + err.message);
       });
