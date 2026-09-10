@@ -158,7 +158,7 @@
                 </div>
               </div>
 
-              <!-- মাসিক নির্ধারিত বেতন ইনপুট (অটো বকেয়া গণনার ভিত্তি) -->
+              <!-- মাসিক নির্ধারিত বেতন ইনপুট -->
               <div class="p-3 border rounded bg-light mb-3 border-start border-danger border-4">
                 <div class="row g-2 align-items-center">
                   <div class="col-md-6">
@@ -264,6 +264,7 @@
           </div>
         </div>
 
+        <!-- ডানে: ভর্তি হওয়া শিক্ষার্থীর তালিকা (মুছে ফেলার ডিলিট অপশনসহ) -->
         <div class="col-lg-5">
           <div class="card border-0 shadow-sm p-4 bg-white mb-4 sticky-top" style="top: 20px;">
             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -271,9 +272,19 @@
               <a href="student-list.html" class="btn btn-outline-success btn-sm">পূর্ণ তালিকা</a>
             </div>
             <div class="table-responsive">
-              <table class="table table-hover align-middle small text-center">
-                <thead class="table-light"><tr><th>ছবি</th><th>আইডি</th><th>বিভাগ</th><th>রোল</th></tr></thead>
-                <tbody id="studentTableBody"><tr><td colspan="4" class="text-center text-muted">তথ্য লোড হচ্ছে...</td></tr></tbody>
+              <table class="table table-hover align-middle small text-center mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>ছবি</th>
+                    <th>আইডি ও নাম</th>
+                    <th>বিভাগ</th>
+                    <th>রোল</th>
+                    <th>অ্যাকশন</th>
+                  </tr>
+                </thead>
+                <tbody id="studentTableBody">
+                  <tr><td colspan="5" class="text-center text-muted">তথ্য লোড হচ্ছে...</td></tr>
+                </tbody>
               </table>
             </div>
           </div>
@@ -743,7 +754,7 @@
       }
     }
 
-    // ================== ১. ছাত্র ভর্তি ==================
+    // ================== ১. ছাত্র ভর্তি ও তালিকা (ডিলিট বাটনসহ) ==================
     let base64Image = "";
     document.getElementById('studentPhotoInput').addEventListener('change', function(e) {
       const file = e.target.files[0];
@@ -765,11 +776,12 @@
       document.getElementById('perDistrict').value = document.getElementById('preDistrict').value;
     });
 
+    // ছাত্র তালিকা রেন্ডার (ডানপাশে লাল ডিলিট বাটন যুক্ত)
     db.collection("students").onSnapshot((snapshot) => {
       const tbody = document.getElementById('studentTableBody');
       tbody.innerHTML = "";
       if (snapshot.empty) {
-        tbody.innerHTML = `<tr><td colspan="4" class="text-center text-muted">কোনো রেকর্ড নেই</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted">কোনো রেকর্ড নেই</td></tr>`;
         return;
       }
       snapshot.forEach((doc) => {
@@ -779,13 +791,31 @@
         tbody.innerHTML += `
           <tr>
             <td><img src="${photo}" class="rounded-circle" style="width:35px; height:35px; object-fit:cover;"></td>
-            <td><strong>${d.studentId}</strong><br><small class="text-muted">${displayName}</small></td>
+            <td class="text-start"><strong>${d.studentId}</strong><br><small class="text-muted">${displayName}</small></td>
             <td><span class="badge bg-success">${d.department || '-'}</span></td>
             <td><span class="badge bg-dark">${d.roll || '-'}</span></td>
+            <td>
+              <button class="btn btn-sm btn-outline-danger py-1 px-2" onclick="deleteStudent('${d.studentId}', '${displayName.replace(/'/g, "")}')" title="শিক্ষার্থী মুছে ফেলুন">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </td>
           </tr>
         `;
       });
     });
+
+    // ছাত্র মুছে ফেলার ফাংশন (Delete Student)
+    function deleteStudent(studentId, studentName) {
+      if (!confirm(`আপনি কি নিশ্চিত যে শিক্ষার্থী "${studentName}" (${studentId})-কে মাদ্রাসা রেজিস্টার থেকে সম্পূর্ণ মুছে ফেলতে চান?`)) {
+        return;
+      }
+
+      db.collection("students").doc(studentId).delete().then(() => {
+        alert(`শিক্ষার্থী "${studentName}" (${studentId})-এর তথ্য সফলভাবে মুছে ফেলা হয়েছে।`);
+      }).catch((err) => {
+        alert("ত্রুটি: " + err.message);
+      });
+    }
 
     document.getElementById('addStudentForm').addEventListener('submit', function(e) {
       e.preventDefault();
@@ -798,7 +828,7 @@
       const studentData = {
         studentId: sId,
         admissionDate: admDate,
-        monthlyFeeRate: monthlyFeeRate, // মাসিক বেতনের হার সংরক্ষিত
+        monthlyFeeRate: monthlyFeeRate,
         nameBn: document.getElementById('nameBn').value.trim(),
         nameEn: document.getElementById('nameEn').value.trim(),
         nameAr: document.getElementById('nameAr').value.trim(),
@@ -1283,7 +1313,7 @@
               <td><code class="text-dark fw-bold">${t.password || 'teacher@123'}</code></td>
               <td>
                 <button class="btn btn-sm btn-success fw-bold px-2 py-1 shadow-sm" onclick="openPaySalaryModal('${t.teacherId}', '${t.name.replace(/'/g, "")}', '${t.phone}', '${t.salary || 0}')">
-                  <i class="fa-solid fa-hand-holding-dollar me-1"></i> বেতন প্রদান করুন
+                  <i class="fa-solid fa-hand-holding-dollar me-1"></i> বেতন প্রদান
                 </button>
               </td>
               <td><button class="btn btn-sm btn-outline-danger" onclick="deleteTeacher('${t.teacherId}')"><i class="fa-solid fa-trash"></i></button></td>
