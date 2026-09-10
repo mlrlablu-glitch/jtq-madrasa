@@ -1,1 +1,444 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>আইডি কার্ড ও প্রবেশপত্র জেনারেটর - JTQ মাদ্রাসা</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ================= আইডি কার্ড স্টাইল ================= */
+    .id-card {
+      width: 320px;
+      height: 490px;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      background: #ffffff;
+      position: relative;
+      border: 1px solid #d1d5db;
+      display: flex;
+      flex-direction: column;
+    }
+    .id-card-front-header {
+      background: linear-gradient(135deg, #062c19, #198754);
+      color: #ffffff;
+      padding: 16px 12px 10px 12px;
+      text-align: center;
+      border-bottom: 3px solid #ffc107;
+    }
+    .id-card-photo {
+      width: 100px;
+      height: 115px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 3px solid #198754;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    .id-card-back-header {
+      background: #062c19;
+      color: #ffd700;
+      padding: 10px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: bold;
+      border-bottom: 2px solid #ffc107;
+    }
+    .id-card-footer {
+      background: #062c19;
+      color: #ffd700;
+      font-size: 11px;
+      text-align: center;
+      padding: 5px;
+      margin-top: auto;
+    }
 
+    /* ================= অ্যাডমিট কার্ড স্টাইল ================= */
+    .admit-card-box {
+      border: 2px solid #0f5132;
+      border-radius: 12px;
+      padding: 24px;
+      background: #ffffff;
+      position: relative;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    .admit-watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 80px;
+      color: rgba(15, 81, 50, 0.04);
+      font-weight: 900;
+      pointer-events: none;
+      user-select: none;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    /* প্রিন্ট মিডিয়া রুলস */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #printableIdCard, #printableIdCard *,
+      #printableAdmitCard, #printableAdmitCard * {
+        visibility: visible;
+      }
+      #printAreaContainer {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-light">
+
+  <!-- নেভিগেশন বার -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm no-print">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="admin-dashboard.html">
+        <i class="fa-solid fa-gauge-high me-2"></i>JTQ অ্যাডমিন
+      </a>
+      <div class="d-flex gap-2">
+        <a href="admin-dashboard.html" class="btn btn-outline-light btn-sm">
+          <i class="fa-solid fa-arrow-left me-1"></i> ড্যাশবোর্ডে ফিরুন
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-4">
+    
+    <!-- সার্চ ও কন্ট্রোল প্যানেল -->
+    <div class="card border-0 shadow-sm p-4 bg-white mb-4 border-top border-success border-4 no-print">
+      <h4 class="fw-bold text-dark mb-2">
+        <i class="fa-solid fa-id-badge text-success me-2"></i>শিক্ষার্থীর ডিজিটাল আইডি কার্ড ও প্রবেশপত্র জেনারেটর
+      </h4>
+      <p class="text-muted small mb-3">Student ID দিয়ে যেকোনো শিক্ষার্থীর জন্য ছবিযুক্ত আইডি কার্ড (উভয় পিঠ) অথবা পরীক্ষার প্রবেশপত্র (Admit Card) প্রিন্ট করুন।</p>
+
+      <form id="cardSearchForm" class="row g-2 align-items-center">
+        <div class="col-md-5">
+          <input type="text" class="form-control form-control-lg fw-bold" id="targetStudentId" placeholder="Student ID লিখুন (যেমন: JTQ-2026-0001)" required>
+        </div>
+        <div class="col-md-4">
+          <select class="form-select form-select-lg fw-semibold" id="cardTypeSelect">
+            <option value="idCard">১. ডিজিটাল স্টুডেন্ট আইডি কার্ড (Front & Back)</option>
+            <option value="admitCard">২. পরীক্ষার প্রবেশপত্র (Exam Admit Card)</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <button type="submit" class="btn btn-success btn-lg w-100 fw-bold shadow-sm" id="generateBtn">
+            <i class="fa-solid fa-wand-magic-sparkles me-1"></i> কার্ড জেনারেট করুন
+          </button>
+        </div>
+      </form>
+
+      <!-- অ্যাডমিট কার্ডের জন্য অতিরিক্ত সেটিংস (পরীক্ষার ধরন) -->
+      <div class="row g-2 mt-2 pt-2 border-top" id="admitCardOptions" style="display: none;">
+        <div class="col-md-4">
+          <label class="form-label small fw-bold">পরীক্ষার নাম:</label>
+          <select class="form-select form-select-sm fw-bold" id="admitExamTerm">
+            <option value="প্রথম সাময়িক পরীক্ষা - ২০২৬">প্রথম সাময়িক পরীক্ষা - ২০২৬</option>
+            <option value="দ্বিতীয় সাময়িক পরীক্ষা - ২০২৬">দ্বিতীয় সাময়িক পরীক্ষা - ২০২৬</option>
+            <option value="বার্ষিক ও হিফজ সমাপনী পরীক্ষা - ২০২৬">বার্ষিক ও হিফজ সমাপনী পরীক্ষা - ২০২৬</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label small fw-bold">পরীক্ষা শুরু হওয়ার তারিখ:</label>
+          <input type="text" class="form-control form-control-sm" id="admitExamDate" value="২০শে সেপ্টেম্বর, ২০২৬">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label small fw-bold">পরীক্ষার সময় ও হল রুম:</label>
+          <input type="text" class="form-control form-control-sm" id="admitExamHall" value="সকাল ৯:০০ - ১২:০০ | হল রুম নং: ০১">
+        </div>
+      </div>
+    </div>
+
+    <!-- প্রিন্ট ও ফলাফল কন্টেইনার -->
+    <div id="printAreaContainer">
+      
+      <!-- ================= ১. ডিজিটাল আইডি কার্ড ভিউ (উভয় পিঠ) ================= -->
+      <div id="idCardDisplayArea" style="display: none;">
+        <div class="d-flex justify-content-between align-items-center mb-3 no-print">
+          <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-id-card me-2 text-success"></i>প্রিন্ট প্রিভিউ: স্টুডেন্ট আইডি কার্ড (Front & Back)</h5>
+          <button class="btn btn-success fw-bold shadow-sm" onclick="window.print()">
+            <i class="fa-solid fa-print me-1"></i> আইডি কার্ড কালার প্রিন্ট
+          </button>
+        </div>
+
+        <div class="d-flex flex-wrap gap-4 justify-content-center mb-4" id="printableIdCard">
+          
+          <!-- সামনের পিঠ (Front Part) -->
+          <div class="id-card">
+            <div class="id-card-front-header">
+              <div class="small fw-semibold text-warning" style="letter-spacing: 1px; font-size: 11px;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+              <h6 class="fw-bold mb-0 text-white" style="font-size: 14px;">জামিয়া তাসলিমুল কুরআন</h6>
+              <small style="font-size: 10px; color: #ffd700;">বাইপাইল, আশুলিয়া, সাভার, ঢাকা</small>
+            </div>
+
+            <div class="text-center my-2">
+              <img id="idPhoto" src="https://via.placeholder.com/100" class="id-card-photo" alt="Student Photo">
+              <h6 class="fw-bold text-dark mb-0 mt-2" id="idNameBn">মোহাম্মদ আব্দুল্লাহ</h6>
+              <small class="text-muted d-block fw-semibold" id="idNameEn" style="font-size: 11px;">Md. Abdullah</small>
+              <span class="badge bg-success mt-1" id="idDeptBadge">হিফজ বিভাগ</span>
+            </div>
+
+            <div class="px-3" style="font-size: 12px;">
+              <table class="table table-sm table-borderless mb-0">
+                <tbody>
+                  <tr><th class="text-muted py-0 w-45">Student ID:</th><td class="fw-bold text-danger py-0" id="idCardStudentId">JTQ-2026-0001</td></tr>
+                  <tr><th class="text-muted py-0">শ্রেণি রোল:</th><td class="fw-bold py-0" id="idRoll">০১</td></tr>
+                  <tr><th class="text-muted py-0">রক্তের গ্রুপ:</th><td class="fw-bold text-danger py-0" id="idBloodGroup">O+</td></tr>
+                  <tr><th class="text-muted py-0">শিক্ষাবর্ষ:</th><td class="fw-semibold py-0">২০২৬ - ২০২৭</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="id-card-footer">
+              <i class="fa-solid fa-phone me-1"></i>জরুরি হেল্পলাইন: 01700-000000
+            </div>
+          </div>
+
+          <!-- পেছনের পিঠ (Back Part) -->
+          <div class="id-card">
+            <div class="id-card-back-header">
+              <i class="fa-solid fa-circle-info me-1"></i> অভিভাবক ও ঠিকানার বিবরণ
+            </div>
+
+            <div class="p-3" style="font-size: 11.5px;">
+              <table class="table table-sm table-borderless mb-2">
+                <tbody>
+                  <tr><th class="text-muted py-0 w-35">পিতার নাম:</th><td class="fw-semibold py-0" id="idFather">...</td></tr>
+                  <tr><th class="text-muted py-0">মাতার নাম:</th><td class="fw-semibold py-0" id="idMother">...</td></tr>
+                  <tr><th class="text-muted py-0">মোবাইল:</th><td class="fw-bold text-success py-0" id="idPhone">...</td></tr>
+                  <tr><th class="text-muted py-0">স্থায়ী ঠিকানা:</th><td class="py-0" id="idAddress">...</td></tr>
+                </tbody>
+              </table>
+
+              <!-- নির্দেশনাবলী -->
+              <div class="border rounded p-2 bg-light small mb-2" style="font-size: 10px; line-height: 1.4;">
+                <strong>নির্দেশনাবলী:</strong>
+                <ol class="ps-3 mb-0">
+                  <li>কার্ডটি মাদ্রাসায় অবস্থানকালে সার্বক্ষণিক সঙ্গে রাখা আবশ্যক।</li>
+                  <li>কার্ডটি হস্তান্তরযোগ্য নয়। হারিয়ে গেলে তাৎক্ষণিক অফিস কক্ষে জানাতে হবে।</li>
+                </ol>
+              </div>
+
+              <!-- সিল ও স্বাক্ষর -->
+              <div class="d-flex justify-content-between align-items-end mt-4 pt-2 px-2">
+                <div class="text-center" style="font-size: 10px;">
+                  <i class="fa-solid fa-qrcode fa-2x text-muted d-block mb-1"></i>
+                  <small>JTQ VERIFIED</small>
+                </div>
+                <div class="text-center">
+                  <div class="border-top border-dark pt-1 fw-bold text-dark" style="font-size: 10.5px;">মুহতামিম / প্রিন্সিপাল</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="id-card-footer">
+              জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ================= ২. পরীক্ষার প্রবেশপত্র (Admit Card) ভিউ ================= -->
+      <div id="admitCardDisplayArea" style="display: none;">
+        <div class="d-flex justify-content-between align-items-center mb-3 no-print">
+          <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-file-signature me-2 text-primary"></i>প্রিন্ট প্রিভিউ: পরীক্ষার প্রবেশপত্র (Admit Card)</h5>
+          <button class="btn btn-primary fw-bold shadow-sm" onclick="window.print()">
+            <i class="fa-solid fa-print me-1"></i> প্রবেশপত্র প্রিন্ট করুন
+          </button>
+        </div>
+
+        <div class="admit-card-box shadow-sm mb-4" id="printableAdmitCard">
+          <div class="admit-watermark">JTQ ADMIT</div>
+
+          <!-- হেডার -->
+          <div class="text-center border-bottom border-success border-2 pb-2 mb-3">
+            <h3 class="fw-bold text-success mb-0">জামিয়া তাসলিমুল কুরআন ইসলামিয়া</h3>
+            <p class="text-muted small mb-1">বাইপাইল, আশুলিয়া, সাভার, ঢাকা | ফোন: 01700-000000</p>
+            <span class="badge bg-primary px-3 py-1 fs-6" id="admitCardExamTitle">পরীক্ষার প্রবেশপত্র (ADMIT CARD)</span>
+          </div>
+
+          <!-- ছাত্রের তথ্য ও ছবি -->
+          <div class="row g-3 align-items-center mb-3">
+            <div class="col-8">
+              <table class="table table-bordered table-sm small mb-0">
+                <tbody>
+                  <tr>
+                    <th class="bg-light w-30">শিক্ষার্থীর নাম:</th>
+                    <td class="fw-bold fs-6 text-dark" id="admitName">...</td>
+                  </tr>
+                  <tr>
+                    <th class="bg-light">Student ID:</th>
+                    <td class="fw-bold text-success" id="admitStudentId">...</td>
+                  </tr>
+                  <tr>
+                    <th class="bg-light">বিভাগ / শ্রেণি:</th>
+                    <td class="fw-semibold" id="admitDept">...</td>
+                  </tr>
+                  <tr>
+                    <th class="bg-light">শ্রেণি রোল নম্বর:</th>
+                    <td class="fw-bold fs-6 text-danger" id="admitRoll">...</td>
+                  </tr>
+                  <tr>
+                    <th class="bg-light">পিতার নাম:</th>
+                    <td id="admitFather">...</td>
+                  </tr>
+                  <tr>
+                    <th class="bg-light">পরীক্ষার তারিখ ও হল:</th>
+                    <td class="fw-bold text-primary" id="admitSchedule">...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-4 text-center">
+              <img id="admitPhoto" src="https://via.placeholder.com/110" class="img-thumbnail border-success" style="width: 110px; height: 125px; object-fit: cover;" alt="Student Photo">
+              <div class="small text-muted mt-1">শিক্ষার্থীর সত্যায়িত ছবি</div>
+            </div>
+          </div>
+
+          <!-- পরীক্ষার রুটিন ছক -->
+          <div class="mb-3">
+            <h6 class="fw-bold text-dark small border-bottom pb-1 mb-2">পরীক্ষাসমূহের তালিকা ও পরিদর্শক স্বাক্ষর:</h6>
+            <table class="table table-bordered table-sm text-center small mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th style="width: 60px;">ক্রমিক</th>
+                  <th>পরীক্ষার বিষয় / কিতাব / পারা</th>
+                  <th>পূর্ণমান</th>
+                  <th>পরীক্ষার তারিখ</th>
+                  <th style="width: 140px;">কক্ষ পরিদর্শকের স্বাক্ষর</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>০১</td><td class="text-start ps-3">কুরআনুল কারীম হিফজ শুনানী (সবক ও সাত সবক)</td><td>১০০</td><td>প্রথম দিন</td><td></td></tr>
+                <tr><td>০২</td><td class="text-start ps-3">কুরআনুল কারীম আমুখতা ও তিলাওয়াত</td><td>১০০</td><td>দ্বিতীয় দিন</td><td></td></tr>
+                <tr><td>০৩</td><td class="text-start ps-3">তাজবীদুল কুরআন ও মাখরাজ পরীক্ষা</td><td>৫০</td><td>তৃতীয় দিন</td><td></td></tr>
+                <tr><td>০৪</td><td class="text-start ps-3">জরুরি আকাইদ, মাসয়ালা ও মাসনুন দুআ</td><td>৫০</td><td>চতুর্থ দিন</td><td></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- নির্দেশনাবলী -->
+          <div class="border rounded p-2 bg-light small mb-4" style="font-size: 11px;">
+            <strong>পরীক্ষার্থীদের জন্য জরুরি নির্দেশনাবলী:</strong>
+            <ul class="mb-0 ps-3">
+              <li>পরীক্ষা শুরুর অন্তত ১৫ মিনিট পূর্বে নির্ধারিত কক্ষে উপস্থিত হতে হবে।</li>
+              <li>এই প্রবেশপত্র (Admit Card) ছাড়া কোনোভাবেই পরীক্ষার হলে প্রবেশ করতে দেওয়া হবে না।</li>
+              <li>মাদ্রাসার নির্ধারিত পোশাক ও শৃঙ্খলা মেনে পরীক্ষায় অংশগ্রহণ করতে হবে।</li>
+            </ul>
+          </div>
+
+          <!-- স্বাক্ষর -->
+          <div class="row text-center mt-5 pt-3">
+            <div class="col-4"><div class="border-top border-dark pt-1 small fw-bold">শিক্ষার্থীর স্বাক্ষর</div></div>
+            <div class="col-4"><div class="border-top border-dark pt-1 small fw-bold">পরীক্ষা সচিব</div></div>
+            <div class="col-4"><div class="border-top border-dark pt-1 small fw-bold">মুহতামিম / প্রিন্সিপাল</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+
+  <script>
+    // ড্রপডাউন টগল
+    document.getElementById('cardTypeSelect').addEventListener('change', function() {
+      const isAdmit = this.value === 'admitCard';
+      document.getElementById('admitCardOptions').style.display = isAdmit ? 'flex' : 'none';
+    });
+
+    // ফর্ম সাবমিট ও কার্ড তৈরি
+    document.getElementById('cardSearchForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const sId = document.getElementById('targetStudentId').value.trim();
+      const cardType = document.getElementById('cardTypeSelect').value;
+      const btn = document.getElementById('generateBtn');
+
+      btn.disabled = true;
+      btn.innerText = "জেনারেট হচ্ছে...";
+
+      db.collection("students").doc(sId).get().then((doc) => {
+        if (!doc.exists) {
+          alert("এই Student ID (" + sId + ") দিয়ে কোনো শিক্ষার্থী পাওয়া যায়নি!");
+          document.getElementById('idCardDisplayArea').style.display = 'none';
+          document.getElementById('admitCardDisplayArea').style.display = 'none';
+          return;
+        }
+
+        const s = doc.data();
+        const photoUrl = s.photo || 'https://via.placeholder.com/110';
+        const nameBn = s.nameBn || s.name || "-";
+        const nameEn = s.nameEn || "-";
+        const fatherName = s.fatherBn || s.father || "-";
+        const motherName = s.motherBn || s.mother || "-";
+        const phone = s.phone || "-";
+        const roll = s.roll || "-";
+        const dept = s.department || "-";
+        const blood = s.bloodGroup || "অজানা";
+
+        const per = s.permanentAddress || {};
+        const fullAddress = `${per.village || ''}, ${per.thana || ''}, ${per.district || ''}`;
+
+        if (cardType === 'idCard') {
+          // আইডি কার্ড পপুলেট
+          document.getElementById('idPhoto').src = photoUrl;
+          document.getElementById('idNameBn').innerText = nameBn;
+          document.getElementById('idNameEn').innerText = nameEn;
+          document.getElementById('idDeptBadge').innerText = dept;
+          document.getElementById('idCardStudentId').innerText = s.studentId;
+          document.getElementById('idRoll').innerText = roll;
+          document.getElementById('idBloodGroup').innerText = blood;
+
+          document.getElementById('idFather').innerText = fatherName;
+          document.getElementById('idMother').innerText = motherName;
+          document.getElementById('idPhone').innerText = phone;
+          document.getElementById('idAddress').innerText = fullAddress || "দেওয়া হয়নি";
+
+          document.getElementById('idCardDisplayArea').style.display = 'block';
+          document.getElementById('admitCardDisplayArea').style.display = 'none';
+        } else {
+          // প্রবেশপত্র পপুলেট
+          const examTerm = document.getElementById('admitExamTerm').value;
+          const examSchedule = `${document.getElementById('admitExamDate').value} (${document.getElementById('admitExamHall').value})`;
+
+          document.getElementById('admitCardExamTitle').innerText = examTerm + " - প্রবেশপত্র";
+          document.getElementById('admitPhoto').src = photoUrl;
+          document.getElementById('admitName').innerText = nameBn;
+          document.getElementById('admitStudentId').innerText = s.studentId;
+          document.getElementById('admitDept').innerText = dept;
+          document.getElementById('admitRoll').innerText = roll;
+          document.getElementById('admitFather').innerText = fatherName;
+          document.getElementById('admitSchedule').innerText = examSchedule;
+
+          document.getElementById('admitCardDisplayArea').style.display = 'block';
+          document.getElementById('idCardDisplayArea').style.display = 'none';
+        }
+      }).catch(err => {
+        alert("ত্রুটি: " + err.message);
+      }).finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles me-1"></i> কার্ড জেনারেট করুন`;
+      });
+    });
+  </script>
+</body>
+</html>
