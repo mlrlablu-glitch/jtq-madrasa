@@ -44,6 +44,30 @@
       border-radius: 12px;
       border-top: 4px solid #198754;
     }
+    .live-clock-pill {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 50px;
+      padding: 6px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .admission-highlight-box {
+      background: linear-gradient(135deg, #062c19, #0f5132);
+      border-radius: 12px;
+      color: #ffffff;
+      border: 2px solid #ffc107;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    }
+    .facility-badge {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 215, 0, 0.4);
+      border-radius: 8px;
+      padding: 10px 14px;
+    }
   </style>
 </head>
 <body class="bg-light">
@@ -70,18 +94,99 @@
     </div>
   </nav>
 
-  <!-- হেডার ব্যানার -->
+  <!-- হেডার ব্যানার (বাম পাশে লাইভ তারিখ এবং ডান পাশে লাইভ ঘড়ির সময়) -->
   <div class="bg-dark text-white py-4 border-bottom border-warning border-4">
-    <div class="container text-center">
-      <h3 class="fw-bold mb-1"><i class="fa-solid fa-bullhorn text-warning me-2"></i>মাদ্রাসার নোটিশ বোর্ড ও তথ্য কেন্দ্র</h3>
-      <p class="text-white-50 small mb-0">পরীক্ষা, ছুটি, ভর্তি ও প্রাতিষ্ঠানিক সকল হালনাগাদ তথ্যাবলী</p>
+    <div class="container">
+      <div class="row align-items-center gy-3">
+        
+        <!-- শেষ বাম পাশ: লাইভ তারিখ -->
+        <div class="col-md-3 text-center text-md-start">
+          <div class="live-clock-pill text-warning">
+            <i class="fa-regular fa-calendar-check text-warning"></i>
+            <span id="liveDateText">তারিখ লোড হচ্ছে...</span>
+          </div>
+        </div>
+
+        <!-- মাঝখান: শিরোনাম -->
+        <div class="col-md-6 text-center">
+          <h3 class="fw-bold mb-1"><i class="fa-solid fa-bullhorn text-warning me-2"></i>মাদ্রাসার নোটিশ বোর্ড ও তথ্য কেন্দ্র</h3>
+          <p class="text-white-50 small mb-0">পরীক্ষা, ছুটি, ভর্তি ও প্রাতিষ্ঠানিক সকল হালনাগাদ তথ্যাবলী</p>
+        </div>
+
+        <!-- শেষ ডান পাশ: লাইভ ঘড়ি -->
+        <div class="col-md-3 text-center text-md-end">
+          <div class="live-clock-pill text-white">
+            <i class="fa-regular fa-clock text-warning"></i>
+            <span id="liveClockText">সময় লোড হচ্ছে...</span>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 
   <div class="container py-4">
+
+    <!-- ভর্তি বিজ্ঞপ্তির কমন ও বিশেষ সুযোগ-সুবিধার ব্যানার -->
+    <div class="admission-highlight-box p-4 mb-4">
+      <div class="row align-items-center g-3">
+        <div class="col-lg-8">
+          <span class="badge bg-warning text-dark px-3 py-1 fw-bold rounded-pill mb-2">
+            <i class="fa-solid fa-star me-1"></i> নতুন শিক্ষাবর্ষে ভর্তি চলছে
+          </span>
+          <h4 class="fw-bold text-white mb-2">দ্বীনি ও আধুনিক পরিবেশের সমন্বয়ে পাঠদানের অনন্য বৈশিষ্ট্য</h4>
+          <p class="text-white-50 small mb-3">
+            সহজ ও বিজ্ঞানসম্মত পদ্ধতিতে তাজবীদভিত্তিক বিশুদ্ধ কুরআন শিক্ষা এবং জরুরি মাসয়ালা-মাসায়েল পাঠদান নিশ্চিত করা হয়।
+          </p>
+
+          <div class="row g-2">
+            <!-- আবাসিক ও অনাবাসিক -->
+            <div class="col-md-6">
+              <div class="facility-badge">
+                <i class="fa-solid fa-hotel text-warning me-2 fa-lg"></i>
+                <strong class="text-white">আবাসিক, অনাবাসিক ও ডে-কেয়ার:</strong>
+                <p class="small text-white-50 mb-0 mt-1">মনোরম আবাসিক পরিবেশ, স্বাস্থ্যসম্মত খাবার ও যত্নশীল ডে-কেয়ার ব্যবস্থা।</p>
+              </div>
+            </div>
+
+            <!-- স্কুল-কলেজ পড়ুয়াদের জন্য -->
+            <div class="col-md-6">
+              <div class="facility-badge">
+                <i class="fa-solid fa-book-open-reader text-warning me-2 fa-lg"></i>
+                <strong class="text-white">স্কুল-কলেজ পড়ুয়াদের জন্য:</strong>
+                <p class="small text-white-50 mb-0 mt-1">স্কুল ও কলেজের পড়ালেখার ক্ষতি না করে বিশেষ সময়ে কুরআন ও মাসয়ালা শিক্ষা।</p>
+              </div>
+            </div>
+
+            <!-- মহিলাদের জন্য শিক্ষিকা -->
+            <div class="col-12">
+              <div class="facility-badge border-warning">
+                <i class="fa-solid fa-person-dress text-warning me-2 fa-lg"></i>
+                <strong class="text-warning">মা-বোন ও মহিলাদের জন্য বিশেষ ব্যবস্থা:</strong>
+                <p class="small text-white-50 mb-0 mt-1">সম্পূর্ণ শরীয়তসম্মত পর্দা ও নিরাপদ পরিবেশে অভিজ্ঞ মহিলা শিক্ষিকা দ্বারা পাঠদানের সুব্যবস্থা রয়েছে।</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 text-center">
+          <div class="p-3 rounded bg-white text-dark shadow-sm">
+            <div class="text-success mb-1"><i class="fa-solid fa-phone-volume fa-2x"></i></div>
+            <h6 class="fw-bold mb-1">ভর্তি সংক্রান্ত জরুরি যোগাযোগ</h6>
+            <p class="small text-muted mb-2">সরাসরি কথা বলুন অথবা অফিসে আসুন</p>
+            <a href="tel:01700000000" class="btn btn-success fw-bold w-100 mb-2">
+              <i class="fa-solid fa-phone me-1"></i> 01700-000000
+            </a>
+            <small class="text-muted d-block" style="font-size: 11px;">আশুলিয়া, বাইপাইল, সাভার, ঢাকা</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- মূল কনটেন্ট এরিয়া -->
     <div class="row g-4">
       
-      <!-- বাম পাশ: নোটিশ ফিল্টার ও নোটিশের তালিকা (নতুন নোটিশ সবার আগে) -->
+      <!-- বাম পাশ: নোটিশ ফিল্টার ও নোটিশের তালিকা -->
       <div class="col-lg-8">
         
         <!-- ফিল্টার পিলস -->
@@ -106,7 +211,6 @@
       <!-- ডান পাশ: ঠিকানা ও জরুরি যোগাযোগ কার্ড -->
       <div class="col-lg-4">
         
-        <!-- ঠিকানা ও সরাসরি যোগাযোগ -->
         <div class="contact-box shadow-sm p-4 mb-4">
           <h5 class="fw-bold text-dark border-bottom pb-2 mb-3">
             <i class="fa-solid fa-address-book me-2 text-success"></i>মাদ্রাসার ঠিকানা ও যোগাযোগ
@@ -125,8 +229,8 @@
               <i class="fa-solid fa-phone text-success mt-1 me-2 fa-lg"></i>
               <div>
                 <strong class="text-dark d-block">অফিস ও ভর্তি হেল্পলাইন:</strong>
-                <a href="tel:01710-899108" class="text-decoration-none text-dark fw-bold">01710-899108</a><br>
-                <a href="tel:01611-899108" class="text-decoration-none text-muted">01611-899108</a>
+                <a href="tel:01700000000" class="text-decoration-none text-dark fw-bold">01700-000000</a><br>
+                <a href="tel:01800000000" class="text-decoration-none text-muted">01800-000000</a>
               </div>
             </li>
             <li class="mb-3 d-flex align-items-start">
@@ -140,21 +244,20 @@
               <i class="fa-solid fa-clock text-warning mt-1 me-2 fa-lg"></i>
               <div>
                 <strong class="text-dark d-block">অফিস ও সাক্ষাতের সময়:</strong>
-                শুক্রবার - বৃহস্পতিবার<br>
-                <small class="text-muted">(প্রতিদিন ফজর নামাজের পর থেকে রাত ১০টা পর্যন্ত)</small>
+                শনিবার - বৃহস্পতিবার: সকাল ৮:০০টা - মাগরিব<br>
+                <small class="text-muted">(শুক্রবার অফিস ছুটি)</small>
               </div>
             </li>
           </ul>
         </div>
 
-        <!-- ফি ও অনুদান গ্রহণের অফিসিয়াল নম্বরসমূহ -->
         <div class="card border-0 shadow-sm p-4 bg-white border-top border-primary border-4 mb-4">
           <h6 class="fw-bold text-dark mb-2"><i class="fa-solid fa-wallet me-2 text-primary"></i>অনলাইন ফি ও লিল্লাহ ফান্ড</h6>
           <p class="text-muted small mb-3">অভিভাবক ও শুভানুধ্যায়ীগণ নিচের মাধ্যমে সরাসরি অর্থ পাঠাতে পারেন:</p>
           
           <div class="p-2 border rounded bg-light mb-2 small">
             <div class="fw-bold text-dark"><i class="fa-solid fa-mobile-screen-button text-success me-1"></i>বিকাশ / নগদ / রকেট:</div>
-            <div class="text-primary fw-bold fs-6">01611-899108 <span class="badge bg-secondary" style="font-size:10px;">Personal/Merchant</span></div>
+            <div class="text-primary fw-bold fs-6">01700-000000 <span class="badge bg-secondary" style="font-size:10px;">Personal/Merchant</span></div>
           </div>
 
           <div class="p-2 border rounded bg-light small">
@@ -184,9 +287,46 @@
   <script src="js/firebase-config.js"></script>
 
   <script>
+    // ================= লাইভ তারিখ ও রিয়েল-টাইম ঘড়ির স্ক্রিপ্ট =================
+    function updateLiveDateTime() {
+      const now = new Date();
+
+      // বাংলা বার ও মাসের তালিকা
+      const days = ["রবিবার", "সোমবার", "মঙ্গলবার", "বুধবার", "বৃহস্পতিবার", "শুক্রবার", "শনিবার"];
+      const months = ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"];
+
+      // সংখ্যা বাংলায় রূপান্তর
+      function toBnDigit(str) {
+        const bnDigits = {'0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯'};
+        return str.toString().replace(/[0-9]/g, match => bnDigits[match]);
+      }
+
+      // তারিখ ফরম্যাট
+      const dayName = days[now.getDay()];
+      const dateNum = toBnDigit(now.getDate());
+      const monthName = months[now.getMonth()];
+      const yearNum = toBnDigit(now.getFullYear());
+      document.getElementById('liveDateText').innerText = `${dayName}, ${dateNum} ${monthName} ${yearNum}`;
+
+      // লাইভ ঘড়ি ফরম্যাট (ঘণ্টা:মিনিট:সেকেন্ড AM/PM)
+      let hours = now.getHours();
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+      const formattedHours = String(hours).padStart(2, '0');
+
+      document.getElementById('liveClockText').innerText = `${toBnDigit(formattedHours)}:${toBnDigit(minutes)}:${toBnDigit(seconds)} ${ampm}`;
+    }
+
+    // প্রতি সেকেন্ডে সময় আপডেট
+    setInterval(updateLiveDateTime, 1000);
+    updateLiveDateTime();
+
+    // ================= ফায়ারবেস থেকে লাইভ নোটিশ লোড =================
     let allNotices = [];
 
-    // নোটিশ লোড (সর্বশেষ নোটিশ সবার উপরে আসবে)
     function fetchLiveNotices() {
       const container = document.getElementById('noticeContainer');
       
@@ -210,7 +350,7 @@
           });
         });
 
-        // নতুন থেকে পুরাতন সাজানো (Latest first)
+        // সর্বশেষ নোটিশ সবার উপরে (Latest First)
         allNotices.sort((a, b) => b.realTime - a.realTime);
 
         renderNotices(allNotices);
@@ -234,7 +374,6 @@
         else if (n.category === "holiday") { badgeColor = "bg-danger"; categoryName = "ছুটির নোটিশ"; }
         else if (n.category === "admission") { badgeColor = "bg-warning text-dark"; categoryName = "ভর্তি বিজ্ঞপ্তি"; }
 
-        // প্রথম ও সর্বশেষ নোটিশে "নতুন" ব্যাজ
         const newBadge = idx === 0 ? '<span class="badge bg-danger ms-2">নতুন নোটিশ</span>' : '';
 
         container.innerHTML += `
@@ -255,7 +394,6 @@
       });
     }
 
-    // ক্যাটাগরি ফিল্টার
     function filterCategory(cat, btn) {
       document.querySelectorAll('.category-pill').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
