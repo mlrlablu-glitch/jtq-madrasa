@@ -55,18 +55,23 @@
       align-items: center;
       gap: 6px;
     }
-    .admission-highlight-box {
+    .admission-folder-box {
       background: linear-gradient(135deg, #062c19, #0f5132);
       border-radius: 12px;
       color: #ffffff;
       border: 2px solid #ffc107;
       box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+      animation: fadeIn 0.3s ease-in-out;
     }
     .facility-badge {
       background: rgba(255, 255, 255, 0.12);
       border: 1px solid rgba(255, 215, 0, 0.4);
       border-radius: 8px;
       padding: 10px 14px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -94,7 +99,7 @@
     </div>
   </nav>
 
-  <!-- হেডার ব্যানার (বাম পাশে লাইভ তারিখ এবং ডান পাশে লাইভ ঘড়ির সময়) -->
+  <!-- হেডার ব্যানার (বামে লাইভ তারিখ ও ডানে লাইভ ঘড়ি) -->
   <div class="bg-dark text-white py-4 border-bottom border-warning border-4">
     <div class="container">
       <div class="row align-items-center gy-3">
@@ -127,76 +132,69 @@
 
   <div class="container py-4">
 
-    <!-- ভর্তি বিজ্ঞপ্তির কমন ও বিশেষ সুযোগ-সুবিধার ব্যানার -->
-    <div class="admission-highlight-box p-4 mb-4">
-      <div class="row align-items-center g-3">
-        <div class="col-lg-8">
-          <span class="badge bg-warning text-dark px-3 py-1 fw-bold rounded-pill mb-2">
-            <i class="fa-solid fa-star me-1"></i> নতুন শিক্ষাবর্ষে ভর্তি চলছে
-          </span>
-          <h4 class="fw-bold text-white mb-2">দ্বীনি ও আধুনিক পরিবেশের সমন্বয়ে পাঠদানের অনন্য বৈশিষ্ট্য</h4>
-          <p class="text-white-50 small mb-3">
-            সহজ ও বিজ্ঞানসম্মত পদ্ধতিতে তাজবীদভিত্তিক বিশুদ্ধ কুরআন শিক্ষা এবং জরুরি মাসয়ালা-মাসায়েল পাঠদান নিশ্চিত করা হয়।
-          </p>
-
-          <div class="row g-2">
-            <!-- আবাসিক ও অনাবাসিক -->
-            <div class="col-md-6">
-              <div class="facility-badge">
-                <i class="fa-solid fa-hotel text-warning me-2 fa-lg"></i>
-                <strong class="text-white">আবাসিক, অনাবাসিক ও ডে-কেয়ার:</strong>
-                <p class="small text-white-50 mb-0 mt-1">মনোরম আবাসিক পরিবেশ, স্বাস্থ্যসম্মত খাবার ও যত্নশীল ডে-কেয়ার ব্যবস্থা।</p>
-              </div>
-            </div>
-
-            <!-- স্কুল-কলেজ পড়ুয়াদের জন্য -->
-            <div class="col-md-6">
-              <div class="facility-badge">
-                <i class="fa-solid fa-book-open-reader text-warning me-2 fa-lg"></i>
-                <strong class="text-white">স্কুল-কলেজ পড়ুয়াদের জন্য:</strong>
-                <p class="small text-white-50 mb-0 mt-1">স্কুল ও কলেজের পড়ালেখার ক্ষতি না করে বিশেষ সময়ে কুরআন ও মাসয়ালা শিক্ষা।</p>
-              </div>
-            </div>
-
-            <!-- মহিলাদের জন্য শিক্ষিকা -->
-            <div class="col-12">
-              <div class="facility-badge border-warning">
-                <i class="fa-solid fa-person-dress text-warning me-2 fa-lg"></i>
-                <strong class="text-warning">মা-বোন ও মহিলাদের জন্য বিশেষ ব্যবস্থা:</strong>
-                <p class="small text-white-50 mb-0 mt-1">সম্পূর্ণ শরীয়তসম্মত পর্দা ও নিরাপদ পরিবেশে অভিজ্ঞ মহিলা শিক্ষিকা দ্বারা পাঠদানের সুব্যবস্থা রয়েছে।</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-4 text-center">
-          <div class="p-3 rounded bg-white text-dark shadow-sm">
-            <div class="text-success mb-1"><i class="fa-solid fa-phone-volume fa-2x"></i></div>
-            <h6 class="fw-bold mb-1">ভর্তি সংক্রান্ত জরুরি যোগাযোগ</h6>
-            <p class="small text-muted mb-2">সরাসরি কথা বলুন অথবা অফিসে আসুন</p>
-            <a href="tel:01700000000" class="btn btn-success fw-bold w-100 mb-2">
-              <i class="fa-solid fa-phone me-1"></i> 01700-000000
-            </a>
-            <small class="text-muted d-block" style="font-size: 11px;">আশুলিয়া, বাইপাইল, সাভার, ঢাকা</small>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- মূল কনটেন্ট এরিয়া -->
     <div class="row g-4">
       
-      <!-- বাম পাশ: নোটিশ ফিল্টার ও নোটিশের তালিকা -->
+      <!-- বাম পাশ: নোটিশ ফিল্টার ফোল্ডার ও তালিকা -->
       <div class="col-lg-8">
         
-        <!-- ফিল্টার পিলস -->
+        <!-- ফিল্টার ফোল্ডার বাটনসমূহ -->
         <div class="d-flex flex-wrap gap-2 mb-3 align-items-center">
-          <span class="small fw-bold text-muted me-1"><i class="fa-solid fa-filter me-1"></i>ক্যাটাগরি:</span>
+          <span class="small fw-bold text-muted me-1"><i class="fa-solid fa-folder-open me-1"></i>ফোল্ডার:</span>
           <button class="category-pill active" onclick="filterCategory('all', this)">সকল নোটিশ</button>
           <button class="category-pill" onclick="filterCategory('exam', this)"><i class="fa-solid fa-square-poll-vertical text-primary me-1"></i>পরীক্ষা সংক্রান্ত</button>
           <button class="category-pill" onclick="filterCategory('holiday', this)"><i class="fa-solid fa-calendar-xmark text-danger me-1"></i>মাদ্রাসা ছুটি</button>
+          <!-- ভর্তি বিজ্ঞপ্তি ফোল্ডার -->
           <button class="category-pill" onclick="filterCategory('admission', this)"><i class="fa-solid fa-user-plus text-warning me-1"></i>ভর্তি বিজ্ঞপ্তি</button>
           <button class="category-pill" onclick="filterCategory('general', this)"><i class="fa-solid fa-circle-info text-success me-1"></i>জরুরি নির্দেশনা</button>
+        </div>
+
+        <!-- ভর্তি বিজ্ঞপ্তি ফোল্ডার ওপেন হলে এই পূর্ণাঙ্গ ইনফরমেশন বক্সটি দৃশ্যমান হবে -->
+        <div id="admissionFolderDetails" class="admission-folder-box p-4 mb-4" style="display: none;">
+          <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
+            <h5 class="fw-bold text-warning mb-0"><i class="fa-solid fa-folder-open me-2"></i>ভর্তি সংক্রান্ত সকল তথ্যাবলী ও বিশেষ সুবিধাসমূহ</h5>
+            <span class="badge bg-warning text-dark px-3 py-1 fw-bold rounded-pill">নতুন সেশন</span>
+          </div>
+
+          <p class="text-white-50 small mb-3">জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসায় অভিজ্ঞ হাফেজ ও উস্তাদদের প্রত্যক্ষ তত্ত্বাবধানে সুশৃঙ্খল পরিবেশে পাঠদান পরিচালিত হয়।</p>
+
+          <div class="row g-2 mb-3">
+            <!-- ১. আবাসিক, অনাবাসিক ও ডে-কেয়ার -->
+            <div class="col-md-6">
+              <div class="facility-badge h-100">
+                <i class="fa-solid fa-hotel text-warning me-2 fa-lg"></i>
+                <strong class="text-white">আবাসিক, অনাবাসিক ও ডে-কেয়ার:</strong>
+                <p class="small text-white-50 mb-0 mt-1">মনোরম আবাসিক পরিবেশ, স্বাস্থ্যসম্মত খাবার ও যত্নশীল ডে-কেয়ার ব্যবস্থা।</p>
+              </div>
+            </div>
+
+            <!-- ২. স্কুল-কলেজ পড়ুয়াদের জন্য -->
+            <div class="col-md-6">
+              <div class="facility-badge h-100">
+                <i class="fa-solid fa-book-open-reader text-warning me-2 fa-lg"></i>
+                <strong class="text-white">স্কুল-কলেজ পড়ুয়াদের জন্য:</strong>
+                <p class="small text-white-50 mb-0 mt-1">স্কুল ও কলেজের সাধারণ শিক্ষার পাশাপাশি বিশেষ সময়ে কুরআন ও মাসয়ালা শিক্ষা।</p>
+              </div>
+            </div>
+
+            <!-- ৩. মহিলাদের জন্য বিশেষ ব্যবস্থা -->
+            <div class="col-12">
+              <div class="facility-badge border-warning">
+                <i class="fa-solid fa-person-dress text-warning me-2 fa-lg"></i>
+                <strong class="text-warning">মা-বোন ও মহিলাদের জন্য সুব্যবস্থা:</strong>
+                <p class="small text-white-50 mb-0 mt-1">সম্পূর্ণ শরীয়তসম্মত পর্দা ও নিরাপদ পরিবেশে অভিজ্ঞ মহিলা শিক্ষিকা দ্বারা পাঠদানের বিশেষ ব্যবস্থা রয়েছে।</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ভর্তি হেল্পলাইন -->
+          <div class="p-2 rounded bg-white text-dark small d-flex flex-wrap justify-content-between align-items-center">
+            <div>
+              <i class="fa-solid fa-headset text-success me-1"></i>
+              ভর্তি ফরম ও তথ্যের জন্য যোগাযোগ: <strong>01700-000000</strong>, <strong>01800-000000</strong>
+            </div>
+            <span class="text-muted">স্থান: আশুলিয়া বাইপাইল, ঢাকা</span>
+          </div>
         </div>
 
         <!-- নোটিশ তালিকা কন্টেইনার -->
@@ -287,28 +285,23 @@
   <script src="js/firebase-config.js"></script>
 
   <script>
-    // ================= লাইভ তারিখ ও রিয়েল-টাইম ঘড়ির স্ক্রিপ্ট =================
+    // ================= লাইভ বাংলা তারিখ ও ঘড়ি =================
     function updateLiveDateTime() {
       const now = new Date();
-
-      // বাংলা বার ও মাসের তালিকা
       const days = ["রবিবার", "সোমবার", "মঙ্গলবার", "বুধবার", "বৃহস্পতিবার", "শুক্রবার", "শনিবার"];
       const months = ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"];
 
-      // সংখ্যা বাংলায় রূপান্তর
       function toBnDigit(str) {
         const bnDigits = {'0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯'};
         return str.toString().replace(/[0-9]/g, match => bnDigits[match]);
       }
 
-      // তারিখ ফরম্যাট
       const dayName = days[now.getDay()];
       const dateNum = toBnDigit(now.getDate());
       const monthName = months[now.getMonth()];
       const yearNum = toBnDigit(now.getFullYear());
       document.getElementById('liveDateText').innerText = `${dayName}, ${dateNum} ${monthName} ${yearNum}`;
 
-      // লাইভ ঘড়ি ফরম্যাট (ঘণ্টা:মিনিট:সেকেন্ড AM/PM)
       let hours = now.getHours();
       const minutes = String(now.getMinutes()).padStart(2, '0');
       const seconds = String(now.getSeconds()).padStart(2, '0');
@@ -320,11 +313,10 @@
       document.getElementById('liveClockText').innerText = `${toBnDigit(formattedHours)}:${toBnDigit(minutes)}:${toBnDigit(seconds)} ${ampm}`;
     }
 
-    // প্রতি সেকেন্ডে সময় আপডেট
     setInterval(updateLiveDateTime, 1000);
     updateLiveDateTime();
 
-    // ================= ফায়ারবেস থেকে লাইভ নোটিশ লোড =================
+    // ================= নোটিশ লোড ও ক্যাটাগরি ফোল্ডার হ্যান্ডলিং =================
     let allNotices = [];
 
     function fetchLiveNotices() {
@@ -350,9 +342,7 @@
           });
         });
 
-        // সর্বশেষ নোটিশ সবার উপরে (Latest First)
         allNotices.sort((a, b) => b.realTime - a.realTime);
-
         renderNotices(allNotices);
       }).catch(err => {
         container.innerHTML = `<div class="card p-4 text-center text-danger bg-white border-0 shadow-sm">নোটিশ লোড করতে সমস্যা হয়েছে: ${err.message}</div>`;
@@ -363,7 +353,7 @@
       const container = document.getElementById('noticeContainer');
       container.innerHTML = "";
       if (list.length === 0) {
-        container.innerHTML = `<div class="card p-4 text-center text-muted bg-white border-0 shadow-sm">এই ক্যাটাগরিতে বর্তমানে কোনো নোটিশ নেই।</div>`;
+        container.innerHTML = `<div class="card p-4 text-center text-muted bg-white border-0 shadow-sm">এই ফোল্ডারে বর্তমানে কোনো নোটিশ নেই।</div>`;
         return;
       }
 
@@ -394,15 +384,26 @@
       });
     }
 
+    // ফোল্ডার ফিল্টারিং ও ভর্তি বক্স টগল লজিক
     function filterCategory(cat, btn) {
       document.querySelectorAll('.category-pill').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
-      if (cat === 'all') {
-        renderNotices(allNotices);
-      } else {
-        const filtered = allNotices.filter(item => item.category === cat);
+      const admissionFolderBox = document.getElementById('admissionFolderDetails');
+
+      // শুধুমাত্র "ভর্তি বিজ্ঞপ্তি" ফোল্ডার সিলেক্ট করলেই ভর্তি তথ্য বক্স ওপেন হবে
+      if (cat === 'admission') {
+        admissionFolderBox.style.display = 'block';
+        const filtered = allNotices.filter(item => item.category === 'admission');
         renderNotices(filtered);
+      } else {
+        admissionFolderBox.style.display = 'none';
+        if (cat === 'all') {
+          renderNotices(allNotices);
+        } else {
+          const filtered = allNotices.filter(item => item.category === cat);
+          renderNotices(filtered);
+        }
       }
     }
 
