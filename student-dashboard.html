@@ -13,7 +13,8 @@
       text-align: center;
       vertical-align: middle;
       padding: 6px 3px;
-      font-size: 12px;
+      font-size: 11.5px;
+      white-space: nowrap;
     }
     .diary-table th { background-color: #f1f8f4; }
     .nav-pills .nav-link.active {
@@ -122,10 +123,10 @@
     </div>
   </nav>
 
-  <div class="container py-4">
+  <div class="container-fluid py-4 px-3">
     
     <!-- ৪টি প্রধান ট্যাব নেভিগেশন -->
-    <ul class="nav nav-pills nav-fill mb-4 p-2 bg-white rounded shadow-sm no-print gap-1" id="dashboardTabs">
+    <ul class="nav nav-pills nav-fill mb-4 p-2 bg-white rounded shadow-sm no-print gap-1 mx-auto" style="max-width: 1100px;" id="dashboardTabs">
       <li class="nav-item">
         <button class="nav-link active fw-bold small" id="tabProfileBtn" onclick="switchTab('profile')">
           <i class="fa-solid fa-id-card me-1"></i> ১. আমার বিবরণী ও প্রত্যয়ন
@@ -138,7 +139,7 @@
       </li>
       <li class="nav-item">
         <button class="nav-link fw-bold text-dark small" id="tabSabakBtn" onclick="switchTab('sabak')">
-          <i class="fa-solid fa-book-journal-whills me-1 text-warning"></i> ৩. দৈনিক ও সাপ্তাহিক সবক
+          <i class="fa-solid fa-book-journal-whills me-1 text-warning"></i> ৩. পড়ার বিবরণী (দৈনিক, সাপ্তাহিক ও মাসিক)
         </button>
       </li>
       <li class="nav-item">
@@ -150,7 +151,7 @@
 
     <!-- ================= ১. বিবরণী ও প্রত্যয়ন পত্র ================= -->
     <div id="profileSection">
-      <div class="d-flex justify-content-end mb-3 no-print">
+      <div class="d-flex justify-content-end mb-3 no-print mx-auto" style="max-width: 850px;">
         <button class="btn btn-success fw-semibold shadow-sm" onclick="window.print()">
           <i class="fa-solid fa-file-pdf me-2"></i>A4 সাইজে প্রত্যয়নপত্র প্রিন্ট
         </button>
@@ -257,7 +258,7 @@
 
     <!-- ================= ২. হিফজ প্রগ্রেস ট্র্যাকার ================= -->
     <div id="hifzSection" style="display: none;">
-      <div class="card border-0 shadow-sm p-4 bg-white mb-4 border-top border-success border-4">
+      <div class="card border-0 shadow-sm p-4 bg-white mb-4 border-top border-success border-4 mx-auto" style="max-width: 1100px;">
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
           <div>
             <h4 class="fw-bold text-dark mb-1">
@@ -295,7 +296,7 @@
         </div>
       </div>
 
-      <div class="card border-0 shadow-sm p-4 bg-white">
+      <div class="card border-0 shadow-sm p-4 bg-white mx-auto" style="max-width: 1100px;">
         <h6 class="fw-bold text-dark border-bottom pb-2 mb-3">
           <i class="fa-solid fa-grid-2 me-2 text-success"></i>পবিত্র কুরআনের ৩০ পারার ছক
         </h6>
@@ -303,9 +304,9 @@
       </div>
     </div>
 
-    <!-- ================= ৩. সবক ডায়েরি সেকশন ================= -->
+    <!-- ================= ৩. পড়ার বিবরণী সেকশন (সম্পূর্ণ আলাদা কলামসমূহ) ================= -->
     <div id="sabakSection" style="display: none;">
-      <div class="card border-0 shadow-sm p-4 bg-white mb-4 no-print border-top border-success border-4">
+      <div class="card border-0 shadow-sm p-4 bg-white mb-4 no-print border-top border-success border-4 mx-auto" style="max-width: 1200px;">
         <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-filter me-2 text-success"></i>পড়ার তথ্য ফিল্টার করুন</h5>
         
         <div class="row g-2 align-items-end">
@@ -314,7 +315,7 @@
             <select class="form-select form-select-sm" id="filterType" onchange="toggleFilterInputs()">
               <option value="recent">সর্বশেষ ৭ দিন (সাপ্তাহিক)</option>
               <option value="daily">নির্দিষ্ট দিন (দৈনিক)</option>
-              <option value="monthly">মাসিক ভিত্তিতে</option>
+              <option value="monthly" selected>মাসিক বিবরণী</option>
             </select>
           </div>
 
@@ -323,7 +324,7 @@
             <input type="date" class="form-control form-control-sm" id="filterSpecificDate">
           </div>
 
-          <div class="col-md-4" id="monthlyInputDiv" style="display: none;">
+          <div class="col-md-4" id="monthlyInputDiv">
             <label class="form-label small fw-semibold">মাসের নাম</label>
             <select class="form-select form-select-sm" id="filterMonthName">
               <option value="জানুয়ারি">জানুয়ারি</option><option value="ফেব্রুয়ারি">ফেব্রুয়ারি</option>
@@ -343,48 +344,68 @@
         </div>
       </div>
 
-      <div class="card border-0 shadow-sm p-4 bg-white">
+      <div class="card border-0 shadow-sm p-4 bg-white mx-auto" style="max-width: 1250px;">
         <div class="border border-dark p-2 text-center position-relative mb-2">
-          <span class="fs-5 fw-bold bg-dark text-white px-4 py-1 rounded-pill" id="tableHeaderTitle">পড়ার বিবরণী</span>
+          <span class="fs-5 fw-bold bg-dark text-white px-4 py-1 rounded-pill" id="tableHeaderTitle">মাসিক বিবরণী</span>
           <div class="d-flex flex-wrap justify-content-between mt-2 px-2 small fw-semibold">
             <div>ছাত্রের নাম: <span class="border-bottom border-dark px-1 fw-bold text-dark" id="diaryStudentName">...</span></div>
             <div>আইডি: <span class="border-bottom border-dark px-1 fw-bold text-success" id="diaryStudentId">...</span></div>
             <div>শ্রেণি/বিভাগ: <span class="border-bottom border-dark px-1 fw-bold text-dark" id="diaryStudentDept">...</span></div>
             <div>রোল: <span class="border-bottom border-dark px-1 fw-bold text-dark" id="diaryStudentRoll">...</span></div>
-            <div>সময়কাল: <span class="border-bottom border-dark px-1 fw-bold text-primary" id="diaryPeriod">...</span></div>
+            <div>সময়কাল: <span class="border-bottom border-dark px-1 fw-bold text-primary" id="diaryPeriod">সেপ্টেম্বর মাস</span></div>
           </div>
         </div>
 
+        <!-- আলাদা আলাদা ১৮টি কলামের সুশৃঙ্খল ছক -->
         <div class="table-responsive">
-          <table class="table table-bordered border-dark diary-table mb-2">
+          <table class="table table-bordered border-dark diary-table mb-2 align-middle">
             <thead>
               <tr>
-                <th rowspan="2" style="width: 75px;">বার</th>
-                <th colspan="2">সবক</th>
-                <th colspan="4">সাত সবক</th>
-                <th colspan="4">আমুখতা</th>
-                <th rowspan="2">দৈনিক<br>তিলাওয়াত</th>
-                <th rowspan="2" style="min-width: 130px;">শিক্ষক</th>
+                <th rowspan="2" style="width: 70px;">বার</th>
+                <th rowspan="2" style="width: 65px;">উপস্থিতি</th>
+                <!-- সবক (আলাদা পারা, পৃষ্ঠা ও সময়) -->
+                <th colspan="3" class="bg-success text-white">সবক (নতুন পড়া)</th>
+                <!-- সাত সবক (আলাদা পারা, পৃষ্ঠা, সময়, পরিমাণ ও ভুল) -->
+                <th colspan="5" class="bg-primary text-white">সাত সবক (সাম্প্রতিক পড়া)</th>
+                <!-- আমুখতা (আলাদা পারা, পৃষ্ঠা, সময়, পরিমাণ ও ভুল) -->
+                <th colspan="5" class="bg-secondary text-white">আমুখতা (পুরাতন পড়া)</th>
+                <th rowspan="2" style="width: 75px;">দৈনিক<br>তিলাওয়াত</th>
+                <!-- শিক্ষকের নাম ও মোবাইল আলাদা কলাম -->
+                <th rowspan="2" style="min-width: 120px;">শিক্ষকের নাম</th>
+                <th rowspan="2" style="min-width: 110px;">শিক্ষকের মোবাইল</th>
                 <th rowspan="2" style="width: 85px;">তারিখ</th>
               </tr>
               <tr>
-                <th>পারা ও পৃষ্ঠা</th><th>সময়</th>
-                <th>পারা ও পৃষ্ঠা</th><th>সময়</th><th>পরিমাণ</th><th>ভুল</th>
-                <th>পারা ও পৃষ্ঠা</th><th>সময়</th><th>পরিমাণ</th><th>ভুল</th>
+                <!-- সবক -->
+                <th>পারা</th>
+                <th>পৃষ্ঠা</th>
+                <th>সময়</th>
+                <!-- সাত সবক -->
+                <th>পারা</th>
+                <th>পৃষ্ঠা</th>
+                <th>সময়</th>
+                <th>পরিমাণ</th>
+                <th>ভুল</th>
+                <!-- আমুখতা -->
+                <th>পারা</th>
+                <th>পৃষ্ঠা</th>
+                <th>সময়</th>
+                <th>পরিমাণ</th>
+                <th>ভুল</th>
               </tr>
             </thead>
             <tbody id="studentDiaryBody">
-              <tr><td colspan="14" class="text-muted">পড়ার তথ্য লোড হচ্ছে...</td></tr>
+              <tr><td colspan="19" class="text-muted">পড়ার তথ্য লোড হচ্ছে...</td></tr>
             </tbody>
           </table>
         </div>
       </div>
     </div>
 
-    <!-- ================= ৪. অনলাইন ফি ও স্বয়ংক্রিয় রসিদ সেকশন (পরীক্ষার নাম সহ) ================= -->
+    <!-- ================= ৪. অনলাইন ফি ও স্বয়ংক্রিয় রসিদ সেকশন ================= -->
     <div id="feeSection" style="display: none;">
       
-      <div class="card border-0 shadow-sm p-4 bg-white mb-4 border-top border-primary border-4 no-print">
+      <div class="card border-0 shadow-sm p-4 bg-white mb-4 border-top border-primary border-4 no-print mx-auto" style="max-width: 1100px;">
         <div class="d-flex justify-content-between align-items-center mb-3">
           <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-receipt me-2 text-primary"></i>অনলাইন ফি ও অনুদান জমা ফরম</h5>
           <span class="badge bg-danger fs-6">মোট বকেয়া: <span id="paymentCurrentDue">০.০০ ৳</span></span>
@@ -407,7 +428,6 @@
               </select>
             </div>
 
-            <!-- পরীক্ষার ফির ক্ষেত্রে: কোন পরীক্ষা ড্রপডাউন -->
             <div class="col-md-4" id="examTypeDiv" style="display: none;">
               <label class="form-label small fw-semibold text-primary">কোন পরীক্ষা?</label>
               <select class="form-select form-select-sm fw-bold" id="payExamName">
@@ -417,13 +437,11 @@
               </select>
             </div>
 
-            <!-- অন্যান্য ফির ক্ষেত্রে টেক্সট বক্স -->
             <div class="col-md-4" id="otherPurposeDiv" style="display: none;">
               <label class="form-label small fw-semibold">কোন বাবদ টাকা দেওয়া হচ্ছে লিখুন</label>
               <input type="text" class="form-control form-control-sm" id="otherPurposeText" placeholder="যেমন: নতুন কিতাব ক্রয় / খাবার খরচ">
             </div>
 
-            <!-- মাসিক বেতনের ক্ষেত্রে মাস ড্রপডাউন -->
             <div class="col-md-4" id="monthSelectDiv">
               <label class="form-label small fw-semibold">কোন মাসের বেতন?</label>
               <select class="form-select form-select-sm" id="payMonth">
@@ -436,7 +454,6 @@
               </select>
             </div>
 
-            <!-- বছর / সাল -->
             <div class="col-md-4" id="yearSelectDiv">
               <label class="form-label small fw-semibold">সাল / বছর</label>
               <select class="form-select form-select-sm" id="payYear">
@@ -497,7 +514,7 @@
         </form>
       </div>
 
-      <div class="card border-0 shadow-sm p-4 bg-white no-print">
+      <div class="card border-0 shadow-sm p-4 bg-white no-print mx-auto" style="max-width: 1100px;">
         <h6 class="fw-bold text-dark mb-3"><i class="fa-solid fa-file-invoice-dollar me-2 text-success"></i>আমার পরিশোধিত ফি ও মানি রসিদ (Payment History)</h6>
         <div class="table-responsive">
           <table class="table table-bordered table-hover fee-history-table align-middle text-center mb-0">
@@ -795,7 +812,6 @@
       }
     });
 
-    // পেমেন্ট ফিল্ড টগল (হ্যান্ড ক্যাশ সহ)
     function togglePaymentFields() {
       const method = document.getElementById('payMethod').value;
       const mfsSenderLabel = document.getElementById('mfsSenderLabel');
@@ -819,7 +835,6 @@
       }
     }
 
-    // ফি ক্যাটাগরি পরিবর্তনের লজিক (পরীক্ষার ফি-র ড্রপডাউন সহ)
     function toggleFeeCategory() {
       const cat = document.getElementById('feeCategory').value;
       const monthDiv = document.getElementById('monthSelectDiv');
@@ -835,7 +850,7 @@
       } else if (cat === "পরীক্ষার ফি") {
         monthDiv.style.display = 'none';
         yearDiv.style.display = 'block';
-        examDiv.style.display = 'block'; // পরীক্ষার নাম প্রদর্শন
+        examDiv.style.display = 'block';
         otherDiv.style.display = 'none';
       } else if (cat === "অন্যান্য বিবিধ") {
         monthDiv.style.display = 'none';
@@ -852,7 +867,6 @@
 
     document.getElementById('payDate').value = new Date().toISOString().split('T')[0];
 
-    // পেমেন্ট সাবমিট
     document.getElementById('onlinePaymentForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const feeCategory = document.getElementById('feeCategory').value;
@@ -873,7 +887,7 @@
         monthYearDisplay = `${month} ${year}`;
       } else if (feeCategory === "পরীক্ষার ফি") {
         purposeDisplay = "পরীক্ষার ফি";
-        monthYearDisplay = `${examName} - ${year}`; // পরীক্ষার নাম ও বছর
+        monthYearDisplay = `${examName} - ${year}`;
       } else if (feeCategory === "অন্যান্য বিবিধ" && otherPurpose) {
         purposeDisplay = `অন্যান্য (${otherPurpose})`;
         monthYearDisplay = year;
@@ -918,7 +932,7 @@
 
       db.collection("students").doc(currentId).collection("online_fee_submissions").add(paymentRecord)
         .then(() => {
-          alert("আপনার " + purposeDisplay + " (" + monthYearDisplay + ")-এর তথ্য সফলভাবে জমা হয়েছে! অ্যাডমিন অনুমোদন করলেই রসিদ প্রিন্ট করা যাবে।");
+          alert("আপনার " + purposeDisplay + " (" + monthYearDisplay + ")-এর তথ্য সফলভাবে জমা হয়েছে!");
           document.getElementById('payAmount').value = "";
           document.getElementById('payTrxId').value = "";
           document.getElementById('paySenderNumber').value = "";
@@ -1012,7 +1026,7 @@
       receiptModal.show();
     }
 
-    // সবক ফিল্টার
+    // সবক ফিল্টার হ্যান্ডলার
     function toggleFilterInputs() {
       const type = document.getElementById('filterType').value;
       document.getElementById('dailyInputDiv').style.display = (type === 'daily') ? 'block' : 'none';
@@ -1029,10 +1043,11 @@
       return `${hours}:${minutes} ${ampm}`;
     }
 
+    // পড়ার বিবরণী লোড (আলাদা আলাদা কলামে)
     function applySabakFilter() {
       const type = document.getElementById('filterType').value;
       const tbody = document.getElementById('studentDiaryBody');
-      tbody.innerHTML = `<tr><td colspan="14">তথ্য লোড হচ্ছে...</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="19">তথ্য লোড হচ্ছে...</td></tr>`;
 
       let query = db.collection("students").doc(currentId).collection("daily_sabak");
 
@@ -1040,7 +1055,7 @@
         const specificDate = document.getElementById('filterSpecificDate').value;
         if (!specificDate) { alert("একটি তারিখ নির্বাচন করুন!"); return; }
         query = query.where("date", "==", specificDate);
-        document.getElementById('tableHeaderTitle').innerText = "দৈনিক পড়ার তথ্য";
+        document.getElementById('tableHeaderTitle').innerText = "দৈনিক পড়ার বিবরণী";
         document.getElementById('diaryPeriod').innerText = specificDate;
       } else if (type === 'monthly') {
         const month = document.getElementById('filterMonthName').value;
@@ -1049,45 +1064,63 @@
         document.getElementById('diaryPeriod').innerText = month + " মাস";
       } else {
         query = query.orderBy("date", "desc").limit(7);
-        document.getElementById('tableHeaderTitle').innerText = "সাপ্তাহিক তথ্য (শেষ ৭ দিন)";
+        document.getElementById('tableHeaderTitle').innerText = "সাপ্তাহিক বিবরণী (শেষ ৭ দিন)";
         document.getElementById('diaryPeriod').innerText = "চলতি সপ্তাহ";
       }
 
       query.get().then((snapshot) => {
         tbody.innerHTML = "";
         if (snapshot.empty) {
-          tbody.innerHTML = `<tr><td colspan="14" class="text-muted">এই সময়ে কোনো পড়া পাওয়া যায়নি।</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="19" class="text-muted py-3">এই সময়ের মধ্যে কোনো পড়ার রেকর্ড পাওয়া যায়নি।</td></tr>`;
           return;
         }
 
         snapshot.forEach((doc) => {
           const r = doc.data();
-          const teacherDetails = r.teacherName ? `<strong>${r.teacherName}</strong><br><small class="text-muted">${r.teacherPhone || ''}</small>` : '<small class="text-success">যাচাইকৃত</small>';
-          const sabakText = (r.sabakPara && r.sabakPara !== '-') ? `পারা: ${r.sabakPara}<br>পৃষ্ঠা: ${r.sabakPage || '-'}` : '-';
-          const satText = (r.satPara && r.satPara !== '-') ? `পারা: ${r.satPara}<br>পৃষ্ঠা: ${r.satPage || '-'}` : '-';
-          const amukhText = (r.amukhPara && r.amukhPara !== '-') ? `পারা: ${r.amukhPara}<br>পৃষ্ঠা: ${r.amukhPage || '-'}` : '-';
+
+          let attBadge = '<span class="badge bg-success">উপস্থিত</span>';
+          if (r.attendance === 'অনুপস্থিত') attBadge = '<span class="badge bg-danger">অনুপস্থিত</span>';
+          else if (r.attendance === 'ছুটিতে') attBadge = '<span class="badge bg-warning text-dark">ছুটি</span>';
 
           tbody.innerHTML += `
             <tr>
+              <!-- বার ও উপস্থিতি -->
               <td class="fw-bold">${r.day}</td>
-              <td>${sabakText}</td>
+              <td>${attBadge}</td>
+
+              <!-- সবক (পারা, পৃষ্ঠা, সময় আলাদা) -->
+              <td class="fw-bold text-success">${r.sabakPara && r.sabakPara !== '-' ? r.sabakPara : '-'}</td>
+              <td>${r.sabakPage && r.sabakPage !== '-' ? r.sabakPage : '-'}</td>
               <td><span class="badge bg-light text-dark border">${formatAMPM(r.sabakTime)}</span></td>
-              <td>${satText}</td>
+
+              <!-- সাত সবক (পারা, পৃষ্ঠা, সময়, পরিমাণ, ভুল আলাদা) -->
+              <td class="fw-semibold text-primary">${r.satPara && r.satPara !== '-' ? r.satPara : '-'}</td>
+              <td>${r.satPage && r.satPage !== '-' ? r.satPage : '-'}</td>
               <td><span class="badge bg-light text-dark border">${formatAMPM(r.satTime)}</span></td>
               <td>${r.satAmount || '-'}</td>
-              <td class="text-danger fw-bold">${r.satMistake || '-'}</td>
-              <td>${amukhText}</td>
+              <td class="text-danger fw-bold">${r.satMistake || '০'}</td>
+
+              <!-- আমুখতা (পারা, পৃষ্ঠা, সময়, পরিমাণ, ভুল আলাদা) -->
+              <td class="fw-semibold text-secondary">${r.amukhPara && r.amukhPara !== '-' ? r.amukhPara : '-'}</td>
+              <td>${r.amukhPage && r.amukhPage !== '-' ? r.amukhPage : '-'}</td>
               <td><span class="badge bg-light text-dark border">${formatAMPM(r.amukhTime)}</span></td>
               <td>${r.amukhAmount || '-'}</td>
-              <td class="text-danger fw-bold">${r.amukhMistake || '-'}</td>
+              <td class="text-danger fw-bold">${r.amukhMistake || '০'}</td>
+
+              <!-- দৈনিক তিলাওয়াত -->
               <td>${r.dailyTilawat || '-'}</td>
-              <td>${teacherDetails}</td>
+
+              <!-- শিক্ষকের নাম ও শিক্ষকের মোবাইল আলাদা কলাম -->
+              <td class="fw-bold text-dark text-start px-2">${r.teacherName || 'যাচাইকৃত'}</td>
+              <td><a href="tel:${r.teacherPhone || ''}" class="text-decoration-none text-success fw-semibold">${r.teacherPhone || '-'}</a></td>
+
+              <!-- তারিখ -->
               <td>${r.date}</td>
             </tr>
           `;
         });
       }).catch(err => {
-        tbody.innerHTML = `<tr><td colspan="14" class="text-danger">ত্রুটি: ${err.message}</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="19" class="text-danger">ত্রুটি: ${err.message}</td></tr>`;
       });
     }
 
