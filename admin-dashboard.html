@@ -48,7 +48,7 @@
 
   <div class="container py-4">
     
-    <!-- ৩টি প্রধান ট্যাব নেভিগেশন -->
+    <!-- ৪টি প্রধান ট্যাব নেভিগেশন -->
     <ul class="nav nav-pills nav-fill mb-4 p-2 bg-white rounded shadow-sm" id="adminTabs">
       <li class="nav-item">
         <button class="nav-link active fw-bold" id="tabAdmissionBtn" onclick="switchAdminTab('admission')">
@@ -57,12 +57,17 @@
       </li>
       <li class="nav-item">
         <button class="nav-link fw-bold text-dark" id="tabExamBtn" onclick="switchAdminTab('exam')">
-          <i class="fa-solid fa-square-poll-vertical me-1 text-primary"></i> ২. বার্ষিক ৩টি পরীক্ষার ফলাফল আপডেট
+          <i class="fa-solid fa-square-poll-vertical me-1 text-primary"></i> ২. ৩টি পরীক্ষার ফলাফল
         </button>
       </li>
       <li class="nav-item">
         <button class="nav-link fw-bold text-dark" id="tabSearchBtn" onclick="switchAdminTab('search')">
-          <i class="fa-solid fa-magnifying-glass-chart me-1 text-warning"></i> ৩. শিক্ষার্থীর পূর্ণাঙ্গ হিস্ট্রি অনুসন্ধান
+          <i class="fa-solid fa-magnifying-glass-chart me-1 text-warning"></i> ৩. পূর্ণাঙ্গ হিস্ট্রি অনুসন্ধান
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link fw-bold text-dark position-relative" id="tabFeeApprovalBtn" onclick="switchAdminTab('feeApproval')">
+          <i class="fa-solid fa-money-bill-circle-check me-1 text-danger"></i> ৪. অনলাইন ফি যাচাই ও অনুমোদন
         </button>
       </li>
     </ul>
@@ -130,7 +135,7 @@
                   <div class="col-md-4"><label class="form-label small fw-semibold">اسم الأب (بالعربية)</label><input type="text" class="form-control form-control-sm text-end" dir="rtl" id="fatherAr" placeholder="اسم الأب" required></div>
                 </div>
                 <div class="row g-2">
-                  <div class="col-md-12"><label class="form-label small fw-semibold">পিতার NID / জাতীয় পরিচয়পত্র নম্বর</label><input type="text" class="form-control form-control-sm" id="fatherNid" placeholder="ভোটার আইডি বা জন্ম নিবন্ধন নম্বর" required></div>
+                  <div class="col-md-12"><label class="form-label small fw-semibold">পিতার NID নম্বর</label><input type="text" class="form-control form-control-sm" id="fatherNid" placeholder="ভোটার আইডি বা জন্ম নিবন্ধন নম্বর" required></div>
                 </div>
               </div>
 
@@ -143,7 +148,7 @@
                   <div class="col-md-4"><label class="form-label small fw-semibold">اسم الأم (بالعربية)</label><input type="text" class="form-control form-control-sm text-end" dir="rtl" id="motherAr" placeholder="اسم الأم" required></div>
                 </div>
                 <div class="row g-2">
-                  <div class="col-md-12"><label class="form-label small fw-semibold">মাতার NID / জাতীয় পরিচয়পত্র নম্বর</label><input type="text" class="form-control form-control-sm" id="motherNid" placeholder="ভোটার আইডি বা জন্ম নিবন্ধন নম্বর" required></div>
+                  <div class="col-md-12"><label class="form-label small fw-semibold">মাতার NID নম্বর</label><input type="text" class="form-control form-control-sm" id="motherNid" placeholder="ভোটার আইডি বা জন্ম নিবন্ধন নম্বর" required></div>
                 </div>
               </div>
 
@@ -261,7 +266,6 @@
     <div id="examSection" style="display: none;">
       <div class="row justify-content-center">
         <div class="col-lg-9">
-          
           <div class="card border-0 shadow-sm p-4 bg-white mb-4 border-top border-primary border-4">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-square-poll-vertical me-2 text-primary"></i>বার্ষিক ৩টি পরীক্ষার ফলাফল ও হাজিরা আপডেট ফরম</h5>
@@ -284,14 +288,13 @@
                 </div>
               </div>
 
-              <!-- পরীক্ষার বিস্তারিত তথ্য -->
               <div class="border rounded p-3 mb-3 bg-white shadow-sm">
                 <h6 class="fw-bold text-primary mb-3" id="examSectionTitle">১ম সাময়িক পরীক্ষার ফলাফল ইনপুট</h6>
                 
                 <div class="row g-2 mb-2">
                   <div class="col-md-6">
                     <label class="form-label small fw-semibold">ফলাফল / প্রাপ্ত মান (Grade / Division)</label>
-                    <input type="text" class="form-control form-control-sm" id="examGrade" placeholder="যেমন: মুমতাজ / জিয়্যিদ জিদ্দান / A+" required>
+                    <input type="text" class="form-control form-control-sm" id="examGrade" placeholder="যেমন: মুমতাজ / A+" required>
                   </div>
                   <div class="col-md-6">
                     <label class="form-label small fw-semibold">মোট প্রাপ্ত নম্বর (Total Marks)</label>
@@ -302,7 +305,7 @@
                 <div class="row g-2 mb-2">
                   <div class="col-md-4">
                     <label class="form-label small fw-semibold">মেধা স্থান (Position)</label>
-                    <input type="text" class="form-control form-control-sm" id="examPosition" placeholder="যেমন: ১ম / ২য় / ৫ম">
+                    <input type="text" class="form-control form-control-sm" id="examPosition" placeholder="যেমন: ১ম / ২য়">
                   </div>
                   <div class="col-md-4">
                     <label class="form-label small fw-semibold">ক্লাস উপস্থিতি (Attendance %)</label>
@@ -316,7 +319,7 @@
 
                 <div class="mb-2">
                   <label class="form-label small fw-semibold">উস্তাদজির মন্তব্য (Teacher's Remarks)</label>
-                  <input type="text" class="form-control form-control-sm" id="examRemarks" placeholder="যেমন: মাশাআল্লাহ, হিফজের ইয়াদ খুবই চমৎকার ও সুশৃঙ্খল।">
+                  <input type="text" class="form-control form-control-sm" id="examRemarks" placeholder="যেমন: মাশাআল্লাহ, হিফজের ইয়াদ চমৎকার।">
                 </div>
               </div>
 
@@ -325,14 +328,12 @@
               </button>
             </form>
           </div>
-
         </div>
       </div>
     </div>
 
     <!-- ================= ৩. শিক্ষার্থীর পূর্ণাঙ্গ হিস্ট্রি অনুসন্ধান সেকশন ================= -->
     <div id="searchSection" style="display: none;">
-      
       <div class="card border-0 shadow-sm p-4 bg-white mb-4 border-top border-warning border-4">
         <h4 class="fw-bold text-dark mb-2"><i class="fa-solid fa-magnifying-glass me-2 text-warning"></i>শিক্ষার্থী তথ্য ও অগ্রগতি অনুসন্ধান</h4>
         <p class="text-muted small mb-3">Student ID লিখলেই ভর্তির তথ্য, ৩টি পরীক্ষার ফলাফল, শেষ মাসের বেতন, পরীক্ষার ফি এবং নিয়মিত সবকের ডায়রি চলে আসবে।</p>
@@ -351,7 +352,6 @@
 
       <!-- ফলাফল ভিউ -->
       <div id="studentDetailsView" style="display: none;">
-        
         <!-- সারসংক্ষেপ কার্ড -->
         <div class="row g-3 mb-4">
           <div class="col-md-3">
@@ -391,12 +391,9 @@
           </div>
         </div>
 
-        <!-- ১. ভর্তির মূল তথ্য -->
+        <!-- ভর্তির তথ্য -->
         <div class="card border-0 shadow-sm p-4 bg-white mb-4">
-          <h5 class="fw-bold text-dark border-bottom pb-2 mb-3">
-            <i class="fa-solid fa-address-card me-2 text-success"></i>শিক্ষার্থীর মূল ভর্তি তথ্য
-          </h5>
-
+          <h5 class="fw-bold text-dark border-bottom pb-2 mb-3"><i class="fa-solid fa-address-card me-2 text-success"></i>শিক্ষার্থীর মূল ভর্তি তথ্য</h5>
           <div class="row g-4 align-items-start">
             <div class="col-md-3 text-center">
               <img id="viewPhoto" src="https://via.placeholder.com/130" class="profile-photo mb-2" alt="Student Photo">
@@ -404,7 +401,6 @@
               <span class="badge bg-success mb-1" id="viewDept">...</span>
               <div class="text-muted small" id="viewId">...</div>
             </div>
-
             <div class="col-md-9">
               <div class="table-responsive">
                 <table class="table table-bordered table-sm small mb-0">
@@ -422,7 +418,7 @@
                       <th class="bg-light">Father's Name (En):</th><td id="tblFatherEn">...</td>
                     </tr>
                     <tr>
-                      <th class="bg-light">اسم الأب (بالعربية):</th><td class="text-end" dir="rtl" id="tblFatherAr">...</td>
+                      <th class="bg-light">اسم الأব (بالعربية):</th><td class="text-end" dir="rtl" id="tblFatherAr">...</td>
                       <th class="bg-light">পিতার NID নম্বর:</th><td id="tblFatherNid">...</td>
                     </tr>
                     <tr>
@@ -454,58 +450,23 @@
           </div>
         </div>
 
-        <!-- ২. বার্ষিক ৩টি পরীক্ষার ফলাফল ও কার্ড রিপোর্ট -->
+        <!-- বার্ষিক ৩টি পরীক্ষার ফলাফল -->
         <div class="card border-0 shadow-sm p-4 bg-white mb-4">
-          <h5 class="fw-bold text-dark border-bottom pb-2 mb-3">
-            <i class="fa-solid fa-square-poll-vertical me-2 text-primary"></i>বার্ষিক ৩টি পরীক্ষার পূর্ণাঙ্গ রিপোর্ট
-          </h5>
+          <h5 class="fw-bold text-dark border-bottom pb-2 mb-3"><i class="fa-solid fa-square-poll-vertical me-2 text-primary"></i>বার্ষিক ৩টি পরীক্ষার পূর্ণাঙ্গ রিপোর্ট</h5>
           <div class="row g-3">
-            <div class="col-md-4">
-              <div class="p-3 border rounded bg-light text-center">
-                <span class="badge bg-primary mb-2">১ম সাময়িক পরীক্ষা</span>
-                <h5 class="fw-bold text-dark my-1" id="repTerm1Grade">অপেক্ষমান</h5>
-                <div class="small text-muted" id="repTerm1Marks">নম্বর: -</div>
-                <div class="small text-muted" id="repTerm1Pos">স্থান: - | উপস্থিতি: -</div>
-                <small class="text-secondary d-block mt-2 italic" id="repTerm1Remarks">-</small>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="p-3 border rounded bg-light text-center">
-                <span class="badge bg-success mb-2">২য় সাময়িক পরীক্ষা</span>
-                <h5 class="fw-bold text-dark my-1" id="repTerm2Grade">অপেক্ষমান</h5>
-                <div class="small text-muted" id="repTerm2Marks">নম্বর: -</div>
-                <div class="small text-muted" id="repTerm2Pos">স্থান: - | উপস্থিতি: -</div>
-                <small class="text-secondary d-block mt-2 italic" id="repTerm2Remarks">-</small>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="p-3 border rounded bg-light text-center">
-                <span class="badge bg-dark mb-2">৩য় / বার্ষিক পরীক্ষা</span>
-                <h5 class="fw-bold text-dark my-1" id="repTerm3Grade">অপেক্ষমান</h5>
-                <div class="small text-muted" id="repTerm3Marks">নম্বর: -</div>
-                <div class="small text-muted" id="repTerm3Pos">স্থান: - | উপস্থিতি: -</div>
-                <small class="text-secondary d-block mt-2 italic" id="repTerm3Remarks">-</small>
-              </div>
-            </div>
+            <div class="col-md-4"><div class="p-3 border rounded bg-light text-center"><span class="badge bg-primary mb-2">১ম সাময়িক পরীক্ষা</span><h5 class="fw-bold text-dark my-1" id="repTerm1Grade">অপেক্ষমান</h5><div class="small text-muted" id="repTerm1Marks">নম্বর: -</div><div class="small text-muted" id="repTerm1Pos">স্থান: - | উপস্থিতি: -</div><small class="text-secondary d-block mt-2 italic" id="repTerm1Remarks">-</small></div></div>
+            <div class="col-md-4"><div class="p-3 border rounded bg-light text-center"><span class="badge bg-success mb-2">২য় সাময়িক পরীক্ষা</span><h5 class="fw-bold text-dark my-1" id="repTerm2Grade">অপেক্ষমান</h5><div class="small text-muted" id="repTerm2Marks">নম্বর: -</div><div class="small text-muted" id="repTerm2Pos">স্থান: - | উপস্থিতি: -</div><small class="text-secondary d-block mt-2 italic" id="repTerm2Remarks">-</small></div></div>
+            <div class="col-md-4"><div class="p-3 border rounded bg-light text-center"><span class="badge bg-dark mb-2">৩য় / বার্ষিক পরীক্ষা</span><h5 class="fw-bold text-dark my-1" id="repTerm3Grade">অপেক্ষমান</h5><div class="small text-muted" id="repTerm3Marks">নম্বর: -</div><div class="small text-muted" id="repTerm3Pos">স্থান: - | উপস্থিতি: -</div><small class="text-secondary d-block mt-2 italic" id="repTerm3Remarks">-</small></div></div>
           </div>
         </div>
 
-        <!-- ৩. সাম্প্রতিক সবক ডায়েরি -->
+        <!-- সবক ডায়রি -->
         <div class="card border-0 shadow-sm p-4 bg-white mb-4">
-          <h5 class="fw-bold text-dark border-bottom pb-2 mb-3">
-            <i class="fa-solid fa-book-journal-whills me-2 text-warning"></i>সাম্প্রতিক পড়ার রেকর্ড (সবক, সাত সবক ও আমুখতা)
-          </h5>
+          <h5 class="fw-bold text-dark border-bottom pb-2 mb-3"><i class="fa-solid fa-book-journal-whills me-2 text-warning"></i>সাম্প্রতিক পড়ার রেকর্ড</h5>
           <div class="table-responsive">
             <table class="table table-bordered table-sm text-center small align-middle">
               <thead class="table-light">
-                <tr>
-                  <th>তারিখ ও বার</th>
-                  <th>সবক (পারা ও পৃষ্ঠা)</th>
-                  <th>সাত সবক</th>
-                  <th>আমুখতা</th>
-                  <th>দৈনিক তিলাওয়াত</th>
-                  <th>শিক্ষকের নাম ও মোবাইল</th>
-                </tr>
+                <tr><th>তারিখ ও বার</th><th>সবক</th><th>সাত সবক</th><th>আমুখতা</th><th>তিলাওয়াত</th><th>শিক্ষক</th></tr>
               </thead>
               <tbody id="viewSabakTableBody">
                 <tr><td colspan="6" class="text-muted">তথ্য লোড হচ্ছে...</td></tr>
@@ -514,21 +475,13 @@
           </div>
         </div>
 
-        <!-- ৪. ফি ও পেমেন্ট হিস্ট্রি -->
+        <!-- ফি ইতিহাস -->
         <div class="card border-0 shadow-sm p-4 bg-white">
-          <h5 class="fw-bold text-dark border-bottom pb-2 mb-3">
-            <i class="fa-solid fa-file-invoice-dollar me-2 text-primary"></i>পরিশোধিত বেতন ও অনলাইন ফি জমার ইতিহাস
-          </h5>
+          <h5 class="fw-bold text-dark border-bottom pb-2 mb-3"><i class="fa-solid fa-file-invoice-dollar me-2 text-primary"></i>ফি জমার ইতিহাস</h5>
           <div class="table-responsive">
             <table class="table table-bordered table-sm text-center small align-middle">
               <thead class="table-light">
-                <tr>
-                  <th>ফি-র ধরন / মাস ও সাল</th>
-                  <th>টাকার পরিমাণ</th>
-                  <th>মাধ্যম ও TrxID</th>
-                  <th>জমার তারিখ</th>
-                  <th>স্ট্যাটাস</th>
-                </tr>
+                <tr><th>খাত / মাস</th><th>পরিমাণ</th><th>মাধ্যম ও TrxID</th><th>তারিখ</th><th>স্ট্যাটাস</th></tr>
               </thead>
               <tbody id="viewPaymentTableBody">
                 <tr><td colspan="5" class="text-muted">তথ্য লোড হচ্ছে...</td></tr>
@@ -538,11 +491,88 @@
         </div>
 
       </div>
+    </div>
 
+    <!-- ================= ৪. অনলাইন ফি যাচাই ও অনুমোদন সেকশন ================= -->
+    <div id="feeApprovalSection" style="display: none;">
+      <div class="card border-0 shadow-sm p-4 bg-white border-top border-danger border-4">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+          <div>
+            <h5 class="fw-bold text-dark mb-1"><i class="fa-solid fa-cash-register me-2 text-danger"></i>অনলাইনে পাঠানো বেতন ও ফি অনুমোদন প্যানেল</h5>
+            <p class="text-muted small mb-0">অভিভাবকদের পাঠানো TrxID/ব্যাংক স্টেটমেন্ট মিলিয়ে অনুমোদন করুন এবং বকেয়া সমন্বয় করুন।</p>
+          </div>
+          <button class="btn btn-success btn-sm fw-semibold shadow-sm" onclick="loadPendingOnlinePayments()">
+            <i class="fa-solid fa-rotate me-1"></i> তালিকা রিফ্রেশ করুন
+          </button>
+        </div>
+
+        <!-- সার্চ বক্স -->
+        <div class="input-group input-group-sm mb-3" style="max-width: 350px;">
+          <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+          <input type="text" class="form-control" id="feeFilterId" placeholder="শিক্ষার্থীর নাম বা Student ID দিয়ে খুঁজুন..." onkeyup="filterPendingFees()">
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover align-middle small text-center">
+            <thead class="table-light">
+              <tr>
+                <th>শিক্ষার্থীর তথ্য</th>
+                <th>খাত ও বিবরণ</th>
+                <th>পরিমাণ</th>
+                <th>মাধ্যম</th>
+                <th>প্রেরক নম্বর / হিসাব ও TrxID</th>
+                <th>টাকা পাঠানোর তারিখ</th>
+                <th>বর্তমান স্ট্যাটাস</th>
+                <th>অ্যাকশন (অনুমোদন / বাতিল)</th>
+              </tr>
+            </thead>
+            <tbody id="pendingFeesTableBody">
+              <tr><td colspan="8" class="text-muted">তথ্য লোড হচ্ছে...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
   </div>
 
+  <!-- ফি অনুমোদন ও বকেয়া সমন্বয় মডাল -->
+  <div class="modal fade" id="approveModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow">
+        <div class="modal-header bg-success text-white py-2">
+          <h6 class="modal-title fw-bold"><i class="fa-solid fa-circle-check me-2"></i>ফি অনুমোদন ও বকেয়া সমন্বয়</h6>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <input type="hidden" id="modalStudentId">
+          <input type="hidden" id="modalDocId">
+          
+          <div class="mb-2">
+            <label class="form-label small fw-semibold">শিক্ষার্থীর নাম ও আইডি:</label>
+            <input type="text" class="form-control form-control-sm fw-bold bg-light" id="modalDisplayId" readonly>
+          </div>
+          <div class="mb-2">
+            <label class="form-label small fw-semibold">পরিশোধিত অর্থ ও খাত:</label>
+            <input type="text" class="form-control form-control-sm fw-bold text-success bg-light" id="modalDisplayAmount" readonly>
+          </div>
+          <div class="mb-3">
+            <div class="d-flex justify-content-between mb-1">
+              <label class="form-label small fw-bold text-danger mb-0">অনুমোদনের পর নতুন মোট বকেয়া (Due):</label>
+              <small class="text-muted">বর্তমান বকেয়া: <span class="fw-bold text-dark" id="modalCurrentDue">০.০০ ৳</span></small>
+            </div>
+            <input type="text" class="form-control form-control-sm border-danger fw-bold" id="modalNewDue" placeholder="যেমন: ০.০০ ৳ বা ৫০০ ৳" required>
+            <small class="text-muted" style="font-size: 11px;">টাকা সম্পূর্ণ পরিশোধ হয়ে থাকলে বক্সে <strong>০.০০ ৳</strong> লিখুন।</small>
+          </div>
+          <button type="button" class="btn btn-success w-100 fw-bold shadow-sm" id="confirmApproveBtn" onclick="submitFeeApproval()">
+            <i class="fa-solid fa-check-double me-1"></i> অনুমোদন চূড়ান্ত করুন ও বকেয়া আপডেট করুন
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <script src="js/firebase-config.js"></script>
@@ -557,21 +587,22 @@
       window.location.href = 'admin-login.html';
     });
 
-    // ভর্তির তারিখে আজকের তারিখ ডিফল্ট সেট করা
     document.getElementById('admissionDate').value = new Date().toISOString().split('T')[0];
 
-    // ৩টি ট্যাব পরিবর্তনের লজিক
+    // ৪টি ট্যাব সুইচার
     function switchAdminTab(tab) {
       const aSec = document.getElementById('admissionSection');
       const eSec = document.getElementById('examSection');
       const sSec = document.getElementById('searchSection');
+      const fSec = document.getElementById('feeApprovalSection');
       
       const aBtn = document.getElementById('tabAdmissionBtn');
       const eBtn = document.getElementById('tabExamBtn');
       const sBtn = document.getElementById('tabSearchBtn');
+      const fBtn = document.getElementById('tabFeeApprovalBtn');
 
-      [aSec, eSec, sSec].forEach(el => el.style.display = 'none');
-      [aBtn, eBtn, sBtn].forEach(btn => {
+      [aSec, eSec, sSec, fSec].forEach(el => el.style.display = 'none');
+      [aBtn, eBtn, sBtn, fBtn].forEach(btn => {
         btn.classList.remove('active');
         btn.classList.add('text-dark');
       });
@@ -588,6 +619,11 @@
         sSec.style.display = 'block';
         sBtn.classList.add('active');
         sBtn.classList.remove('text-dark');
+      } else if (tab === 'feeApproval') {
+        fSec.style.display = 'block';
+        fBtn.classList.add('active');
+        fBtn.classList.remove('text-dark');
+        loadPendingOnlinePayments();
       }
     }
 
@@ -645,8 +681,7 @@
 
       const studentData = {
         studentId: sId,
-        admissionDate: admDate, // নির্বাচিত ভর্তির তারিখ
-
+        admissionDate: admDate,
         nameBn: document.getElementById('nameBn').value.trim(),
         nameEn: document.getElementById('nameEn').value.trim(),
         nameAr: document.getElementById('nameAr').value.trim(),
@@ -693,7 +728,7 @@
       };
 
       db.collection("students").doc(sId).set(studentData).then(() => {
-        alert("নতুন ছাত্র সফলভাবে ভর্তি করা হয়েছে! ভর্তির তারিখ: " + admDate);
+        alert("নতুন ছাত্র সফলভাবে ভর্তি করা হয়েছে!");
         this.reset();
         document.getElementById('imagePreview').src = "https://via.placeholder.com/90";
         base64Image = "";
@@ -707,7 +742,7 @@
       });
     });
 
-    // ================== ২. বার্ষিক ৩টি পরীক্ষার ফলাফল কোড ==================
+    // ================== ২. পরীক্ষা কোড ==================
     document.getElementById('examPublishDate').value = new Date().toISOString().split('T')[0];
 
     function fetchCurrentExamData() {
@@ -783,7 +818,6 @@
       const btn = document.getElementById('searchBtn');
       btn.innerText = "খোঁজা হচ্ছে...";
       btn.disabled = true;
-
       loadFullStudentProfile(sId, btn);
     });
 
@@ -924,12 +958,8 @@
               const p = doc.data();
               const cat = p.category || "মাসিক বেতন";
 
-              if (!lastTuition && (cat.includes("মাসিক বেতন") || p.month)) {
-                lastTuition = p;
-              }
-              if (!lastExam && cat.includes("পরীক্ষা")) {
-                lastExam = p;
-              }
+              if (!lastTuition && (cat.includes("মাসিক বেতন") || p.month)) lastTuition = p;
+              if (!lastExam && cat.includes("পরীক্ষা")) lastExam = p;
 
               tbody.innerHTML += `
                 <tr>
@@ -937,7 +967,7 @@
                   <td><span class="text-success fw-bold">${p.amount}</span></td>
                   <td>${p.method}<br><small class="text-muted">${p.senderDetail || '-'}</small></td>
                   <td>${p.date}</td>
-                  <td><span class="badge ${p.status.includes('অনুমোদিত') ? 'bg-success' : 'bg-warning text-dark'}">${p.status}</span></td>
+                  <td><span class="badge ${p.status && p.status.includes('অনুমোদিত') ? 'bg-success' : 'bg-warning text-dark'}">${p.status || 'অপেক্ষমান'}</span></td>
                 </tr>
               `;
             });
@@ -965,6 +995,199 @@
             tbody.innerHTML = `<tr><td colspan="5" class="text-muted">কোনো জমার রেকর্ড পাওয়া যায়নি।</td></tr>`;
           }
         });
+    }
+
+    // ================== ৪. অনলাইন ফি যাচাই ও অনুমোদন কোড (সম্পূর্ণ নির্ভরযোগ্য ও ডায়নামিক) ==================
+    let pendingFeeList = [];
+
+    async function loadPendingOnlinePayments() {
+      const tbody = document.getElementById('pendingFeesTableBody');
+      tbody.innerHTML = `<tr><td colspan="8" class="text-muted py-3"><div class="spinner-border spinner-border-sm text-success me-2"></div>অনলাইন ফি রেকর্ড লোড হচ্ছে...</td></tr>`;
+      pendingFeeList = [];
+
+      try {
+        // ১. সকল শিক্ষার্থীর তথ্য সংগ্রহ
+        const studentsSnap = await db.collection("students").get();
+        if (studentsSnap.empty) {
+          tbody.innerHTML = `<tr><td colspan="8" class="text-muted">কোনো শিক্ষার্থী পাওয়া যায়নি।</td></tr>`;
+          return;
+        }
+
+        // ২. প্রতিটি শিক্ষার্থীর online_fee_submissions থেকে ডাটা সংগ্রহ
+        const fetchPromises = [];
+        studentsSnap.forEach((studentDoc) => {
+          const sId = studentDoc.id;
+          const sData = studentDoc.data();
+          const sName = sData.nameBn || sData.name || sId;
+          const sDue = sData.due || "০.০০ ৳";
+
+          const p = studentDoc.ref.collection("online_fee_submissions").get().then((subSnap) => {
+            subSnap.forEach((doc) => {
+              const data = doc.data();
+              let parsedTime = new Date(0);
+              if (data.submittedAt) {
+                parsedTime = data.submittedAt.toDate ? data.submittedAt.toDate() : new Date(data.submittedAt);
+              }
+
+              pendingFeeList.push({
+                docId: doc.id,
+                studentId: sId,
+                studentName: sName,
+                studentDue: sDue,
+                category: data.category || "মাসিক বেতন",
+                amount: data.amount || "০ ৳",
+                method: data.method || "অজানা",
+                senderDetail: data.senderDetail || "-",
+                date: data.date || "-",
+                status: data.status || "অপেক্ষমান (Pending)",
+                submittedAt: parsedTime
+              });
+            });
+          });
+          fetchPromises.push(p);
+        });
+
+        await Promise.all(fetchPromises);
+
+        // ৩. তারিখ অনুযায়ী নতুন থেকে পুরাতন সাজানো (ক্লায়েন্ট সাইড সাজানো - কোনো ফায়ারবেস ইনডেক্স এরর হবে না)
+        pendingFeeList.sort((a, b) => b.submittedAt - a.submittedAt);
+
+        renderPendingFeesTable(pendingFeeList);
+      } catch (err) {
+        console.error(err);
+        tbody.innerHTML = `<tr><td colspan="8" class="text-danger py-3">তথ্য লোড করতে সমস্যা হয়েছে: ${err.message}</td></tr>`;
+      }
+    }
+
+    function renderPendingFeesTable(list) {
+      const tbody = document.getElementById('pendingFeesTableBody');
+      tbody.innerHTML = "";
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" class="text-muted py-3">এখনো কোনো অনলাইন ফি জমার আবেদন আসেনি।</td></tr>`;
+        return;
+      }
+
+      list.forEach(item => {
+        const isApproved = item.status && item.status.includes("অনুমোদিত");
+        const isRejected = item.status && item.status.includes("বাতিল");
+
+        let statusBadge = '<span class="badge bg-warning text-dark">অপেক্ষমান (Pending)</span>';
+        if (isApproved) statusBadge = '<span class="badge bg-success">অনুমোদিত (Approved)</span>';
+        else if (isRejected) statusBadge = '<span class="badge bg-danger">বাতিলকৃত (Rejected)</span>';
+
+        let actionBtns = "";
+        if (!isApproved && !isRejected) {
+          actionBtns = `
+            <div class="d-flex gap-1 justify-content-center">
+              <button class="btn btn-sm btn-success fw-semibold px-2 py-1" onclick="openApproveModal('${item.studentId}', '${item.studentName.replace(/'/g, "")}', '${item.docId}', '${item.amount}', '${item.category}', '${item.studentDue}')">
+                <i class="fa-solid fa-check me-1"></i>অনুমোদন
+              </button>
+              <button class="btn btn-sm btn-outline-danger fw-semibold px-2 py-1" onclick="rejectFee('${item.studentId}', '${item.docId}')">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+          `;
+        } else if (isApproved) {
+          actionBtns = `<span class="text-success small fw-bold"><i class="fa-solid fa-circle-check me-1"></i>অনুমোদিত</span>`;
+        } else {
+          actionBtns = `<span class="text-danger small fw-bold"><i class="fa-solid fa-ban me-1"></i>বাতিল করা হয়েছে</span>`;
+        }
+
+        tbody.innerHTML += `
+          <tr>
+            <td><strong>${item.studentName}</strong><br><small class="text-success fw-bold">${item.studentId}</small></td>
+            <td><span class="badge bg-light text-dark border">${item.category}</span></td>
+            <td class="text-primary fw-bold fs-6">${item.amount}</td>
+            <td><span class="badge bg-secondary">${item.method}</span></td>
+            <td class="text-start small">${item.senderDetail}</td>
+            <td>${item.date}</td>
+            <td>${statusBadge}</td>
+            <td>${actionBtns}</td>
+          </tr>
+        `;
+      });
+    }
+
+    function filterPendingFees() {
+      const kw = document.getElementById('feeFilterId').value.toLowerCase().trim();
+      const filtered = pendingFeeList.filter(item => 
+        item.studentId.toLowerCase().includes(kw) || 
+        item.studentName.toLowerCase().includes(kw)
+      );
+      renderPendingFeesTable(filtered);
+    }
+
+    // অনুমোদন মডাল ওপেন
+    function openApproveModal(sId, sName, docId, amount, cat, currentDue) {
+      document.getElementById('modalStudentId').value = sId;
+      document.getElementById('modalDocId').value = docId;
+      document.getElementById('modalDisplayId').value = `${sName} (${sId})`;
+      document.getElementById('modalDisplayAmount').value = `${amount} [${cat}]`;
+      document.getElementById('modalCurrentDue').innerText = currentDue;
+      document.getElementById('modalNewDue').value = "০.০০ ৳"; // ডিফল্ট
+
+      const modalEl = document.getElementById('approveModal');
+      const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+      modal.show();
+    }
+
+    // অনুমোদন চূড়ান্ত ও বকেয়া আপডেট
+    async function submitFeeApproval() {
+      const sId = document.getElementById('modalStudentId').value;
+      const docId = document.getElementById('modalDocId').value;
+      const newDue = document.getElementById('modalNewDue').value.trim();
+      const btn = document.getElementById('confirmApproveBtn');
+
+      if (!newDue) {
+        alert("অনুমোদনের পর নতুন বকেয়া কত থাকবে তা লিখুন (যেমন: ০.০০ ৳)");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerText = "অনুমোদন হচ্ছে...";
+
+      try {
+        // ১. ফি স্ট্যাটাস 'অনুমোদিত' করা
+        await db.collection("students").doc(sId).collection("online_fee_submissions").doc(docId).update({
+          status: "অনুমোদিত (Approved)",
+          approvedAt: new Date()
+        });
+
+        // ২. শিক্ষার্থীর মূল প্রোফাইলে নতুন বকেয়া আপডেট
+        await db.collection("students").doc(sId).update({
+          due: newDue
+        });
+
+        alert("ফি সফলভাবে অনুমোদিত হয়েছে এবং শিক্ষার্থীর বকেয়া হালনাগাদ করা হয়েছে!");
+        
+        const modalEl = document.getElementById('approveModal');
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        if (modal) modal.hide();
+
+        loadPendingOnlinePayments();
+      } catch (err) {
+        alert("ত্রুটি: " + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fa-solid fa-check-double me-1"></i> অনুমোদন চূড়ান্ত করুন ও বকেয়া আপডেট করুন`;
+      }
+    }
+
+    // ভুয়া বা ভুল পেমেন্ট বাতিল করার অপশন
+    async function rejectFee(sId, docId) {
+      if (!confirm("আপনি কি নিশ্চিত যে এই আবেদনটি বাতিল করতে চান? (ভুল তথ্য বা ভুয়া ট্রানজেকশনের কারণে)")) {
+        return;
+      }
+      try {
+        await db.collection("students").doc(sId).collection("online_fee_submissions").doc(docId).update({
+          status: "বাতিলকৃত (Rejected)",
+          rejectedAt: new Date()
+        });
+        alert("আবেদনটি বাতিল করা হয়েছে।");
+        loadPendingOnlinePayments();
+      } catch (err) {
+        alert("ত্রুটি: " + err.message);
+      }
     }
   </script>
 </body>
