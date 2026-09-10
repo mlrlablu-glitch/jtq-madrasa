@@ -15,9 +15,7 @@
       font-size: 11.5px;
       white-space: nowrap;
     }
-    .diary-table th {
-      background-color: #f1f8f4;
-    }
+    .diary-table th { background-color: #f1f8f4; }
     @media print {
       body * { visibility: hidden; }
       #printableArea, #printableArea * { visibility: visible; }
@@ -28,7 +26,6 @@
 </head>
 <body class="bg-light">
 
-  <!-- নেভিগেশন বার -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm no-print">
     <div class="container">
       <a class="navbar-brand fw-bold" href="index.html">
@@ -47,15 +44,13 @@
 
   <div class="container-fluid py-4 px-3">
     
-    <!-- পড়া ও উপস্থিতি এন্ট্রি ফর্ম -->
     <div class="card border-0 shadow-sm p-4 bg-white mb-4 no-print border-top border-success border-4 mx-auto" style="max-width: 1100px;">
       <div class="d-flex justify-content-between align-items-center mb-3">
         <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-clipboard-user me-2 text-success"></i>দৈনিক পড়া ও উপস্থিতি ইনপুট ফরম</h5>
-        <span class="badge bg-success small"><i class="fa-solid fa-check me-1"></i>শিক্ষক ভেরিফায়েড মোড</span>
+        <span class="badge bg-success small"><i class="fa-solid fa-bell me-1"></i>স্বয়ংক্রিয় এসএমএস সক্রিয়</span>
       </div>
       
       <form id="sabakForm">
-        <!-- সারি ১: সাধারণ তথ্য -->
         <div class="row g-2 mb-3">
           <div class="col-md-3">
             <label class="form-label small fw-semibold">Student ID</label>
@@ -68,44 +63,33 @@
           <div class="col-md-2">
             <label class="form-label small fw-semibold">বার</label>
             <select class="form-select form-select-sm" id="inpDay">
-              <option value="শনিবার">শনিবার</option>
-              <option value="রবিবার">রবিবার</option>
-              <option value="সোমবার">সোমবার</option>
-              <option value="মঙ্গলবার">মঙ্গলবার</option>
-              <option value="বুধবার">বুধবার</option>
-              <option value="বৃহস্পতিবার">বৃহস্পতিবার</option>
+              <option value="শনিবার">শনিবার</option><option value="রবিবার">রবিবার</option>
+              <option value="সোমবার">সোমবার</option><option value="মঙ্গলবার">মঙ্গলবার</option>
+              <option value="বুধবার">বুধবার</option><option value="বৃহস্পতিবার">বৃহস্পতিবার</option>
               <option value="শুক্রবার">শুক্রবার</option>
             </select>
           </div>
           <div class="col-md-2">
             <label class="form-label small fw-semibold">মাসের নাম</label>
             <select class="form-select form-select-sm" id="inpMonth" required>
-              <option value="জানুয়ারি">জানুয়ারি</option>
-              <option value="ফেব্রুয়ারি">ফেব্রুয়ারি</option>
-              <option value="মার্চ">মার্চ</option>
-              <option value="এপ্রিল">এপ্রিল</option>
-              <option value="মে">মে</option>
-              <option value="জুন">জুন</option>
-              <option value="জুলাই">জুলাই</option>
-              <option value="আগস্ট">আগস্ট</option>
-              <option value="সেপ্টেম্বর" selected>সেপ্টেম্বর</option>
-              <option value="অক্টোবর">অক্টোবর</option>
-              <option value="নভেম্বর">নভেম্বর</option>
-              <option value="ডিসেম্বর">ডিসেম্বর</option>
+              <option value="জানুয়ারি">জানুয়ারি</option><option value="ফেব্রুয়ারি">ফেব্রুয়ারি</option>
+              <option value="মার্চ">মার্চ</option><option value="এপ্রিল">এপ্রিল</option>
+              <option value="মে">মে</option><option value="জুন">জুন</option>
+              <option value="জুলাই">জুলাই</option><option value="আগস্ট">আগস্ট</option>
+              <option value="সেপ্টেম্বর" selected>সেপ্টেম্বর</option><option value="অক্টোবর">অক্টোবর</option>
+              <option value="নভেম্বর">নভেম্বর</option><option value="ডিসেম্বর">ডিসেম্বর</option>
             </select>
           </div>
           <div class="col-md-2">
             <label class="form-label small fw-semibold">সাল / বছর</label>
             <select class="form-select form-select-sm" id="inpYear" required>
-              <option value="২০২৫">২০২৫</option>
-              <option value="২০২৬" selected>২০২৬</option>
-              <option value="২০২৭">২০২৭</option>
-              <option value="২০২৮">২০২৮</option>
+              <option value="২০২৫">২০২৫</option><option value="২০২৬" selected>২০২৬</option>
+              <option value="২০২৭">২০২৭</option><option value="২০২৮">২০২৮</option>
             </select>
           </div>
         </div>
 
-        <!-- সারি ২: উপস্থিতি -->
+        <!-- উপস্থিতি রেডিও বাটন -->
         <div class="row g-2 mb-3 p-2 border rounded bg-light align-items-center">
           <div class="col-md-4">
             <label class="form-label small fw-bold text-dark mb-0">
@@ -120,7 +104,9 @@
               </div>
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="attendanceStatus" id="attAbsent" value="অনুপস্থিত">
-                <label class="form-check-label small fw-bold text-danger" for="attAbsent">অনুপস্থিত (Absent)</label>
+                <label class="form-check-label small fw-bold text-danger" for="attAbsent">
+                  অনুপস্থিত (Absent) <small class="badge bg-danger">এসএমএস যাবে</small>
+                </label>
               </div>
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="attendanceStatus" id="attLeave" value="ছুটিতে">
@@ -130,7 +116,6 @@
           </div>
         </div>
 
-        <!-- সারি ৩: পড়ার ক্যাটাগরি -->
         <div class="row g-2 mb-3">
           <div class="col-md-12">
             <label class="form-label small fw-bold text-success"><i class="fa-solid fa-list-check me-1"></i>কোন পড়াটি এখন নিচ্ছেন?</label>
@@ -164,7 +149,7 @@
           </div>
         </div>
 
-        <!-- ৩. আমুখতা ও তিলাওয়াত -->
+        <!-- ৩. আমুখতা -->
         <div id="sectionAmukh" class="p-3 border rounded bg-light mb-3" style="display: none;">
           <span class="badge bg-secondary mb-2 fs-6"><i class="fa-solid fa-book-quran me-1"></i> ৩. আমুখতা ও তিলাওয়াত ইনপুট</span>
           <div class="row g-2 mb-2">
@@ -179,7 +164,6 @@
           </div>
         </div>
 
-        <!-- শিক্ষক তথ্য -->
         <div class="row g-2 mb-3 p-2 border rounded bg-light">
           <div class="col-md-6"><label class="form-label small fw-semibold">শিক্ষকের নাম</label><input type="text" class="form-control form-control-sm bg-white" id="teacherName" readonly required></div>
           <div class="col-md-6"><label class="form-label small fw-semibold">শিক্ষকের মোবাইল নম্বর</label><input type="tel" class="form-control form-control-sm bg-white" id="teacherPhone" readonly required></div>
@@ -191,7 +175,7 @@
       </form>
     </div>
 
-    <!-- ডায়েরি ভিউ ছক (সম্পূর্ণ আলাদা কলামসমূহ) -->
+    <!-- ডায়েরি ভিউ ছক -->
     <div class="card border-0 shadow-sm p-3 bg-white" id="printableArea">
       <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 no-print">
         <div class="d-flex gap-2 align-items-center">
@@ -212,7 +196,6 @@
         </div>
       </div>
 
-      <!-- মূল টেবিল: পারা, পৃষ্ঠা, সময় এবং শিক্ষক-মোবাইল আলাদা আলাদা কলামে -->
       <div class="table-responsive">
         <table class="table table-bordered border-dark diary-table mb-2">
           <thead>
@@ -228,22 +211,9 @@
               <th rowspan="2">তারিখ</th>
             </tr>
             <tr>
-              <!-- সবক -->
-              <th>পারা</th>
-              <th>পৃষ্ঠা</th>
-              <th>সময়</th>
-              <!-- সাত সবক -->
-              <th>পারা</th>
-              <th>পৃষ্ঠা</th>
-              <th>সময়</th>
-              <th>পরিমাণ</th>
-              <th>ভুল</th>
-              <!-- আমুখতা -->
-              <th>পারা</th>
-              <th>পৃষ্ঠা</th>
-              <th>সময়</th>
-              <th>পরিমাণ</th>
-              <th>ভুল</th>
+              <th>পারা</th><th>পৃষ্ঠা</th><th>সময়</th>
+              <th>পারা</th><th>পৃষ্ঠা</th><th>সময়</th><th>পরিমাণ</th><th>ভুল</th>
+              <th>পারা</th><th>পৃষ্ঠা</th><th>সময়</th><th>পরিমাণ</th><th>ভুল</th>
             </tr>
           </thead>
           <tbody id="diaryTableBody">
@@ -252,7 +222,6 @@
         </table>
       </div>
 
-      <!-- শবীনার অংশ -->
       <div class="border border-dark p-2 mt-2">
         <div class="row g-2 align-items-center small">
           <div class="col-md-6 border-end border-dark">
@@ -274,6 +243,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <script src="js/firebase-config.js"></script>
+  <script src="js/sms-service.js"></script>
 
   <script>
     if (localStorage.getItem('teacherSession') !== 'active') {
@@ -317,17 +287,14 @@
     const secAmukh = document.getElementById('sectionAmukh');
 
     lessonSelect.addEventListener('change', function() {
-      secSabak.style.display = 'none';
-      secSatSabak.style.display = 'none';
-      secAmukh.style.display = 'none';
-
+      secSabak.style.display = 'none'; secSatSabak.style.display = 'none'; secAmukh.style.display = 'none';
       if (this.value === 'sabak') secSabak.style.display = 'block';
       else if (this.value === 'satSabak') secSatSabak.style.display = 'block';
       else if (this.value === 'amukhTilawat') secAmukh.style.display = 'block';
     });
 
-    // সংরক্ষণ
-    document.getElementById('sabakForm').addEventListener('submit', function(e) {
+    // উপস্থিতি ও পড়া সংরক্ষণ + অটো এসএমএস লজিক
+    document.getElementById('sabakForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       const sId = document.getElementById('inpStudentId').value.trim();
       const date = document.getElementById('inpDate').value;
@@ -338,58 +305,66 @@
       const attendance = document.querySelector('input[name="attendanceStatus"]:checked').value;
       const btn = document.getElementById('saveSabakBtn');
 
-      btn.disabled = true;
-      btn.innerText = "সংরক্ষণ হচ্ছে...";
+      btn.disabled = true; btn.innerText = "সংরক্ষণ ও যাচাই হচ্ছে...";
 
-      let updatePayload = {
-        date: date,
-        day: day,
-        month: month,
-        year: year,
-        attendance: attendance,
-        teacherName: tName,
-        teacherPhone: tPhone,
-        timestamp: new Date()
-      };
+      try {
+        // ১. ছাত্রের ফোন ও নাম সংগ্রহ
+        const studentDoc = await db.collection("students").doc(sId).get();
+        if (!studentDoc.exists) {
+          alert("এই Student ID পাওয়া যায়নি!");
+          btn.disabled = false; btn.innerText = "পড়া ও উপস্থিতি সংরক্ষণ করুন";
+          return;
+        }
 
-      if (lessonType === 'sabak') {
-        updatePayload.sabakPara = document.getElementById('sabakPara').value.trim() || "-";
-        updatePayload.sabakPage = document.getElementById('sabakPage').value.trim() || "-";
-        updatePayload.sabakTime = document.getElementById('sabakTime').value || "-";
-      } else if (lessonType === 'satSabak') {
-        updatePayload.satPara = document.getElementById('satPara').value.trim() || "-";
-        updatePayload.satPage = document.getElementById('satPage').value.trim() || "-";
-        updatePayload.satTime = document.getElementById('satTime').value || "-";
-        updatePayload.satAmount = document.getElementById('satAmount').value.trim() || "-";
-        updatePayload.satMistake = document.getElementById('satMistake').value.trim() || "-";
-      } else if (lessonType === 'amukhTilawat') {
-        updatePayload.amukhPara = document.getElementById('amukhPara').value.trim() || "-";
-        updatePayload.amukhPage = document.getElementById('amukhPage').value.trim() || "-";
-        updatePayload.amukhTime = document.getElementById('amukhTime').value || "-";
-        updatePayload.amukhAmount = document.getElementById('amukhAmount').value.trim() || "-";
-        updatePayload.amukhMistake = document.getElementById('amukhMistake').value.trim() || "-";
-        updatePayload.dailyTilawat = document.getElementById('dailyTilawat').value.trim() || "-";
-      }
+        const studentData = studentDoc.data();
+        const studentName = studentData.nameBn || studentData.name || "শিক্ষার্থী";
+        const guardianPhone = studentData.phone || "";
 
-      db.collection("students").doc(sId).collection("daily_sabak").doc(date).set(updatePayload, { merge: true })
-        .then(() => {
-          return db.collection("students").doc(sId).update({
-            lastAttendanceStatus: attendance,
-            lastAttendanceDate: date
-          });
-        }).then(() => {
+        let updatePayload = {
+          date: date, day: day, month: month, year: year,
+          attendance: attendance, teacherName: tName, teacherPhone: tPhone, timestamp: new Date()
+        };
+
+        if (lessonType === 'sabak') {
+          updatePayload.sabakPara = document.getElementById('sabakPara').value.trim() || "-";
+          updatePayload.sabakPage = document.getElementById('sabakPage').value.trim() || "-";
+          updatePayload.sabakTime = document.getElementById('sabakTime').value || "-";
+        } else if (lessonType === 'satSabak') {
+          updatePayload.satPara = document.getElementById('satPara').value.trim() || "-";
+          updatePayload.satPage = document.getElementById('satPage').value.trim() || "-";
+          updatePayload.satTime = document.getElementById('satTime').value || "-";
+          updatePayload.satAmount = document.getElementById('satAmount').value.trim() || "-";
+          updatePayload.satMistake = document.getElementById('satMistake').value.trim() || "-";
+        } else if (lessonType === 'amukhTilawat') {
+          updatePayload.amukhPara = document.getElementById('amukhPara').value.trim() || "-";
+          updatePayload.amukhPage = document.getElementById('amukhPage').value.trim() || "-";
+          updatePayload.amukhTime = document.getElementById('amukhTime').value || "-";
+          updatePayload.amukhAmount = document.getElementById('amukhAmount').value.trim() || "-";
+          updatePayload.amukhMistake = document.getElementById('amukhMistake').value.trim() || "-";
+          updatePayload.dailyTilawat = document.getElementById('dailyTilawat').value.trim() || "-";
+        }
+
+        await db.collection("students").doc(sId).collection("daily_sabak").doc(date).set(updatePayload, { merge: true });
+        await db.collection("students").doc(sId).update({ lastAttendanceStatus: attendance, lastAttendanceDate: date });
+
+        // ২. যদি শিক্ষার্থী "অনুপস্থিত" হয় তবেই স্বয়ংক্রিয় এসএমএস পাঠানো হবে
+        if (attendance === "অনুপস্থিত") {
+          sendAbsenceSMS(guardianPhone, studentName);
+          alert(`পড়া সংরক্ষিত হয়েছে! শিক্ষার্থী অনুপস্থিত থাকায় অভিভাবক (${guardianPhone})-কে স্বয়ংক্রিয় এসএমএস নোটিফিকেশন পাঠানো হয়েছে।`);
+        } else {
           alert("পড়া ও উপস্থিতি সফলভাবে সংরক্ষিত হয়েছে!");
-          document.getElementById('searchId').value = sId;
-          loadDiary(sId);
-        }).catch(err => {
-          alert("ত্রুটি: " + err.message);
-        }).finally(() => {
-          btn.disabled = false;
-          btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up me-1"></i> পড়া ও উপস্থিতি সংরক্ষণ করুন`;
-        });
+        }
+
+        document.getElementById('searchId').value = sId;
+        loadDiary(sId);
+      } catch (err) {
+        alert("ত্রুটি: " + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up me-1"></i> পড়া ও উপস্থিতি সংরক্ষণ করুন`;
+      }
     });
 
-    // ছকে লোড
     function loadDiary(sId) {
       const tbody = document.getElementById('diaryTableBody');
       tbody.innerHTML = `<tr><td colspan="19">তথ্য লোড হচ্ছে...</td></tr>`;
@@ -397,7 +372,7 @@
       db.collection("students").doc(sId).get().then(doc => {
         if(doc.exists) {
           const d = doc.data();
-          document.getElementById('viewStudentName').innerText = d.name;
+          document.getElementById('viewStudentName').innerText = d.nameBn || d.name;
           document.getElementById('viewStudentId').innerText = sId;
           document.getElementById('viewStudentDept').innerText = d.department || "-";
           document.getElementById('viewStudentRoll').innerText = d.roll || "-";
@@ -424,27 +399,14 @@
               <tr>
                 <td class="fw-bold">${r.day}</td>
                 <td>${attBadge}</td>
-                
-                <!-- সবক (আলাদা ৩ কলাম) -->
-                <td>${r.sabakPara || '-'}</td>
-                <td>${r.sabakPage || '-'}</td>
+                <td>${r.sabakPara || '-'}</td><td>${r.sabakPage || '-'}</td>
                 <td><span class="badge bg-light text-dark border">${formatAMPM(r.sabakTime)}</span></td>
-
-                <!-- সাত সবক (আলাদা ৫ কলাম) -->
-                <td>${r.satPara || '-'}</td>
-                <td>${r.satPage || '-'}</td>
+                <td>${r.satPara || '-'}</td><td>${r.satPage || '-'}</td>
                 <td><span class="badge bg-light text-dark border">${formatAMPM(r.satTime)}</span></td>
-                <td>${r.satAmount || '-'}</td>
-                <td class="text-danger fw-bold">${r.satMistake || '-'}</td>
-
-                <!-- আমুখতা (আলাদা ৫ কলাম) -->
-                <td>${r.amukhPara || '-'}</td>
-                <td>${r.amukhPage || '-'}</td>
+                <td>${r.satAmount || '-'}</td><td class="text-danger fw-bold">${r.satMistake || '-'}</td>
+                <td>${r.amukhPara || '-'}</td><td>${r.amukhPage || '-'}</td>
                 <td><span class="badge bg-light text-dark border">${formatAMPM(r.amukhTime)}</span></td>
-                <td>${r.amukhAmount || '-'}</td>
-                <td class="text-danger fw-bold">${r.amukhMistake || '-'}</td>
-
-                <!-- অন্যান্য ও শিক্ষক (আলাদা ২ কলাম) -->
+                <td>${r.amukhAmount || '-'}</td><td class="text-danger fw-bold">${r.amukhMistake || '-'}</td>
                 <td>${r.dailyTilawat || '-'}</td>
                 <td class="fw-semibold text-dark">${r.teacherName || '-'}</td>
                 <td>${r.teacherPhone || '-'}</td>
