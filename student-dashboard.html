@@ -22,7 +22,6 @@
       color: #fff !important;
     }
 
-    /* হিফজ ট্র্যাকার ও গ্রিড স্টাইল */
     .para-grid-card {
       border: 1px solid #d1d5db;
       border-radius: 8px;
@@ -53,7 +52,6 @@
       font-weight: 600;
     }
 
-    /* মানি রসিদ ভাউচার ডিজাইন */
     .money-receipt-box {
       border: 2px dashed #0f5132;
       border-radius: 10px;
@@ -129,22 +127,22 @@
     <ul class="nav nav-pills nav-fill mb-4 p-2 bg-white rounded shadow-sm no-print gap-1 mx-auto" style="max-width: 1100px;" id="dashboardTabs">
       <li class="nav-item">
         <button class="nav-link active fw-bold small" id="tabProfileBtn" onclick="switchTab('profile')">
-          <i class="fa-solid fa-id-card me-1"></i> ১. বিবরণী ও প্রত্যয়ন
+          <i class="fa-solid fa-id-card me-1"></i> ১. আমার বিবরণী ও প্রত্যয়ন
         </button>
       </li>
       <li class="nav-item">
         <button class="nav-link fw-bold text-dark small" id="tabHifzBtn" onclick="switchTab('hifz')">
-          <i class="fa-solid fa-book-quran me-1 text-success"></i> ২. ট্র্যাকার (৩০ পারা)
+          <i class="fa-solid fa-book-quran me-1 text-success"></i> ২. হিফজ প্রগ্রেস ট্র্যাকার (৩০ পারা)
         </button>
       </li>
       <li class="nav-item">
         <button class="nav-link fw-bold text-dark small" id="tabSabakBtn" onclick="switchTab('sabak')">
-          <i class="fa-solid fa-book-journal-whills me-1 text-warning"></i> ৩. পড়ার বিবরণী
+          <i class="fa-solid fa-book-journal-whills me-1 text-warning"></i> ৩. পড়ার বিবরণী (দৈনিক ও মাসিক)
         </button>
       </li>
       <li class="nav-item">
         <button class="nav-link fw-bold text-dark small" id="tabFeeBtn" onclick="switchTab('fee')">
-          <i class="fa-solid fa-money-check-dollar me-1 text-primary"></i> ৪. ফি ও রসিদ
+          <i class="fa-solid fa-money-check-dollar me-1 text-primary"></i> ৪. অনলাইন ফি ও রসিদ
         </button>
       </li>
     </ul>
@@ -159,7 +157,7 @@
 
       <div class="card border-0 shadow-sm p-4 mx-auto bg-white" id="printableA4" style="max-width: 850px;">
         <div class="text-center border-bottom border-success border-2 pb-2 mb-3">
-          <h3 class="fw-bold text-success mb-1">জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা</h3>
+          <h3 class="fw-bold text-success mb-1">জামিয়া তাসলিমুল কুরআন ইসলামিয়া</h3>
           <p class="text-muted small mb-1">দ্বীনি ও আধুনিক শিক্ষার এক অনন্য সমন্বয়</p>
           <span class="badge bg-success px-3 py-1 fs-6">শিক্ষার্থী বিবরণী ও প্রত্যয়ন পত্র</span>
         </div>
@@ -238,8 +236,9 @@
           </div>
           <div class="col-4">
             <div class="p-2 border rounded text-center bg-light">
-              <small class="text-muted d-block">বর্তমান বকেয়া ফি</small>
+              <small class="text-muted d-block">স্বয়ংক্রিয় বকেয়া হিসাব</small>
               <h5 class="fw-bold text-danger my-1" id="dashDue">০.০০ ৳</h5>
+              <small class="text-muted d-block" id="dashDueBreakdown" style="font-size: 10.5px;">-</small>
             </div>
           </div>
         </div>
@@ -304,7 +303,7 @@
       </div>
     </div>
 
-    <!-- ================= ৩. পড়ার বিবরণী সেকশন (সম্পূর্ণ আলাদা কলামসমূহ) ================= -->
+    <!-- ================= ৩. পড়ার বিবরণী সেকশন ================= -->
     <div id="sabakSection" style="display: none;">
       <div class="card border-0 shadow-sm p-4 bg-white mb-4 no-print border-top border-success border-4 mx-auto" style="max-width: 1200px;">
         <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-filter me-2 text-success"></i>পড়ার তথ্য ফিল্টার করুন</h5>
@@ -356,42 +355,24 @@
           </div>
         </div>
 
-        <!-- আলাদা আলাদা ১৮টি কলামের সুশৃঙ্খল ছক -->
         <div class="table-responsive">
           <table class="table table-bordered border-dark diary-table mb-2 align-middle">
             <thead>
               <tr>
                 <th rowspan="2" style="width: 70px;">বার</th>
                 <th rowspan="2" style="width: 65px;">উপস্থিতি</th>
-                <!-- সবক (আলাদা পারা, পৃষ্ঠা ও সময়) -->
                 <th colspan="3" class="bg-success text-white">সবক (নতুন পড়া)</th>
-                <!-- সাত সবক (আলাদা পারা, পৃষ্ঠা, সময়, পরিমাণ ও ভুল) -->
                 <th colspan="5" class="bg-primary text-white">সাত সবক (সাম্প্রতিক পড়া)</th>
-                <!-- আমুখতা (আলাদা পারা, পৃষ্ঠা, সময়, পরিমাণ ও ভুল) -->
                 <th colspan="5" class="bg-secondary text-white">আমুখতা (পুরাতন পড়া)</th>
                 <th rowspan="2" style="width: 75px;">দৈনিক<br>তিলাওয়াত</th>
-                <!-- শিক্ষকের নাম ও মোবাইল আলাদা কলাম -->
                 <th rowspan="2" style="min-width: 120px;">শিক্ষকের নাম</th>
                 <th rowspan="2" style="min-width: 110px;">শিক্ষকের মোবাইল</th>
                 <th rowspan="2" style="width: 85px;">তারিখ</th>
               </tr>
               <tr>
-                <!-- সবক -->
-                <th>পারা</th>
-                <th>পৃষ্ঠা</th>
-                <th>সময়</th>
-                <!-- সাত সবক -->
-                <th>পারা</th>
-                <th>পৃষ্ঠা</th>
-                <th>সময়</th>
-                <th>পরিমাণ</th>
-                <th>ভুল</th>
-                <!-- আমুখতা -->
-                <th>পারা</th>
-                <th>পৃষ্ঠা</th>
-                <th>সময়</th>
-                <th>পরিমাণ</th>
-                <th>ভুল</th>
+                <th>পারা</th><th>পৃষ্ঠা</th><th>সময়</th>
+                <th>পারা</th><th>পৃষ্ঠা</th><th>সময়</th><th>পরিমাণ</th><th>ভুল</th>
+                <th>পারা</th><th>পৃষ্ঠা</th><th>সময়</th><th>পরিমাণ</th><th>ভুল</th>
               </tr>
             </thead>
             <tbody id="studentDiaryBody">
@@ -406,9 +387,16 @@
     <div id="feeSection" style="display: none;">
       
       <div class="card border-0 shadow-sm p-4 bg-white mb-4 border-top border-primary border-4 no-print mx-auto" style="max-width: 1100px;">
-        <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
           <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-receipt me-2 text-primary"></i>অনলাইন ফি ও অনুদান জমা ফরম</h5>
-          <span class="badge bg-danger fs-6">মোট বকেয়া: <span id="paymentCurrentDue">০.০০ ৳</span></span>
+          
+          <!-- স্বয়ংক্রিয় রানিং ও পূর্বের মাস বকেয়া ব্যানার -->
+          <div class="text-end">
+            <span class="badge bg-danger fs-6 px-3 py-2" id="paymentCurrentDueBadge">
+              <i class="fa-solid fa-triangle-exclamation me-1"></i>মোট বকেয়া: ০.০০ ৳
+            </span>
+            <small class="text-danger d-block fw-semibold mt-1" id="autoDueDetailNotice" style="font-size: 11.5px;"></small>
+          </div>
         </div>
 
         <div class="alert alert-info py-2 px-3 small mb-3">
@@ -663,6 +651,12 @@
     }
 
     let globalStudentData = {};
+    const bengaliMonths = ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"];
+
+    function toBn(num) {
+      const bnDigits = {'0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯'};
+      return num.toString().replace(/[0-9]/g, match => bnDigits[match]);
+    }
 
     function switchTab(tab) {
       const pSec = document.getElementById('profileSection');
@@ -695,6 +689,144 @@
       }
     }
 
+    // ================= স্বয়ংক্রিয় রানিং ও পূর্ববর্তী মাস বকেয়া ক্যালকুলেশন ইঞ্জিন =================
+    async function calculateAutomaticDue(studentDocData) {
+      const monthlyRate = studentDocData.monthlyFeeRate || 1000;
+      const admDateStr = studentDocData.admissionDate || "2026-01-01";
+      const admDate = new Date(admDateStr);
+
+      const now = new Date(); // বর্তমান সময়
+      const currentYear = now.getFullYear();
+      const currentMonthIndex = now.getMonth(); // ০ = জানুয়ারি ... ৮ = সেপ্টেম্বর
+
+      // ১. অনুমোদিত সকল পরিশোধিত মাসের তালিকা সংগ্রহ
+      const paidMonthsSet = new Set();
+      try {
+        const approvedSnap = await db.collection("students").doc(currentId)
+          .collection("online_fee_submissions")
+          .where("status", "==", "অনুমোদিত (Approved)").get();
+
+        approvedSnap.forEach(doc => {
+          const d = doc.data();
+          if (d.purpose === "মাসিক বেতন" || (d.category && d.category.includes("মাসিক বেতন"))) {
+            // যেমন: "সেপ্টেম্বর ২০২৬" বা "মাসিক বেতন (সেপ্টেম্বর ২০২৬)"
+            const str = (d.monthYear || d.category || "");
+            bengaliMonths.forEach(mName => {
+              if (str.includes(mName)) {
+                // বছর খুঁজে বের করা
+                const yrMatch = str.match(/202[5-9]|২০২[৫-৯]/);
+                const yr = yrMatch ? yrMatch[0] : currentYear.toString();
+                paidMonthsSet.add(`${mName}_${yr}`);
+              }
+            });
+          }
+        });
+      } catch (err) {
+        console.error("Paid months check:", err);
+      }
+
+      // ২. ভর্তির তারিখ থেকে শুরু করে রানিং মাস পর্যন্ত অপরিশোধিত মাসগুলোর তালিকা তৈরি
+      let startYear = admDate.getFullYear();
+      let startMonthIndex = admDate.getMonth();
+
+      // যদি ভর্তির তারিখ ভবিষ্যৎ হয়, ডিফল্ট জানুয়ারি থেকে
+      if (startYear > currentYear || (startYear === currentYear && startMonthIndex > currentMonthIndex)) {
+        startYear = currentYear;
+        startMonthIndex = 0;
+      }
+
+      const unpaidMonthsList = [];
+      let y = startYear;
+      let m = startMonthIndex;
+
+      while (y < currentYear || (y === currentYear && m <= currentMonthIndex)) {
+        const monthName = bengaliMonths[m];
+        const yrEnglish = y.toString();
+        const yrBengali = toBn(yrEnglish);
+
+        // পরিশোধিত কি না পরীক্ষা
+        const isPaid = paidMonthsSet.has(`${monthName}_${yrEnglish}`) || paidMonthsSet.has(`${monthName}_${yrBengali}`);
+        if (!isPaid) {
+          unpaidMonthsList.push(`${monthName} ${yrBengali}`);
+        }
+
+        m++;
+        if (m > 11) {
+          m = 0;
+          y++;
+        }
+      }
+
+      // ৩. মোট টাকার পরিমাণ হিসাব
+      const totalDueAmount = unpaidMonthsList.length * monthlyRate;
+      const formattedTotalDue = `${toBn(totalDueAmount.toLocaleString('en-US'))}.০০ ৳`;
+
+      // ৪. স্ক্রিনে রেন্ডার করা
+      document.getElementById('dashDue').innerText = formattedTotalDue;
+      document.getElementById('paymentCurrentDueBadge').innerHTML = `<i class="fa-solid fa-triangle-exclamation me-1"></i>মোট বকেয়া: ${formattedTotalDue}`;
+
+      if (unpaidMonthsList.length > 0) {
+        const breakdownStr = `বকেয়া মাসসমূহ: ${unpaidMonthsList.join(', ')}`;
+        document.getElementById('dashDueBreakdown').innerText = breakdownStr;
+        document.getElementById('autoDueDetailNotice').innerText = `(${breakdownStr})`;
+      } else {
+        document.getElementById('dashDueBreakdown').innerText = `আলহামদুলিল্লাহ, কোনো বকেয়া নেই`;
+        document.getElementById('autoDueDetailNotice').innerText = `(চলতি মাস পর্যন্ত সকল বেতন পরিশোধিত)`;
+      }
+
+      // ফায়ারবেসের মূল ডকে ব্যাকআপ বকেয়া ফিল্ড সিঙ্ক করা
+      db.collection("students").doc(currentId).update({ due: formattedTotalDue });
+    }
+
+    // ছাত্র প্রোফাইল লোড
+    db.collection("students").doc(currentId).get().then((doc) => {
+      if (doc.exists) {
+        globalStudentData = doc.data();
+        const s = globalStudentData;
+        document.getElementById('navName').innerText = "ছাত্র: " + (s.nameBn || s.name);
+        document.getElementById('dashName').innerText = s.nameBn || s.name;
+        document.getElementById('dashId').innerText = s.studentId;
+        document.getElementById('dashStudentReg').innerText = s.studentRegNo || "দেওয়া হয়নি";
+        document.getElementById('dashDept').innerText = s.department;
+        document.getElementById('dashRoll').innerText = s.roll;
+        document.getElementById('dashFather').innerText = s.fatherBn || s.father;
+        document.getElementById('dashFatherNid').innerText = s.fatherNid || "দেওয়া হয়নি";
+        document.getElementById('dashMother').innerText = s.motherBn || s.mother || "দেওয়া হয়নি";
+        document.getElementById('dashMotherNid').innerText = s.motherNid || "দেওয়া হয়নি";
+        document.getElementById('dashDob').innerText = s.dob || "দেওয়া হয়নি";
+        document.getElementById('dashBlood').innerText = s.bloodGroup || "অজানা";
+        document.getElementById('dashPhone').innerText = s.phone || "দেওয়া হয়নি";
+
+        document.getElementById('diaryStudentName').innerText = s.nameBn || s.name;
+        document.getElementById('diaryStudentId').innerText = s.studentId;
+        document.getElementById('diaryStudentDept').innerText = s.department;
+        document.getElementById('diaryStudentRoll').innerText = s.roll;
+
+        if (s.photo) document.getElementById('dashPhoto').src = s.photo;
+
+        const pre = s.presentAddress || {};
+        document.getElementById('preVillageText').innerText = pre.village || "-";
+        document.getElementById('prePostText').innerText = pre.post || "-";
+        document.getElementById('preUnionText').innerText = pre.union || "-";
+        document.getElementById('preThanaText').innerText = pre.thana || "-";
+        document.getElementById('preDistrictText').innerText = pre.district || "-";
+
+        const per = s.permanentAddress || {};
+        document.getElementById('perVillageText').innerText = per.village || "-";
+        document.getElementById('perPostText').innerText = per.post || "-";
+        document.getElementById('perUnionText').innerText = per.union || "-";
+        document.getElementById('perThanaText').innerText = per.thana || "-";
+        document.getElementById('perDistrictText').innerText = per.district || "-";
+
+        document.getElementById('dashAtt').innerText = s.attendance || "১০০%";
+        document.getElementById('dashRes').innerText = s.result || "অপেক্ষমান";
+
+        // স্বয়ংক্রিয় বকেয়া হিসাব ক্যালকুলেশন শুরু
+        calculateAutomaticDue(s);
+        renderQuran30ParaGrid();
+      }
+    });
+
     const paraNames = [
       "আলিফ লাম মীম", "সাইয়াকুলু", "তিলকার রুসুল", "লান তানালু", "ওয়াল মুহসানাতু",
       "লা ইয়ুহিব্বুল্লাহ", "ওয়া ইজা সামিয়ু", "ওয়া লাও আন্নানা", "ক্বালা আল-মালাউ", "ওয়া আ'লামু",
@@ -703,11 +835,6 @@
       "উতলু মা উহিয়া", "ওয়া মাইঁ-ইয়াক্বনুত", "ওয়ামালিয়া", "ফামান আজলামু", "ইলাইহি ইউরাদ্দু",
       "হা-মীম", "ক্বালা ফামা খাতবুকুম", "ক্বাদ্ সামিআল্লাহু", "তাবারাকাল্লাজি", "আম্মা ইয়াতাসা-আলুন"
     ];
-
-    function toBn(num) {
-      const bnDigits = {'0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯'};
-      return num.toString().replace(/[0-9]/g, match => bnDigits[match]);
-    }
 
     function renderQuran30ParaGrid() {
       const gridContainer = document.getElementById('quran30ParaGrid');
@@ -763,55 +890,6 @@
       }
     }
 
-    // ছাত্র প্রোফাইল লোড
-    db.collection("students").doc(currentId).get().then((doc) => {
-      if (doc.exists) {
-        globalStudentData = doc.data();
-        const s = globalStudentData;
-        document.getElementById('navName').innerText = "ছাত্র: " + (s.nameBn || s.name);
-        document.getElementById('dashName').innerText = s.nameBn || s.name;
-        document.getElementById('dashId').innerText = s.studentId;
-        document.getElementById('dashStudentReg').innerText = s.studentRegNo || "দেওয়া হয়নি";
-        document.getElementById('dashDept').innerText = s.department;
-        document.getElementById('dashRoll').innerText = s.roll;
-        document.getElementById('dashFather').innerText = s.fatherBn || s.father;
-        document.getElementById('dashFatherNid').innerText = s.fatherNid || "দেওয়া হয়নি";
-        document.getElementById('dashMother').innerText = s.motherBn || s.mother || "দেওয়া হয়নি";
-        document.getElementById('dashMotherNid').innerText = s.motherNid || "দেওয়া হয়নি";
-        document.getElementById('dashDob').innerText = s.dob || "দেওয়া হয়নি";
-        document.getElementById('dashBlood').innerText = s.bloodGroup || "অজানা";
-        document.getElementById('dashPhone').innerText = s.phone || "দেওয়া হয়নি";
-
-        document.getElementById('diaryStudentName').innerText = s.nameBn || s.name;
-        document.getElementById('diaryStudentId').innerText = s.studentId;
-        document.getElementById('diaryStudentDept').innerText = s.department;
-        document.getElementById('diaryStudentRoll').innerText = s.roll;
-
-        document.getElementById('paymentCurrentDue').innerText = s.due || "০.০০ ৳";
-        if (s.photo) document.getElementById('dashPhoto').src = s.photo;
-
-        const pre = s.presentAddress || {};
-        document.getElementById('preVillageText').innerText = pre.village || "-";
-        document.getElementById('prePostText').innerText = pre.post || "-";
-        document.getElementById('preUnionText').innerText = pre.union || "-";
-        document.getElementById('preThanaText').innerText = pre.thana || "-";
-        document.getElementById('preDistrictText').innerText = pre.district || "-";
-
-        const per = s.permanentAddress || {};
-        document.getElementById('perVillageText').innerText = per.village || "-";
-        document.getElementById('perPostText').innerText = per.post || "-";
-        document.getElementById('perUnionText').innerText = per.union || "-";
-        document.getElementById('perThanaText').innerText = per.thana || "-";
-        document.getElementById('perDistrictText').innerText = per.district || "-";
-
-        document.getElementById('dashAtt').innerText = s.attendance || "১০০%";
-        document.getElementById('dashRes').innerText = s.result || "অপেক্ষমান";
-        document.getElementById('dashDue').innerText = s.due || "০.০০ ৳";
-
-        renderQuran30ParaGrid();
-      }
-    });
-
     function togglePaymentFields() {
       const method = document.getElementById('payMethod').value;
       const mfsSenderLabel = document.getElementById('mfsSenderLabel');
@@ -843,25 +921,13 @@
       const otherDiv = document.getElementById('otherPurposeDiv');
 
       if (cat === "মাসিক বেতন") {
-        monthDiv.style.display = 'block';
-        yearDiv.style.display = 'block';
-        examDiv.style.display = 'none';
-        otherDiv.style.display = 'none';
+        monthDiv.style.display = 'block'; yearDiv.style.display = 'block'; examDiv.style.display = 'none'; otherDiv.style.display = 'none';
       } else if (cat === "পরীক্ষার ফি") {
-        monthDiv.style.display = 'none';
-        yearDiv.style.display = 'block';
-        examDiv.style.display = 'block';
-        otherDiv.style.display = 'none';
+        monthDiv.style.display = 'none'; yearDiv.style.display = 'block'; examDiv.style.display = 'block'; otherDiv.style.display = 'none';
       } else if (cat === "অন্যান্য বিবিধ") {
-        monthDiv.style.display = 'none';
-        yearDiv.style.display = 'none';
-        examDiv.style.display = 'none';
-        otherDiv.style.display = 'block';
+        monthDiv.style.display = 'none'; yearDiv.style.display = 'none'; examDiv.style.display = 'none'; otherDiv.style.display = 'block';
       } else {
-        monthDiv.style.display = 'none';
-        yearDiv.style.display = 'block';
-        examDiv.style.display = 'none';
-        otherDiv.style.display = 'none';
+        monthDiv.style.display = 'none'; yearDiv.style.display = 'block'; examDiv.style.display = 'none'; otherDiv.style.display = 'none';
       }
     }
 
@@ -932,7 +998,7 @@
 
       db.collection("students").doc(currentId).collection("online_fee_submissions").add(paymentRecord)
         .then(() => {
-          alert("আপনার " + purposeDisplay + " (" + monthYearDisplay + ")-এর তথ্য সফলভাবে জমা হয়েছে!");
+          alert("আপনার " + purposeDisplay + " (" + monthYearDisplay + ")-এর তথ্য সফলভাবে জমা হয়েছে! অ্যাডমিন অনুমোদন করলেই রসিদ প্রিন্ট করা যাবে এবং বকেয়া সমন্বয় হবে।");
           document.getElementById('payAmount').value = "";
           document.getElementById('payTrxId').value = "";
           document.getElementById('paySenderNumber').value = "";
@@ -1020,13 +1086,12 @@
       document.getElementById('rcptTrxId').innerText = p.trxId || "-";
       document.getElementById('rcptAmount').innerText = p.amount;
       document.getElementById('rcptTotalAmount').innerText = p.amount;
-      document.getElementById('rcptRemainingDue').innerText = globalStudentData.due || "০.০০ ৳";
+      document.getElementById('rcptRemainingDue').innerText = document.getElementById('dashDue').innerText || "০.০০ ৳";
 
       const receiptModal = new bootstrap.Modal(document.getElementById('receiptModal'));
       receiptModal.show();
     }
 
-    // সবক ফিল্টার হ্যান্ডলার
     function toggleFilterInputs() {
       const type = document.getElementById('filterType').value;
       document.getElementById('dailyInputDiv').style.display = (type === 'daily') ? 'block' : 'none';
@@ -1043,7 +1108,6 @@
       return `${hours}:${minutes} ${ampm}`;
     }
 
-    // পড়ার বিবরণী লোড (আলাদা আলাদা কলামে)
     function applySabakFilter() {
       const type = document.getElementById('filterType').value;
       const tbody = document.getElementById('studentDiaryBody');
@@ -1084,37 +1148,24 @@
 
           tbody.innerHTML += `
             <tr>
-              <!-- বার ও উপস্থিতি -->
               <td class="fw-bold">${r.day}</td>
               <td>${attBadge}</td>
-
-              <!-- সবক (পারা, পৃষ্ঠা, সময় আলাদা) -->
               <td class="fw-bold text-success">${r.sabakPara && r.sabakPara !== '-' ? r.sabakPara : '-'}</td>
               <td>${r.sabakPage && r.sabakPage !== '-' ? r.sabakPage : '-'}</td>
               <td><span class="badge bg-light text-dark border">${formatAMPM(r.sabakTime)}</span></td>
-
-              <!-- সাত সবক (পারা, পৃষ্ঠা, সময়, পরিমাণ, ভুল আলাদা) -->
               <td class="fw-semibold text-primary">${r.satPara && r.satPara !== '-' ? r.satPara : '-'}</td>
               <td>${r.satPage && r.satPage !== '-' ? r.satPage : '-'}</td>
               <td><span class="badge bg-light text-dark border">${formatAMPM(r.satTime)}</span></td>
               <td>${r.satAmount || '-'}</td>
               <td class="text-danger fw-bold">${r.satMistake || '০'}</td>
-
-              <!-- আমুখতা (পারা, পৃষ্ঠা, সময়, পরিমাণ, ভুল আলাদা) -->
               <td class="fw-semibold text-secondary">${r.amukhPara && r.amukhPara !== '-' ? r.amukhPara : '-'}</td>
               <td>${r.amukhPage && r.amukhPage !== '-' ? r.amukhPage : '-'}</td>
               <td><span class="badge bg-light text-dark border">${formatAMPM(r.amukhTime)}</span></td>
               <td>${r.amukhAmount || '-'}</td>
               <td class="text-danger fw-bold">${r.amukhMistake || '০'}</td>
-
-              <!-- দৈনিক তিলাওয়াত -->
               <td>${r.dailyTilawat || '-'}</td>
-
-              <!-- শিক্ষকের নাম ও শিক্ষকের মোবাইল আলাদা কলাম -->
               <td class="fw-bold text-dark text-start px-2">${r.teacherName || 'যাচাইকৃত'}</td>
               <td><a href="tel:${r.teacherPhone || ''}" class="text-decoration-none text-success fw-semibold">${r.teacherPhone || '-'}</a></td>
-
-              <!-- তারিখ -->
               <td>${r.date}</td>
             </tr>
           `;
