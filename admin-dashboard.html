@@ -143,7 +143,7 @@
                 </div>
                 <div class="col-md-6">
                   <div class="p-2 border rounded bg-light border-start border-primary border-4 h-100">
-                    <label class="form-label small fw-bold text-primary"><i class="fa-solid fa-calendar-day me-1"></i>ছাত্র ভর্তির তারিখ</label>
+                    <label class="form-label small fw-bold text-primary"><i class="fa-solid fa-calendar-day me-1"></i>ছাত্র ভর্তির তারিখ (বকেয়া গণনা শুরু)</label>
                     <input type="date" class="form-control form-control-sm fw-semibold" id="admissionDate" required>
                   </div>
                 </div>
@@ -155,6 +155,21 @@
                   <div class="col-md-4"><label class="form-label small fw-semibold">বাংলায় নাম</label><input type="text" class="form-control form-control-sm" id="nameBn" placeholder="মোহাম্মদ আব্দুল্লাহ" required></div>
                   <div class="col-md-4"><label class="form-label small fw-semibold">Name (English)</label><input type="text" class="form-control form-control-sm" id="nameEn" placeholder="Md. Abdullah" required></div>
                   <div class="col-md-4"><label class="form-label small fw-semibold">الاسم (بالعربية)</label><input type="text" class="form-control form-control-sm text-end" dir="rtl" id="nameAr" placeholder="محمد عبد الله" required></div>
+                </div>
+              </div>
+
+              <!-- মাসিক নির্ধারিত বেতন ইনপুট (অটো বকেয়া গণনার ভিত্তি) -->
+              <div class="p-3 border rounded bg-light mb-3 border-start border-danger border-4">
+                <div class="row g-2 align-items-center">
+                  <div class="col-md-6">
+                    <label class="form-label small fw-bold text-danger mb-0">
+                      <i class="fa-solid fa-hand-holding-dollar me-1"></i>শিক্ষার্থীর মাসিক নির্ধারিত বেতন হার (টাকা):
+                    </label>
+                    <small class="text-muted d-block" style="font-size: 11px;">প্রতি মাসের ১ তারিখ পার হলে এই হারে স্বয়ংক্রিয় বকেয়া যুক্ত হবে।</small>
+                  </div>
+                  <div class="col-md-6">
+                    <input type="number" class="form-control form-control-sm fw-bold border-danger text-danger fs-6" id="studentMonthlyFeeRate" placeholder="যেমন: ১০০০ বা ১৫০০" value="1000" required>
+                  </div>
                 </div>
               </div>
 
@@ -184,7 +199,7 @@
 
               <div class="row g-2 mb-2">
                 <div class="col-md-6"><label class="form-label small fw-semibold">ছাত্রের জন্ম নিবন্ধন নম্বর</label><input type="text" class="form-control form-control-sm" id="studentRegNo" placeholder="১৭ ডিজিট জন্ম নিবন্ধন" required></div>
-                <div class="col-md-6"><label class="form-label small fw-semibold">অভিভাবকের মোবাইল নম্বর</label><input type="tel" class="form-control form-control-sm" id="phone" placeholder="017XXXXXXXX" required></div>
+                <div class="col-md-6"><label class="form-label small fw-semibold">অভিভাবকের মোবাইল নম্বর (SMS যাবে)</label><input type="tel" class="form-control form-control-sm" id="phone" placeholder="017XXXXXXXX" required></div>
               </div>
 
               <div class="row g-2 mb-2">
@@ -362,7 +377,7 @@
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
           <div>
             <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-cash-register me-2 text-danger"></i>অনলাইন ফি অনুমোদন ও স্বয়ংক্রিয় SMS</h5>
-            <small class="text-muted">অনুমোদনের সাথে সাথে ফি মাদ্রাসার আয়ের তহবিলে যোগ হবে।</small>
+            <small class="text-muted">অনুমোদনের সাথে সাথে ফি মাদ্রাসার আয়ের তহবিলে যোগ হবে এবং বকেয়া কমে যাবে।</small>
           </div>
           <button class="btn btn-success btn-sm fw-semibold" onclick="loadPendingOnlinePayments()"><i class="fa-solid fa-rotate me-1"></i> তালিকা রিফ্রেশ</button>
         </div>
@@ -379,7 +394,7 @@
       </div>
     </div>
 
-    <!-- ================= ৫. শিক্ষক তালিকা ও বেতন প্রদান (আপডেটেড) ================= -->
+    <!-- ================= ৫. শিক্ষক তালিকা ও বেতন প্রদান ================= -->
     <div id="teacherSection" style="display: none;">
       <div class="row g-4">
         <div class="col-lg-4">
@@ -394,13 +409,10 @@
               <div class="mb-2"><label class="form-label small fw-semibold">শিক্ষকের পুরো নাম</label><input type="text" class="form-control form-control-sm" id="teacherFullName" placeholder="হাফেজ আব্দুর রহমান" required></div>
               <div class="mb-2"><label class="form-label small fw-semibold">পদবি</label><input type="text" class="form-control form-control-sm" id="teacherDesignation" placeholder="হিফজ প্রধান" required></div>
               <div class="mb-2"><label class="form-label small fw-semibold">বিভাগ</label><select class="form-select form-select-sm" id="teacherDept" required><option value="হিফজ বিভাগ">হিফজ বিভাগ</option><option value="নাজেরা বিভাগ">নাজেরা বিভাগ</option><option value="নূরানী বিভাগ">নূরানী বিভাগ</option><option value="মক্তব বিভাগ">মক্তব বিভাগ</option></select></div>
-              
-              <!-- মাসিক মূল বেতন ইনপুট -->
               <div class="mb-2 p-2 border rounded bg-light border-start border-success border-4">
                 <label class="form-label small fw-bold text-success"><i class="fa-solid fa-money-bill-wave me-1"></i>মাসিক নির্ধারিত মূল বেতন (টাকা)</label>
                 <input type="number" class="form-control form-control-sm fw-bold" id="teacherSalary" placeholder="যেমন: ১২০০০" required>
               </div>
-
               <div class="mb-2"><label class="form-label small fw-semibold">মোবাইল নম্বর</label><input type="tel" class="form-control form-control-sm" id="teacherMobile" placeholder="017XXXXXXXX" required></div>
               <div class="mb-2"><label class="form-label small fw-semibold">লগইন পাসওয়ার্ড</label><input type="text" class="form-control form-control-sm" id="teacherLoginPass" value="teacher@123" required></div>
               <div class="mb-3"><label class="form-label small fw-semibold">যোগ্যতা</label><input type="text" class="form-control form-control-sm" id="teacherEdu" placeholder="দাওরায়ে হাদীস"></div>
@@ -408,7 +420,6 @@
             </form>
           </div>
         </div>
-
         <div class="col-lg-8">
           <div class="card border-0 shadow-sm p-4 bg-white">
             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -419,15 +430,7 @@
               <table class="table table-bordered table-hover teacher-table text-center align-middle mb-0">
                 <thead class="table-light">
                   <tr>
-                    <th>ছবি</th>
-                    <th>আইডি</th>
-                    <th>নাম</th>
-                    <th>পদবি ও বিভাগ</th>
-                    <th>মূল বেতন</th>
-                    <th>মোবাইল</th>
-                    <th>লগইন পাসওয়ার্ড</th>
-                    <th>বেতন প্রদান অ্যাকশন</th>
-                    <th>মুছুন</th>
+                    <th>ছবি</th><th>আইডি</th><th>নাম</th><th>পদবি ও বিভাগ</th><th>মূল বেতন</th><th>মোবাইল</th><th>পাসওয়ার্ড</th><th>বেতন প্রদান</th><th>মুছুন</th>
                   </tr>
                 </thead>
                 <tbody id="teacherTableBody"><tr><td colspan="9">লোড হচ্ছে...</td></tr></tbody>
@@ -485,7 +488,6 @@
             </div>
           </div>
         </div>
-
         <div class="col-md-4">
           <div class="accounts-metric-card expense">
             <div class="d-flex justify-content-between align-items-center">
@@ -498,7 +500,6 @@
             </div>
           </div>
         </div>
-
         <div class="col-md-4">
           <div class="accounts-metric-card balance">
             <div class="d-flex justify-content-between align-items-center">
@@ -546,23 +547,19 @@
                   <option value="বিবিধ অন্যান্য ব্যয়">৮. বিবিধ অন্যান্য ব্যয়</option>
                 </select>
               </div>
-
               <div class="row g-2 mb-2">
                 <div class="col-md-6"><label class="form-label small fw-semibold">টাকার পরিমাণ (টাকা)</label><input type="number" class="form-control form-control-sm fw-bold" id="expAmount" placeholder="৫০০০" required></div>
                 <div class="col-md-6"><label class="form-label small fw-semibold">পরিশোধের মাধ্যম</label><select class="form-select form-select-sm" id="expMethod"><option value="ক্যাশ (নগদ)">ক্যাশ (নগদ)</option><option value="ব্যাংক একাউন্ট">ব্যাংক একাউন্ট</option><option value="বিকাশ / নগদ">বিকাশ / নগদ</option></select></div>
               </div>
-
               <div class="row g-2 mb-2">
                 <div class="col-md-6"><label class="form-label small fw-semibold">ব্যয়ের তারিখ</label><input type="date" class="form-control form-control-sm" id="expDate" required></div>
                 <div class="col-md-6"><label class="form-label small fw-semibold">টাকা গ্রহণকারীর নাম</label><input type="text" class="form-control form-control-sm" id="expRecipient" placeholder="উস্তাদজি / মুদি দোকান" required></div>
               </div>
-
               <div class="mb-3"><label class="form-label small fw-semibold">সংক্ষিপ্ত বিবরণ</label><input type="text" class="form-control form-control-sm" id="expNote" placeholder="বিবরণ লিখুন"></div>
               <button type="submit" class="btn btn-danger btn-sm w-100 fw-bold shadow-sm" id="saveExpenseBtn"><i class="fa-solid fa-file-invoice-dollar me-1"></i> ব্যয়ের ভাউচার সংরক্ষণ করুন</button>
             </form>
           </div>
         </div>
-
         <div class="col-lg-7">
           <div class="card border-0 shadow-sm p-4 bg-white">
             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -582,7 +579,7 @@
 
   </div>
 
-  <!-- শিক্ষক বেতন প্রদান মডাল (Pay Salary Modal) -->
+  <!-- শিক্ষক বেতন প্রদান মডাল -->
   <div class="modal fade" id="payTeacherSalaryModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content border-0 shadow-lg">
@@ -595,12 +592,10 @@
             <input type="hidden" id="salTeacherId">
             <input type="hidden" id="salTeacherName">
             <input type="hidden" id="salTeacherPhone">
-
             <div class="mb-2">
               <label class="small fw-semibold">শিক্ষকের নাম ও আইডি:</label>
               <input type="text" class="form-control form-control-sm bg-light fw-bold" id="salDisplayTeacher" readonly>
             </div>
-
             <div class="row g-2 mb-2">
               <div class="col-md-6">
                 <label class="small fw-bold text-primary">কোন মাসের বেতন?</label>
@@ -621,7 +616,6 @@
                 </select>
               </div>
             </div>
-
             <div class="row g-2 mb-2">
               <div class="col-md-6">
                 <label class="small fw-bold text-success">পরিশোধিত বেতন (টাকা)</label>
@@ -629,23 +623,13 @@
               </div>
               <div class="col-md-6">
                 <label class="small fw-semibold">পরিশোধের মাধ্যম</label>
-                <select class="form-select form-select-sm" id="salPayMethod">
-                  <option value="ক্যাশ (নগদ)">ক্যাশ (নগদ)</option>
-                  <option value="ব্যাংক একাউন্ট">ব্যাংক একাউন্ট</option>
-                  <option value="বিকাশ / নগদ">বিকাশ / নগদ</option>
-                </select>
+                <select class="form-select form-select-sm" id="salPayMethod"><option value="ক্যাশ (নগদ)">ক্যাশ (নগদ)</option><option value="ব্যাংক একাউন্ট">ব্যাংক একাউন্ট</option><option value="বিকাশ / নগদ">বিকাশ / নগদ</option></select>
               </div>
             </div>
-
             <div class="mb-3">
               <label class="small fw-semibold">পরিশোধের তারিখ</label>
               <input type="date" class="form-control form-control-sm" id="salPayDate" required>
             </div>
-
-            <div class="alert alert-info py-2 px-3 small mb-3">
-              <i class="fa-solid fa-circle-info me-1"></i> এই টাকা স্বয়ংক্রিয়ভাবে মাদ্রাসার <strong>খরচের তালিকায় (Expense)</strong> যোগ হবে এবং শিক্ষকের পোর্টালে <strong>বেতন রিসিভ করার পপআপ বার্তা</strong> পৌঁছে যাবে।
-            </div>
-
             <button type="submit" class="btn btn-success w-100 fw-bold shadow-sm" id="btnConfirmTeacherSalary">
               <i class="fa-solid fa-check-double me-1"></i> বেতন পরিশোধ সম্পন্ন করুন
             </button>
@@ -674,7 +658,7 @@
           <div class="mb-2"><label class="small fw-semibold">শিক্ষার্থী:</label><input type="text" class="form-control form-control-sm bg-light" id="modalDisplayId" readonly></div>
           <div class="mb-2"><label class="small fw-semibold">অর্থ ও খাত:</label><input type="text" class="form-control form-control-sm bg-light text-success fw-bold" id="modalDisplayAmount" readonly></div>
           <div class="mb-3">
-            <div class="d-flex justify-content-between"><label class="small fw-bold text-danger">নতুন মোট বকেয়া:</label><small>বর্তমান: <span id="modalCurrentDue">০.০০ ৳</span></small></div>
+            <div class="d-flex justify-content-between"><label class="small fw-bold text-danger">অনুমোদন পরবর্তী মোট বকেয়া:</label><small>বর্তমান: <span id="modalCurrentDue">০.০০ ৳</span></small></div>
             <input type="text" class="form-control form-control-sm border-danger fw-bold" id="modalNewDue" required>
           </div>
           
@@ -807,12 +791,14 @@
       e.preventDefault();
       const sId = document.getElementById('sId').value.trim();
       const admDate = document.getElementById('admissionDate').value;
+      const monthlyFeeRate = parseFloat(document.getElementById('studentMonthlyFeeRate').value) || 1000;
       const submitBtn = document.getElementById('submitBtn');
       submitBtn.innerText = "সংরক্ষণ হচ্ছে..."; submitBtn.disabled = true;
 
       const studentData = {
         studentId: sId,
         admissionDate: admDate,
+        monthlyFeeRate: monthlyFeeRate, // মাসিক বেতনের হার সংরক্ষিত
         nameBn: document.getElementById('nameBn').value.trim(),
         nameEn: document.getElementById('nameEn').value.trim(),
         nameAr: document.getElementById('nameAr').value.trim(),
@@ -1011,6 +997,8 @@
         tbody.innerHTML = "";
         if (snapshot.empty) {
           tbody.innerHTML = `<tr><td colspan="6" class="text-muted">কোনো রেকর্ড নেই</td></tr>`;
+          document.getElementById('sumSabakActive').innerText = "কোনো সবক নেই";
+          document.getElementById('sumLastSabakRead').innerText = "পড়া অনিয়মিত";
           return;
         }
 
@@ -1221,7 +1209,7 @@
       }
     }
 
-    // ================== ৫. শিক্ষক তালিকা ও বেতন প্রদান লজিক (আপডেটেড) ==================
+    // ================== ৫. শিক্ষক তালিকা ==================
     let teacherBase64 = "";
     document.getElementById('teacherPhotoInput').addEventListener('change', function(e) {
       const file = e.target.files[0];
@@ -1246,7 +1234,7 @@
         name: document.getElementById('teacherFullName').value.trim(),
         designation: document.getElementById('teacherDesignation').value.trim(),
         department: document.getElementById('teacherDept').value,
-        salary: parseFloat(document.getElementById('teacherSalary').value) || 0, // মূল বেতন
+        salary: parseFloat(document.getElementById('teacherSalary').value) || 0,
         phone: document.getElementById('teacherMobile').value.trim(),
         password: document.getElementById('teacherLoginPass').value.trim(),
         education: document.getElementById('teacherEdu').value.trim() || "-",
@@ -1313,7 +1301,6 @@
       });
     }
 
-    // শিক্ষক বেতন প্রদানের মডাল ওপেন
     function openPaySalaryModal(tId, tName, tPhone, baseSalary) {
       document.getElementById('salTeacherId').value = tId;
       document.getElementById('salTeacherName').value = tName;
@@ -1325,12 +1312,10 @@
       modal.show();
     }
 
-    // শিক্ষক বেতন প্রদান কনফার্মেশন ও খরচের সাথে অটো যোগ
     document.getElementById('payTeacherSalaryForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       const tId = document.getElementById('salTeacherId').value;
       const tName = document.getElementById('salTeacherName').value;
-      const tPhone = document.getElementById('salTeacherPhone').value;
       const month = document.getElementById('salMonth').value;
       const year = document.getElementById('salYear').value;
       const amount = parseFloat(document.getElementById('salPayAmount').value) || 0;
@@ -1342,8 +1327,6 @@
 
       try {
         const monthYearStr = `${month} ${year}`;
-
-        // ১. শিক্ষকের ব্যক্তিগত সেলারি কালেকশনে নোটিফিকেশন এন্ট্রি (যাতে শিক্ষক পোর্টালে পপআপ ভেসে ওঠে)
         const salaryRecord = {
           teacherId: tId,
           teacherName: tName,
@@ -1353,13 +1336,12 @@
           amount: amount,
           method: method,
           date: date,
-          status: "প্রদান করা হয়েছে (অপেক্ষমান)", // শিক্ষক রিসিভ করলে হবে 'গৃহীত (Received)'
+          status: "প্রদান করা হয়েছে (অপেক্ষমান)",
           paidAt: new Date()
         };
 
         const salDocRef = await db.collection("teachers").doc(tId).collection("salary_payments").add(salaryRecord);
 
-        // ২. মাদ্রাসার ৭ম ট্যাব হিসাবরক্ষণে (Accounts Module) ব্যয়ের খাতে স্বয়ংক্রিয়ভাবে যোগ করা
         const expenseData = {
           type: "expense",
           category: "শিক্ষক ও স্টাফ বেতন-ভাতা",
@@ -1374,8 +1356,7 @@
 
         await db.collection("accounts_expenses").add(expenseData);
 
-        alert(`মাশাআল্লাহ! ${tName}-কে ${monthYearStr} মাসের বেতন (${amount} ৳) সফলভাবে পরিশোধ করা হয়েছে। এটি মাদ্রাসার ব্যয়ের খতিয়ানে যুক্ত হয়েছে এবং উস্তাদজির পোর্টালে রিসিভ পপআপ চলে গেছে।`);
-
+        alert(`মাশাআল্লাহ! ${tName}-কে ${monthYearStr} মাসের বেতন (${amount} ৳) সফলভাবে পরিশোধ করা হয়েছে।`);
         bootstrap.Modal.getInstance(document.getElementById('payTeacherSalaryModal')).hide();
       } catch (err) {
         alert("ত্রুটি: " + err.message);
