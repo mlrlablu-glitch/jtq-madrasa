@@ -126,7 +126,7 @@
       </li>
     </ul>
 
-    <!-- ================= ১. ছাত্র ভর্তি ================= -->
+    <!-- ================= ১. ছাত্র ভর্তি (ঠিকানার সম্পূর্ণ ঘরসহ) ================= -->
     <div id="admissionSection">
       <div class="row g-4">
         <div class="col-lg-7">
@@ -163,7 +163,7 @@
                 <div class="row g-2">
                   <div class="col-md-4"><label class="form-label small fw-semibold">বাংলায় নাম</label><input type="text" class="form-control form-control-sm" id="nameBn" placeholder="মোহাম্মদ আব্দুল্লাহ" required></div>
                   <div class="col-md-4"><label class="form-label small fw-semibold">Name (English)</label><input type="text" class="form-control form-control-sm" id="nameEn" placeholder="Md. Abdullah" required></div>
-                  <div class="col-md-4"><label class="form-label small fw-semibold">الاسم (بالعربية)</label><input type="text" class="form-control form-control-sm text-end" dir="rtl" id="nameAr" placeholder="محمد عبد الله" required></div>
+                  <div class="col-md-4"><label class="form-label small fw-semibold">الاسم (بالعربية)</label><input type="text" class="form-control form-control-sm text-end" dir="rtl" id="nameAr" placeholder="محمد عبد الله"></div>
                 </div>
               </div>
 
@@ -185,23 +185,23 @@
                 <span class="badge bg-primary mb-2">পিতার বিবরণ</span>
                 <div class="row g-2 mb-2">
                   <div class="col-md-4"><label class="form-label small fw-semibold">পিতার নাম (বাংলা)</label><input type="text" class="form-control form-control-sm" id="fatherBn" placeholder="পিতার নাম" required></div>
-                  <div class="col-md-4"><label class="form-label small fw-semibold">Father's Name (En)</label><input type="text" class="form-control form-control-sm" id="fatherEn" placeholder="Father's Name" required></div>
-                  <div class="col-md-4"><label class="form-label small fw-semibold">اسم الأب (بالعربية)</label><input type="text" class="form-control form-control-sm text-end" dir="rtl" id="fatherAr" placeholder="اسم الأب" required></div>
+                  <div class="col-md-4"><label class="form-label small fw-semibold">Father's Name (En)</label><input type="text" class="form-control form-control-sm" id="fatherEn" placeholder="Father's Name"></div>
+                  <div class="col-md-4"><label class="form-label small fw-semibold">اسم الأب (بالعربية)</label><input type="text" class="form-control form-control-sm text-end" dir="rtl" id="fatherAr" placeholder="اسم الأب"></div>
                 </div>
                 <div class="row g-2">
-                  <div class="col-md-12"><label class="form-label small fw-semibold">পিতার NID নম্বর</label><input type="text" class="form-control form-control-sm" id="fatherNid" placeholder="ভোটার আইডি নম্বর" required></div>
+                  <div class="col-md-12"><label class="form-label small fw-semibold">পিতার NID নম্বর</label><input type="text" class="form-control form-control-sm" id="fatherNid" placeholder="ভোটার আইডি নম্বর"></div>
                 </div>
               </div>
 
               <div class="border rounded p-3 mb-3 bg-white shadow-sm">
                 <span class="badge bg-secondary mb-2">মাতার বিবরণ</span>
                 <div class="row g-2 mb-2">
-                  <div class="col-md-4"><label class="form-label small fw-semibold">মাতার নাম (বাংলা)</label><input type="text" class="form-control form-control-sm" id="motherBn" placeholder="মাতার নাম" required></div>
-                  <div class="col-md-4"><label class="form-label small fw-semibold">Mother's Name (En)</label><input type="text" class="form-control form-control-sm" id="motherEn" placeholder="Mother's Name" required></div>
-                  <div class="col-md-4"><label class="form-label small fw-semibold">اسم الأم (بالعربية)</label><input type="text" class="form-control form-control-sm text-end" dir="rtl" id="motherAr" placeholder="اسم الأم" required></div>
+                  <div class="col-md-4"><label class="form-label small fw-semibold">মাতার নাম (বাংলা)</label><input type="text" class="form-control form-control-sm" id="motherBn" placeholder="মাতার নাম"></div>
+                  <div class="col-md-4"><label class="form-label small fw-semibold">Mother's Name (En)</label><input type="text" class="form-control form-control-sm" id="motherEn" placeholder="Mother's Name"></div>
+                  <div class="col-md-4"><label class="form-label small fw-semibold">اسم الأم (بالعربية)</label><input type="text" class="form-control form-control-sm text-end" dir="rtl" id="motherAr" placeholder="اسم الأم"></div>
                 </div>
                 <div class="row g-2">
-                  <div class="col-md-12"><label class="form-label small fw-semibold">মাতার NID নম্বর</label><input type="text" class="form-control form-control-sm" id="motherNid" placeholder="ভোটার আইডি নম্বর" required></div>
+                  <div class="col-md-12"><label class="form-label small fw-semibold">মাতার NID নম্বর</label><input type="text" class="form-control form-control-sm" id="motherNid" placeholder="ভোটার আইডি নম্বর"></div>
                 </div>
               </div>
 
@@ -237,28 +237,62 @@
                 <div class="col-md-6"><label class="form-label small fw-semibold">শ্রেণি রোল নম্বর</label><input type="number" class="form-control form-control-sm" id="roll" placeholder="যেমন: ০১" required></div>
               </div>
 
+              <!-- বর্তমান ঠিকানা (গ্রাম, ডাকঘর, ইউনিয়ন, থানা, জেলা) -->
               <div class="border rounded p-3 mb-3 bg-light">
-                <span class="badge bg-success mb-2">বর্তমান ঠিকানা</span>
+                <span class="badge bg-success mb-2"><i class="fa-solid fa-location-dot me-1"></i>বর্তমান ঠিকানা</span>
                 <div class="row g-2">
-                  <div class="col-md-4"><input type="text" class="form-control form-control-sm" id="preVillage" placeholder="গ্রাম" required></div>
-                  <div class="col-md-4"><input type="text" class="form-control form-control-sm" id="prePost" placeholder="ডাকঘর" required></div>
-                  <div class="col-md-4"><input type="text" class="form-control form-control-sm" id="preUnion" placeholder="ইউনিয়ন" required></div>
-                  <div class="col-md-6"><input type="text" class="form-control form-control-sm" id="preThana" placeholder="থানা" required></div>
-                  <div class="col-md-6"><input type="text" class="form-control form-control-sm" id="preDistrict" placeholder="জেলা" required></div>
+                  <div class="col-md-4">
+                    <label class="form-label small text-muted mb-0">গ্রাম / মহল্লা</label>
+                    <input type="text" class="form-control form-control-sm" id="preVillage" placeholder="গ্রামের নাম" required>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label small text-muted mb-0">ডাকঘর (Post Office)</label>
+                    <input type="text" class="form-control form-control-sm" id="prePost" placeholder="ডাকঘর" required>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label small text-muted mb-0">ইউনিয়ন / ওয়ার্ড</label>
+                    <input type="text" class="form-control form-control-sm" id="preUnion" placeholder="ইউনিয়ন" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label small text-muted mb-0">থানা / উপজেলা</label>
+                    <input type="text" class="form-control form-control-sm" id="preThana" placeholder="থানা" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label small text-muted mb-0">জেলা</label>
+                    <input type="text" class="form-control form-control-sm" id="preDistrict" placeholder="জেলা" required>
+                  </div>
                 </div>
               </div>
 
+              <!-- স্থায়ী ঠিকানা (গ্রাম, ডাকঘর, ইউনিয়ন, থানা, জেলা) -->
               <div class="border rounded p-3 mb-3 bg-light">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                  <span class="badge bg-secondary">স্থায়ী ঠিকানা</span>
-                  <button type="button" class="btn btn-outline-dark btn-sm py-0" style="font-size: 11px;" id="copyAddressBtn">বর্তমান ঠিকানার মতো একই</button>
+                  <span class="badge bg-secondary"><i class="fa-solid fa-house-chimney me-1"></i>স্থায়ী ঠিকানা</span>
+                  <button type="button" class="btn btn-outline-dark btn-sm py-0" style="font-size: 11px;" id="copyAddressBtn">
+                    <i class="fa-solid fa-copy me-1"></i>বর্তমান ঠিকানার মতো একই
+                  </button>
                 </div>
                 <div class="row g-2">
-                  <div class="col-md-4"><input type="text" class="form-control form-control-sm" id="perVillage" placeholder="গ্রাম" required></div>
-                  <div class="col-md-4"><input type="text" class="form-control form-control-sm" id="perPost" placeholder="ডাকঘর" required></div>
-                  <div class="col-md-4"><input type="text" class="form-control form-control-sm" id="perUnion" placeholder="ইউনিয়ন" required></div>
-                  <div class="col-md-6"><input type="text" class="form-control form-control-sm" id="perThana" placeholder="থানা" required></div>
-                  <div class="col-md-6"><input type="text" class="form-control form-control-sm" id="perDistrict" placeholder="জেলা" required></div>
+                  <div class="col-md-4">
+                    <label class="form-label small text-muted mb-0">গ্রাম / মহল্লা</label>
+                    <input type="text" class="form-control form-control-sm" id="perVillage" placeholder="গ্রামের নাম" required>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label small text-muted mb-0">ডাকঘর (Post Office)</label>
+                    <input type="text" class="form-control form-control-sm" id="perPost" placeholder="ডাকঘর" required>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label small text-muted mb-0">ইউনিয়ন / ওয়ার্ড</label>
+                    <input type="text" class="form-control form-control-sm" id="perUnion" placeholder="ইউনিয়ন" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label small text-muted mb-0">থানা / উপজেলা</label>
+                    <input type="text" class="form-control form-control-sm" id="perThana" placeholder="থানা" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label small text-muted mb-0">জেলা</label>
+                    <input type="text" class="form-control form-control-sm" id="perDistrict" placeholder="জেলা" required>
+                  </div>
                 </div>
               </div>
 
@@ -272,6 +306,7 @@
           </div>
         </div>
 
+        <!-- ডানে: ভর্তি হওয়া শিক্ষার্থী তালিকা -->
         <div class="col-lg-5">
           <div class="card border-0 shadow-sm p-4 bg-white mb-4 sticky-top" style="top: 20px;">
             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -638,7 +673,7 @@
 
   </div>
 
-  <!-- শিক্ষার্থী তথ্য এডিট মোডাল -->
+  <!-- শিক্ষার্থী তথ্য এডিট মোডাল (সম্পূর্ণ ঠিকানার ঘরসহ) -->
   <div class="modal fade" id="editStudentModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content border-0 shadow-lg">
@@ -686,7 +721,7 @@
                 <div class="col-md-6"><label class="form-label small fw-semibold">পিতার NID</label><input type="text" class="form-control form-control-sm" id="editFatherNid"></div>
               </div>
               <div class="row g-2">
-                <div class="col-md-6"><label class="form-label small fw-semibold">মাতার নাম (বাংলা)</label><input type="text" class="form-control form-control-sm" id="editMotherBn" required></div>
+                <div class="col-md-6"><label class="form-label small fw-semibold">মাতার নাম (বাংলা)</label><input type="text" class="form-control form-control-sm" id="editMotherBn"></div>
                 <div class="col-md-6"><label class="form-label small fw-semibold">মাতার NID</label><input type="text" class="form-control form-control-sm" id="editMotherNid"></div>
               </div>
             </div>
@@ -723,25 +758,57 @@
               <div class="col-md-6"><label class="form-label small fw-semibold">শ্রেণি রোল নম্বর</label><input type="number" class="form-control form-control-sm" id="editRoll" required></div>
             </div>
 
+            <!-- এডিট মোডালে বর্তমান ঠিকানার ৫টি ঘর -->
             <div class="border rounded p-3 mb-3 bg-light">
-              <span class="badge bg-success mb-2">বর্তমান ঠিকানা</span>
+              <span class="badge bg-success mb-2"><i class="fa-solid fa-location-dot me-1"></i>বর্তমান ঠিকানা</span>
               <div class="row g-2">
-                <div class="col-md-4"><input type="text" class="form-control form-control-sm" id="editPreVillage" placeholder="গ্রাম"></div>
-                <div class="col-md-4"><input type="text" class="form-control form-control-sm" id="editPrePost" placeholder="ডাকঘর"></div>
-                <div class="col-md-4"><input type="text" class="form-control form-control-sm" id="editPreUnion" placeholder="ইউনিয়ন"></div>
-                <div class="col-md-6"><input type="text" class="form-control form-control-sm" id="editPreThana" placeholder="থানা"></div>
-                <div class="col-md-6"><input type="text" class="form-control form-control-sm" id="editPreDistrict" placeholder="জেলা"></div>
+                <div class="col-md-4">
+                  <label class="form-label small text-muted mb-0">গ্রাম / মহল্লা</label>
+                  <input type="text" class="form-control form-control-sm" id="editPreVillage" placeholder="গ্রাম">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label small text-muted mb-0">ডাকঘর</label>
+                  <input type="text" class="form-control form-control-sm" id="editPrePost" placeholder="ডাকঘর">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label small text-muted mb-0">ইউনিয়ন / ওয়ার্ড</label>
+                  <input type="text" class="form-control form-control-sm" id="editPreUnion" placeholder="ইউনিয়ন">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small text-muted mb-0">থানা / উপজেলা</label>
+                  <input type="text" class="form-control form-control-sm" id="editPreThana" placeholder="থানা">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small text-muted mb-0">জেলা</label>
+                  <input type="text" class="form-control form-control-sm" id="editPreDistrict" placeholder="জেলা">
+                </div>
               </div>
             </div>
 
+            <!-- এডিট মোডালে স্থায়ী ঠিকানার ৫টি ঘর -->
             <div class="border rounded p-3 mb-3 bg-light">
-              <span class="badge bg-secondary mb-2">স্থায়ী ঠিকানা</span>
+              <span class="badge bg-secondary mb-2"><i class="fa-solid fa-house-chimney me-1"></i>স্থায়ী ঠিকানা</span>
               <div class="row g-2">
-                <div class="col-md-4"><input type="text" class="form-control form-control-sm" id="editPerVillage" placeholder="গ্রাম"></div>
-                <div class="col-md-4"><input type="text" class="form-control form-control-sm" id="editPerPost" placeholder="ডাকঘর"></div>
-                <div class="col-md-4"><input type="text" class="form-control form-control-sm" id="editPerUnion" placeholder="ইউনিয়ন"></div>
-                <div class="col-md-6"><input type="text" class="form-control form-control-sm" id="editPerThana" placeholder="থানা"></div>
-                <div class="col-md-6"><input type="text" class="form-control form-control-sm" id="editPerDistrict" placeholder="জেলা"></div>
+                <div class="col-md-4">
+                  <label class="form-label small text-muted mb-0">গ্রাম / মহল্লা</label>
+                  <input type="text" class="form-control form-control-sm" id="editPerVillage" placeholder="গ্রাম">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label small text-muted mb-0">ডাকঘর</label>
+                  <input type="text" class="form-control form-control-sm" id="editPerPost" placeholder="ডাকঘর">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label small text-muted mb-0">ইউনিয়ন / ওয়ার্ড</label>
+                  <input type="text" class="form-control form-control-sm" id="editPerUnion" placeholder="ইউনিয়ন">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small text-muted mb-0">থানা / উপজেলা</label>
+                  <input type="text" class="form-control form-control-sm" id="editPerThana" placeholder="থানা">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small text-muted mb-0">জেলা</label>
+                  <input type="text" class="form-control form-control-sm" id="editPerDistrict" placeholder="জেলা">
+                </div>
               </div>
             </div>
 
@@ -989,7 +1056,7 @@
       });
     }
 
-    // ================== এডিট মোডাল হ্যান্ডলিং লজিক ==================
+    // ================== এডিট মোডাল হ্যান্ডলিং ==================
     let editBase64Image = "";
 
     document.getElementById('editPhotoInput').addEventListener('change', function(e) {
@@ -1114,6 +1181,7 @@
       }
     });
 
+    // নতুন ভর্তি সাবমিট (ঠিকানা নির্ভুলভাবে ফায়ারবেসে সেভ হবে)
     document.getElementById('addStudentForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const sId = document.getElementById('sId').value.trim();
@@ -1299,7 +1367,7 @@
       }
     }
 
-    // ================== ১০০% নির্ভুল বাংলা ইউনিকোড এক্সেল ফাইল এক্সপোর্ট (.xls) ==================
+    // ================== এক্সেল ফাইল এক্সপোর্ট (.xls) ==================
     function downloadExcelFile(headers, rows, sheetName, fileName) {
       let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <?mso-application progid="Excel.Sheet"?>
@@ -1363,7 +1431,6 @@
       });
     }
 
-    // ১. শিক্ষার্থী রেজিস্টার এক্সেল এক্সপোর্ট
     async function exportStudentsToExcel() {
       try {
         const snap = await db.collection("students").get();
@@ -1396,7 +1463,6 @@
       }
     }
 
-    // ২. শিক্ষক তালিকা এক্সেল এক্সপোর্ট
     async function exportTeachersToExcel() {
       try {
         const snap = await db.collection("teachers").get();
@@ -1425,13 +1491,11 @@
       }
     }
 
-    // ৩. মাদ্রাসার আয়-ব্যয় খতিয়ান এক্সেল এক্সপোর্ট
     async function exportLedgerToExcel() {
       try {
         const headers = ["তারিখ", "লেনদেনের ধরন", "খাত ও বিবরণ", "পরিশোধ মাধ্যম", "টাকার পরিমাণ"];
         const rows = [];
 
-        // আয়
         const studentsSnap = await db.collection("students").get();
         for (const sDoc of studentsSnap.docs) {
           const sName = sDoc.data().nameBn || sDoc.data().name || sDoc.id;
@@ -1448,7 +1512,6 @@
           });
         }
 
-        // ব্যয়
         const expSnap = await db.collection("accounts_expenses").get();
         expSnap.forEach(e => {
           const ed = e.data();
@@ -1570,14 +1633,14 @@
         document.getElementById('tblAdmissionDate').innerText = s.admissionDate || "-";
 
         const pre = s.presentAddress || {};
-        document.getElementById('tblPresentAddress').innerText = `${pre.village || '-'}, ডাক: ${pre.post || '-'}, থানা: ${pre.thana || '-'}, জেলা: ${pre.district || '-'}`;
+        document.getElementById('tblPresentAddress').innerText = `গ্রাম: ${pre.village || '-'}, ডাক: ${pre.post || '-'}, ইউনিয়ন: ${pre.union || '-'}, থানা: ${pre.thana || '-'}, জেলা: ${pre.district || '-'}`;
         const per = s.permanentAddress || {};
-        document.getElementById('tblPermanentAddress').innerText = `${per.village || '-'}, ডাক: ${per.post || '-'}, থানা: ${per.thana || '-'}, জেলা: ${per.district || '-'}`;
+        document.getElementById('tblPermanentAddress').innerText = `গ্রাম: ${per.village || '-'}, ডাক: ${per.post || '-'}, ইউনিয়ন: ${per.union || '-'}, থানা: ${per.thana || '-'}, জেলা: ${per.district || '-'}`;
 
         document.getElementById('sumAttendance').innerText = s.attendance || "১০০%";
         document.getElementById('sumResult').innerText = "ফলাফল: " + (s.result || "অপেক্ষমান");
         document.getElementById('sumStudentDeptRoll').innerText = `বিভাগ: ${s.department || '-'} | রোল: ${s.roll || '-'}`;
-        document.getElementById('sumTotalDue').innerText = "বকেয়া: " + (s.due || "০.০০ ৳");
+        document.getElementById('sumTotalDue').innerText = "বকেয়া: " + (s.due || "০.০০ ৳");
 
         loadExamReports(sId);
         loadSabakHistory(sId);
