@@ -272,7 +272,6 @@
           </div>
         </div>
 
-        <!-- ডানে: ভর্তি হওয়া শিক্ষার্থী তালিকা (এডিট ও ডিলিট অপশনসহ) -->
         <div class="col-lg-5">
           <div class="card border-0 shadow-sm p-4 bg-white mb-4 sticky-top" style="top: 20px;">
             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -639,7 +638,7 @@
 
   </div>
 
-  <!-- শিক্ষার্থী তথ্য এডিট মোডাল (Student Edit Modal) -->
+  <!-- শিক্ষার্থী তথ্য এডিট মোডাল -->
   <div class="modal fade" id="editStudentModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content border-0 shadow-lg">
@@ -649,7 +648,6 @@
         </div>
         <div class="modal-body p-4">
           <form id="editStudentForm">
-            
             <div class="row g-3 align-items-center mb-3 p-2 border rounded bg-light">
               <div class="col-auto">
                 <img id="editImagePreview" src="https://via.placeholder.com/80" class="img-thumbnail rounded" style="width: 75px; height: 85px; object-fit: cover;">
@@ -930,7 +928,7 @@
       }
     }
 
-    // ================== ১. ছাত্র ভর্তি ও তালিকা (এডিট ও ডিলিট বাটন) ==================
+    // ================== ১. ছাত্র ভর্তি ও তালিকা ==================
     let base64Image = "";
     document.getElementById('studentPhotoInput').addEventListener('change', function(e) {
       const file = e.target.files[0];
@@ -952,7 +950,6 @@
       document.getElementById('perDistrict').value = document.getElementById('preDistrict').value;
     });
 
-    // ছাত্র তালিকা রেন্ডার (এডিট ও ডিলিট অপশনসহ)
     db.collection("students").onSnapshot((snapshot) => {
       const tbody = document.getElementById('studentTableBody');
       tbody.innerHTML = "";
@@ -972,11 +969,9 @@
             <td><span class="badge bg-dark">${d.roll || '-'}</span></td>
             <td>
               <div class="d-flex gap-1 justify-content-center">
-                <!-- এডিট বাটন -->
                 <button class="btn btn-sm btn-outline-primary py-1 px-2" onclick="openEditStudentModal('${d.studentId}')" title="তথ্য সংশোধন / এডিট করুন">
                   <i class="fa-solid fa-pen-to-square"></i>
                 </button>
-                <!-- ডিলিট বাটন -->
                 <button class="btn btn-sm btn-outline-danger py-1 px-2" onclick="deleteStudent('${d.studentId}', '${displayName.replace(/'/g, "")}')" title="শিক্ষার্থী মুছে ফেলুন">
                   <i class="fa-solid fa-trash-can"></i>
                 </button>
@@ -1060,7 +1055,6 @@
       });
     }
 
-    // এডিট ফর্ম সাবমিট
     document.getElementById('editStudentForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       const sId = document.getElementById('editSId').value;
@@ -1105,7 +1099,6 @@
           updatedAt: new Date()
         };
 
-        // যদি নতুন ছবি আপলোড করে থাকে তবেই ছবি আপডেট হবে
         if (editBase64Image) {
           updateData.photo = editBase64Image;
         }
@@ -1188,7 +1181,7 @@
       });
     });
 
-    // ================== ২. অনলাইন ভর্তি আবেদন যাচাই ==================
+    // ================== ২. অনলাইন ভর্তি আবেদনসমূহ ==================
     let applicantsCache = [];
 
     async function loadAdmissionApplications() {
@@ -1306,73 +1299,169 @@
       }
     }
 
-    // ================== এক্সেল / সিএসভি এক্সপোর্ট ==================
-    function downloadCSV(csvContent, fileName) {
-      const blob = new Blob(["\uFEFF" + csvContent], { type: 'text/csv;charset=utf-8;' });
+    // ================== ১০০% নির্ভুল বাংলা ইউনিকোড এক্সেল ফাইল এক্সপোর্ট (.xls) ==================
+    function downloadExcelFile(headers, rows, sheetName, fileName) {
+      let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <Styles>
+  <Style ss:ID="HeaderStyle">
+   <Font ss:FontName="Arial" ss:Bold="1" ss:Color="#FFFFFF"/>
+   <Interior ss:Color="#198754" ss:Pattern="Solid"/>
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+  </Style>
+  <Style ss:ID="CellStyle">
+   <Font ss:FontName="Arial" ss:Color="#000000"/>
+   <Alignment ss:Vertical="Center"/>
+  </Style>
+ </Styles>
+ <Worksheet ss:Name="${sheetName}">
+  <Table>
+   <Row ss:StyleID="HeaderStyle">`;
+
+      headers.forEach(h => {
+        xml += `<Cell><Data ss:Type="String">${escapeXml(h)}</Data></Cell>`;
+      });
+      xml += `</Row>`;
+
+      rows.forEach(row => {
+        xml += `<Row ss:StyleID="CellStyle">`;
+        row.forEach(val => {
+          xml += `<Cell><Data ss:Type="String">${escapeXml(val !== undefined && val !== null ? val.toString() : '')}</Data></Cell>`;
+        });
+        xml += `</Row>`;
+      });
+
+      xml += `</Table>
+ </Worksheet>
+</Workbook>`;
+
+      const blob = new Blob([xml], { type: 'application/vnd.ms-excel;charset=utf-8' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.setAttribute("download", fileName);
+      a.download = fileName;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
+      URL.revokeObjectURL(url);
     }
 
+    function escapeXml(str) {
+      return str.replace(/[<>&'"]/g, function (c) {
+        switch (c) {
+          case '<': return '&lt;';
+          case '>': return '&gt;';
+          case '&': return '&amp;';
+          case '\'': return '&apos;';
+          case '"': return '&quot;';
+        }
+      });
+    }
+
+    // ১. শিক্ষার্থী রেজিস্টার এক্সেল এক্সপোর্ট
     async function exportStudentsToExcel() {
       try {
         const snap = await db.collection("students").get();
         if (snap.empty) { alert("কোনো শিক্ষার্থীর তথ্য পাওয়া যায়নি!"); return; }
 
-        let csv = "Student ID,নাম (বাংলা),Name (English),বিভাগ,রোল,মোবাইল,পিতার নাম,মাতার নাম,জন্ম নিবন্ধন,রক্তের গ্রুপ,ভর্তির তারিখ,বকেয়া\n";
+        const headers = ["Student ID", "শিক্ষার্থীর নাম (বাংলা)", "Name (English)", "বিভাগ", "রোল", "মোবাইল", "পিতার নাম", "মাতার নাম", "জন্ম নিবন্ধন", "রক্তের গ্রুপ", "ভর্তির তারিখ", "বর্তমান বকেয়া"];
+        const rows = [];
+
         snap.forEach(doc => {
           const d = doc.data();
-          csv += `"${d.studentId || ''}","${d.nameBn || d.name || ''}","${d.nameEn || ''}","${d.department || ''}","${d.roll || ''}","${d.phone || ''}","${d.fatherBn || d.father || ''}","${d.motherBn || d.mother || ''}","${d.studentRegNo || ''}","${d.bloodGroup || ''}","${d.admissionDate || ''}","${d.due || '০ ৳'}"\n`;
+          rows.push([
+            d.studentId || '',
+            d.nameBn || d.name || '',
+            d.nameEn || '',
+            d.department || '',
+            d.roll || '',
+            d.phone || '',
+            d.fatherBn || d.father || '',
+            d.motherBn || d.mother || '',
+            d.studentRegNo || '',
+            d.bloodGroup || '',
+            d.admissionDate || '',
+            d.due || '০ ৳'
+          ]);
         });
 
-        downloadCSV(csv, `JTQ_Student_Register_${new Date().toISOString().split('T')[0]}.csv`);
+        downloadExcelFile(headers, rows, "শিক্ষার্থী রেজিস্টার", `JTQ_শিক্ষার্থী_তালিকা_${new Date().toISOString().split('T')[0]}.xls`);
       } catch (err) {
         alert("এক্সপোর্ট ত্রুটি: " + err.message);
       }
     }
 
+    // ২. শিক্ষক তালিকা এক্সেল এক্সপোর্ট
     async function exportTeachersToExcel() {
       try {
         const snap = await db.collection("teachers").get();
         if (snap.empty) { alert("কোনো শিক্ষকের তথ্য পাওয়া যায়নি!"); return; }
 
-        let csv = "শিক্ষক আইডি,নাম,পদবি,বিভাগ,মূল বেতন (টাকা),মোবাইল,পাসওয়ার্ড,যোগদানের তারিখ\n";
+        const headers = ["শিক্ষক আইডি", "শিক্ষকের নাম", "পদবি", "দায়িত্বপ্রাপ্ত বিভাগ", "মাসিক মূল বেতন", "মোবাইল নম্বর", "লগইন পাসওয়ার্ড", "যোগদানের তারিখ"];
+        const rows = [];
+
         snap.forEach(doc => {
           const d = doc.data();
-          csv += `"${d.teacherId || ''}","${d.name || ''}","${d.designation || ''}","${d.department || ''}","${d.salary || 0}","${d.phone || ''}","${d.password || ''}","${d.joiningDate || ''}"\n`;
+          rows.push([
+            d.teacherId || '',
+            d.name || '',
+            d.designation || '',
+            d.department || '',
+            (d.salary || 0) + " ৳",
+            d.phone || '',
+            d.password || '',
+            d.joiningDate || ''
+          ]);
         });
 
-        downloadCSV(csv, `JTQ_Teachers_List_${new Date().toISOString().split('T')[0]}.csv`);
+        downloadExcelFile(headers, rows, "শিক্ষক তালিকা", `JTQ_শিক্ষক_তালিকা_${new Date().toISOString().split('T')[0]}.xls`);
       } catch (err) {
         alert("এক্সপোর্ট ত্রুটি: " + err.message);
       }
     }
 
+    // ৩. মাদ্রাসার আয়-ব্যয় খতিয়ান এক্সেল এক্সপোর্ট
     async function exportLedgerToExcel() {
       try {
-        let csv = "তারিখ,লেনদেনের ধরন,খাত ও বিবরণ,মাধ্যম,টাকার পরিমাণ\n";
+        const headers = ["তারিখ", "লেনদেনের ধরন", "খাত ও বিবরণ", "পরিশোধ মাধ্যম", "টাকার পরিমাণ"];
+        const rows = [];
 
+        // আয়
         const studentsSnap = await db.collection("students").get();
         for (const sDoc of studentsSnap.docs) {
           const sName = sDoc.data().nameBn || sDoc.data().name || sDoc.id;
           const feeSnap = await sDoc.ref.collection("online_fee_submissions").where("status", "==", "অনুমোদিত (Approved)").get();
           feeSnap.forEach(f => {
             const fd = f.data();
-            csv += `"${fd.date || ''}","আয় (Income)","${fd.purpose || fd.category} - ছাত্র: ${sName}","${fd.method || ''}","+${fd.amount}"\n`;
+            rows.push([
+              fd.date || '',
+              "আয় (Income)",
+              `${fd.purpose || fd.category} - ছাত্র: ${sName}`,
+              fd.method || '',
+              `+${fd.amount}`
+            ]);
           });
         }
 
+        // ব্যয়
         const expSnap = await db.collection("accounts_expenses").get();
         expSnap.forEach(e => {
           const ed = e.data();
-          csv += `"${ed.date || ''}","ব্যয় (Expense)","${ed.category} - গ্রহীতা: ${ed.recipient} (${ed.note || ''})","${ed.method || ''}","-${ed.amount} ৳"\n`;
+          rows.push([
+            ed.date || '',
+            "ব্যয় (Expense)",
+            `${ed.category} - গ্রহীতা: ${ed.recipient} (${ed.note || ''})`,
+            ed.method || '',
+            `-${ed.amount} ৳`
+          ]);
         });
 
-        downloadCSV(csv, `JTQ_Accounts_Ledger_${new Date().toISOString().split('T')[0]}.csv`);
+        downloadExcelFile(headers, rows, "আয়-ব্যয় খতিয়ান", `JTQ_আয়_ব্যয়_খতিয়ান_${new Date().toISOString().split('T')[0]}.xls`);
       } catch (err) {
         alert("এক্সপোর্ট ত্রুটি: " + err.message);
       }
