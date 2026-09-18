@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>অ্যাডমিন কন্ট্রোল প্যানেল - JTQ মাদ্রাসা</title>
+  <title>অ্যাডমিন কন্ট্রোল প্যানেল - JTQIM মাদ্রাসা</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
@@ -137,49 +137,59 @@
                   <input type="file" class="form-control form-control-sm" id="studentPhotoInput" accept="image/*" required>
                 </div>
               </div>
-
-              <div class="row g-2 mb-3">
-                <div class="col-md-6">
-                  <div class="p-2 border rounded bg-light border-start border-success border-4 h-100">
-                    <label class="form-label small fw-bold text-success"><i class="fa-solid fa-id-card me-1"></i>শিক্ষার্থীর Student ID</label>
-                    <input type="text" class="form-control form-control-sm fw-bold" id="sId" placeholder="যেমন: JTQ-2026-0001" required>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="p-2 border rounded bg-light border-start border-primary border-4 h-100">
-                    <label class="form-label small fw-bold text-primary"><i class="fa-solid fa-calendar-day me-1"></i>ছাত্র ভর্তির তারিখ (বকেয়া গণনা শুরু)</label>
-                    <input type="date" class="form-control form-control-sm fw-semibold" id="admissionDate" required>
-                  </div>
-                </div>
-              </div>
-
-              <div class="border rounded p-3 mb-3 bg-white shadow-sm">
-                <span class="badge bg-success mb-2">শিক্ষার্থীর নাম</span>
-                <div class="row g-2">
-                  <div class="col-md-4"><label class="form-label small fw-semibold">বাংলায় নাম</label><input type="text" class="form-control form-control-sm" id="nameBn" placeholder="মোহাম্মদ আব্দুল্লাহ" required></div>
-                  <div class="col-md-4"><label class="form-label small fw-semibold">Name (English)</label><input type="text" class="form-control form-control-sm" id="nameEn" placeholder="Md. Abdullah" required></div>
-                  <div class="col-md-4"><label class="form-label small fw-semibold">الاسم (بالعربية)</label><input type="text" class="form-control form-control-sm text-end" dir="rtl" id="nameAr" placeholder="محمد عبد الله"></div>
-                </div>
-              </div>
-
-              <div class="p-3 border rounded bg-light mb-3 border-start border-danger border-4">
-                <div class="row g-2 align-items-center">
-                  <div class="col-md-6">
-                    <label class="form-label small fw-bold text-danger mb-0">
-                      <i class="fa-solid fa-hand-holding-dollar me-1"></i>শিক্ষার্থীর মাসিক নির্ধারিত বেতন হার (টাকা):
-                    </label>
-                    <small class="text-muted d-block" style="font-size: 11px;">প্রতি মাসের ১ তারিখ পার হলে এই হারে স্বয়ংক্রিয় বকেয়া যুক্ত হবে।</small>
-                  </div>
-                  <div class="col-md-4">
-                    <input type="number" class="form-control form-control-sm fw-bold border-danger text-danger fs-6" id="studentMonthlyFeeRate" placeholder="যেমন: ১০০০ বা ১৫০০" value="1000" required>
-                  </div>
-                </div>
-              </div>
-
-              <div class="border rounded p-3 mb-3 bg-white shadow-sm">
-                <span class="badge bg-primary mb-2">পিতার বিবরণ</span>
+		
+	      	<div class="border rounded p-3 mb-3 bg-white shadow-sm">
+                <span class="badge bg-primary mb-2">শিক্ষার্থীর মাদরাসা তথ্য</span>
                 <div class="row g-2 mb-2">
-                  <div class="col-md-4"><label class="form-label small fw-semibold">পিতার নাম (বাংলা)</label><input type="text" class="form-control form-control-sm" id="fatherBn" placeholder="পিতার নাম" required></div>
+                <div class="col-md-4"><label class="form-label small fw-semibold">শিক্ষার্থীর আইডি  (Student ID)</label><input type="text" class="form-control form-control-sm" id="fatherBn" placeholder="JTQIM-20260001" required></div>
+                  <div class="col-md-4"><label class="form-label small fw-semibold">শিক্ষার্থীর শ্রেণী রোল নাম্বর</label><input type="text" class="form-control form-control-sm" id="fatherEn" placeholder="যেমন: ০১"></div>
+<div class="col-md-4"><label class="form-label small fw-semibold">শিক্ষার্থীর ভর্তির তারিখ</label><input type="date" class="form-control form-control-sm" id="dob" required></div>
+                </div>
+                <div class="row g-2">
+                  <div class="col-md-4"><label class="form-label small fw-semibold">শিক্ষার্থীর ভর্তি ফি (টাকা)</label><input type="text" class="form-control form-control-sm" id="fatherNid" placeholder="শিক্ষার্থীর ভর্তি ফি (টাকা)"></div>
+		  <div class="col-md-4"><label class="form-label small fw-semibold">শিক্ষার্থীর মাসিক বেতন (টাকা)</label><input type="text" class="form-control form-control-sm" id="fatherNid" placeholder="শিক্ষার্থীর মাসিক বেতন (টাকা)"></div>
+		
+		<div class="col-md-4"><label class="form-label small fw-semibold">শিক্ষার্থীর বিভাগ / শ্রেণি</label>
+                  <select class="form-select form-select-sm" id="dept" required>
+                    <option value="হিফজ বিভাগ">হিফজ বিভাগ</option>
+                    <option value="নাজেরা">নাজেরা</option>
+                    <option value="নূরানী">নূরানী</option>
+                    <option value="মক্তব">মক্তব</option>
+                  </select>
+
+	
+                </div>
+              </div>
+
+
+              <div class="border rounded p-3 mb-3 bg-white shadow-sm">
+                <span class="badge bg-primary mb-2">শিক্ষার্থীর তথ্য</span>
+                <div class="row g-2">
+                  <div class="col-md-4"><label class="form-label small fw-semibold">বাংলায় নাম</label><input type="text" class="form-control form-control-sm" id="nameBn" placeholder="আব্দুর রহমান আব্দুল্লাহ বায়েজিদ" required></div>
+                  <div class="col-md-4"><label class="form-label small fw-semibold">Name (English)</label><input type="text" class="form-control form-control-sm" id="nameEn" placeholder="Md. Lutfor Rahman Lablu" required></div>
+                  <div class="col-md-4"><label class="form-label small fw-semibold">الاسم (بالعربية)</label><input type="text" class="form-control form-control-sm text-end" dir="rtl" id="nameAr" placeholder="عبد الرحمن عبد الله بايزيد"></div>
+
+		<div class="row g-2 mb-2">
+                <div class="col-md-4"><label class="form-label small fw-semibold">শিক্ষার্থীর জন্ম নিবন্ধন নম্বর</label><input type="text" class="form-control form-control-sm" id="studentRegNo" placeholder="১৭ ডিজিট জন্ম নিবন্ধন" required></div>
+               <div class="col-md-4"><label class="form-label small fw-semibold">শিক্ষার্থীর জন্ম তারিখ</label><input type="date" class="form-control form-control-sm" id="dob" required></div>
+		<div class="col-md-4"><label class="form-label small fw-semibold">রক্তের গ্রুপ</label>
+                  <select class="form-select form-select-sm" id="bloodGroup">
+                    <option value="A+">A+</option><option value="A-">A-</option>
+                    <option value="B+">B+</option><option value="B-">B-</option>
+                    <option value="O+">O+</option><option value="O-">O-</option>
+                    <option value="AB+">AB+</option><option value="AB-">AB-</option>
+                    <option value="অজানা">অজানা</option>
+                  </select>
+		
+                </div>
+              </div>
+	      </div>
+
+             
+              <div class="border rounded p-3 mb-3 bg-white shadow-sm">
+                <span class="badge bg-primary mb-2">পিতার তথ্য</span>
+                <div class="row g-2 mb-2">
+                <div class="col-md-4"><label class="form-label small fw-semibold">পিতার নাম (বাংলা)</label><input type="text" class="form-control form-control-sm" id="fatherBn" placeholder="পিতার নাম" required></div>
                   <div class="col-md-4"><label class="form-label small fw-semibold">Father's Name (En)</label><input type="text" class="form-control form-control-sm" id="fatherEn" placeholder="Father's Name"></div>
                   <div class="col-md-4"><label class="form-label small fw-semibold">اسم الأب (بالعربية)</label><input type="text" class="form-control form-control-sm text-end" dir="rtl" id="fatherAr" placeholder="اسم الأب"></div>
                 </div>
@@ -190,7 +200,7 @@
               </div>
 
               <div class="border rounded p-3 mb-3 bg-white shadow-sm">
-                <span class="badge bg-secondary mb-2">মাতার বিবরণ</span>
+                <span class="badge bg-primary mb-2">মাতার তথ্য</span>
                 <div class="row g-2 mb-2">
                   <div class="col-md-4"><label class="form-label small fw-semibold">মাতার নাম (বাংলা)</label><input type="text" class="form-control form-control-sm" id="motherBn" placeholder="মাতার নাম"></div>
                   <div class="col-md-4"><label class="form-label small fw-semibold">Mother's Name (En)</label><input type="text" class="form-control form-control-sm" id="motherEn" placeholder="Mother's Name"></div>
@@ -202,38 +212,12 @@
                 </div>
               </div>
 
-              <div class="border rounded p-3 mb-3 bg-white shadow-sm">
-                <span class="badge bg-secondary mb-2">ছাত্রের</span>
-              <div class="row g-2 mb-2">
-                <div class="col-md-4"><label class="form-label small fw-semibold">ছাত্রের জন্ম নিবন্ধন নম্বর</label><input type="text" class="form-control form-control-sm" id="studentRegNo" placeholder="১৭ ডিজিট জন্ম নিবন্ধন" required></div>
-                <div class="col-md-4"><label class="form-label small fw-semibold">জরুরী মোবাইল নম্বর</label><input type="tel" class="form-control form-control-sm" id="phone" placeholder="017XXXXXXXX" required></div>
-                <div class="col-md-4"><label class="form-label small fw-semibold">জন্ম তারিখ</label><input type="date" class="form-control form-control-sm" id="dob" required></div>
-                 <div class="col-md-4"><label class="form-label small fw-semibold">রক্তের গ্রুপ</label>
-                  <select class="form-select form-select-sm" id="bloodGroup">
-                    <option value="A+">A+</option><option value="A-">A-</option>
-                    <option value="B+">B+</option><option value="B-">B-</option>
-                    <option value="O+">O+</option><option value="O-">O-</option>
-                    <option value="AB+">AB+</option><option value="AB-">AB-</option>
-                    <option value="অজানা">অজানা</option>
-                  </select>
-		</div>
-		  <div class="col-md-4"><label class="form-label small fw-semibold">বিভাগ / শ্রেণি</label>
-                  <select class="form-select form-select-sm" id="dept" required>
-                    <option value="হিফজ বিভাগ">হিফজ বিভাগ</option>
-                    <option value="নাজেরা">নাজেরা</option>
-                    <option value="নূরানী">নূরানী</option>
-                    <option value="মক্তব">মক্তব</option>
-                  </select>
-		  </div>
-		  <div class="col-md-4"><label class="form-label small fw-semibold">শ্রেণি রোল নম্বর</label><input type="number" class="form-control form-control-sm" id="roll" placeholder="যেমন: ০১" required></div>
-              </div>
-	      </div>
-             <!-- বর্তমান ঠিকানা (গ্রাম, ডাকঘর, ইউনিয়ন, থানা, জেলা) -->
+              <!-- বর্তমান ঠিকানা (গ্রাম, ডাকঘর, ইউনিয়ন, থানা, জেলা) -->
               <div class="border rounded p-3 mb-3 bg-light">
-                <span class="badge bg-success mb-2"><i class="fa-solid fa-location-dot me-1"></i>বর্তমান ঠিকানা</span>
+                <span class="badge bg-primary mb-2"><i class="fa-solid fa-location-dot me-1"></i>বর্তমান ঠিকানা</span>
                 <div class="row g-2">
                   <div class="col-md-4">
-                    <label class="form-label small text-muted mb-0">গ্রাম / মহল্লা</label>
+                    <label class="form-label small text-muted mb-0">গ্রাম (Village)</label>
                     <input type="text" class="form-control form-control-sm" id="preVillage" placeholder="গ্রামের নাম" required>
                   </div>
                   <div class="col-md-4">
@@ -245,7 +229,7 @@
                     <input type="text" class="form-control form-control-sm" id="preUnion" placeholder="ইউনিয়নের নাম" required>
                   </div>
                   <div class="col-md-4">
-                    <label class="form-label small text-muted mb-0">ওয়ার্ড (Ward No)</label>
+                    <label class="form-label small text-muted mb-0">ওয়ার্ড (Ward)</label>
                     <input type="text" class="form-control form-control-sm" id="preUnion" placeholder="ওয়ার্ড নাম্বার" required>
                   </div>
                   <div class="col-md-4">
@@ -262,14 +246,14 @@
               <!-- স্থায়ী ঠিকানা (গ্রাম, ডাকঘর, ইউনিয়ন, থানা, জেলা) -->
               <div class="border rounded p-3 mb-3 bg-light">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                  <span class="badge bg-secondary"><i class="fa-solid fa-house-chimney me-1"></i>স্থায়ী ঠিকানা</span>
+                  <span class="badge bg-primary"><i class="fa-solid fa-house-chimney me-1"></i>স্থায়ী ঠিকানা</span>
                   <button type="button" class="btn btn-outline-dark btn-sm py-0" style="font-size: 11px;" id="copyAddressBtn">
                     <i class="fa-solid fa-copy me-1"></i>বর্তমান ঠিকানার মতো একই
                   </button>
                 </div>
                 <div class="row g-2">
                   <div class="col-md-4">
-                    <label class="form-label small text-muted mb-0">গ্রাম / মহল্লা</label>
+                    <label class="form-label small text-muted mb-0">গ্রাম (Village)</label>
                     <input type="text" class="form-control form-control-sm" id="perVillage" placeholder="গ্রামের নাম" required>
                   </div>
                   <div class="col-md-4">
@@ -281,7 +265,7 @@
                     <input type="text" class="form-control form-control-sm" id="perUnion" placeholder="ইউনিয়নের নাম" required>
                   </div>
                   <div class="col-md-4">
-                    <label class="form-label small text-muted mb-0">ওয়ার্ড (Ward No)</label>
+                    <label class="form-label small text-muted mb-0">ওয়ার্ড (Ward)</label>
                     <input type="text" class="form-control form-control-sm" id="perUnion" placeholder="ওয়ার্ড নাম্বার" required>
                   </div>
                   <div class="col-md-4">
@@ -380,7 +364,7 @@
               <div class="row g-3 mb-3 p-3 bg-light rounded border">
                 <div class="col-md-6">
                   <label class="form-label small fw-bold text-dark">টার্গেট Student ID</label>
-                  <input type="text" class="form-control form-control-sm fw-bold border-primary" id="examTargetId" placeholder="যেমন: JTQ-2026-0001" required>
+                  <input type="text" class="form-control form-control-sm fw-bold border-primary" id="examTargetId" placeholder="যেমন: JTQIM-20260001" required>
                 </div>
                 <div class="col-md-6">
                   <label class="form-label small fw-bold text-dark">কোন পরীক্ষার ফলাফল আপডেট করবেন?</label>
