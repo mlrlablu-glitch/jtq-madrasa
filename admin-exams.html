@@ -1,1 +1,103 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>পরীক্ষার ফলাফল এন্ট্রি - JTQ মাদ্রাসা</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
 
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold text-success" href="admin-dashboard.html"><i class="fa-solid fa-mosque me-2"></i>JTQ মাদ্রাসা ERP</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNav"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="adminNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 small fw-semibold">
+          <li class="nav-item"><a class="nav-link" href="admin-dashboard.html"><i class="fa-solid fa-gauge me-1"></i>ড্যাশবোর্ড</a></li>
+          <li class="nav-item"><a class="nav-link" href="admin-students.html"><i class="fa-solid fa-user-graduate me-1"></i>ছাত্র ভর্তি ও তালিকা</a></li>
+          <li class="nav-item"><a class="nav-link" href="admin-admissions.html"><i class="fa-solid fa-address-book me-1"></i>ভর্তি আবেদন</a></li>
+          <li class="nav-item"><a class="nav-link" href="admin-fees.html"><i class="fa-solid fa-money-check-dollar me-1"></i>ফি অনুমোদন</a></li>
+          <li class="nav-item"><a class="nav-link" href="admin-teachers.html"><i class="fa-solid fa-chalkboard-user me-1"></i>শিক্ষক ও বেতন</a></li>
+          <li class="nav-item"><a class="nav-link active text-success" href="admin-exams.html"><i class="fa-solid fa-square-poll-vertical me-1"></i>পরীক্ষার ফলাফল</a></li>
+          <li class="nav-item"><a class="nav-link" href="id-admit-card.html"><i class="fa-solid fa-id-badge me-1"></i>আইডি ও প্রবেশপত্র</a></li>
+        </ul>
+        <div class="d-flex gap-2">
+          <button class="btn btn-outline-danger btn-sm" id="adminLogout"><i class="fa-solid fa-right-from-bracket me-1"></i>লগআউট</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-4">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card border-0 shadow-sm p-4 bg-white border-top border-primary border-4">
+          <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-square-poll-vertical me-2 text-primary"></i>বার্ষিক ৩টি পরীক্ষার ফলাফল ও হাজিরা আপডেট</h5>
+          <form id="threeExamsUpdateForm">
+            <div class="row g-3 mb-3 p-3 bg-light rounded border">
+              <div class="col-md-6">
+                <label class="form-label small fw-bold text-dark">Student ID</label>
+                <input type="text" class="form-control form-control-sm fw-bold border-primary" id="examTargetId" placeholder="যেমন: JTQ-2026-0001" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label small fw-bold text-dark">পরীক্ষা নির্বাচন করুন</label>
+                <select class="form-select form-select-sm fw-bold border-primary" id="examTermSelect">
+                  <option value="term1">১. প্রথম সাময়িক পরীক্ষা</option>
+                  <option value="term2">২. দ্বিতীয় সাময়িক পরীক্ষা</option>
+                  <option value="term3">৩. তৃতীয় সাময়িক / বার্ষিক পরীক্ষা</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="border rounded p-3 mb-3 bg-white shadow-sm">
+              <div class="row g-2 mb-2">
+                <div class="col-md-6"><label class="form-label small fw-semibold">ফলাফল / গ্রেড</label><input type="text" class="form-control form-control-sm" id="examGrade" placeholder="যেমন: মুমতাজ / A+" required></div>
+                <div class="col-md-6"><label class="form-label small fw-semibold">মোট নম্বর</label><input type="text" class="form-control form-control-sm" id="examTotalMarks" placeholder="যেমন: ৪৮৫ / ৫০০" required></div>
+              </div>
+              <div class="row g-2 mb-2">
+                <div class="col-md-4"><label class="form-label small fw-semibold">মেধা স্থান</label><input type="text" class="form-control form-control-sm" id="examPosition" placeholder="যেমন: ১ম"></div>
+                <div class="col-md-4"><label class="form-label small fw-semibold">উপস্থিতি %</label><input type="text" class="form-control form-control-sm" id="examAttendance" placeholder="যেমন: ৯৫%" required></div>
+                <div class="col-md-4"><label class="form-label small fw-semibold">প্রকাশের তারিখ</label><input type="date" class="form-control form-control-sm" id="examPublishDate" required></div>
+              </div>
+              <div class="mb-2"><label class="form-label small fw-semibold">মন্তব্য</label><input type="text" class="form-control form-control-sm" id="examRemarks" placeholder="উস্তাদজির মন্তব্য"></div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm px-4 fw-semibold" id="saveExamBtn">ফলাফল সেভ ও আপডেট করুন</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+
+  <script>
+    if (localStorage.getItem('adminSession') !== 'active') window.location.href = 'admin-login.html';
+    document.getElementById('adminLogout').addEventListener('click', () => { localStorage.removeItem('adminSession'); window.location.href = 'admin-login.html'; });
+    document.getElementById('examPublishDate').value = new Date().toISOString().split('T')[0];
+
+    document.getElementById('threeExamsUpdateForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const sId = document.getElementById('examTargetId').value.trim();
+      const term = document.getElementById('examTermSelect').value;
+
+      const examData = {
+        term: term, grade: document.getElementById('examGrade').value.trim(),
+        marks: document.getElementById('examTotalMarks').value.trim(), position: document.getElementById('examPosition').value.trim(),
+        attendance: document.getElementById('examAttendance').value.trim(), publishDate: document.getElementById('examPublishDate').value,
+        remarks: document.getElementById('examRemarks').value.trim(), updatedAt: new Date()
+      };
+
+      db.collection("students").doc(sId).collection("exam_results").doc(term).set(examData, { merge: true })
+        .then(() => db.collection("students").doc(sId).update({ result: examData.grade, attendance: examData.attendance }))
+        .then(() => alert("পরীক্ষার ফলাফল সফলভাবে সংরক্ষিত হয়েছে!"))
+        .catch(err => alert("ত্রুটি: " + err.message));
+    });
+  </script>
+</body>
+</html>
