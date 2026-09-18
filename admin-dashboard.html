@@ -216,7 +216,7 @@
                 
                 <div class="row g-2 mb-2">
                   <div class="col-md-4">
-                    <label class="form-label small text-muted mb-0">বাংলায় নাম</label>
+                    <label class="form-label small text-muted mb-0">বাংলায় নাম</label>
                     <input type="text" class="form-control form-control-sm" id="nameBn" placeholder="যেমন: লুৎফর রহমান লাবলু" required>
                   </div>
                   <div class="col-md-4">
@@ -251,7 +251,7 @@
                 </div>
               </div>
 
-              <!-- ৪. পিতার তথ্য -->
+              <!-- ৪. পিতার তথ্য (পেশা সহ) -->
               <div class="form-section-box">
                 <span class="badge bg-primary form-section-badge">পিতার তথ্য</span>
                 
@@ -271,18 +271,22 @@
                 </div>
 
                 <div class="row g-2">
-                  <div class="col-md-6">
+                  <div class="col-md-4">
+                    <label class="form-label small text-muted mb-0">পিতার পেশা (কী করেন)</label>
+                    <input type="text" class="form-control form-control-sm" id="fatherOccupation" placeholder="যেমন: ব্যবসা / শিক্ষকতা / কৃষক">
+                  </div>
+                  <div class="col-md-4">
                     <label class="form-label small text-muted mb-0">পিতার NID নম্বর</label>
                     <input type="text" class="form-control form-control-sm" id="fatherNid" placeholder="ভোটার আইডি নম্বর">
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-4">
                     <label class="form-label small text-muted mb-0">পিতার মোবাইল নম্বর</label>
                     <input type="tel" class="form-control form-control-sm" id="phone" placeholder="017XXXXXXXX" required>
                   </div>
                 </div>
               </div>
 
-              <!-- ৫. মাতার তথ্য -->
+              <!-- ৫. মাতার তথ্য (পেশা সহ) -->
               <div class="form-section-box">
                 <span class="badge bg-primary form-section-badge">মাতার তথ্য</span>
                 
@@ -302,21 +306,41 @@
                 </div>
 
                 <div class="row g-2">
-                  <div class="col-md-6">
+                  <div class="col-md-4">
+                    <label class="form-label small text-muted mb-0">মাতার পেশা (কী করেন)</label>
+                    <input type="text" class="form-control form-control-sm" id="motherOccupation" placeholder="যেমন: গৃহিণী / চাকরিজীবী">
+                  </div>
+                  <div class="col-md-4">
                     <label class="form-label small text-muted mb-0">মাতার NID নম্বর</label>
                     <input type="text" class="form-control form-control-sm" id="motherNid" placeholder="ভোটার আইডি নম্বর">
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-4">
                     <label class="form-label small text-muted mb-0">মাতার মোবাইল নম্বর</label>
                     <input type="tel" class="form-control form-control-sm" id="motherPhone" placeholder="017XXXXXXXX">
                   </div>
                 </div>
               </div>
 
-              <!-- ৬. বর্তমান ঠিকানা -->
+              <!-- ৬. বর্তমান ঠিকানা (বাড়িওয়ালার নাম, বাড়ির নাম ও ফোন নম্বর সহ) -->
               <div class="form-section-box">
                 <span class="badge bg-primary form-section-badge"><i class="fa-solid fa-location-dot me-1"></i>বর্তমান ঠিকানা</span>
                 
+                <!-- বাড়ি সংক্রান্ত নতুন ৩টি তথ্য -->
+                <div class="row g-2 mb-2 p-2 border rounded bg-light">
+                  <div class="col-md-4">
+                    <label class="form-label small fw-bold text-success mb-0">বাড়িওয়ালার নাম</label>
+                    <input type="text" class="form-control form-control-sm" id="preLandlordName" placeholder="বাড়িওয়ালার পুরো নাম">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label small fw-bold text-success mb-0">বাড়ির নাম / হোল্ডিং নং</label>
+                    <input type="text" class="form-control form-control-sm" id="preHouseName" placeholder="যেমন: বায়তুল আমান / বাড়ি নং-১২">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label small fw-bold text-success mb-0">বাড়িওয়ালার ফোন নম্বর</label>
+                    <input type="tel" class="form-control form-control-sm" id="preLandlordPhone" placeholder="01XXXXXXXXX">
+                  </div>
+                </div>
+
                 <div class="row g-2 mb-2">
                   <div class="col-md-4">
                     <label class="form-label small text-muted mb-0">গ্রাম (Village)</label>
@@ -541,10 +565,11 @@
                   <tbody>
                     <tr><th class="bg-light w-25">নাম (বাংলা):</th><td class="fw-bold" id="tblNameBn">...</td><th class="bg-light w-25">Name (En):</th><td id="tblNameEn">...</td></tr>
                     <tr><th class="bg-light">الاسم (بالعربية):</th><td class="fw-bold text-end" dir="rtl" id="tblNameAr">...</td><th class="bg-light">শ্রেণি রোল:</th><td class="fw-bold" id="tblRoll">...</td></tr>
-                    <tr><th class="bg-light">পিতার নাম:</th><td id="tblFatherBn">...</td><th class="bg-light">পিতার NID:</th><td id="tblFatherNid">...</td></tr>
-                    <tr><th class="bg-light">মাতার নাম:</th><td id="tblMotherBn">...</td><th class="bg-light">মাতার NID:</th><td id="tblMotherNid">...</td></tr>
+                    <tr><th class="bg-light">পিতার নাম ও পেশা:</th><td id="tblFatherBn">...</td><th class="bg-light">পিতার NID:</th><td id="tblFatherNid">...</td></tr>
+                    <tr><th class="bg-light">মাতার নাম ও পেশা:</th><td id="tblMotherBn">...</td><th class="bg-light">মাতার NID:</th><td id="tblMotherNid">...</td></tr>
                     <tr><th class="bg-light">জন্ম নিবন্ধন:</th><td class="fw-bold text-primary" id="tblRegNo">...</td><th class="bg-light">জন্ম ও রক্ত:</th><td id="tblDobBlood">...</td></tr>
                     <tr><th class="bg-light">মোবাইল:</th><td id="tblPhone">...</td><th class="bg-light">ভর্তির তারিখ:</th><td class="fw-bold text-success" id="tblAdmissionDate">...</td></tr>
+                    <tr><th class="bg-light">বর্তমান বাড়ি ও বাড়িওয়ালা:</th><td colspan="3" id="tblLandlordInfo">...</td></tr>
                     <tr><th class="bg-light">বর্তমান ঠিকানা:</th><td colspan="3" id="tblPresentAddress">...</td></tr>
                     <tr><th class="bg-light">স্থায়ী ঠিকানা:</th><td colspan="3" id="tblPermanentAddress">...</td></tr>
                   </tbody>
@@ -768,7 +793,7 @@
 
   </div>
 
-  <!-- শিক্ষার্থী তথ্য এডিট মোডাল -->
+  <!-- শিক্ষার্থী তথ্য এডিট মোডাল (নতুন সব ঘরসহ) -->
   <div class="modal fade" id="editStudentModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content border-0 shadow-lg">
@@ -813,15 +838,18 @@
               </div>
             </div>
 
+            <!-- এডিট মোডালে পিতা ও মাতার বিবরণ (পেশা সহ) -->
             <div class="border rounded p-3 mb-3 bg-light">
               <span class="badge bg-primary mb-2">পিতা ও মাতার বিবরণ</span>
               <div class="row g-2 mb-2">
-                <div class="col-md-6"><label class="form-label small fw-semibold">পিতার নাম (বাংলা)</label><input type="text" class="form-control form-control-sm" id="editFatherBn" required></div>
-                <div class="col-md-6"><label class="form-label small fw-semibold">পিতার NID</label><input type="text" class="form-control form-control-sm" id="editFatherNid"></div>
+                <div class="col-md-4"><label class="form-label small fw-semibold">পিতার নাম (বাংলা)</label><input type="text" class="form-control form-control-sm" id="editFatherBn" required></div>
+                <div class="col-md-4"><label class="form-label small fw-semibold">পিতার পেশা (কী করেন)</label><input type="text" class="form-control form-control-sm" id="editFatherOccupation"></div>
+                <div class="col-md-4"><label class="form-label small fw-semibold">পিতার NID</label><input type="text" class="form-control form-control-sm" id="editFatherNid"></div>
               </div>
               <div class="row g-2">
-                <div class="col-md-6"><label class="form-label small fw-semibold">মাতার নাম (বাংলা)</label><input type="text" class="form-control form-control-sm" id="editMotherBn"></div>
-                <div class="col-md-6"><label class="form-label small fw-semibold">মাতার NID</label><input type="text" class="form-control form-control-sm" id="editMotherNid"></div>
+                <div class="col-md-4"><label class="form-label small fw-semibold">মাতার নাম (বাংলা)</label><input type="text" class="form-control form-control-sm" id="editMotherBn"></div>
+                <div class="col-md-4"><label class="form-label small fw-semibold">মাতার পেশা (কী করেন)</label><input type="text" class="form-control form-control-sm" id="editMotherOccupation"></div>
+                <div class="col-md-4"><label class="form-label small fw-semibold">মাতার NID</label><input type="text" class="form-control form-control-sm" id="editMotherNid"></div>
               </div>
             </div>
 
@@ -858,9 +886,16 @@
               <div class="col-md-6"><label class="form-label small fw-semibold">শ্রেণি রোল নম্বর</label><input type="number" class="form-control form-control-sm" id="editRoll" required></div>
             </div>
 
-            <!-- এডিট মোডালে বর্তমান ঠিকানা -->
+            <!-- এডিট মোডালে বর্তমান ঠিকানা (বাড়িওয়ালার তথ্য সহ) -->
             <div class="border rounded p-3 mb-3 bg-light">
               <span class="badge bg-success mb-2"><i class="fa-solid fa-location-dot me-1"></i>বর্তমান ঠিকানা</span>
+              
+              <div class="row g-2 mb-2 p-2 border rounded bg-white">
+                <div class="col-md-4"><label class="form-label small fw-bold text-success mb-0">বাড়িওয়ালার নাম</label><input type="text" class="form-control form-control-sm" id="editPreLandlordName"></div>
+                <div class="col-md-4"><label class="form-label small fw-bold text-success mb-0">বাড়ির নাম / হোল্ডিং</label><input type="text" class="form-control form-control-sm" id="editPreHouseName"></div>
+                <div class="col-md-4"><label class="form-label small fw-bold text-success mb-0">বাড়িওয়ালার ফোন</label><input type="tel" class="form-control form-control-sm" id="editPreLandlordPhone"></div>
+              </div>
+
               <div class="row g-2 mb-2">
                 <div class="col-md-4"><label class="form-label small text-muted mb-0">গ্রাম</label><input type="text" class="form-control form-control-sm" id="editPreVillage"></div>
                 <div class="col-md-4"><label class="form-label small text-muted mb-0">ডাকঘর</label><input type="text" class="form-control form-control-sm" id="editPrePost"></div>
@@ -1022,7 +1057,6 @@
     document.getElementById('expDate').value = new Date().toISOString().split('T')[0];
     document.getElementById('salPayDate').value = new Date().toISOString().split('T')[0];
 
-    // ৮টি ট্যাব স্যুইচ করার নিরাপদ ফাংশন
     function switchAdminTab(tab) {
       const tabsMap = {
         'admission': { sec: 'admissionSection', btn: 'tabAdmissionBtn', fn: null },
@@ -1159,8 +1193,10 @@
         document.getElementById('editNameAr').value = s.nameAr || "";
 
         document.getElementById('editFatherBn').value = s.fatherBn || s.father || "";
+        document.getElementById('editFatherOccupation').value = s.fatherOccupation || "";
         document.getElementById('editFatherNid').value = s.fatherNid || "";
         document.getElementById('editMotherBn').value = s.motherBn || s.mother || "";
+        document.getElementById('editMotherOccupation').value = s.motherOccupation || "";
         document.getElementById('editMotherNid').value = s.motherNid || "";
 
         document.getElementById('editRegNo').value = s.studentRegNo || "";
@@ -1175,6 +1211,9 @@
         document.getElementById('editImagePreview').src = s.photo || "https://via.placeholder.com/80";
 
         const pre = s.presentAddress || {};
+        document.getElementById('editPreLandlordName').value = pre.landlordName || "";
+        document.getElementById('editPreHouseName').value = pre.houseName || "";
+        document.getElementById('editPreLandlordPhone').value = pre.landlordPhone || "";
         document.getElementById('editPreVillage').value = pre.village || "";
         document.getElementById('editPrePost').value = pre.post || "";
         document.getElementById('editPreUnion').value = pre.union || "";
@@ -1212,9 +1251,11 @@
           name: document.getElementById('editNameBn').value.trim(),
           fatherBn: document.getElementById('editFatherBn').value.trim(),
           father: document.getElementById('editFatherBn').value.trim(),
+          fatherOccupation: document.getElementById('editFatherOccupation').value.trim(),
           fatherNid: document.getElementById('editFatherNid').value.trim(),
           motherBn: document.getElementById('editMotherBn').value.trim(),
           mother: document.getElementById('editMotherBn').value.trim(),
+          motherOccupation: document.getElementById('editMotherOccupation').value.trim(),
           motherNid: document.getElementById('editMotherNid').value.trim(),
           studentRegNo: document.getElementById('editRegNo').value.trim(),
           phone: document.getElementById('editPhone').value.trim(),
@@ -1227,6 +1268,9 @@
           monthlyFeeRate: parseFloat(document.getElementById('editMonthlyFeeRate').value) || 1000,
           password: document.getElementById('editPass').value.trim(),
           presentAddress: {
+            landlordName: document.getElementById('editPreLandlordName').value.trim(),
+            houseName: document.getElementById('editPreHouseName').value.trim(),
+            landlordPhone: document.getElementById('editPreLandlordPhone').value.trim(),
             village: document.getElementById('editPreVillage').value.trim(),
             post: document.getElementById('editPrePost').value.trim(),
             union: document.getElementById('editPreUnion').value.trim(),
@@ -1282,11 +1326,13 @@
         fatherEn: document.getElementById('fatherEn').value.trim(),
         fatherAr: document.getElementById('fatherAr').value.trim(),
         father: document.getElementById('fatherBn').value.trim(),
+        fatherOccupation: document.getElementById('fatherOccupation').value.trim(),
         fatherNid: document.getElementById('fatherNid').value.trim(),
         motherBn: document.getElementById('motherBn').value.trim(),
         motherEn: document.getElementById('motherEn').value.trim(),
         motherAr: document.getElementById('motherAr').value.trim(),
         mother: document.getElementById('motherBn').value.trim(),
+        motherOccupation: document.getElementById('motherOccupation').value.trim(),
         motherNid: document.getElementById('motherNid').value.trim(),
         studentRegNo: document.getElementById('studentRegNo').value.trim(),
         phone: document.getElementById('phone').value.trim(),
@@ -1298,6 +1344,9 @@
         photo: base64Image || "https://via.placeholder.com/130",
         password: document.getElementById('sPass').value,
         presentAddress: {
+          landlordName: document.getElementById('preLandlordName').value.trim(),
+          houseName: document.getElementById('preHouseName').value.trim(),
+          landlordPhone: document.getElementById('preLandlordPhone').value.trim(),
           village: document.getElementById('preVillage').value.trim(),
           post: document.getElementById('prePost').value.trim(),
           union: document.getElementById('preUnion').value.trim(),
@@ -1402,10 +1451,12 @@
           fatherBn: app.fatherBn,
           fatherEn: app.fatherEn || "",
           father: app.fatherBn,
+          fatherOccupation: app.fatherOccupation || "",
           fatherNid: app.fatherNid || "",
           motherBn: app.motherBn,
           motherEn: app.motherEn || "",
           mother: app.motherBn,
+          motherOccupation: app.motherOccupation || "",
           motherNid: app.motherNid || "",
           studentRegNo: app.studentRegNo || "",
           phone: app.phone,
@@ -1519,20 +1570,29 @@
         const snap = await db.collection("students").get();
         if (snap.empty) { alert("কোনো শিক্ষার্থীর তথ্য পাওয়া যায়নি!"); return; }
 
-        const headers = ["Student ID", "শিক্ষার্থীর নাম (বাংলা)", "Name (English)", "বিভাগ", "রোল", "মোবাইল", "পিতার নাম", "মাতার নাম", "জন্ম নিবন্ধন", "রক্তের গ্রুপ", "ভর্তির তারিখ", "বর্তমান বকেয়া"];
+        const headers = ["Student ID", "শিক্ষার্থীর নাম (বাংলা)", "Name (English)", "বিভাগ", "রোল", "পিতার নাম", "পিতার পেশা", "মোবাইল", "মাতার নাম", "মাতার পেশা", "বাড়িওয়ালার নাম", "বাড়ির নাম", "বাড়িওয়ালার ফোন", "বর্তমান ঠিকানা", "স্থায়ী ঠিকানা", "জন্ম নিবন্ধন", "রক্তের গ্রুপ", "ভর্তির তারিখ", "বর্তমান বকেয়া"];
         const rows = [];
 
         snap.forEach(doc => {
           const d = doc.data();
+          const pre = d.presentAddress || {};
+          const per = d.permanentAddress || {};
           rows.push([
             d.studentId || '',
             d.nameBn || d.name || '',
             d.nameEn || '',
             d.department || '',
             d.roll || '',
-            d.phone || '',
             d.fatherBn || d.father || '',
+            d.fatherOccupation || '',
+            d.phone || '',
             d.motherBn || d.mother || '',
+            d.motherOccupation || '',
+            pre.landlordName || '',
+            pre.houseName || '',
+            pre.landlordPhone || '',
+            `${pre.village || ''}, ${pre.thana || ''}, ${pre.district || ''}`,
+            `${per.village || ''}, ${per.thana || ''}, ${per.district || ''}`,
             d.studentRegNo || '',
             d.bloodGroup || '',
             d.admissionDate || '',
@@ -1706,9 +1766,9 @@
         document.getElementById('tblNameEn').innerText = s.nameEn || "-";
         document.getElementById('tblNameAr').innerText = s.nameAr || "-";
         document.getElementById('tblRoll').innerText = s.roll || "-";
-        document.getElementById('tblFatherBn').innerText = s.fatherBn || s.father || "-";
+        document.getElementById('tblFatherBn').innerText = (s.fatherBn || s.father || "-") + (s.fatherOccupation ? ` (${s.fatherOccupation})` : '');
         document.getElementById('tblFatherNid').innerText = s.fatherNid || "-";
-        document.getElementById('tblMotherBn').innerText = s.motherBn || s.mother || "-";
+        document.getElementById('tblMotherBn').innerText = (s.motherBn || s.mother || "-") + (s.motherOccupation ? ` (${s.motherOccupation})` : '');
         document.getElementById('tblMotherNid').innerText = s.motherNid || "-";
         document.getElementById('tblRegNo').innerText = s.studentRegNo || "-";
         document.getElementById('tblDobBlood').innerText = (s.dob || "-") + " | রক্ত: " + (s.bloodGroup || "অজানা");
@@ -1716,6 +1776,7 @@
         document.getElementById('tblAdmissionDate').innerText = s.admissionDate || "-";
 
         const pre = s.presentAddress || {};
+        document.getElementById('tblLandlordInfo').innerText = `বাড়িওয়ালার নাম: ${pre.landlordName || '-'}, বাড়ি/হোল্ডিং: ${pre.houseName || '-'}, বাড়িওয়ালার ফোন: ${pre.landlordPhone || '-'}`;
         document.getElementById('tblPresentAddress').innerText = `গ্রাম: ${pre.village || '-'}, ডাক: ${pre.post || '-'}, ইউনিয়ন: ${pre.union || '-'}, ওয়ার্ড: ${pre.ward || '-'}, থানা: ${pre.thana || '-'}, জেলা: ${pre.district || '-'}`;
         const per = s.permanentAddress || {};
         document.getElementById('tblPermanentAddress').innerText = `গ্রাম: ${per.village || '-'}, ডাক: ${per.post || '-'}, ইউনিয়ন: ${per.union || '-'}, ওয়ার্ড: ${per.ward || '-'}, থানা: ${per.thana || '-'}, জেলা: ${per.district || '-'}`;
