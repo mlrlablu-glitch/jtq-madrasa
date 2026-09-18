@@ -10,8 +10,8 @@
   <style>
     /* ================= আইডি কার্ড স্টাইল ================= */
     .id-card {
-      width: 320px;
-      height: 490px;
+      width: 340px;
+      height: 520px;
       border-radius: 14px;
       overflow: hidden;
       box-shadow: 0 8px 20px rgba(0,0,0,0.15);
@@ -24,13 +24,13 @@
     .id-card-front-header {
       background: linear-gradient(135deg, #062c19, #198754);
       color: #ffffff;
-      padding: 16px 12px 10px 12px;
+      padding: 14px 10px 10px 10px;
       text-align: center;
       border-bottom: 3px solid #ffc107;
     }
     .id-card-photo {
-      width: 100px;
-      height: 115px;
+      width: 105px;
+      height: 120px;
       object-fit: cover;
       border-radius: 8px;
       border: 3px solid #198754;
@@ -41,7 +41,7 @@
       color: #ffd700;
       padding: 10px;
       text-align: center;
-      font-size: 13px;
+      font-size: 13.5px;
       font-weight: bold;
       border-bottom: 2px solid #ffc107;
     }
@@ -50,7 +50,7 @@
       color: #ffd700;
       font-size: 11px;
       text-align: center;
-      padding: 5px;
+      padding: 6px;
       margin-top: auto;
     }
 
@@ -78,7 +78,7 @@
       white-space: nowrap;
     }
 
-    /* প্রিন্ট মিডিয়া রুলস */
+    /* প্রিন্ট মিডিয়া রুলস */
     @media print {
       body * {
         visibility: hidden;
@@ -122,11 +122,11 @@
       <h4 class="fw-bold text-dark mb-2">
         <i class="fa-solid fa-id-badge text-success me-2"></i>শিক্ষার্থীর ডিজিটাল আইডি কার্ড ও প্রবেশপত্র জেনারেটর
       </h4>
-      <p class="text-muted small mb-3">Student ID দিয়ে যেকোনো শিক্ষার্থীর জন্য ছবিযুক্ত আইডি কার্ড (উভয় পিঠ) অথবা পরীক্ষার প্রবেশপত্র (Admit Card) প্রিন্ট করুন।</p>
+      <p class="text-muted small mb-3">Student ID দিয়ে যেকোনো শিক্ষার্থীর জন্য ছবিযুক্ত আইডি কার্ড (উভয় পিঠ) অথবা পরীক্ষার প্রবেশপত্র (Admit Card) প্রিন্ট করুন।</p>
 
       <form id="cardSearchForm" class="row g-2 align-items-center">
         <div class="col-md-5">
-          <input type="text" class="form-control form-control-lg fw-bold" id="targetStudentId" placeholder="Student ID লিখুন (যেমন: JTQIM-STDT-26090001)" required>
+          <input type="text" class="form-control form-control-lg fw-bold" id="targetStudentId" placeholder="Student ID লিখুন (যেমন: JTQ-M-20260001)" required>
         </div>
         <div class="col-md-4">
           <select class="form-select form-select-lg fw-semibold" id="cardTypeSelect">
@@ -146,17 +146,17 @@
         <div class="col-md-4">
           <label class="form-label small fw-bold">পরীক্ষার নাম:</label>
           <select class="form-select form-select-sm fw-bold" id="admitExamTerm">
-            <option value="প্রথম সাময়িক পরীক্ষা - ২০২৬">প্রথম সাময়িক পরীক্ষা - ২০২৬</option>
-            <option value="দ্বিতীয় সাময়িক পরীক্ষা - ২০২৬">দ্বিতীয় সাময়িক পরীক্ষা - ২০২৬</option>
+            <option value="প্রথম সাময়িক পরীক্ষা - ২০২৬">প্রথম সাময়িক পরীক্ষা - ২০২৬</option>
+            <option value="দ্বিতীয় সাময়িক পরীক্ষা - ২০২৬">দ্বিতীয় সাময়িক পরীক্ষা - ২০২৬</option>
             <option value="বার্ষিক ও হিফজ সমাপনী পরীক্ষা - ২০২৬">বার্ষিক ও হিফজ সমাপনী পরীক্ষা - ২০২৬</option>
           </select>
         </div>
         <div class="col-md-4">
-          <label class="form-label small fw-bold">পরীক্ষা শুরু হওয়ার তারিখ:</label>
+          <label class="form-label small fw-bold">পরীক্ষা শুরু হওয়ার তারিখ:</label>
           <input type="text" class="form-control form-control-sm" id="admitExamDate" value="২০শে সেপ্টেম্বর, ২০২৬">
         </div>
         <div class="col-md-4">
-          <label class="form-label small fw-bold">পরীক্ষার সময় ও হল রুম:</label>
+          <label class="form-label small fw-bold">পরীক্ষার সময় ও হল রুম:</label>
           <input type="text" class="form-control form-control-sm" id="admitExamHall" value="সকাল ৯:০০ - ১২:০০ | হল রুম নং: ০১">
         </div>
       </div>
@@ -165,7 +165,7 @@
     <!-- প্রিন্ট ও ফলাফল কন্টেইনার -->
     <div id="printAreaContainer">
       
-      <!-- ================= ১. ডিজিটাল আইডি কার্ড ভিউ (উভয় পিঠ) ================= -->
+      <!-- ================= ১. ডিজিটাল আইডি কার্ড ভিউ (উভয় পিঠ - বর্ধিত ও স্পষ্ট ফন্ট) ================= -->
       <div id="idCardDisplayArea" style="display: none;">
         <div class="d-flex justify-content-between align-items-center mb-3 no-print">
           <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-id-card me-2 text-success"></i>প্রিন্ট প্রিভিউ: স্টুডেন্ট আইডি কার্ড (Front & Back)</h5>
@@ -176,64 +176,66 @@
 
         <div class="d-flex flex-wrap gap-4 justify-content-center mb-4" id="printableIdCard">
           
-          <!-- সামনের পিঠ (Front Part) -->
+          <!-- সামনের পিঠ (Front Part - বড় ফন্ট ও স্পষ্ট লেআউট) -->
           <div class="id-card">
             <div class="id-card-front-header">
               <div class="small fw-semibold text-warning" style="letter-spacing: 1px; font-size: 11px;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-              <h6 class="fw-bold mb-0 text-white" style="font-size: 14px;">জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা</h6>
-              <small style="font-size: 10px; color: #ffd700;">বাইপাইল, আশুলিয়া, সাভার, ঢাকা</small>
+              <h6 class="fw-bold mb-1 text-white" style="font-size: 14.5px;">জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা</h6>
+              <small style="font-size: 11px; color: #ffd700;">বাইপাইল, আশুলিয়া, সাভার, ঢাকা | ফোন: 01700-000000</small>
             </div>
 
             <div class="text-center my-2">
-              <img id="idPhoto" src="https://via.placeholder.com/100" class="id-card-photo" alt="Student Photo">
-              <h6 class="fw-bold text-dark mb-0 mt-2" id="idNameBn">মোহাম্মদ আব্দুল্লাহ</h6>
-              <small class="text-muted d-block fw-semibold" id="idNameEn" style="font-size: 11px;">Md. Abdullah</small>
-              <span class="badge bg-success mt-1" id="idDeptBadge">হিফজ বিভাগ</span>
+              <img id="idPhoto" src="https://via.placeholder.com/105" class="id-card-photo" alt="Student Photo">
+              <h5 class="fw-bold text-dark mb-0 mt-2 fs-5" id="idNameBn">মোহাম্মদ আব্দুল্লাহ</h5>
+              <small class="text-muted d-block fw-bold" id="idNameEn" style="font-size: 12px;">Md. Abdullah</small>
+              <span class="badge bg-success mt-1 fs-6 px-3" id="idDeptBadge">হিফজ বিভাগ</span>
             </div>
 
-            <div class="px-3" style="font-size: 12px;">
+            <div class="px-3" style="font-size: 13px;">
               <table class="table table-sm table-borderless mb-0">
                 <tbody>
-                  <tr><th class="text-muted py-0 w-45">Student ID:</th><td class="fw-bold text-danger py-0" id="idCardStudentId">JTQ-2026-0001</td></tr>
-                  <tr><th class="text-muted py-0">শ্রেণি রোল:</th><td class="fw-bold py-0" id="idRoll">০১</td></tr>
-                  <tr><th class="text-muted py-0">রক্তের গ্রুপ:</th><td class="fw-bold text-danger py-0" id="idBloodGroup">O+</td></tr>
-                  <tr><th class="text-muted py-0">শিক্ষাবর্ষ:</th><td class="fw-semibold py-0">২০২৬ - ২০২৭</td></tr>
+                  <tr><th class="text-secondary py-1 w-45">Student ID:</th><td class="fw-bold text-danger py-1 fs-6" id="idCardStudentId">JTQ-M-20260001</td></tr>
+                  <tr><th class="text-secondary py-1">শ্রেণি রোল:</th><td class="fw-bold text-dark py-1 fs-6" id="idRoll">০১</td></tr>
+                  <tr><th class="text-secondary py-1">রক্তের গ্রুপ:</th><td class="fw-bold text-danger py-1 fs-6" id="idBloodGroup">O+</td></tr>
+                  <tr><th class="text-secondary py-1">শিক্ষাবর্ষ:</th><td class="fw-bold text-dark py-1 fs-6">২০২৬ - ২০২৭</td></tr>
                 </tbody>
               </table>
             </div>
 
-            <div class="id-card-footer">
-              <i class="fa-solid fa-phone me-1"></i>জরুরি হেল্পলাইন: 01700-000000
+            <div class="id-card-footer" style="font-size: 12px; padding: 7px;">
+              <i class="fa-solid fa-phone me-1"></i>অফিস হেল্পলাইন: 01700-000000
             </div>
           </div>
 
-          <!-- পেছনের পিঠ (Back Part) -->
+          <!-- পেছনের পিঠ (Back Part - বর্তমান ঠিকানা ও মাদ্রাসার ঠিকানা সহ) -->
           <div class="id-card">
             <div class="id-card-back-header">
-              <i class="fa-solid fa-circle-info me-1"></i> অভিভাবক ও ঠিকানার বিবরণ
+              <i class="fa-solid fa-address-book me-1"></i> অভিভাবক ও বর্তমান ঠিকানা
             </div>
 
             <div class="p-3" style="font-size: 11.5px;">
               <table class="table table-sm table-borderless mb-2">
                 <tbody>
-                  <tr><th class="text-muted py-0 w-35">পিতার নাম:</th><td class="fw-semibold py-0" id="idFather">...</td></tr>
-                  <tr><th class="text-muted py-0">মাতার নাম:</th><td class="fw-semibold py-0" id="idMother">...</td></tr>
-                  <tr><th class="text-muted py-0">মোবাইল:</th><td class="fw-bold text-success py-0" id="idPhone">...</td></tr>
-                  <tr><th class="text-muted py-0">স্থায়ী ঠিকানা:</th><td class="py-0" id="idAddress">...</td></tr>
+                  <tr><th class="text-secondary py-0 w-35">পিতার নাম:</th><td class="fw-semibold py-0 text-dark" id="idFather">...</td></tr>
+                  <tr><th class="text-secondary py-0">পিতার পেশা:</th><td class="fw-semibold py-0" id="idFatherOcc">...</td></tr>
+                  <tr><th class="text-secondary py-0">মাতার নাম:</th><td class="fw-semibold py-0 text-dark" id="idMother">...</td></tr>
+                  <tr><th class="text-secondary py-0">অভিভাবক ফোন:</th><td class="fw-bold text-success py-0" id="idPhone">...</td></tr>
+                  <tr><th class="text-secondary py-0">বাড়িওয়ালা/ফোন:</th><td class="py-0 text-dark" id="idLandlord">...</td></tr>
+                  <tr><th class="text-secondary py-0">বর্তমান ঠিকানা:</th><td class="py-0 text-dark fw-semibold" id="idAddress">...</td></tr>
                 </tbody>
               </table>
 
-              <!-- নির্দেশনাবলী -->
+              <!-- জরুরি নির্দেশনাবলী -->
               <div class="border rounded p-2 bg-light small mb-2" style="font-size: 10px; line-height: 1.4;">
-                <strong>নির্দেশনাবলী:</strong>
+                <strong>জরুরি নির্দেশনাবলী:</strong>
                 <ol class="ps-3 mb-0">
-                  <li>কার্ডটি মাদ্রাসায় অবস্থানকালে সার্বক্ষণিক সঙ্গে রাখা আবশ্যক।</li>
-                  <li>কার্ডটি হস্তান্তরযোগ্য নয়। হারিয়ে গেলে তাৎক্ষণিক অফিস কক্ষে জানাতে হবে।</li>
+                  <li>মাদ্রাসায় অবস্থানকালে কার্ডটি গলায় ঝুলিয়ে রাখা আবশ্যক।</li>
+                  <li>হারিয়ে গেলে তাৎক্ষণিক অফিস কক্ষে ডুপ্লিকেট কার্ডের জন্য আবেদন করতে হবে।</li>
                 </ol>
               </div>
 
               <!-- সিল ও স্বাক্ষর -->
-              <div class="d-flex justify-content-between align-items-end mt-4 pt-2 px-2">
+              <div class="d-flex justify-content-between align-items-end mt-3 pt-1 px-2">
                 <div class="text-center" style="font-size: 10px;">
                   <i class="fa-solid fa-qrcode fa-2x text-muted d-block mb-1"></i>
                   <small>JTQ VERIFIED</small>
@@ -244,8 +246,8 @@
               </div>
             </div>
 
-            <div class="id-card-footer">
-              জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা
+            <div class="id-card-footer" style="font-size: 10.5px;">
+              জামিয়া তাসলিমুল কুরআন ইসলামিয়া | বাইপাইল, আশুলিয়া, সাভার
             </div>
           </div>
 
@@ -316,7 +318,7 @@
               <thead class="table-light">
                 <tr>
                   <th style="width: 60px;">ক্রমিক</th>
-                  <th>পরীক্ষার বিষয় / কিতাব / পারা</th>
+                  <th>পরীক্ষার বিষয় / কিতাব / পারা</th>
                   <th>পূর্ণমান</th>
                   <th>পরীক্ষার তারিখ</th>
                   <th style="width: 140px;">কক্ষ পরিদর্শকের স্বাক্ষর</th>
@@ -324,9 +326,9 @@
               </thead>
               <tbody>
                 <tr><td>০১</td><td class="text-start ps-3">কুরআনুল কারীম হিফজ শুনানী (সবক ও সাত সবক)</td><td>১০০</td><td>প্রথম দিন</td><td></td></tr>
-                <tr><td>০২</td><td class="text-start ps-3">কুরআনুল কারীম আমুখতা ও তিলাওয়াত</td><td>১০০</td><td>দ্বিতীয় দিন</td><td></td></tr>
-                <tr><td>০৩</td><td class="text-start ps-3">তাজবীদুল কুরআন ও মাখরাজ পরীক্ষা</td><td>৫০</td><td>তৃতীয় দিন</td><td></td></tr>
-                <tr><td>০৪</td><td class="text-start ps-3">জরুরি আকাইদ, মাসয়ালা ও মাসনুন দুআ</td><td>৫০</td><td>চতুর্থ দিন</td><td></td></tr>
+                <tr><td>০২</td><td class="text-start ps-3">কুরআনুল কারীম আমুখতা ও তিলাওয়াত</td><td>১০০</td><td>দ্বিতীয় দিন</td><td></td></tr>
+                <tr><td>০৩</td><td class="text-start ps-3">তাজবীদুল কুরআন ও মাখরাজ পরীক্ষা</td><td>৫০</td><td>তৃতীয় দিন</td><td></td></tr>
+                <tr><td>০৪</td><td class="text-start ps-3">জরুরি আকাইদ, মাসয়ালা ও মাসনুন দুআ</td><td>৫০</td><td>চতুর্থ দিন</td><td></td></tr>
               </tbody>
             </table>
           </div>
@@ -336,8 +338,8 @@
             <strong>পরীক্ষার্থীদের জন্য জরুরি নির্দেশনাবলী:</strong>
             <ul class="mb-0 ps-3">
               <li>পরীক্ষা শুরুর অন্তত ১৫ মিনিট পূর্বে নির্ধারিত কক্ষে উপস্থিত হতে হবে।</li>
-              <li>এই প্রবেশপত্র (Admit Card) ছাড়া কোনোভাবেই পরীক্ষার হলে প্রবেশ করতে দেওয়া হবে না।</li>
-              <li>মাদ্রাসার নির্ধারিত পোশাক ও শৃঙ্খলা মেনে পরীক্ষায় অংশগ্রহণ করতে হবে।</li>
+              <li>এই প্রবেশপত্র (Admit Card) ছাড়া কোনোভাবেই পরীক্ষার হলে প্রবেশ করতে দেওয়া হবে না।</li>
+              <li>মাদ্রাসার নির্ধারিত পোশাক ও শৃঙ্খলা মেনে পরীক্ষায় অংশগ্রহণ করতে হবে।</li>
             </ul>
           </div>
 
@@ -360,13 +362,11 @@
   <script src="js/firebase-config.js"></script>
 
   <script>
-    // ড্রপডাউন টগল
     document.getElementById('cardTypeSelect').addEventListener('change', function() {
       const isAdmit = this.value === 'admitCard';
       document.getElementById('admitCardOptions').style.display = isAdmit ? 'flex' : 'none';
     });
 
-    // ফর্ম সাবমিট ও কার্ড তৈরি
     document.getElementById('cardSearchForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const sId = document.getElementById('targetStudentId').value.trim();
@@ -378,7 +378,7 @@
 
       db.collection("students").doc(sId).get().then((doc) => {
         if (!doc.exists) {
-          alert("এই Student ID (" + sId + ") দিয়ে কোনো শিক্ষার্থী পাওয়া যায়নি!");
+          alert("এই Student ID (" + sId + ") দিয়ে কোনো শিক্ষার্থী পাওয়া যায়নি!");
           document.getElementById('idCardDisplayArea').style.display = 'none';
           document.getElementById('admitCardDisplayArea').style.display = 'none';
           return;
@@ -389,17 +389,19 @@
         const nameBn = s.nameBn || s.name || "-";
         const nameEn = s.nameEn || "-";
         const fatherName = s.fatherBn || s.father || "-";
+        const fatherOcc = s.fatherOccupation || "-";
         const motherName = s.motherBn || s.mother || "-";
         const phone = s.phone || "-";
         const roll = s.roll || "-";
         const dept = s.department || "-";
         const blood = s.bloodGroup || "অজানা";
 
-        const per = s.permanentAddress || {};
-        const fullAddress = `${per.village || ''}, ${per.thana || ''}, ${per.district || ''}`;
+        const pre = s.presentAddress || {};
+        const landlordStr = pre.landlordName ? `${pre.landlordName} (${pre.landlordPhone || 'নম্বর নেই'})` : "দেওয়া হয়নি";
+        const fullPresentAddr = `গ্রাম: ${pre.village || '-'}, ডাক: ${pre.post || '-'}, থানা: ${pre.thana || '-'}, জেলা: ${pre.district || '-'}`;
 
         if (cardType === 'idCard') {
-          // আইডি কার্ড পপুলেট
+          // আইডি কার্ড পপুলেট (সামনে ও পেছনে বড় ও স্পষ্ট ফন্ট)
           document.getElementById('idPhoto').src = photoUrl;
           document.getElementById('idNameBn').innerText = nameBn;
           document.getElementById('idNameEn').innerText = nameEn;
@@ -409,9 +411,11 @@
           document.getElementById('idBloodGroup').innerText = blood;
 
           document.getElementById('idFather').innerText = fatherName;
+          document.getElementById('idFatherOcc').innerText = fatherOcc;
           document.getElementById('idMother').innerText = motherName;
           document.getElementById('idPhone').innerText = phone;
-          document.getElementById('idAddress').innerText = fullAddress || "দেওয়া হয়নি";
+          document.getElementById('idLandlord').innerText = landlordStr;
+          document.getElementById('idAddress').innerText = fullPresentAddr;
 
           document.getElementById('idCardDisplayArea').style.display = 'block';
           document.getElementById('admitCardDisplayArea').style.display = 'none';
