@@ -61,7 +61,7 @@
   <div class="container-fluid py-4 px-3">
     <div class="row g-4">
       
-      <!-- বামে: পূর্ণাঙ্গ শিক্ষক নিয়োগ ও তথ্য ফরম -->
+      <!-- বামে: শিক্ষক নিয়োগ ও তথ্য ফরম -->
       <div class="col-lg-5">
         <div class="card border-0 shadow-sm p-4 bg-white border-top border-success border-4">
           <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-user-tie me-2 text-success"></i>নতুন শিক্ষক নিয়োগ ও তথ্য ফরম</h5>
@@ -159,20 +159,33 @@
               </div>
             </div>
 
-            <!-- ৫. ঠিকানা ও জরুরি যোগাযোগ -->
+            <!-- ৫. স্থায়ী ঠিকানা (আলাদা আলাদা ঘর) -->
             <div class="teacher-section-box">
-              <span class="badge bg-secondary teacher-section-badge">ঠিকানা ও জরুরি যোগাযোগ</span>
-              <div class="mb-2">
-                <label class="form-label small text-muted mb-0">বর্তমান ঠিকানা</label>
-                <input type="text" class="form-control form-control-sm" id="teacherPresentAddress" placeholder="গ্রাম, থানা, জেলা">
+              <span class="badge bg-secondary teacher-section-badge"><i class="fa-solid fa-house-chimney me-1"></i>স্থায়ী ঠিকানা</span>
+              <div class="row g-2 mb-2">
+                <div class="col-md-4"><label class="form-label small text-muted mb-0">গ্রাম</label><input type="text" class="form-control form-control-sm" id="perVillage" placeholder="গ্রামের নাম" required></div>
+                <div class="col-md-4"><label class="form-label small text-muted mb-0">ডাকঘর</label><input type="text" class="form-control form-control-sm" id="perPost" placeholder="ডাকঘর" required></div>
+                <div class="col-md-4"><label class="form-label small text-muted mb-0">ইউনিয়ন</label><input type="text" class="form-control form-control-sm" id="perUnion" placeholder="ইউনিয়ন" required></div>
               </div>
-              <div class="mb-2">
-                <label class="form-label small text-muted mb-0">স্থায়ী ঠিকানা</label>
-                <input type="text" class="form-control form-control-sm" id="teacherPermanentAddress" placeholder="গ্রাম, ডাকঘর, থানা, জেলা">
+              <div class="row g-2">
+                <div class="col-md-4"><label class="form-label small text-muted mb-0">ওয়ার্ড</label><input type="text" class="form-control form-control-sm" id="perWard" placeholder="ওয়ার্ড"></div>
+                <div class="col-md-4"><label class="form-label small text-muted mb-0">থানা</label><input type="text" class="form-control form-control-sm" id="perThana" placeholder="থানা" required></div>
+                <div class="col-md-4"><label class="form-label small text-muted mb-0">জেলা</label><input type="text" class="form-control form-control-sm" id="perDistrict" placeholder="জেলা" required></div>
               </div>
-              <div class="row g-2 mt-2 p-2 border rounded bg-light">
-                <div class="col-md-6"><label class="form-label small fw-bold text-danger mb-0">জরুরি যোগাযোগ (ব্যক্তি)</label><input type="text" class="form-control form-control-sm" id="teacherEmergencyName" placeholder="নিকটাত্মীয়ের নাম"></div>
-                <div class="col-md-6"><label class="form-label small fw-bold text-danger mb-0">জরুরি মোবাইল নম্বর</label><input type="tel" class="form-control form-control-sm" id="teacherEmergencyPhone" placeholder="01XXXXXXXXX"></div>
+            </div>
+
+            <!-- ৬. জরুরি যোগাযোগ -->
+            <div class="teacher-section-box">
+              <span class="badge bg-danger teacher-section-badge"><i class="fa-solid fa-phone me-1"></i>জরুরি যোগাযোগ (Emergency Contact)</span>
+              <div class="row g-2">
+                <div class="col-md-6">
+                  <label class="form-label small text-muted mb-0">নিকটাত্মীয়ের নাম</label>
+                  <input type="text" class="form-control form-control-sm" id="teacherEmergencyName" placeholder="ব্যক্তির নাম">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small text-muted mb-0">মোবাইল নম্বর</label>
+                  <input type="tel" class="form-control form-control-sm" id="teacherEmergencyPhone" placeholder="01XXXXXXXXX">
+                </div>
               </div>
             </div>
 
@@ -286,8 +299,14 @@
         education: document.getElementById('teacherEdu').value.trim() || "-",
         madrasa: document.getElementById('teacherMadrasa').value.trim(),
         experience: document.getElementById('teacherExp').value.trim(),
-        presentAddress: document.getElementById('teacherPresentAddress').value.trim(),
-        permanentAddress: document.getElementById('teacherPermanentAddress').value.trim(),
+        permanentAddress: {
+          village: document.getElementById('perVillage').value.trim(),
+          post: document.getElementById('perPost').value.trim(),
+          union: document.getElementById('perUnion').value.trim(),
+          ward: document.getElementById('perWard').value.trim(),
+          thana: document.getElementById('perThana').value.trim(),
+          district: document.getElementById('perDistrict').value.trim()
+        },
         emergencyName: document.getElementById('teacherEmergencyName').value.trim(),
         emergencyPhone: document.getElementById('teacherEmergencyPhone').value.trim(),
         photo: teacherBase64 || "https://via.placeholder.com/80",
@@ -391,11 +410,12 @@
     async function exportTeachersToExcel() {
       const snap = await db.collection("teachers").get();
       if (snap.empty) { alert("শিক্ষক নেই!"); return; }
-      const headers = ["আইডি", "নাম", "পদবি", "বিভাগ", "শিক্ষাগত যোগ্যতা", "বেতন", "মোবাইল", "NID", "যোগদানের তারিখ", "বর্তমান ঠিকানা", "জরুরি যোগাযোগ"];
+      const headers = ["আইডি", "নাম", "পদবি", "বিভাগ", "শিক্ষাগত যোগ্যতা", "বেতন", "মোবাইল", "NID", "যোগদানের তারিখ", "স্থায়ী ঠিকানা", "জরুরি যোগাযোগ"];
       const rows = [];
       snap.forEach(doc => {
         const t = doc.data();
-        rows.push([t.teacherId||'', t.name||'', t.designation||'', t.department||'', t.education||'', (t.salary||0)+" ৳", t.phone||'', t.nid||'', t.joiningDate||'', t.presentAddress||'', `${t.emergencyName||''} (${t.emergencyPhone||''})`]);
+        const per = t.permanentAddress || {};
+        rows.push([t.teacherId||'', t.name||'', t.designation||'', t.department||'', t.education||'', (t.salary||0)+" ৳", t.phone||'', t.nid||'', t.joiningDate||'', `${per.village||''}, ${per.thana||''}, ${per.district||''}`, `${t.emergencyName||''} (${t.emergencyPhone||''})`]);
       });
       downloadExcelFile(headers, rows, "শিক্ষক তালিকা", `JTQ_Teachers_${new Date().toISOString().split('T')[0]}.xls`);
     }
