@@ -1,1 +1,205 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>শিক্ষক ও বেতন ব্যবস্থাপনা - JTQ মাদ্রাসা</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
 
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold text-success" href="admin-dashboard.html"><i class="fa-solid fa-mosque me-2"></i>JTQ মাদ্রাসা ERP</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNav"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="adminNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 small fw-semibold">
+          <li class="nav-item"><a class="nav-link" href="admin-dashboard.html"><i class="fa-solid fa-gauge me-1"></i>ড্যাশবোর্ড</a></li>
+          <li class="nav-item"><a class="nav-link" href="admin-students.html"><i class="fa-solid fa-user-graduate me-1"></i>ছাত্র ভর্তি ও তালিকা</a></li>
+          <li class="nav-item"><a class="nav-link" href="admin-admissions.html"><i class="fa-solid fa-address-book me-1"></i>ভর্তি আবেদন</a></li>
+          <li class="nav-item"><a class="nav-link" href="admin-fees.html"><i class="fa-solid fa-money-check-dollar me-1"></i>ফি অনুমোদন</a></li>
+          <li class="nav-item"><a class="nav-link active text-success" href="admin-teachers.html"><i class="fa-solid fa-chalkboard-user me-1"></i>শিক্ষক ও বেতন</a></li>
+          <li class="nav-item"><a class="nav-link" href="admin-exams.html"><i class="fa-solid fa-square-poll-vertical me-1"></i>পরীক্ষার ফলাফল</a></li>
+          <li class="nav-item"><a class="nav-link" href="id-admit-card.html"><i class="fa-solid fa-id-badge me-1"></i>আইডি ও প্রবেশপত্র</a></li>
+        </ul>
+        <div class="d-flex gap-2">
+          <button class="btn btn-outline-danger btn-sm" id="adminLogout"><i class="fa-solid fa-right-from-bracket me-1"></i>লগআউট</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-4">
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="card border-0 shadow-sm p-4 bg-white border-top border-success border-4">
+          <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-user-tie me-2 text-success"></i>নতুন শিক্ষক যোগ করুন</h5>
+          <form id="addTeacherForm">
+            <div class="row g-3 align-items-center mb-3 p-2 border rounded bg-light">
+              <div class="col-auto"><img id="tImagePreview" src="https://via.placeholder.com/80" class="img-thumbnail rounded-circle" style="width: 75px; height: 75px; object-fit: cover;"></div>
+              <div class="col"><label class="form-label small fw-semibold mb-1">শিক্ষকের ছবি</label><input type="file" class="form-control form-control-sm" id="teacherPhotoInput" accept="image/*"></div>
+            </div>
+            <div class="mb-2"><label class="form-label small fw-semibold">শিক্ষক আইডি</label><input type="text" class="form-control form-control-sm fw-bold" id="tId" placeholder="TCH-01" required></div>
+            <div class="mb-2"><label class="form-label small fw-semibold">শিক্ষকের পুরো নাম</label><input type="text" class="form-control form-control-sm" id="teacherFullName" placeholder="হাফেজ আব্দুর রহমান" required></div>
+            <div class="mb-2"><label class="form-label small fw-semibold">পদবি</label><input type="text" class="form-control form-control-sm" id="teacherDesignation" placeholder="হিফজ প্রধান" required></div>
+            <div class="mb-2"><label class="form-label small fw-semibold">বিভাগ</label><select class="form-select form-select-sm" id="teacherDept" required><option value="হিফজ বিভাগ">হিফজ বিভাগ</option><option value="নাজেরা বিভাগ">নাজেরা বিভাগ</option><option value="নূরানী বিভাগ">নূরানী বিভাগ</option><option value="মক্তব বিভাগ">মক্তব বিভাগ</option></select></div>
+            <div class="mb-2 p-2 border rounded bg-light border-start border-success border-4">
+              <label class="form-label small fw-bold text-success"><i class="fa-solid fa-money-bill-wave me-1"></i>মাসিক নির্ধারিত মূল বেতন (টাকা)</label>
+              <input type="number" class="form-control form-control-sm fw-bold" id="teacherSalary" placeholder="যেমন: ১২০০০" required>
+            </div>
+            <div class="mb-2"><label class="form-label small fw-semibold">মোবাইল নম্বর</label><input type="tel" class="form-control form-control-sm" id="teacherMobile" placeholder="017XXXXXXXX" required></div>
+            <div class="mb-2"><label class="form-label small fw-semibold">লগইন পাসওয়ার্ড</label><input type="text" class="form-control form-control-sm" id="teacherLoginPass" value="teacher@123" required></div>
+            <div class="mb-3"><label class="form-label small fw-semibold">যোগ্যতা</label><input type="text" class="form-control form-control-sm" id="teacherEdu" placeholder="দাওরায়ে হাদীস"></div>
+            <button type="submit" class="btn btn-success btn-sm w-100 fw-bold shadow-sm" id="saveTeacherBtn">শিক্ষক সংরক্ষণ করুন</button>
+          </form>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="card border-0 shadow-sm p-4 bg-white">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-users-rectangle me-2 text-primary"></i>মাদ্রাসার শিক্ষকবৃন্দ ও বেতন</h5>
+            <button class="btn btn-success btn-sm fw-bold shadow-sm" onclick="exportTeachersToExcel()"><i class="fa-solid fa-file-excel me-1"></i> এক্সেল ডাউনলোড</button>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover text-center align-middle mb-0">
+              <thead class="table-light">
+                <tr><th>ছবি</th><th>আইডি</th><th>নাম</th><th>পদবি ও বিভাগ</th><th>মূল বেতন</th><th>মোবাইল</th><th>পাসওয়ার্ড</th><th>বেতন প্রদান</th><th>মুছুন</th></tr>
+              </thead>
+              <tbody id="teacherTableBody"><tr><td colspan="9">লোড হচ্ছে...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- শিক্ষক বেতন প্রদান মডাল -->
+  <div class="modal fade" id="payTeacherSalaryModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg">
+        <div class="modal-header bg-success text-white py-2">
+          <h6 class="modal-title fw-bold"><i class="fa-solid fa-hand-holding-dollar me-2"></i>উস্তাদজিকে বেতন প্রদান</h6>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <form id="payTeacherSalaryForm">
+            <input type="hidden" id="salTeacherId">
+            <input type="hidden" id="salTeacherName">
+            <input type="hidden" id="salTeacherPhone">
+            <div class="mb-2"><label class="small fw-semibold">শিক্ষকের নাম ও আইডি:</label><input type="text" class="form-control form-control-sm bg-light fw-bold" id="salDisplayTeacher" readonly></div>
+            <div class="row g-2 mb-2">
+              <div class="col-md-6"><label class="small fw-bold text-primary">কোন মাসের বেতন?</label>
+                <select class="form-select form-select-sm fw-bold border-primary" id="salMonth" required>
+                  <option value="জানুয়ারি">জানুয়ারি</option><option value="ফেব্রুয়ারি">ফেব্রুয়ারি</option><option value="মার্চ">মার্চ</option><option value="এপ্রিল">এপ্রিল</option><option value="মে">মে</option><option value="জুন">জুন</option><option value="জুলাই">জুলাই</option><option value="আগস্ট">আগস্ট</option><option value="সেপ্টেম্বর" selected>সেপ্টেম্বর</option><option value="অক্টোবর">অক্টোবর</option><option value="নভেম্বর">নভেম্বর</option><option value="ডিসেম্বর">ডিসেম্বর</option>
+                </select>
+              </div>
+              <div class="col-md-6"><label class="small fw-bold text-primary">বছর / সাল</label><select class="form-select form-select-sm fw-bold border-primary" id="salYear"><option value="২০২৫">২০২৫</option><option value="২০২৬" selected>২০২৬</option><option value="২০২৭">২০২৭</option></select></div>
+            </div>
+            <div class="row g-2 mb-2">
+              <div class="col-md-6"><label class="small fw-bold text-success">পরিশোধিত বেতন (টাকা)</label><input type="number" class="form-control form-control-sm fw-bold border-success text-success fs-6" id="salPayAmount" required></div>
+              <div class="col-md-6"><label class="small fw-semibold">পরিশোধের মাধ্যম</label><select class="form-select form-select-sm" id="salPayMethod"><option value="ক্যাশ (নগদ)">ক্যাশ (নগদ)</option><option value="ব্যাংক একাউন্ট">ব্যাংক একাউন্ট</option><option value="বিকাশ / নগদ">বিকাশ / নগদ</option></select></div>
+            </div>
+            <div class="mb-3"><label class="small fw-semibold">পরিশোধের তারিখ</label><input type="date" class="form-control form-control-sm" id="salPayDate" required></div>
+            <button type="submit" class="btn btn-success w-100 fw-bold shadow-sm" id="btnConfirmTeacherSalary"><i class="fa-solid fa-check-double me-1"></i> বেতন পরিশোধ সম্পন্ন করুন</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+
+  <script>
+    if (localStorage.getItem('adminSession') !== 'active') window.location.href = 'admin-login.html';
+    document.getElementById('adminLogout').addEventListener('click', () => { localStorage.removeItem('adminSession'); window.location.href = 'admin-login.html'; });
+    document.getElementById('salPayDate').value = new Date().toISOString().split('T')[0];
+
+    let teacherBase64 = "";
+    document.getElementById('teacherPhotoInput').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => { teacherBase64 = event.target.result; document.getElementById('tImagePreview').src = teacherBase64; };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    document.getElementById('addTeacherForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const tId = document.getElementById('tId').value.trim();
+      const teacherData = {
+        teacherId: tId, name: document.getElementById('teacherFullName').value.trim(),
+        designation: document.getElementById('teacherDesignation').value.trim(), department: document.getElementById('teacherDept').value,
+        salary: parseFloat(document.getElementById('teacherSalary').value) || 0, phone: document.getElementById('teacherMobile').value.trim(),
+        password: document.getElementById('teacherLoginPass').value.trim(), photo: teacherBase64 || "https://via.placeholder.com/80",
+        joiningDate: new Date().toISOString().split('T')[0], timestamp: new Date()
+      };
+      db.collection("teachers").doc(tId).set(teacherData).then(() => {
+        alert("শিক্ষক সংরক্ষিত হয়েছে!"); this.reset(); loadTeachersList();
+      });
+    });
+
+    function loadTeachersList() {
+      db.collection("teachers").orderBy("timestamp", "desc").get().then((snapshot) => {
+        const tbody = document.getElementById('teacherTableBody');
+        tbody.innerHTML = "";
+        snapshot.forEach((doc) => {
+          const t = doc.data();
+          tbody.innerHTML += `
+            <tr>
+              <td><img src="${t.photo}" class="rounded-circle" style="width:38px; height:38px; object-fit:cover;"></td>
+              <td class="fw-bold text-success">${t.teacherId}</td>
+              <td class="fw-bold text-dark text-start px-2">${t.name}</td>
+              <td><span class="badge bg-light text-dark border">${t.designation}</span></td>
+              <td><span class="badge bg-success fs-6">${(t.salary||0).toLocaleString('bn-BD')} ৳</span></td>
+              <td>${t.phone}</td>
+              <td><code>${t.password}</code></td>
+              <td><button class="btn btn-sm btn-success fw-bold px-2 py-1" onclick="openPaySalaryModal('${t.teacherId}', '${t.name}', '${t.phone}', '${t.salary||0}')"><i class="fa-solid fa-hand-holding-dollar me-1"></i>বেতন দিন</button></td>
+              <td><button class="btn btn-sm btn-outline-danger" onclick="deleteTeacher('${t.teacherId}')"><i class="fa-solid fa-trash"></i></button></td>
+            </tr>
+          `;
+        });
+      });
+    }
+
+    function deleteTeacher(tId) {
+      if (!confirm("মুছতে চান?")) return;
+      db.collection("teachers").doc(tId).delete().then(() => loadTeachersList());
+    }
+
+    function openPaySalaryModal(tId, tName, tPhone, baseSalary) {
+      document.getElementById('salTeacherId').value = tId;
+      document.getElementById('salTeacherName').value = tName;
+      document.getElementById('salTeacherPhone').value = tPhone;
+      document.getElementById('salDisplayTeacher').value = `${tName} (${tId})`;
+      document.getElementById('salPayAmount').value = baseSalary > 0 ? baseSalary : "";
+      bootstrap.Modal.getOrCreateInstance(document.getElementById('payTeacherSalaryModal')).show();
+    }
+
+    document.getElementById('payTeacherSalaryForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const tId = document.getElementById('salTeacherId').value;
+      const tName = document.getElementById('salTeacherName').value;
+      const month = document.getElementById('salMonth').value;
+      const year = document.getElementById('salYear').value;
+      const amount = parseFloat(document.getElementById('salPayAmount').value) || 0;
+      const monthYearStr = `${month} ${year}`;
+
+      await db.collection("teachers").doc(tId).collection("salary_payments").add({
+        teacherId: tId, teacherName: tName, monthYear: monthYearStr, amount: amount,
+        method: document.getElementById('salPayMethod').value, date: document.getElementById('salPayDate').value,
+        status: "প্রদান করা হয়েছে (অপেক্ষমান)", paidAt: new Date()
+      });
+      alert(`${tName}-কে ${monthYearStr} মাসের বেতন সফলভাবে পরিশোধ করা হয়েছে!`);
+      bootstrap.Modal.getInstance(document.getElementById('payTeacherSalaryModal')).hide();
+    });
+
+    loadTeachersList();
+  </script>
+</body>
+</html>
