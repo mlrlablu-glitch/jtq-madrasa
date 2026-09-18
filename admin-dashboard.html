@@ -3,11 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>অ্যাডমিন প্যানেল - JTQIM মাদ্রাসা</title>
+  <title>অ্যাডমিন কন্ট্রোল প্যানেল - JTQ মাদ্রাসা</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
   <style>
+    .nav-pills .nav-link {
+      cursor: pointer;
+      color: #333;
+    }
     .nav-pills .nav-link.active {
       background-color: #198754 !important;
       color: #fff !important;
@@ -53,6 +57,23 @@
       background: linear-gradient(135deg, #0d6efd, #052c65);
       border-left: 5px solid #0dcaf0;
     }
+
+    /* ফর্ম সেকশন বক্স ডিজাইন */
+    .form-section-box {
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 14px;
+      background-color: #ffffff;
+    }
+    .form-section-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -61,7 +82,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
     <div class="container">
       <a class="navbar-brand fw-bold" href="admin-dashboard.html">
-        <i class="fa-solid fa-gauge-high me-2"></i>JTQIM মাদ্রাসা কন্ট্রোল
+        <i class="fa-solid fa-gauge-high me-2"></i>JTQ মাদ্রাসা অ্যাডমিন কন্ট্রোল
       </a>
       <div class="d-flex gap-2">
         <a href="admission-apply.html" target="_blank" class="btn btn-warning btn-sm text-dark fw-bold">
@@ -90,44 +111,55 @@
         </button>
       </li>
       <li class="nav-item">
-        <button class="nav-link fw-bold text-dark small" id="tabAppReviewBtn" onclick="switchAdminTab('appReview')">
+        <button class="nav-link fw-bold small" id="tabAppReviewBtn" onclick="switchAdminTab('appReview')">
           <i class="fa-solid fa-address-book me-1 text-primary"></i> ২. অনলাইন ভর্তি আবেদন
         </button>
       </li>
       <li class="nav-item">
-        <button class="nav-link fw-bold text-dark small" id="tabExamBtn" onclick="switchAdminTab('exam')">
+        <button class="nav-link fw-bold small" id="tabExamBtn" onclick="switchAdminTab('exam')">
           <i class="fa-solid fa-square-poll-vertical me-1 text-primary"></i> ৩. পরীক্ষার ফলাফল
         </button>
       </li>
       <li class="nav-item">
-        <button class="nav-link fw-bold text-dark small" id="tabSearchBtn" onclick="switchAdminTab('search')">
+        <button class="nav-link fw-bold small" id="tabSearchBtn" onclick="switchAdminTab('search')">
           <i class="fa-solid fa-magnifying-glass-chart me-1 text-warning"></i> ৪. ছাত্র হিস্ট্রি
         </button>
       </li>
       <li class="nav-item">
-        <button class="nav-link fw-bold text-dark small" id="tabFeeApprovalBtn" onclick="switchAdminTab('feeApproval')">
+        <button class="nav-link fw-bold small" id="tabFeeApprovalBtn" onclick="switchAdminTab('feeApproval')">
           <i class="fa-solid fa-money-bill-circle-check me-1 text-danger"></i> ৫. ফি অনুমোদন
         </button>
       </li>
       <li class="nav-item">
-        <button class="nav-link fw-bold text-dark small" id="tabTeacherBtn" onclick="switchAdminTab('teachers')">
+        <button class="nav-link fw-bold small" id="tabTeacherBtn" onclick="switchAdminTab('teachers')">
           <i class="fa-solid fa-chalkboard-user me-1 text-success"></i> ৬. শিক্ষক ও বেতন
         </button>
       </li>
       <li class="nav-item">
-        <button class="nav-link fw-bold text-dark small" id="tabNoticeBtn" onclick="switchAdminTab('noticeManage')">
+        <button class="nav-link fw-bold small" id="tabNoticeBtn" onclick="switchAdminTab('noticeManage')">
           <i class="fa-solid fa-bullhorn me-1 text-info"></i> ৭. নোটিশ জারি
         </button>
       </li>
-      </ul>
+      <li class="nav-item">
+        <button class="nav-link fw-bold small" id="tabAccountsBtn" onclick="switchAdminTab('accounts')">
+          <i class="fa-solid fa-scale-balanced me-1 text-success"></i> ৮. আয়-ব্যয় ও হিসাব
+        </button>
+      </li>
+    </ul>
 
-    <!-- ================= ১. ছাত্র ভর্তি (ঠিকানার সম্পূর্ণ ঘরসহ) ================= -->
+    <!-- ================= ১. ছাত্র ভর্তি ================= -->
     <div id="admissionSection">
       <div class="row g-4">
+        <!-- বামে: পূর্ণাঙ্গ ছাত্র ভর্তি ফরম -->
         <div class="col-lg-7">
           <div class="card border-0 shadow-sm p-4 bg-white mb-4">
-            <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-user-plus me-2 text-success"></i>পূর্ণাঙ্গ ছাত্র ভর্তি ফরম</h5>
+            <h5 class="fw-bold text-dark mb-3">
+              <i class="fa-solid fa-user-plus text-success me-2"></i>পূর্ণাঙ্গ ছাত্র ভর্তি ফরম
+            </h5>
+            
             <form id="addStudentForm">
+              
+              <!-- ১. ছবি আপলোড বক্স -->
               <div class="row g-3 align-items-center mb-3 p-2 border rounded bg-light">
                 <div class="col-auto">
                   <img id="imagePreview" src="https://via.placeholder.com/90" class="img-thumbnail rounded" style="width: 85px; height: 95px; object-fit: cover;">
@@ -137,85 +169,155 @@
                   <input type="file" class="form-control form-control-sm" id="studentPhotoInput" accept="image/*" required>
                 </div>
               </div>
-		
-	      	<div class="border rounded p-3 mb-3 bg-white shadow-sm">
-                <span class="badge bg-primary mb-2">শিক্ষার্থীর মাদরাসা তথ্য</span>
+
+              <!-- ২. শিক্ষার্থীর প্রাতিষ্ঠানিক তথ্য -->
+              <div class="form-section-box">
+                <span class="badge bg-primary form-section-badge">শিক্ষার্থীর প্রাতিষ্ঠানিক তথ্য</span>
+                
                 <div class="row g-2 mb-2">
-                <div class="col-md-4"><label class="form-label small fw-semibold">শিক্ষার্থীর আইডি  (Student ID)</label><input type="text" class="form-control form-control-sm" id="fatherBn" placeholder="JTQIM-20260001" required></div>
-                  <div class="col-md-4"><label class="form-label small fw-semibold">শিক্ষার্থীর শ্রেণী রোল নাম্বর</label><input type="text" class="form-control form-control-sm" id="fatherEn" placeholder="যেমন: ০১"></div>
-<div class="col-md-4"><label class="form-label small fw-semibold">শিক্ষার্থীর ভর্তির তারিখ</label><input type="date" class="form-control form-control-sm" id="dob" required></div>
+                  <div class="col-md-4">
+                    <label class="form-label small text-muted mb-0">শিক্ষার্থীর আইডি (Student ID)</label>
+                    <input type="text" class="form-control form-control-sm fw-bold" id="sId" placeholder="JTQ-M-20260001" required>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label small text-muted mb-0">শিক্ষার্থীর শ্রেণি রোল নম্বর</label>
+                    <input type="number" class="form-control form-control-sm" id="roll" placeholder="যেমন: ০১" required>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label small text-muted mb-0">শিক্ষার্থীর ভর্তির তারিখ</label>
+                    <input type="date" class="form-control form-control-sm" id="admissionDate" required>
+                  </div>
                 </div>
-                <div class="row g-2">
-                  <div class="col-md-4"><label class="form-label small fw-semibold">শিক্ষার্থীর ভর্তি ফি (টাকা)</label><input type="text" class="form-control form-control-sm" id="fatherNid" placeholder="শিক্ষার্থীর ভর্তি ফি (টাকা)"></div>
-		  <div class="col-md-4"><label class="form-label small fw-semibold">শিক্ষার্থীর মাসিক বেতন (টাকা)</label><input type="text" class="form-control form-control-sm" id="fatherNid" placeholder="শিক্ষার্থীর মাসিক বেতন (টাকা)"></div>
-		
-		<div class="col-md-4"><label class="form-label small fw-semibold">শিক্ষার্থীর বিভাগ / শ্রেণি</label>
-                  <select class="form-select form-select-sm" id="dept" required>
-                    <option value="হিফজ বিভাগ">হিফজ বিভাগ</option>
-                    <option value="নাজেরা">নাজেরা</option>
-                    <option value="নূরানী">নূরানী</option>
-                    <option value="মক্তব">মক্তব</option>
-                  </select>
 
-	
+                <div class="row g-2">
+                  <div class="col-md-4">
+                    <label class="form-label small text-muted mb-0">শিক্ষার্থীর ভর্তি ফি (টাকা)</label>
+                    <input type="number" class="form-control form-control-sm" id="studentAdmissionFee" placeholder="ভর্তি ফি (টাকা)" value="0">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label small text-muted mb-0">শিক্ষার্থীর মাসিক বেতন (টাকা)</label>
+                    <input type="number" class="form-control form-control-sm fw-bold text-danger" id="studentMonthlyFeeRate" placeholder="মাসিক বেতন (টাকা)" value="1000" required>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label small text-muted mb-0">শিক্ষার্থীর বিভাগ / শ্রেণি</label>
+                    <select class="form-select form-select-sm fw-semibold" id="dept" required>
+                      <option value="হিফজ বিভাগ">হিফজ বিভাগ</option>
+                      <option value="নাজেরা">নাজেরা</option>
+                      <option value="নূরানী">নূরানী</option>
+                      <option value="মক্তব">মক্তব</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 
-
-              <div class="border rounded p-3 mb-3 bg-white shadow-sm">
-                <span class="badge bg-primary mb-2">শিক্ষার্থীর তথ্য</span>
-                <div class="row g-2">
-                  <div class="col-md-4"><label class="form-label small fw-semibold">বাংলায় নাম</label><input type="text" class="form-control form-control-sm" id="nameBn" placeholder="আব্দুর রহমান আব্দুল্লাহ বায়েজিদ" required></div>
-                  <div class="col-md-4"><label class="form-label small fw-semibold">Name (English)</label><input type="text" class="form-control form-control-sm" id="nameEn" placeholder="Md. Lutfor Rahman Lablu" required></div>
-                  <div class="col-md-4"><label class="form-label small fw-semibold">الاسم (بالعربية)</label><input type="text" class="form-control form-control-sm text-end" dir="rtl" id="nameAr" placeholder="عبد الرحمن عبد الله بايزيد"></div>
-
-		<div class="row g-2 mb-2">
-                <div class="col-md-4"><label class="form-label small fw-semibold">শিক্ষার্থীর জন্ম নিবন্ধন নম্বর</label><input type="text" class="form-control form-control-sm" id="studentRegNo" placeholder="১৭ ডিজিট জন্ম নিবন্ধন" required></div>
-               <div class="col-md-4"><label class="form-label small fw-semibold">শিক্ষার্থীর জন্ম তারিখ</label><input type="date" class="form-control form-control-sm" id="dob" required></div>
-		<div class="col-md-4"><label class="form-label small fw-semibold">রক্তের গ্রুপ</label>
-                  <select class="form-select form-select-sm" id="bloodGroup">
-                    <option value="A+">A+</option><option value="A-">A-</option>
-                    <option value="B+">B+</option><option value="B-">B-</option>
-                    <option value="O+">O+</option><option value="O-">O-</option>
-                    <option value="AB+">AB+</option><option value="AB-">AB-</option>
-                    <option value="অজানা">অজানা</option>
-                  </select>
-		
-                </div>
-              </div>
-	      </div>
-
-             
-              <div class="border rounded p-3 mb-3 bg-white shadow-sm">
-                <span class="badge bg-primary mb-2">পিতার তথ্য</span>
+              <!-- ৩. শিক্ষার্থীর ব্যক্তিগত তথ্য -->
+              <div class="form-section-box">
+                <span class="badge bg-primary form-section-badge">শিক্ষার্থীর তথ্য</span>
+                
                 <div class="row g-2 mb-2">
-                <div class="col-md-4"><label class="form-label small fw-semibold">পিতার নাম (বাংলা)</label><input type="text" class="form-control form-control-sm" id="fatherBn" placeholder="পিতার নাম" required></div>
-                  <div class="col-md-4"><label class="form-label small fw-semibold">Father's Name (En)</label><input type="text" class="form-control form-control-sm" id="fatherEn" placeholder="Father's Name"></div>
-                  <div class="col-md-4"><label class="form-label small fw-semibold">اسم الأب (بالعربية)</label><input type="text" class="form-control form-control-sm text-end" dir="rtl" id="fatherAr" placeholder="اسم الأب"></div>
+                  <div class="col-md-4">
+                    <label class="form-label small text-muted mb-0">বাংলায় নাম</label>
+                    <input type="text" class="form-control form-control-sm" id="nameBn" placeholder="যেমন: লুৎফর রহমান লাবলু" required>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label small text-muted mb-0">Name (English)</label>
+                    <input type="text" class="form-control form-control-sm" id="nameEn" placeholder="Md. Lutfor Rahman Lablu" required>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label small text-muted mb-0">الاسم (بالعربية)</label>
+                    <input type="text" class="form-control form-control-sm text-end" dir="rtl" id="nameAr" placeholder="محمد لطف الرحمن">
+                  </div>
                 </div>
+
                 <div class="row g-2">
-                  <div class="col-md-6"><label class="form-label small fw-semibold">পিতার NID নম্বর</label><input type="text" class="form-control form-control-sm" id="fatherNid" placeholder="ভোটার আইডি নম্বর"></div>
-		  <div class="col-md-6"><label class="form-label small fw-semibold">পিতার মোবাইল নম্বর</label><input type="text" class="form-control form-control-sm" id="fatherNid" placeholder="017XXXXXXXX"></div>
+                  <div class="col-md-5">
+                    <label class="form-label small text-muted mb-0">শিক্ষার্থীর জন্ম নিবন্ধন নম্বর</label>
+                    <input type="text" class="form-control form-control-sm" id="studentRegNo" placeholder="১৭ ডিজিট জন্ম নিবন্ধন" required>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label small text-muted mb-0">শিক্ষার্থীর জন্ম তারিখ</label>
+                    <input type="date" class="form-control form-control-sm" id="dob" required>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label small text-muted mb-0">রক্তের গ্রুপ</label>
+                    <select class="form-select form-select-sm" id="bloodGroup">
+                      <option value="A+">A+</option><option value="A-">A-</option>
+                      <option value="B+">B+</option><option value="B-">B-</option>
+                      <option value="O+">O+</option><option value="O-">O-</option>
+                      <option value="AB+">AB+</option><option value="AB-">AB-</option>
+                      <option value="অজানা">অজানা</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 
-              <div class="border rounded p-3 mb-3 bg-white shadow-sm">
-                <span class="badge bg-primary mb-2">মাতার তথ্য</span>
+              <!-- ৪. পিতার তথ্য -->
+              <div class="form-section-box">
+                <span class="badge bg-primary form-section-badge">পিতার তথ্য</span>
+                
                 <div class="row g-2 mb-2">
-                  <div class="col-md-4"><label class="form-label small fw-semibold">মাতার নাম (বাংলা)</label><input type="text" class="form-control form-control-sm" id="motherBn" placeholder="মাতার নাম"></div>
-                  <div class="col-md-4"><label class="form-label small fw-semibold">Mother's Name (En)</label><input type="text" class="form-control form-control-sm" id="motherEn" placeholder="Mother's Name"></div>
-                  <div class="col-md-4"><label class="form-label small fw-semibold">اسم الأم (بالعربية)</label><input type="text" class="form-control form-control-sm text-end" dir="rtl" id="motherAr" placeholder="اسم الأم"></div>
+                  <div class="col-md-4">
+                    <label class="form-label small text-muted mb-0">পিতার নাম (বাংলা)</label>
+                    <input type="text" class="form-control form-control-sm" id="fatherBn" placeholder="পিতার নাম" required>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label small text-muted mb-0">Father's Name (En)</label>
+                    <input type="text" class="form-control form-control-sm" id="fatherEn" placeholder="Father's Name">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label small text-muted mb-0">اسم الأب (بالعربية)</label>
+                    <input type="text" class="form-control form-control-sm text-end" dir="rtl" id="fatherAr" placeholder="اسم الأب">
+                  </div>
                 </div>
+
                 <div class="row g-2">
-                  <div class="col-md-6"><label class="form-label small fw-semibold">মাতার NID নম্বর</label><input type="text" class="form-control form-control-sm" id="motherNid" placeholder="ভোটার আইডি নম্বর"></div>
-		 <div class="col-md-6"><label class="form-label small fw-semibold">মাতার মোবাইল নম্বর</label><input type="text" class="form-control form-control-sm" id="fatherNid" placeholder="017XXXXXXXX"></div>
+                  <div class="col-md-6">
+                    <label class="form-label small text-muted mb-0">পিতার NID নম্বর</label>
+                    <input type="text" class="form-control form-control-sm" id="fatherNid" placeholder="ভোটার আইডি নম্বর">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label small text-muted mb-0">পিতার মোবাইল নম্বর</label>
+                    <input type="tel" class="form-control form-control-sm" id="phone" placeholder="017XXXXXXXX" required>
+                  </div>
                 </div>
               </div>
 
-              <!-- বর্তমান ঠিকানা (গ্রাম, ডাকঘর, ইউনিয়ন, থানা, জেলা) -->
-              <div class="border rounded p-3 mb-3 bg-light">
-                <span class="badge bg-primary mb-2"><i class="fa-solid fa-location-dot me-1"></i>বর্তমান ঠিকানা</span>
+              <!-- ৫. মাতার তথ্য -->
+              <div class="form-section-box">
+                <span class="badge bg-primary form-section-badge">মাতার তথ্য</span>
+                
+                <div class="row g-2 mb-2">
+                  <div class="col-md-4">
+                    <label class="form-label small text-muted mb-0">মাতার নাম (বাংলা)</label>
+                    <input type="text" class="form-control form-control-sm" id="motherBn" placeholder="মাতার নাম">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label small text-muted mb-0">Mother's Name (En)</label>
+                    <input type="text" class="form-control form-control-sm" id="motherEn" placeholder="Mother's Name">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label small text-muted mb-0">اسم الأم (بالعربية)</label>
+                    <input type="text" class="form-control form-control-sm text-end" dir="rtl" id="motherAr" placeholder="اسم الأم">
+                  </div>
+                </div>
+
                 <div class="row g-2">
+                  <div class="col-md-6">
+                    <label class="form-label small text-muted mb-0">মাতার NID নম্বর</label>
+                    <input type="text" class="form-control form-control-sm" id="motherNid" placeholder="ভোটার আইডি নম্বর">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label small text-muted mb-0">মাতার মোবাইল নম্বর</label>
+                    <input type="tel" class="form-control form-control-sm" id="motherPhone" placeholder="017XXXXXXXX">
+                  </div>
+                </div>
+              </div>
+
+              <!-- ৬. বর্তমান ঠিকানা -->
+              <div class="form-section-box">
+                <span class="badge bg-primary form-section-badge"><i class="fa-solid fa-location-dot me-1"></i>বর্তমান ঠিকানা</span>
+                
+                <div class="row g-2 mb-2">
                   <div class="col-md-4">
                     <label class="form-label small text-muted mb-0">গ্রাম (Village)</label>
                     <input type="text" class="form-control form-control-sm" id="preVillage" placeholder="গ্রামের নাম" required>
@@ -228,9 +330,12 @@
                     <label class="form-label small text-muted mb-0">ইউনিয়ন (Union)</label>
                     <input type="text" class="form-control form-control-sm" id="preUnion" placeholder="ইউনিয়নের নাম" required>
                   </div>
+                </div>
+
+                <div class="row g-2">
                   <div class="col-md-4">
                     <label class="form-label small text-muted mb-0">ওয়ার্ড (Ward)</label>
-                    <input type="text" class="form-control form-control-sm" id="preUnion" placeholder="ওয়ার্ড নাম্বার" required>
+                    <input type="text" class="form-control form-control-sm" id="preWard" placeholder="ওয়ার্ড নম্বর">
                   </div>
                   <div class="col-md-4">
                     <label class="form-label small text-muted mb-0">থানা (Police Station)</label>
@@ -243,15 +348,16 @@
                 </div>
               </div>
 
-              <!-- স্থায়ী ঠিকানা (গ্রাম, ডাকঘর, ইউনিয়ন, থানা, জেলা) -->
-              <div class="border rounded p-3 mb-3 bg-light">
+              <!-- ৭. স্থায়ী ঠিকানা -->
+              <div class="form-section-box">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                  <span class="badge bg-primary"><i class="fa-solid fa-house-chimney me-1"></i>স্থায়ী ঠিকানা</span>
+                  <span class="badge bg-primary form-section-badge mb-0"><i class="fa-solid fa-house-chimney me-1"></i>স্থায়ী ঠিকানা</span>
                   <button type="button" class="btn btn-outline-dark btn-sm py-0" style="font-size: 11px;" id="copyAddressBtn">
                     <i class="fa-solid fa-copy me-1"></i>বর্তমান ঠিকানার মতো একই
                   </button>
                 </div>
-                <div class="row g-2">
+
+                <div class="row g-2 mb-2">
                   <div class="col-md-4">
                     <label class="form-label small text-muted mb-0">গ্রাম (Village)</label>
                     <input type="text" class="form-control form-control-sm" id="perVillage" placeholder="গ্রামের নাম" required>
@@ -264,9 +370,12 @@
                     <label class="form-label small text-muted mb-0">ইউনিয়ন (Union)</label>
                     <input type="text" class="form-control form-control-sm" id="perUnion" placeholder="ইউনিয়নের নাম" required>
                   </div>
+                </div>
+
+                <div class="row g-2">
                   <div class="col-md-4">
                     <label class="form-label small text-muted mb-0">ওয়ার্ড (Ward)</label>
-                    <input type="text" class="form-control form-control-sm" id="perUnion" placeholder="ওয়ার্ড নাম্বার" required>
+                    <input type="text" class="form-control form-control-sm" id="perWard" placeholder="ওয়ার্ড নম্বর">
                   </div>
                   <div class="col-md-4">
                     <label class="form-label small text-muted mb-0">থানা (Police Station)</label>
@@ -279,17 +388,20 @@
                 </div>
               </div>
 
+              <!-- ৮. লগইন পাসওয়ার্ড -->
               <div class="mb-3">
-                <label class="form-label small fw-semibold">ছাত্রের লগইন পাসওয়ার্ড</label>
+                <label class="form-label small fw-semibold">ছাত্রের লগইন পাসওয়ার্ড</label>
                 <input type="text" class="form-control form-control-sm" id="sPass" value="jtq@12345" required>
               </div>
 
-              <button type="submit" class="btn btn-success btn-sm w-100 fw-semibold" id="submitBtn">ছাত্র ভর্তি সম্পন্ন করুন</button>
+              <button type="submit" class="btn btn-success btn-sm w-100 fw-bold py-2 shadow-sm" id="submitBtn">
+                ছাত্র ভর্তি সম্পন্ন করুন
+              </button>
             </form>
           </div>
         </div>
 
-        <!-- ডানে: ভর্তি হওয়া শিক্ষার্থী তালিকা -->
+        <!-- ডানে: ভর্তি হওয়া শিক্ষার্থী তালিকা ও এক্সেল বাটন -->
         <div class="col-lg-5">
           <div class="card border-0 shadow-sm p-4 bg-white mb-4 sticky-top" style="top: 20px;">
             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -364,7 +476,7 @@
               <div class="row g-3 mb-3 p-3 bg-light rounded border">
                 <div class="col-md-6">
                   <label class="form-label small fw-bold text-dark">টার্গেট Student ID</label>
-                  <input type="text" class="form-control form-control-sm fw-bold border-primary" id="examTargetId" placeholder="যেমন: JTQIM-20260001" required>
+                  <input type="text" class="form-control form-control-sm fw-bold border-primary" id="examTargetId" placeholder="যেমন: JTQ-2026-0001" required>
                 </div>
                 <div class="col-md-6">
                   <label class="form-label small fw-bold text-dark">কোন পরীক্ষার ফলাফল আপডেট করবেন?</label>
@@ -656,7 +768,7 @@
 
   </div>
 
-  <!-- শিক্ষার্থী তথ্য এডিট মোডাল (সম্পূর্ণ ঠিকানার ঘরসহ) -->
+  <!-- শিক্ষার্থী তথ্য এডিট মোডাল -->
   <div class="modal fade" id="editStudentModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content border-0 shadow-lg">
@@ -678,12 +790,16 @@
             </div>
 
             <div class="row g-2 mb-3">
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <label class="form-label small fw-bold">Student ID (পরিবর্তনযোগ্য নয়):</label>
                 <input type="text" class="form-control form-control-sm fw-bold bg-light" id="editSId" readonly>
               </div>
-              <div class="col-md-6">
-                <label class="form-label small fw-bold text-danger">মাসিক নির্ধারিত বেতন হার (টাকা):</label>
+              <div class="col-md-4">
+                <label class="form-label small fw-bold">ভর্তি ফি (টাকা):</label>
+                <input type="number" class="form-control form-control-sm" id="editAdmissionFee">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label small fw-bold text-danger">মাসিক বেতন হার (টাকা):</label>
                 <input type="number" class="form-control form-control-sm fw-bold border-danger text-danger" id="editMonthlyFeeRate" required>
               </div>
             </div>
@@ -710,8 +826,9 @@
             </div>
 
             <div class="row g-2 mb-2">
-              <div class="col-md-6"><label class="form-label small fw-semibold">জন্ম নিবন্ধন নম্বর</label><input type="text" class="form-control form-control-sm" id="editRegNo" required></div>
-              <div class="col-md-6"><label class="form-label small fw-semibold">মোবাইল নম্বর</label><input type="tel" class="form-control form-control-sm" id="editPhone" required></div>
+              <div class="col-md-4"><label class="form-label small fw-semibold">জন্ম নিবন্ধন নম্বর</label><input type="text" class="form-control form-control-sm" id="editRegNo" required></div>
+              <div class="col-md-4"><label class="form-label small fw-semibold">পিতার মোবাইল</label><input type="tel" class="form-control form-control-sm" id="editPhone" required></div>
+              <div class="col-md-4"><label class="form-label small fw-semibold">মাতার মোবাইল</label><input type="tel" class="form-control form-control-sm" id="editMotherPhone"></div>
             </div>
 
             <div class="row g-2 mb-2">
@@ -741,57 +858,33 @@
               <div class="col-md-6"><label class="form-label small fw-semibold">শ্রেণি রোল নম্বর</label><input type="number" class="form-control form-control-sm" id="editRoll" required></div>
             </div>
 
-            <!-- এডিট মোডালে বর্তমান ঠিকানার ৫টি ঘর -->
+            <!-- এডিট মোডালে বর্তমান ঠিকানা -->
             <div class="border rounded p-3 mb-3 bg-light">
               <span class="badge bg-success mb-2"><i class="fa-solid fa-location-dot me-1"></i>বর্তমান ঠিকানা</span>
+              <div class="row g-2 mb-2">
+                <div class="col-md-4"><label class="form-label small text-muted mb-0">গ্রাম</label><input type="text" class="form-control form-control-sm" id="editPreVillage"></div>
+                <div class="col-md-4"><label class="form-label small text-muted mb-0">ডাকঘর</label><input type="text" class="form-control form-control-sm" id="editPrePost"></div>
+                <div class="col-md-4"><label class="form-label small text-muted mb-0">ইউনিয়ন</label><input type="text" class="form-control form-control-sm" id="editPreUnion"></div>
+              </div>
               <div class="row g-2">
-                <div class="col-md-4">
-                  <label class="form-label small text-muted mb-0">গ্রাম / মহল্লা</label>
-                  <input type="text" class="form-control form-control-sm" id="editPreVillage" placeholder="গ্রাম">
-                </div>
-                <div class="col-md-4">
-                  <label class="form-label small text-muted mb-0">ডাকঘর</label>
-                  <input type="text" class="form-control form-control-sm" id="editPrePost" placeholder="ডাকঘর">
-                </div>
-                <div class="col-md-4">
-                  <label class="form-label small text-muted mb-0">ইউনিয়ন / ওয়ার্ড</label>
-                  <input type="text" class="form-control form-control-sm" id="editPreUnion" placeholder="ইউনিয়ন">
-                </div>
-                <div class="col-md-6">
-                  <label class="form-label small text-muted mb-0">থানা / উপজেলা</label>
-                  <input type="text" class="form-control form-control-sm" id="editPreThana" placeholder="থানা">
-                </div>
-                <div class="col-md-6">
-                  <label class="form-label small text-muted mb-0">জেলা</label>
-                  <input type="text" class="form-control form-control-sm" id="editPreDistrict" placeholder="জেলা">
-                </div>
+                <div class="col-md-4"><label class="form-label small text-muted mb-0">ওয়ার্ড</label><input type="text" class="form-control form-control-sm" id="editPreWard"></div>
+                <div class="col-md-4"><label class="form-label small text-muted mb-0">থানা</label><input type="text" class="form-control form-control-sm" id="editPreThana"></div>
+                <div class="col-md-4"><label class="form-label small text-muted mb-0">জেলা</label><input type="text" class="form-control form-control-sm" id="editPreDistrict"></div>
               </div>
             </div>
 
-            <!-- এডিট মোডালে স্থায়ী ঠিকানার ৫টি ঘর -->
+            <!-- এডিট মোডালে স্থায়ী ঠিকানা -->
             <div class="border rounded p-3 mb-3 bg-light">
               <span class="badge bg-secondary mb-2"><i class="fa-solid fa-house-chimney me-1"></i>স্থায়ী ঠিকানা</span>
+              <div class="row g-2 mb-2">
+                <div class="col-md-4"><label class="form-label small text-muted mb-0">গ্রাম</label><input type="text" class="form-control form-control-sm" id="editPerVillage"></div>
+                <div class="col-md-4"><label class="form-label small text-muted mb-0">ডাকঘর</label><input type="text" class="form-control form-control-sm" id="editPerPost"></div>
+                <div class="col-md-4"><label class="form-label small text-muted mb-0">ইউনিয়ন</label><input type="text" class="form-control form-control-sm" id="editPerUnion"></div>
+              </div>
               <div class="row g-2">
-                <div class="col-md-4">
-                  <label class="form-label small text-muted mb-0">গ্রাম / মহল্লা</label>
-                  <input type="text" class="form-control form-control-sm" id="editPerVillage" placeholder="গ্রাম">
-                </div>
-                <div class="col-md-4">
-                  <label class="form-label small text-muted mb-0">ডাকঘর</label>
-                  <input type="text" class="form-control form-control-sm" id="editPerPost" placeholder="ডাকঘর">
-                </div>
-                <div class="col-md-4">
-                  <label class="form-label small text-muted mb-0">ইউনিয়ন / ওয়ার্ড</label>
-                  <input type="text" class="form-control form-control-sm" id="editPerUnion" placeholder="ইউনিয়ন">
-                </div>
-                <div class="col-md-6">
-                  <label class="form-label small text-muted mb-0">থানা / উপজেলা</label>
-                  <input type="text" class="form-control form-control-sm" id="editPerThana" placeholder="থানা">
-                </div>
-                <div class="col-md-6">
-                  <label class="form-label small text-muted mb-0">জেলা</label>
-                  <input type="text" class="form-control form-control-sm" id="editPerDistrict" placeholder="জেলা">
-                </div>
+                <div class="col-md-4"><label class="form-label small text-muted mb-0">ওয়ার্ড</label><input type="text" class="form-control form-control-sm" id="editPerWard"></div>
+                <div class="col-md-4"><label class="form-label small text-muted mb-0">থানা</label><input type="text" class="form-control form-control-sm" id="editPerThana"></div>
+                <div class="col-md-4"><label class="form-label small text-muted mb-0">জেলা</label><input type="text" class="form-control form-control-sm" id="editPerDistrict"></div>
               </div>
             </div>
 
@@ -929,52 +1022,46 @@
     document.getElementById('expDate').value = new Date().toISOString().split('T')[0];
     document.getElementById('salPayDate').value = new Date().toISOString().split('T')[0];
 
+    // ৮টি ট্যাব স্যুইচ করার নিরাপদ ফাংশন
     function switchAdminTab(tab) {
-      const aSec = document.getElementById('admissionSection');
-      const appSec = document.getElementById('appReviewSection');
-      const eSec = document.getElementById('examSection');
-      const sSec = document.getElementById('searchSection');
-      const fSec = document.getElementById('feeApprovalSection');
-      const tSec = document.getElementById('teacherSection');
-      const nSec = document.getElementById('noticeManageSection');
-      const accSec = document.getElementById('accountsSection');
-      
-      const aBtn = document.getElementById('tabAdmissionBtn');
-      const appBtn = document.getElementById('tabAppReviewBtn');
-      const eBtn = document.getElementById('tabExamBtn');
-      const sBtn = document.getElementById('tabSearchBtn');
-      const fBtn = document.getElementById('tabFeeApprovalBtn');
-      const tBtn = document.getElementById('tabTeacherBtn');
-      const nBtn = document.getElementById('tabNoticeBtn');
-      const accBtn = document.getElementById('tabAccountsBtn');
+      const tabsMap = {
+        'admission': { sec: 'admissionSection', btn: 'tabAdmissionBtn', fn: null },
+        'appReview': { sec: 'appReviewSection', btn: 'tabAppReviewBtn', fn: loadAdmissionApplications },
+        'exam': { sec: 'examSection', btn: 'tabExamBtn', fn: null },
+        'search': { sec: 'searchSection', btn: 'tabSearchBtn', fn: null },
+        'feeApproval': { sec: 'feeApprovalSection', btn: 'tabFeeApprovalBtn', fn: loadPendingOnlinePayments },
+        'teachers': { sec: 'teacherSection', btn: 'tabTeacherBtn', fn: loadTeachersList },
+        'noticeManage': { sec: 'noticeManageSection', btn: 'tabNoticeBtn', fn: loadAdminNoticesList },
+        'accounts': { sec: 'accountsSection', btn: 'tabAccountsBtn', fn: loadAccountsData }
+      };
 
-      [aSec, appSec, eSec, sSec, fSec, tSec, nSec, accSec].forEach(el => el.style.display = 'none');
-      [aBtn, appBtn, eBtn, sBtn, fBtn, tBtn, nBtn, accBtn].forEach(btn => {
-        btn.classList.remove('active');
-        btn.classList.add('text-dark');
+      Object.keys(tabsMap).forEach(key => {
+        const item = tabsMap[key];
+        const sEl = document.getElementById(item.sec);
+        const bEl = document.getElementById(item.btn);
+        if (sEl) sEl.style.display = 'none';
+        if (bEl) {
+          bEl.classList.remove('active');
+          bEl.classList.add('text-dark');
+        }
       });
 
-      if (tab === 'admission') {
-        aSec.style.display = 'block'; aBtn.classList.add('active'); aBtn.classList.remove('text-dark');
-      } else if (tab === 'appReview') {
-        appSec.style.display = 'block'; appBtn.classList.add('active'); appBtn.classList.remove('text-dark');
-        loadAdmissionApplications();
-      } else if (tab === 'exam') {
-        eSec.style.display = 'block'; eBtn.classList.add('active'); eBtn.classList.remove('text-dark');
-      } else if (tab === 'search') {
-        sSec.style.display = 'block'; sBtn.classList.add('active'); sBtn.classList.remove('text-dark');
-      } else if (tab === 'feeApproval') {
-        fSec.style.display = 'block'; fBtn.classList.add('active'); fBtn.classList.remove('text-dark');
-        loadPendingOnlinePayments();
-      } else if (tab === 'teachers') {
-        tSec.style.display = 'block'; tBtn.classList.add('active'); tBtn.classList.remove('text-dark');
-        loadTeachersList();
-      } else if (tab === 'noticeManage') {
-        nSec.style.display = 'block'; nBtn.classList.add('active'); nBtn.classList.remove('text-dark');
-        loadAdminNoticesList();
-      } else if (tab === 'accounts') {
-        accSec.style.display = 'block'; accBtn.classList.add('active'); accBtn.classList.remove('text-dark');
-        loadAccountsData();
+      if (tabsMap[tab]) {
+        const target = tabsMap[tab];
+        const sEl = document.getElementById(target.sec);
+        const bEl = document.getElementById(target.btn);
+        if (sEl) sEl.style.display = 'block';
+        if (bEl) {
+          bEl.classList.add('active');
+          bEl.classList.remove('text-dark');
+        }
+        if (target.fn && typeof target.fn === 'function') {
+          try {
+            target.fn();
+          } catch (e) {
+            console.error("Tab function call error:", e);
+          }
+        }
       }
     }
 
@@ -996,6 +1083,7 @@
       document.getElementById('perVillage').value = document.getElementById('preVillage').value;
       document.getElementById('perPost').value = document.getElementById('prePost').value;
       document.getElementById('perUnion').value = document.getElementById('preUnion').value;
+      document.getElementById('perWard').value = document.getElementById('preWard').value;
       document.getElementById('perThana').value = document.getElementById('preThana').value;
       document.getElementById('perDistrict').value = document.getElementById('preDistrict').value;
     });
@@ -1064,6 +1152,7 @@
 
         const s = doc.data();
         document.getElementById('editSId').value = s.studentId;
+        document.getElementById('editAdmissionFee').value = s.admissionFee || 0;
         document.getElementById('editMonthlyFeeRate').value = s.monthlyFeeRate || 1000;
         document.getElementById('editNameBn').value = s.nameBn || s.name || "";
         document.getElementById('editNameEn').value = s.nameEn || "";
@@ -1076,6 +1165,7 @@
 
         document.getElementById('editRegNo').value = s.studentRegNo || "";
         document.getElementById('editPhone').value = s.phone || "";
+        document.getElementById('editMotherPhone').value = s.motherPhone || "";
         document.getElementById('editDob').value = s.dob || "";
         document.getElementById('editBlood').value = s.bloodGroup || "অজানা";
         document.getElementById('editDept').value = s.department || "হিফজ বিভাগ";
@@ -1088,6 +1178,7 @@
         document.getElementById('editPreVillage').value = pre.village || "";
         document.getElementById('editPrePost').value = pre.post || "";
         document.getElementById('editPreUnion').value = pre.union || "";
+        document.getElementById('editPreWard').value = pre.ward || "";
         document.getElementById('editPreThana').value = pre.thana || "";
         document.getElementById('editPreDistrict').value = pre.district || "";
 
@@ -1095,6 +1186,7 @@
         document.getElementById('editPerVillage').value = per.village || "";
         document.getElementById('editPerPost').value = per.post || "";
         document.getElementById('editPerUnion').value = per.union || "";
+        document.getElementById('editPerWard').value = per.ward || "";
         document.getElementById('editPerThana').value = per.thana || "";
         document.getElementById('editPerDistrict').value = per.district || "";
 
@@ -1126,16 +1218,19 @@
           motherNid: document.getElementById('editMotherNid').value.trim(),
           studentRegNo: document.getElementById('editRegNo').value.trim(),
           phone: document.getElementById('editPhone').value.trim(),
+          motherPhone: document.getElementById('editMotherPhone').value.trim(),
           dob: document.getElementById('editDob').value,
           bloodGroup: document.getElementById('editBlood').value,
           department: document.getElementById('editDept').value,
           roll: document.getElementById('editRoll').value,
+          admissionFee: parseFloat(document.getElementById('editAdmissionFee').value) || 0,
           monthlyFeeRate: parseFloat(document.getElementById('editMonthlyFeeRate').value) || 1000,
           password: document.getElementById('editPass').value.trim(),
           presentAddress: {
             village: document.getElementById('editPreVillage').value.trim(),
             post: document.getElementById('editPrePost').value.trim(),
             union: document.getElementById('editPreUnion').value.trim(),
+            ward: document.getElementById('editPreWard').value.trim(),
             thana: document.getElementById('editPreThana').value.trim(),
             district: document.getElementById('editPreDistrict').value.trim()
           },
@@ -1143,6 +1238,7 @@
             village: document.getElementById('editPerVillage').value.trim(),
             post: document.getElementById('editPerPost').value.trim(),
             union: document.getElementById('editPerUnion').value.trim(),
+            ward: document.getElementById('editPerWard').value.trim(),
             thana: document.getElementById('editPerThana').value.trim(),
             district: document.getElementById('editPerDistrict').value.trim()
           },
@@ -1164,11 +1260,11 @@
       }
     });
 
-    // নতুন ভর্তি সাবমিট (ঠিকানা নির্ভুলভাবে ফায়ারবেসে সেভ হবে)
     document.getElementById('addStudentForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const sId = document.getElementById('sId').value.trim();
       const admDate = document.getElementById('admissionDate').value;
+      const admissionFee = parseFloat(document.getElementById('studentAdmissionFee').value) || 0;
       const monthlyFeeRate = parseFloat(document.getElementById('studentMonthlyFeeRate').value) || 1000;
       const submitBtn = document.getElementById('submitBtn');
       submitBtn.innerText = "সংরক্ষণ হচ্ছে..."; submitBtn.disabled = true;
@@ -1176,6 +1272,7 @@
       const studentData = {
         studentId: sId,
         admissionDate: admDate,
+        admissionFee: admissionFee,
         monthlyFeeRate: monthlyFeeRate,
         nameBn: document.getElementById('nameBn').value.trim(),
         nameEn: document.getElementById('nameEn').value.trim(),
@@ -1193,6 +1290,7 @@
         motherNid: document.getElementById('motherNid').value.trim(),
         studentRegNo: document.getElementById('studentRegNo').value.trim(),
         phone: document.getElementById('phone').value.trim(),
+        motherPhone: document.getElementById('motherPhone').value.trim(),
         dob: document.getElementById('dob').value,
         department: document.getElementById('dept').value,
         roll: document.getElementById('roll').value,
@@ -1203,6 +1301,7 @@
           village: document.getElementById('preVillage').value.trim(),
           post: document.getElementById('prePost').value.trim(),
           union: document.getElementById('preUnion').value.trim(),
+          ward: document.getElementById('preWard').value.trim(),
           thana: document.getElementById('preThana').value.trim(),
           district: document.getElementById('preDistrict').value.trim()
         },
@@ -1210,6 +1309,7 @@
           village: document.getElementById('perVillage').value.trim(),
           post: document.getElementById('perPost').value.trim(),
           union: document.getElementById('perUnion').value.trim(),
+          ward: document.getElementById('perWard').value.trim(),
           thana: document.getElementById('perThana').value.trim(),
           district: document.getElementById('perDistrict').value.trim()
         },
@@ -1616,9 +1716,9 @@
         document.getElementById('tblAdmissionDate').innerText = s.admissionDate || "-";
 
         const pre = s.presentAddress || {};
-        document.getElementById('tblPresentAddress').innerText = `গ্রাম: ${pre.village || '-'}, ডাক: ${pre.post || '-'}, ইউনিয়ন: ${pre.union || '-'}, থানা: ${pre.thana || '-'}, জেলা: ${pre.district || '-'}`;
+        document.getElementById('tblPresentAddress').innerText = `গ্রাম: ${pre.village || '-'}, ডাক: ${pre.post || '-'}, ইউনিয়ন: ${pre.union || '-'}, ওয়ার্ড: ${pre.ward || '-'}, থানা: ${pre.thana || '-'}, জেলা: ${pre.district || '-'}`;
         const per = s.permanentAddress || {};
-        document.getElementById('tblPermanentAddress').innerText = `গ্রাম: ${per.village || '-'}, ডাক: ${per.post || '-'}, ইউনিয়ন: ${per.union || '-'}, থানা: ${per.thana || '-'}, জেলা: ${per.district || '-'}`;
+        document.getElementById('tblPermanentAddress').innerText = `গ্রাম: ${per.village || '-'}, ডাক: ${per.post || '-'}, ইউনিয়ন: ${per.union || '-'}, ওয়ার্ড: ${per.ward || '-'}, থানা: ${per.thana || '-'}, জেলা: ${per.district || '-'}`;
 
         document.getElementById('sumAttendance').innerText = s.attendance || "১০০%";
         document.getElementById('sumResult').innerText = "ফলাফল: " + (s.result || "অপেক্ষমান");
