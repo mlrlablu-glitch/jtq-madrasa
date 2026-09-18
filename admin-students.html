@@ -102,7 +102,7 @@
               </div>
             </div>
 
-            <!-- ৪. পিতার তথ্য (পেশা সহ) -->
+            <!-- ৪. পিতার তথ্য -->
             <div class="form-section-box">
               <span class="badge bg-primary form-section-badge">পিতার তথ্য</span>
               <div class="row g-2 mb-2">
@@ -117,7 +117,7 @@
               </div>
             </div>
 
-            <!-- ৫. মাতার তথ্য (পেশা সহ) -->
+            <!-- ৫. মাতার তথ্য -->
             <div class="form-section-box">
               <span class="badge bg-primary form-section-badge">মাতার তথ্য</span>
               <div class="row g-2 mb-2">
@@ -132,7 +132,7 @@
               </div>
             </div>
 
-            <!-- ৬. বর্তমান ঠিকানা (বাড়িওয়ালার তথ্য সহ) -->
+            <!-- ৬. বর্তমান ঠিকানা -->
             <div class="form-section-box">
               <span class="badge bg-primary form-section-badge"><i class="fa-solid fa-location-dot me-1"></i>বর্তমান ঠিকানা</span>
               <div class="row g-2 mb-2 p-2 border rounded bg-light">
@@ -143,7 +143,7 @@
               <div class="row g-2 mb-2">
                 <div class="col-md-4"><label class="form-label small text-muted mb-0">গ্রাম (Village)</label><input type="text" class="form-control form-control-sm" id="preVillage" placeholder="গ্রামের নাম" required></div>
                 <div class="col-md-4"><label class="form-label small text-muted mb-0">ডাকঘর (Post Office)</label><input type="text" class="form-control form-control-sm" id="prePost" placeholder="ডাকঘর" required></div>
-                <div class="col-md-4"><label class="form-label small text-muted mb-0">ইউনিয়ন (Union)</label><input type="text" class="form-control form-control-sm" id="preUnion" placeholder="ইউনিয়ন" required></div>
+                <div class="col-md-4"><label class="form-label small text-muted mb-0">ইউনিয়ন (Union)</label><input type="text" class="form-control form-control-sm" id="preUnion" placeholder="ইউনিয়নের নাম" required></div>
               </div>
               <div class="row g-2">
                 <div class="col-md-4"><label class="form-label small text-muted mb-0">ওয়ার্ড (Ward)</label><input type="text" class="form-control form-control-sm" id="preWard" placeholder="ওয়ার্ড নম্বর"></div>
@@ -161,7 +161,7 @@
               <div class="row g-2 mb-2">
                 <div class="col-md-4"><label class="form-label small text-muted mb-0">গ্রাম (Village)</label><input type="text" class="form-control form-control-sm" id="perVillage" placeholder="গ্রামের নাম" required></div>
                 <div class="col-md-4"><label class="form-label small text-muted mb-0">ডাকঘর (Post Office)</label><input type="text" class="form-control form-control-sm" id="perPost" placeholder="ডাকঘর" required></div>
-                <div class="col-md-4"><label class="form-label small text-muted mb-0">ইউনিয়ন (Union)</label><input type="text" class="form-control form-control-sm" id="perUnion" placeholder="ইউনিয়ন" required></div>
+                <div class="col-md-4"><label class="form-label small text-muted mb-0">ইউনিয়ন (Union)</label><input type="text" class="form-control form-control-sm" id="perUnion" placeholder="ইউনিয়নের নাম" required></div>
               </div>
               <div class="row g-2">
                 <div class="col-md-4"><label class="form-label small text-muted mb-0">ওয়ার্ড (Ward)</label><input type="text" class="form-control form-control-sm" id="perWard" placeholder="ওয়ার্ড নম্বর"></div>
@@ -284,13 +284,36 @@
     document.getElementById('adminLogout').addEventListener('click', () => { localStorage.removeItem('adminSession'); window.location.href = 'admin-login.html'; });
     document.getElementById('admissionDate').value = new Date().toISOString().split('T')[0];
 
+    // অটো ইমেজ কম্প্রেস ইঞ্জিন (১ এমবি লিমিট এড়ানোর জন্য)
+    function compressImage(file, callback) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = function(e) {
+        const img = new Image();
+        img.src = e.target.result;
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          const maxDim = 600; // ম্যাক্সিমাম সাইজ পিক্সেল
+          if (width > height) { if (width > maxDim) { height *= maxDim / width; width = maxDim; } }
+          else { if (height > maxDim) { width *= maxDim / height; height = maxDim; } }
+          canvas.width = width; canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          callback(canvas.toDataURL('image/jpeg', 0.7)); // ৭% কোয়ালিটি কম্প্রেস
+        }
+      }
+    }
+
     let base64Image = "";
     document.getElementById('studentPhotoInput').addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (file) {
-        const reader = new FileReader();
-        reader.onload = (event) => { base64Image = event.target.result; document.getElementById('imagePreview').src = base64Image; };
-        reader.readAsDataURL(file);
+        compressImage(file, (compressedData) => {
+          base64Image = compressedData;
+          document.getElementById('imagePreview').src = base64Image;
+        });
       }
     });
 
@@ -303,7 +326,6 @@
       document.getElementById('perDistrict').value = document.getElementById('preDistrict').value;
     });
 
-    // ছাত্র তালিকা লোড
     db.collection("students").onSnapshot((snapshot) => {
       const tbody = document.getElementById('studentTableBody');
       tbody.innerHTML = "";
@@ -334,14 +356,14 @@
       db.collection("students").doc(id).delete().then(() => alert("শিক্ষার্থী মুছে ফেলা হয়েছে।"));
     }
 
-    // এডিট মোডাল লজিক
     let editBase64Image = "";
     document.getElementById('editPhotoInput').addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (file) {
-        const reader = new FileReader();
-        reader.onload = (event) => { editBase64Image = event.target.result; document.getElementById('editImagePreview').src = editBase64Image; };
-        reader.readAsDataURL(file);
+        compressImage(file, (compressedData) => {
+          editBase64Image = compressedData;
+          document.getElementById('editImagePreview').src = editBase64Image;
+        });
       }
     });
 
@@ -388,6 +410,7 @@
       const sId = document.getElementById('editSId').value;
       const btn = document.getElementById('btnUpdateStudent');
       btn.disabled = true; btn.innerText = "আপডেট হচ্ছে...";
+
       try {
         const updateData = {
           nameBn: document.getElementById('editNameBn').value.trim(),
@@ -419,7 +442,6 @@
       finally { btn.disabled = false; btn.innerHTML = `<i class="fa-solid fa-check-double me-1"></i> তথ্য আপডেট ও সংরক্ষণ করুন`; }
     });
 
-    // নতুন ভর্তি সাবমিট
     document.getElementById('addStudentForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const sId = document.getElementById('sId').value.trim();
@@ -479,24 +501,24 @@
       };
 
       db.collection("students").doc(sId).set(studentData).then(() => {
-        alert("ছাত্র ভর্তি সফলভাবে সম্পন্ন হয়েছে!");
+        alert("নতুন ছাত্র সফলভাবে ভর্তি করা হয়েছে!");
         this.reset();
         document.getElementById('imagePreview').src = "https://via.placeholder.com/90";
         base64Image = "";
-      }).catch(err => alert("ত্রুটি: " + err.message)).finally(() => {
-        btn.disabled = false; btn.innerText = "ছাত্র ভর্তি সম্পন্ন করুন";
+        document.getElementById('sPass').value = "jtq@12345";
+        document.getElementById('admissionDate').value = new Date().toISOString().split('T')[0];
+      }).catch((err) => alert("ত্রুটি: " + err.message)).finally(() => {
+        btn.innerText = "ছাত্র ভর্তি সম্পন্ন করুন"; btn.disabled = false;
       });
     });
 
-    // ১০০% বাংলা ইউনিকোড এক্সেল ফাইল এক্সপোর্ট (.xls)
     async function exportStudentsToExcel() {
       const snap = await db.collection("students").get();
-      if (snap.empty) { alert("তথ্য নেই!"); return; }
-      let xml = `<?xml version="1.0" encoding="UTF-8"?><?mso-application progid="Excel.Sheet"?><Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"><Worksheet ss:Name="Students"><Table><Row ss:StyleID="HeaderStyle"><Cell><Data ss:Type="String">ID</Data></Cell><Cell><Data ss:Type="String">নাম</Data></Cell><Cell><Data ss:Type="String">বিভাগ</Data></Cell><Cell><Data ss:Type="String">রোল</Data></Cell><Cell><Data ss:Type="String">পিতার নাম</Data></Cell><Cell><Data ss:Type="String">পিতার পেশা</Data></Cell><Cell><Data ss:Type="String">মোবাইল</Data></Cell><Cell><Data ss:Type="String">বাড়িওয়ালা</Data></Cell><Cell><Data ss:Type="String">বর্তমান ঠিকানা</Data></Cell></Row>`;
-      snap.forEach(doc => {
-        const d = doc.data();
-        const pre = d.presentAddress || {};
-        xml += `<Row><Cell><Data ss:Type="String">${d.studentId}</Data></Cell><Cell><Data ss:Type="String">${d.nameBn||d.name}</Data></Cell><Cell><Data ss:Type="String">${d.department}</Data></Cell><Cell><Data ss:Type="String">${d.roll}</Data></Cell><Cell><Data ss:Type="String">${d.fatherBn||''}</Data></Cell><Cell><Data ss:Type="String">${d.fatherOccupation||''}</Data></Cell><Cell><Data ss:Type="String">${d.phone}</Data></Cell><Cell><Data ss:Type="String">${pre.landlordName||''}</Data></Cell><Cell><Data ss:Type="String">${pre.village||''}, ${pre.thana||''}, ${pre.district||''}</Data></Cell></Row>`;
+      if (snap.empty) { alert("কোনো শিক্ষার্থীর তথ্য পাওয়া যায়নি!"); return; }
+      let xml = `<?xml version="1.0" encoding="UTF-8"?><?mso-application progid="Excel.Sheet"?><Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"><Worksheet ss:Name="Students"><Table><Row ss:StyleID="HeaderStyle"><Cell><Data ss:Type="String">ID</Data></Cell><Cell><Data ss:Type="String">নাম</Data></Cell><Cell><Data ss:Type="String">বিভাগ</Data></Cell><Cell><Data ss:Type="String">রোল</Data></Cell><Cell><Data ss:Type="String">মোবাইল</Data></Cell></Row>`;
+      snap.forEach(d => {
+        const s = d.data();
+        xml += `<Row><Cell><Data ss:Type="String">${s.studentId}</Data></Cell><Cell><Data ss:Type="String">${s.nameBn||s.name}</Data></Cell><Cell><Data ss:Type="String">${s.department}</Data></Cell><Cell><Data ss:Type="String">${s.roll}</Data></Cell><Cell><Data ss:Type="String">${s.phone}</Data></Cell></Row>`;
       });
       xml += `</Table></Worksheet></Workbook>`;
       const blob = new Blob([xml], { type: 'application/vnd.ms-excel;charset=utf-8' });
