@@ -38,18 +38,10 @@
 
     <form id="teacherLoginForm">
       <div class="mb-3">
-        <label class="form-label small fw-semibold">শিক্ষকের পুরো নাম</label>
+        <label class="form-label small fw-semibold">শিক্ষক আইডি (Teacher ID)</label>
         <div class="input-group">
-          <span class="input-group-text"><i class="fa-solid fa-user-tie"></i></span>
-          <input type="text" class="form-control" id="tName" placeholder="যেমন: মাও. আব্দুর রহমান" required>
-        </div>
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label small fw-semibold">মোবাইল নম্বর</label>
-        <div class="input-group">
-          <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
-          <input type="tel" class="form-control" id="tPhone" placeholder="017XXXXXXXX" required>
+          <span class="input-group-text"><i class="fa-solid fa-id-card"></i></span>
+          <input type="text" class="form-control fw-bold text-success" id="tId" placeholder="যেমন: TCH-01" required>
         </div>
       </div>
 
@@ -62,34 +54,60 @@
         <small class="text-muted" style="font-size: 11px;">ডিফল্ট পাসওয়ার্ড: <strong>teacher@123</strong></small>
       </div>
 
-      <button type="submit" class="btn btn-success w-100 fw-semibold py-2 shadow-sm">
+      <button type="submit" class="btn btn-success w-100 fw-semibold py-2 shadow-sm" id="loginBtn">
         <i class="fa-solid fa-right-to-bracket me-1"></i> লগইন করুন
       </button>
     </form>
 
     <div class="text-center mt-3">
       <a href="index.html" class="text-decoration-none small text-muted">
-        <i class="fa-solid fa-house me-1"></i> মূল ওয়েবসাইটে ফিরে যান
+        <i class="fa-solid fa-house me-1"></i> মূল ওয়েবসাইটে ফিরে যান
       </a>
     </div>
   </div>
 
-  <script>
-    // শিক্ষক লগইন লজিক
-    document.getElementById('teacherLoginForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const name = document.getElementById('tName').value.trim();
-      const phone = document.getElementById('tPhone').value.trim();
-      const pass = document.getElementById('tPass').value;
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
 
-      // শিক্ষক পিন/পাসওয়ার্ড (teacher@123)
-      if (pass === 'teacher@123') {
-        localStorage.setItem('teacherSession', 'active');
-        localStorage.setItem('teacherName', name);
-        localStorage.setItem('teacherPhone', phone);
-        window.location.href = 'daily-sabak.html';
-      } else {
-        alert("ভুল পাসওয়ার্ড! সঠিক শিক্ষক পাসওয়ার্ড প্রদান করুন।");
+  <script>
+    // ফায়ারবেস থেকে শিক্ষক আইডি ও পাসওয়ার্ড যাচাই লজিক
+    document.getElementById('teacherLoginForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const tId = document.getElementById('tId').value.trim();
+      const pass = document.getElementById('tPass').value;
+      const btn = document.getElementById('loginBtn');
+
+      btn.disabled = true;
+      btn.innerText = "যাচাই করা হচ্ছে...";
+
+      try {
+        const docRef = await db.collection("teachers").doc(tId).get();
+        if (!docRef.exists) {
+          alert("এই শিক্ষক আইডি দিয়ে কোনো শিক্ষক নিবন্ধিত নেই!");
+          btn.disabled = false;
+          btn.innerHTML = `<i class="fa-solid fa-right-to-bracket me-1"></i> লগইন করুন`;
+          return;
+        }
+
+        const tData = docRef.data();
+        const storedPass = tData.password || "teacher@123";
+
+        if (pass === storedPass) {
+          localStorage.setItem('teacherSession', 'active');
+          localStorage.setItem('teacherId', tId);
+          localStorage.setItem('teacherName', tData.name);
+          localStorage.setItem('teacherPhone', tData.phone || "");
+          window.location.href = 'daily-sabak.html';
+        } else {
+          alert("ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড প্রদান করুন।");
+          btn.disabled = false;
+          btn.innerHTML = `<i class="fa-solid fa-right-to-bracket me-1"></i> লগইন করুন`;
+        }
+      } catch (err) {
+        alert("ত্রুটি: " + err.message);
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fa-solid fa-right-to-bracket me-1"></i> লগইন করুন`;
       }
     });
   </script>
