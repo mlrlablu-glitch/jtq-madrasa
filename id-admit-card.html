@@ -78,12 +78,39 @@
       white-space: nowrap;
     }
 
+    /* অটো-সাজেশন ড্রপডাউন স্টাইল */
+    .autocomplete-list {
+      position: absolute;
+      border: 1px solid #d4d4d4;
+      border-bottom: none;
+      border-top: none;
+      z-index: 99;
+      top: 100%;
+      left: 0;
+      right: 0;
+      max-height: 200px;
+      overflow-y: auto;
+      background-color: #fff;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      border-radius: 0 0 6px 6px;
+    }
+    .autocomplete-item {
+      padding: 10px;
+      cursor: pointer;
+      border-bottom: 1px solid #d4d4d4;
+      font-size: 14px;
+    }
+    .autocomplete-item:hover {
+      background-color: #e9ecef;
+    }
+
     /* প্রিন্ট মিডিয়া রুলস */
     @media print {
       body * {
         visibility: hidden;
       }
       #printableIdCard, #printableIdCard *,
+      #printableTeacherIdCard, #printableTeacherIdCard *,
       #printableAdmitCard, #printableAdmitCard * {
         visibility: visible;
       }
@@ -124,14 +151,17 @@
       </h4>
       <p class="text-muted small mb-3">Student ID দিয়ে যেকোনো শিক্ষার্থীর জন্য ছবিযুক্ত আইডি কার্ড (উভয় পিঠ) অথবা পরীক্ষার প্রবেশপত্র (Admit Card) প্রিন্ট করুন।</p>
 
-      <form id="cardSearchForm" class="row g-2 align-items-center">
-        <div class="col-md-5">
-          <input type="text" class="form-control form-control-lg fw-bold" id="targetStudentId" placeholder="Student ID লিখুন (যেমন: JTQIM-STDT-26090001)" required>
+      <form id="cardSearchForm" class="row g-2 align-items-center position-relative">
+        <div class="col-md-5 position-relative">
+          <input type="text" class="form-control form-control-lg fw-bold" id="targetStudentId" placeholder="ID বা শেষ সংখ্যা লিখুন (যেমন: ...0001)" autocomplete="off" required>
+          <!-- অটো-ফিল্টার ড্রপডাউন -->
+          <div id="autocompleteResults" class="autocomplete-list" style="display: none;"></div>
         </div>
         <div class="col-md-4">
           <select class="form-select form-select-lg fw-semibold" id="cardTypeSelect">
             <option value="idCard">১. ডিজিটাল স্টুডেন্ট আইডি কার্ড (Front & Back)</option>
-            <option value="admitCard">২. পরীক্ষার প্রবেশপত্র (Exam Admit Card)</option>
+            <option value="teacherIdCard">২. শিক্ষক আইডি কার্ড (Teacher ID Card)</option>
+            <option value="admitCard">৩. পরীক্ষার প্রবেশপত্র (Exam Admit Card)</option>
           </select>
         </div>
         <div class="col-md-3">
@@ -176,7 +206,7 @@
 
         <div class="d-flex flex-wrap gap-4 justify-content-center mb-4" id="printableIdCard">
           
-          <!-- সামনের পিঠ (Front Part - বড় ফন্ট ও স্পষ্ট লেআউট) -->
+          <!-- সামনের পিঠ (Front Part - বড় ফন্ট ও স্পষ্ট লেআউট) -->
           <div class="id-card">
             <div class="id-card-front-header">
               <div class="small fw-semibold text-warning" style="letter-spacing: 2px; font-size: 18px;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
@@ -220,7 +250,7 @@
                   <tr><th class="text-secondary py-0">পিতার পেশা:</th><td class="fw-semibold py-0" id="idFatherOcc">...</td></tr>
                   <tr><th class="text-secondary py-0">মাতার নাম:</th><td class="fw-semibold py-0 text-dark" id="idMother">...</td></tr>
                   <tr><th class="text-secondary py-0">অভিভাবক ফোন:</th><td class="fw-bold text-success py-0" id="idPhone">...</td></tr>
-                  <tr><th class="text-secondary py-0">বাড়িওয়ালা/ফোন:</th><td class="py-0 text-dark" id="idLandlord">...</td></tr>
+                  <tr><th class="text-secondary py-0">বাড়িওয়ালা/ফোন:</th><td class="py-0 text-dark" id="idLandlord">...</td></tr>
                   <tr><th class="text-secondary py-0">বর্তমান ঠিকানা:</th><td class="py-0 text-dark fw-semibold" id="idAddress">...</td></tr>
                 </tbody>
               </table>
@@ -229,8 +259,8 @@
               <div class="border rounded p-2 bg-light small mb-2" style="font-size: 10px; line-height: 1.4;">
                 <strong>জরুরি নির্দেশনাবলী:</strong>
                 <ol class="ps-3 mb-0">
-                  <li>মাদ্রাসায় অবস্থানকালে কার্ডটি গলায় ঝুলিয়ে রাখা আবশ্যক।</li>
-                  <li>হারিয়ে গেলে তাৎক্ষণিক অফিস কক্ষে ডুপ্লিকেট কার্ডের জন্য আবেদন করতে হবে।</li>
+                  <li>মাদ্রাসায় অবস্থানকালে কার্ডটি গলায় ঝুলিয়ে রাখা আবশ্যক।</li>
+                  <li>হারিয়ে গেলে তাৎক্ষণিক অফিস কক্ষে ডুপ্লিকেট কার্ডের জন্য আবেদন করতে হবে।</li>
                 </ol>
               </div>
 
@@ -254,7 +284,49 @@
         </div>
       </div>
 
-      <!-- ================= ২. পরীক্ষার প্রবেশপত্র (Admit Card) ভিউ ================= -->
+      <!-- ================= ২. শিক্ষক আইডি কার্ড ভিউ ================= -->
+      <div id="teacherIdCardDisplayArea" style="display: none;">
+        <div class="d-flex justify-content-between align-items-center mb-3 no-print">
+          <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-chalkboard-user me-2 text-success"></i>প্রিন্ট প্রিভিউ: শিক্ষক আইডি কার্ড (Teacher ID Card)</h5>
+          <button class="btn btn-success fw-bold shadow-sm" onclick="window.print()">
+            <i class="fa-solid fa-print me-1"></i> শিক্ষক আইডি কার্ড প্রিন্ট
+          </button>
+        </div>
+
+        <div class="d-flex flex-wrap gap-4 justify-content-center mb-4" id="printableTeacherIdCard">
+          <div class="id-card">
+            <div class="id-card-front-header" style="background: linear-gradient(135deg, #0f5132, #198754);">
+              <div class="small fw-semibold text-warning" style="letter-spacing: 2px; font-size: 18px;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+              <h6 class="fw-bold mb-1 text-white" style="font-size: 15px;">জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা</h6>
+              <small style="font-size: 12px; color: #ffd700;">শিক্ষক পরিচয়পত্র (TEACHER ID)</small>
+            </div>
+
+            <div class="text-center my-2">
+              <img id="tIdPhoto" src="https://via.placeholder.com/105" class="id-card-photo" alt="Teacher Photo">
+              <h5 class="fw-bold text-dark mb-0 mt-2 fs-5" id="tIdNameBn">মাওলানা মোহাম্মদ ইব্রাহিম</h5>
+              <small class="text-muted d-block fw-bold" id="tIdNameEn" style="font-size: 12px;">Maolana Md. Ibrahim</small>
+              <span class="badge bg-dark mt-1 fs-6 px-3" id="tIdDesignation">সিনিয়র মুহাদ্দিস</span>
+            </div>
+
+            <div class="px-3" style="font-size: 13px;">
+              <table class="table table-sm table-borderless mb-0">
+                <tbody>
+                  <tr><th class="text-secondary py-1 w-45">Teacher ID:</th><td class="fw-bold text-danger py-1 fs-6" id="tIdCardNo">JTQ-T-2026001</td></tr>
+                  <tr><th class="text-secondary py-1">বিভাগ:</th><td class="fw-bold text-dark py-1" id="tIdDept">হিফজ বিভাগ</td></tr>
+                  <tr><th class="text-secondary py-1">মোবাইল:</th><td class="fw-bold text-success py-1" id="tIdPhone">01700-000000</td></tr>
+                  <tr><th class="text-secondary py-1">রক্তের গ্রুপ:</th><td class="fw-bold text-danger py-1" id="tIdBlood">A+</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="id-card-footer" style="font-size: 11px; padding: 7px;">
+              <div class="border-top border-warning pt-1 mt-1">কর্তপক্ষের স্বাক্ষর: _______________</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= ৩. পরীক্ষার প্রবেশপত্র (Admit Card) ভিউ ================= -->
       <div id="admitCardDisplayArea" style="display: none;">
         <div class="d-flex justify-content-between align-items-center mb-3 no-print">
           <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-file-signature me-2 text-primary"></i>প্রিন্ট প্রিভিউ: পরীক্ষার প্রবেশপত্র (Admit Card)</h5>
@@ -367,6 +439,81 @@
       document.getElementById('admitCardOptions').style.display = isAdmit ? 'flex' : 'none';
     });
 
+    // অটো-ফিল্টার এবং সাজেশান লজিক (শেষ ২-৩ সংখ্যা বা নাম/আইডি লিখলেই ফিল্টার দেখাবে)
+    const searchInput = document.getElementById('targetStudentId');
+    const autocompleteList = document.getElementById('autocompleteResults');
+    let allRecords = [];
+
+    function loadSearchRecords() {
+      allRecords = [];
+      // স্টুডেন্ট লিস্ট ফেচ
+      db.collection("students").get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          let data = doc.data();
+          allRecords.push({
+            id: data.studentId || doc.id,
+            name: data.nameBn || data.name || "নাম নেই",
+            type: 'student',
+            raw: data
+          });
+        });
+      }).catch(err => console.log(err));
+
+      // শিক্ষক লিস্ট ফেচ
+      db.collection("teachers").get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          let data = doc.data();
+          allRecords.push({
+            id: data.teacherId || doc.id,
+            name: data.nameBn || data.name || "নাম নেই",
+            type: 'teacher',
+            raw: data
+          });
+        });
+      }).catch(err => console.log(err));
+    }
+
+    window.addEventListener('DOMContentLoaded', loadSearchRecords);
+
+    searchInput.addEventListener('input', function() {
+      const val = this.value.trim().toLowerCase();
+      autocompleteList.innerHTML = '';
+      if (!val) {
+        autocompleteList.style.display = 'none';
+        return;
+      }
+
+      // শেষ ২-৩ সংখ্যা বা যেকোনো অংশ মিললে ফিল্টার করার কন্ডিশন
+      const filtered = allRecords.filter(item => {
+        const idStr = String(item.id).toLowerCase();
+        const nameStr = String(item.name).toLowerCase();
+        return idStr.includes(val) || nameStr.includes(val);
+      });
+
+      if (filtered.length === 0) {
+        autocompleteList.style.display = 'none';
+        return;
+      }
+
+      filtered.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'autocomplete-item';
+        div.innerHTML = `<strong>${item.id}</strong> - ${item.name} <span class="badge bg-${item.type === 'student' ? 'success' : 'dark'} float-end">${item.type === 'student' ? 'শিক্ষার্থী' : 'শিক্ষক'}</span>`;
+        div.addEventListener('click', function() {
+          searchInput.value = item.id;
+          autocompleteList.style.display = 'none';
+        });
+        autocompleteList.appendChild(div);
+      });
+      autocompleteList.style.display = 'block';
+    });
+
+    document.addEventListener('click', function(e) {
+      if (e.target !== searchInput) {
+        autocompleteList.style.display = 'none';
+      }
+    });
+
     document.getElementById('cardSearchForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const sId = document.getElementById('targetStudentId').value.trim();
@@ -376,73 +523,122 @@
       btn.disabled = true;
       btn.innerText = "জেনারেট হচ্ছে...";
 
-      db.collection("students").doc(sId).get().then((doc) => {
-        if (!doc.exists) {
-          alert("এই Student ID (" + sId + ") দিয়ে কোনো শিক্ষার্থী পাওয়া যায়নি!");
-          document.getElementById('idCardDisplayArea').style.display = 'none';
-          document.getElementById('admitCardDisplayArea').style.display = 'none';
-          return;
-        }
-
-        const s = doc.data();
-        const photoUrl = s.photo || 'https://via.placeholder.com/110';
-        const nameBn = s.nameBn || s.name || "-";
-        const nameEn = s.nameEn || "-";
-        const fatherName = s.fatherBn || s.father || "-";
-        const fatherOcc = s.fatherOccupation || "-";
-        const motherName = s.motherBn || s.mother || "-";
-        const phone = s.phone || "-";
-        const roll = s.roll || "-";
-        const dept = s.department || "-";
-        const blood = s.bloodGroup || "অজানা";
-
-        const pre = s.presentAddress || {};
-        const landlordStr = pre.landlordName ? `${pre.landlordName} (${pre.landlordPhone || 'নম্বর নেই'})` : "দেওয়া হয়নি";
-        const fullPresentAddr = `গ্রাম: ${pre.village || '-'}, ডাক: ${pre.post || '-'}, থানা: ${pre.thana || '-'}, জেলা: ${pre.district || '-'}`;
-
-        if (cardType === 'idCard') {
-          // আইডি কার্ড পপুলেট (সামনে ও পেছনে বড় ও স্পষ্ট ফন্ট)
-          document.getElementById('idPhoto').src = photoUrl;
-          document.getElementById('idNameBn').innerText = nameBn;
-          document.getElementById('idNameEn').innerText = nameEn;
-          document.getElementById('idDeptBadge').innerText = dept;
-          document.getElementById('idCardStudentId').innerText = s.studentId;
-          document.getElementById('idRoll').innerText = roll;
-          document.getElementById('idBloodGroup').innerText = blood;
-
-          document.getElementById('idFather').innerText = fatherName;
-          document.getElementById('idFatherOcc').innerText = fatherOcc;
-          document.getElementById('idMother').innerText = motherName;
-          document.getElementById('idPhone').innerText = phone;
-          document.getElementById('idLandlord').innerText = landlordStr;
-          document.getElementById('idAddress').innerText = fullPresentAddr;
-
-          document.getElementById('idCardDisplayArea').style.display = 'block';
-          document.getElementById('admitCardDisplayArea').style.display = 'none';
-        } else {
-          // প্রবেশপত্র পপুলেট
-          const examTerm = document.getElementById('admitExamTerm').value;
-          const examSchedule = `${document.getElementById('admitExamDate').value} (${document.getElementById('admitExamHall').value})`;
-
-          document.getElementById('admitCardExamTitle').innerText = examTerm + " - প্রবেশপত্র";
-          document.getElementById('admitPhoto').src = photoUrl;
-          document.getElementById('admitName').innerText = nameBn;
-          document.getElementById('admitStudentId').innerText = s.studentId;
-          document.getElementById('admitDept').innerText = dept;
-          document.getElementById('admitRoll').innerText = roll;
-          document.getElementById('admitFather').innerText = fatherName;
-          document.getElementById('admitSchedule').innerText = examSchedule;
-
-          document.getElementById('admitCardDisplayArea').style.display = 'block';
-          document.getElementById('idCardDisplayArea').style.display = 'none';
-        }
-      }).catch(err => {
-        alert("ত্রুটি: " + err.message);
-      }).finally(() => {
-        btn.disabled = false;
-        btn.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles me-1"></i> কার্ড জেনারেট করুন`;
-      });
+      if (cardType === 'teacherIdCard') {
+        db.collection("teachers").doc(sId).get().then((doc) => {
+          if (!doc.exists) {
+            db.collection("teachers").where("teacherId", "==", sId).get().then((qSnap) => {
+              if (qSnap.empty) {
+                alert("এই Teacher ID (" + sId + ") দিয়ে কোনো শিক্ষক পাওয়া যায়নি!");
+                hideAllDisplays();
+                return;
+              }
+              renderTeacherCard(qSnap.docs[0].data());
+            });
+          } else {
+            renderTeacherCard(doc.data());
+          }
+        }).catch(err => {
+          alert("ত্রুটি: " + err.message);
+        }).finally(() => { resetBtn(btn); });
+      } else {
+        db.collection("students").doc(sId).get().then((doc) => {
+          if (!doc.exists) {
+            db.collection("students").where("studentId", "==", sId).get().then((qSnap) => {
+              if (qSnap.empty) {
+                alert("এই Student ID (" + sId + ") দিয়ে কোনো শিক্ষার্থী পাওয়া যায়নি!");
+                hideAllDisplays();
+                return;
+              }
+              processStudentData(qSnap.docs[0].data(), cardType);
+            });
+          } else {
+            processStudentData(doc.data(), cardType);
+          }
+        }).catch(err => {
+          alert("ত্রুটি: " + err.message);
+        }).finally(() => { resetBtn(btn); });
+      }
     });
+
+    function renderTeacherCard(t) {
+      document.getElementById('tIdPhoto').src = t.photo || 'https://via.placeholder.com/105';
+      document.getElementById('tIdNameBn').innerText = t.nameBn || t.name || "-";
+      document.getElementById('tIdNameEn').innerText = t.nameEn || "-";
+      document.getElementById('tIdDesignation').innerText = t.designation || "শিক্ষক";
+      document.getElementById('tIdCardNo').innerText = t.teacherId || "-";
+      document.getElementById('tIdDept').innerText = t.department || "-";
+      document.getElementById('tIdPhone').innerText = t.phone || "-";
+      document.getElementById('tIdBlood').innerText = t.bloodGroup || "অজানা";
+
+      document.getElementById('teacherIdCardDisplayArea').style.display = 'block';
+      document.getElementById('idCardDisplayArea').style.display = 'none';
+      document.getElementById('admitCardDisplayArea').style.display = 'none';
+    }
+
+    function processStudentData(s, cardType) {
+      const photoUrl = s.photo || 'https://via.placeholder.com/110';
+      const nameBn = s.nameBn || s.name || "-";
+      const nameEn = s.nameEn || "-";
+      const fatherName = s.fatherBn || s.father || "-";
+      const fatherOcc = s.fatherOccupation || "-";
+      const motherName = s.motherBn || s.mother || "-";
+      const phone = s.phone || "-";
+      const roll = s.roll || "-";
+      const dept = s.department || "-";
+      const blood = s.bloodGroup || "অজানা";
+
+      const pre = s.presentAddress || {};
+      const landlordStr = pre.landlordName ? `${pre.landlordName} (${pre.landlordPhone || 'নম্বর নেই'})` : "দেওয়া হয়নি";
+      const fullPresentAddr = `গ্রাম: ${pre.village || '-'}, ডাক: ${pre.post || '-'}, থানা: ${pre.thana || '-'}, জেলা: ${pre.district || '-'}`;
+
+      if (cardType === 'idCard') {
+        document.getElementById('idPhoto').src = photoUrl;
+        document.getElementById('idNameBn').innerText = nameBn;
+        document.getElementById('idNameEn').innerText = nameEn;
+        document.getElementById('idDeptBadge').innerText = dept;
+        document.getElementById('idCardStudentId').innerText = s.studentId || "-";
+        document.getElementById('idRoll').innerText = roll;
+        document.getElementById('idBloodGroup').innerText = blood;
+
+        document.getElementById('idFather').innerText = fatherName;
+        document.getElementById('idFatherOcc').innerText = fatherOcc;
+        document.getElementById('idMother').innerText = motherName;
+        document.getElementById('idPhone').innerText = phone;
+        document.getElementById('idLandlord').innerText = landlordStr;
+        document.getElementById('idAddress').innerText = fullPresentAddr;
+
+        document.getElementById('idCardDisplayArea').style.display = 'block';
+        document.getElementById('teacherIdCardDisplayArea').style.display = 'none';
+        document.getElementById('admitCardDisplayArea').style.display = 'none';
+      } else {
+        const examTerm = document.getElementById('admitExamTerm').value;
+        const examSchedule = `${document.getElementById('admitExamDate').value} (${document.getElementById('admitExamHall').value})`;
+
+        document.getElementById('admitCardExamTitle').innerText = examTerm + " - প্রবেশপত্র";
+        document.getElementById('admitPhoto').src = photoUrl;
+        document.getElementById('admitName').innerText = nameBn;
+        document.getElementById('admitStudentId').innerText = s.studentId || "-";
+        document.getElementById('admitDept').innerText = dept;
+        document.getElementById('admitRoll').innerText = roll;
+        document.getElementById('admitFather').innerText = fatherName;
+        document.getElementById('admitSchedule').innerText = examSchedule;
+
+        document.getElementById('admitCardDisplayArea').style.display = 'block';
+        document.getElementById('idCardDisplayArea').style.display = 'none';
+        document.getElementById('teacherIdCardDisplayArea').style.display = 'none';
+      }
+    }
+
+    function hideAllDisplays() {
+      document.getElementById('idCardDisplayArea').style.display = 'none';
+      document.getElementById('teacherIdCardDisplayArea').style.display = 'none';
+      document.getElementById('admitCardDisplayArea').style.display = 'none';
+    }
+
+    function resetBtn(btn) {
+      btn.disabled = false;
+      btn.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles me-1"></i> কার্ড জেনারেট করুন`;
+    }
   </script>
 </body>
 </html>
