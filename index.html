@@ -3,248 +3,483 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JTQIM-জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা</title>
+  <title>JTQIM - জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
   <style>
-    /* প্রিমিয়াম ইসলামিক ব্যানার স্টাইল */
+    .top-bar {
+      background: #062c19;
+      color: #e0f2e9;
+      font-size: 13px;
+      padding: 8px 0;
+      border-bottom: 2px solid #ffc107;
+    }
+    .top-bar a {
+      color: #e0f2e9;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .top-bar a:hover {
+      color: #ffd700;
+    }
+    .main-header {
+      background: #ffffff;
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    .madrasa-brand-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #0f5132;
+      line-height: 1.2;
+    }
+    .madrasa-brand-sub {
+      font-size: 13px;
+      color: #6c757d;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .navbar-light .navbar-nav .nav-link {
+      color: #212529;
+      font-weight: 600;
+      font-size: 15px;
+      padding: 10px 14px;
+      transition: color 0.2s;
+    }
+    .navbar-light .navbar-nav .nav-link:hover,
+    .navbar-light .navbar-nav .nav-link.active {
+      color: #198754;
+    }
     .hero-banner {
       position: relative;
-      background: linear-gradient(135deg, rgba(6, 44, 25, 0.92), rgba(15, 81, 50, 0.88)), 
-                url('https://images.unsplash.com/photo-1542816417-0983c9c9ad53?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
-      padding: 100px 0 90px 0;
+      background: linear-gradient(135deg, rgba(6, 44, 25, 0.88), rgba(15, 81, 50, 0.82)), 
+                  url('https://images.unsplash.com/photo-1542816417-0983c9c9ad53?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      padding: 90px 0 80px 0;
       color: #ffffff;
       border-bottom: 5px solid #ffc107;
     }
-    .arabic-bismillah {
-      font-size: 26px;
-      letter-spacing: 2px;
-      color: #ffd700;
-      margin-bottom: 12px;
-      font-weight: 500;
-    }
-    .banner-badge {
-      background: rgba(255, 255, 255, 0.15);
-      border: 1px solid rgba(255, 215, 0, 0.4);
+    .hero-slogan-badge {
+      background: rgba(255, 193, 7, 0.2);
+      border: 1px solid #ffc107;
       color: #ffd700;
       padding: 6px 18px;
       border-radius: 50px;
       font-size: 14px;
+      font-weight: 600;
       display: inline-block;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
-    .banner-title {
-      font-size: 2.8rem;
+    .hero-title {
+      font-size: 2.5rem;
       font-weight: 800;
       text-shadow: 0 2px 8px rgba(0,0,0,0.5);
     }
-    .banner-desc {
-      font-size: 1.15rem;
-      color: #e0f2e9;
-      max-width: 800px;
-      margin: 0 auto;
-      line-height: 1.8;
-    }
-    .stat-pill {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(5px);
-      border-radius: 10px;
-      padding: 12px 20px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-    }
-
-    /* নেভিগেশন মেনু স্টাইল: সব বাটন একই কালার থাকবে */
-    .custom-nav-btn {
-      color: #ffffff !important;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      padding: 6px 14px;
-      border-radius: 6px;
-      font-size: 14px;
-      font-weight: 500;
+    .btn-custom-outline {
+      border: 2px solid #ffffff;
+      color: #ffffff;
+      font-weight: 700;
+      padding: 10px 24px;
+      border-radius: 50px;
+      transition: all 0.25s;
       text-decoration: none;
-      transition: all 0.25s ease;
       display: inline-block;
     }
-    .custom-nav-btn:hover {
-      background: rgba(255, 255, 255, 0.25);
-      color: #ffd700 !important;
+    .btn-custom-outline:hover {
+      background: #ffffff;
+      color: #062c19;
     }
-
-    /* নির্বাচিত (Active) পেজ হলে শুধুই এটি হাইলাইট কালার হবে */
-    .custom-nav-btn.active-page {
-      background: #ffc107 !important;
-      color: #062c19 !important;
-      border-color: #ffc107 !important;
-      font-weight: 700 !important;
-      box-shadow: 0 2px 8px rgba(255, 193, 7, 0.4);
+    .btn-custom-solid {
+      background: #ffc107;
+      border: 2px solid #ffc107;
+      color: #000000;
+      font-weight: 700;
+      padding: 10px 24px;
+      border-radius: 50px;
+      transition: all 0.25s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-custom-solid:hover {
+      background: #e0a800;
+      border-color: #e0a800;
+    }
+    .feature-pill-bar {
+      background: #ffffff;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+      border-radius: 12px;
+      margin-top: -35px;
+      position: relative;
+      z-index: 10;
+      padding: 20px;
+    }
+    .feature-item {
+      text-align: center;
+      padding: 10px;
+      border-right: 1px solid #e9ecef;
+      text-decoration: none;
+      display: block;
+      color: inherit;
+      transition: transform 0.2s;
+    }
+    .feature-item:hover {
+      transform: translateY(-3px);
+    }
+    .feature-item:last-child {
+      border-right: none;
+    }
+    .feature-item i {
+      font-size: 28px;
+      color: #198754;
+      margin-bottom: 8px;
+    }
+    .feature-item span {
+      font-size: 14px;
+      font-weight: 700;
+      color: #333333;
+      display: block;
+    }
+    .card-dept {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+      background: #ffffff;
+      text-align: center;
+      padding: 30px 20px;
+    }
+    .card-dept:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    .card-dept i {
+      font-size: 40px;
+      color: #198754;
+      margin-bottom: 15px;
+    }
+    .admission-promo-card {
+      background: linear-gradient(135deg, #062c19, #0f5132);
+      border-radius: 16px;
+      color: #ffffff;
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+      border-left: 6px solid #ffc107;
     }
   </style>
 </head>
 <body class="bg-light">
 
-  <!-- নেভিগেশন বার (মাদ্রাসার নাম উপরে এবং পেজগুলো নিচে) -->
-  <nav class="navbar navbar-dark bg-success shadow-sm sticky-top py-3">
-    <div class="container text-center d-flex flex-column align-items-center">
-      <!-- মাদ্রাসার নাম উপরে -->
-      <a class="navbar-brand fw-bold fs-4 mb-3 m-0 text-white text-decoration-none" href="index.html">
-        <i class="fa-solid fa-mosque me-2"></i>জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা</a>
-      
-      <!-- পেজগুলো নিচে -->
-      <div class="w-100">
-        <ul class="navbar-nav d-flex flex-row justify-content-center align-items-center flex-wrap gap-2 m-0 p-0">
-          <!-- হোম পেজ অ্যাক্টিভ (Active Color) -->
-          <li class="nav-item">
-            <a class="custom-nav-btn active-page" href="index.html">
-              <i class="fa-solid fa-house me-1"></i> হোম
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="custom-nav-btn" href="hifz-calculator.html">
-              <i class="fa-solid fa-calculator me-1"></i> হিফজ ক্যালকুলেটর
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="custom-nav-btn" href="student-login.html">
-              <i class="fa-solid fa-graduation-cap me-1"></i> শিক্ষার্থী পোর্টাল
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="custom-nav-btn" href="teacher-login.html">
-              <i class="fa-solid fa-chalkboard-user me-1"></i> শিক্ষক লগইন
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="custom-nav-btn" href="admin-login.html">
-              <i class="fa-solid fa-user-shield me-1"></i> অ্যাডমিন
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="custom-nav-btn" href="notices.html">
-              <i class="fa-solid fa-bullhorn me-1"></i> নোটিশ বোর্ড
-            </a>
-          </li>
-        </ul>
+  <!-- ১. টপ বার -->
+  <div class="top-bar d-none d-lg-block">
+    <div class="container d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center gap-4">
+        <span><i class="fa-solid fa-location-dot text-warning me-1"></i> আশুলিয়া, সাভার, ঢাকা, বাংলাদেশ</span>
+        <span><i class="fa-solid fa-phone text-warning me-1"></i> +880 1712 345678</span>
+        <span><i class="fa-solid fa-envelope text-warning me-1"></i> info@taslimulquran.org</span>
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <span class="border-start border-secondary ps-3"><i class="fa-solid fa-globe me-1"></i> বাংলা</span>
       </div>
     </div>
-  </nav>
+  </div>
 
-  <!-- প্রফেশনাল ইমেজ ব্যানার সেকশন -->
-  <section class="hero-banner text-center">
-    <div class="container">
-      
-      <!-- বিসমিল্লাহ ও পরিচিতি -->
-      <div class="arabic-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-      <div class="banner-badge">
-        <i class="fa-solid fa-star-and-crescent me-1"></i> দ্বীনি ও আধুনিক শিক্ষার সমন্বিত প্রতিষ্ঠান
+  <!-- ২. মেইন হেডার ও ন্যাভবার (সঠিক পেজ লিঙ্কসহ) -->
+  <header class="main-header sticky-top">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a href="index.html" class="d-flex align-items-center gap-3 text-decoration-none">
+        <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 55px; height: 55px; font-size: 24px;">
+          <i class="fa-solid fa-mosque"></i>
+        </div>
+        <div>
+          <div class="madrasa-brand-title">জামিয়া তাসলিমুল কুরআন ইসলামিয়া</div>
+          <div class="madrasa-brand-sub">JAMIA TASLIMUL QURAN ISLAMIA MADRASA</div>
+        </div>
+      </a>
+
+      <div class="d-flex align-items-center gap-2">
+        <a href="student-login.html" class="btn btn-success btn-sm fw-bold px-3 py-2 rounded-pill shadow-sm">
+          <i class="fa-solid fa-graduation-cap me-1"></i> ছাত্র পোর্টাল
+        </a>
+        <a href="admin-login.html" class="btn btn-warning btn-sm fw-bold px-3 py-2 rounded-pill text-dark shadow-sm">
+          <i class="fa-solid fa-user-shield me-1"></i> অ্যাডমিন লগইন
+        </a>
       </div>
+    </div>
 
-      <!-- মাদ্রাসার নাম -->
-      <h1 class="banner-title mb-3">জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা</h1>
-      
-      <!-- মূল স্লোগান -->
-      <p class="banner-desc mb-4">
-        কুরআনিক আলোয় নৈতিক ও আদর্শ জীবন গড়ার প্রত্যয়ে এক অনন্য দ্বীনি শিক্ষাঙ্গন। তাজবীদভিত্তিক বিশুদ্ধ কুরআন তিলাওয়াত, সুশৃঙ্খল হিফজুল কুরআন এবং বুনিয়াদি ইসলামি তরবিয়ত নিশ্চিত করাই আমাদের লক্ষ্য।
+    <!-- মেনুবার লিঙ্কযুক্ত -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-top mt-2 py-1">
+      <div class="container">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-center" id="mainMenu">
+          <ul class="navbar-nav gap-1">
+            <li class="nav-item"><a class="nav-link active text-success fw-bold" href="index.html">হোম</a></li>
+            <li class="nav-item"><a class="nav-link" href="#aboutSection">আমাদের সম্পর্কে</a></li>
+            <li class="nav-item"><a class="nav-link" href="#deptSection">বিভাগসমূহ</a></li>
+            <li class="nav-item"><a class="nav-link" href="teacher-login.html">শিক্ষক লগইন</a></li>
+            <li class="nav-item"><a class="nav-link" href="notices.html">নোটিশ বোর্ড</a></li>
+            <li class="nav-item"><a class="nav-link" href="admission-apply.html">অনলাইন ভর্তি</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contactSection">যোগাযোগ</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ৩. প্রিমিয়াম হিরো ব্যানার -->
+  <section class="hero-banner text-center">
+    <div class="container py-4">
+      <div class="hero-slogan-badge">
+        <i class="fa-solid fa-star-and-crescent me-1"></i> কুরআন, সুন্নাহ ও উত্তম চরিত্র গঠনের অঙ্গীকার
+      </div>
+      <h1 class="hero-title mb-3">জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা</h1>
+      <p class="text-warning fw-semibold fs-5 mb-3" style="letter-spacing: 0.5px;">JAMIA TASLIMUL QURAN ISLAMIA MADRASA</p>
+      <p class="text-light mb-4" style="max-width: 750px; margin: 0 auto; font-size: 1.1rem; line-height: 1.7;">
+        আমাদের লক্ষ্য হলো কুরআন ও সুন্নাহর আলোকে যোগ্য, নৈতিক ও আদর্শ মানুষ তৈরি করা।
       </p>
 
-      <!-- ব্যানার হাইলাইটস -->
-      <div class="row justify-content-center g-3 mt-2">
-        <div class="col-auto">
-          <div class="stat-pill text-white small">
-            <i class="fa-solid fa-book-quran text-warning me-2"></i>তাজবীদভিত্তিক বিশুদ্ধ হিফজ
-          </div>
-        </div>
-        <div class="col-auto">
-          <div class="stat-pill text-white small">
-            <i class="fa-solid fa-chalkboard-user text-warning me-2"></i>অভিজ্ঞ হাফেজ ও শিক্ষক মণ্ডলী
-          </div>
-        </div>
-        <div class="col-auto">
-          <div class="stat-pill text-white small">
-            <i class="fa-solid fa-shield-halved text-warning me-2"></i>মনোরম ও নিরাপদ আবাসিক পরিবেশ
-          </div>
-        </div>
+      <div class="d-flex justify-content-center gap-3">
+        <a href="#aboutSection" class="btn-custom-outline">আমাদের সম্পর্কে জানুন</a>
+        <a href="admission-apply.html" class="btn-custom-solid">ভর্তি তথ্য দেখুন</a>
       </div>
-
     </div>
   </section>
 
-  <!-- বিভাগসমূহ সেকশন -->
-  <section class="py-5">
+  <!-- ৪. শর্টকাট ফিচার পিল বার (লিংকযুক্ত) -->
+  <div class="container">
+    <div class="feature-pill-bar">
+      <div class="row row-cols-2 row-cols-lg-6 g-2">
+        <div class="col">
+          <a href="admission-apply.html" class="feature-item">
+            <i class="fa-solid fa-book-quran"></i>
+            <span>কুরআন শিক্ষা (হিফজ)</span>
+          </a>
+        </div>
+        <div class="col">
+          <a href="admission-apply.html" class="feature-item">
+            <i class="fa-solid fa-book-open-reader"></i>
+            <span>নাজেরা বিভাগ</span>
+          </a>
+        </div>
+        <div class="col">
+          <a href="admission-apply.html" class="feature-item">
+            <i class="fa-solid fa-book"></i>
+            <span>কিতাব বিভাগ</span>
+          </a>
+        </div>
+        <div class="col">
+          <a href="student-login.html" class="feature-item">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>ছাত্র পোর্টাল</span>
+          </a>
+        </div>
+        <div class="col">
+          <a href="admission-apply.html" class="feature-item">
+            <i class="fa-solid fa-house-chimney"></i>
+            <span>আবাসিক সুবিধা</span>
+          </a>
+        </div>
+        <div class="col">
+          <a href="teacher-login.html" class="feature-item" style="border-right: none;">
+            <i class="fa-solid fa-user-tie"></i>
+            <span>শিক্ষক পোর্টাল</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ৫. আমাদের সম্পর্কে ও স্ট্যাটাস সেকশন -->
+  <section class="py-5" id="aboutSection">
+    <div class="container py-3">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-7">
+          <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill fw-semibold mb-2">আমাদের সম্পর্কে</span>
+          <h2 class="fw-bold text-dark mb-3">জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা</h2>
+          <p class="text-muted" style="line-height: 1.8;">
+            জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা একটি ইসলামী শিক্ষা প্রতিষ্ঠান, যেখানে কুরআন ও সুন্নাহর আলোকে নৈতিক, মানবিক ও আদর্শ মানুষ গড়ে তোলাই আমাদের মূল লক্ষ্য। আমরা আধুনিক শিক্ষা ব্যবস্থার সাথে ঐতিহ্যবাহী ইসলামী শিক্ষার সমন্বয় ঘটিয়ে শিক্ষার্থীদের উজ্জ্বল ভবিষ্যতের জন্য প্রস্তুত করছি।
+          </p>
+          <a href="admission-apply.html" class="btn btn-success fw-bold px-4 py-2 rounded-pill shadow-sm">
+            অনলাইন আবেদন করুন <i class="fa-solid fa-arrow-right ms-1"></i>
+          </a>
+        </div>
+
+        <div class="col-lg-5">
+          <div class="card border-0 shadow-sm p-4 bg-white rounded-4">
+            <ul class="list-unstyled mb-0 d-flex flex-column gap-3">
+              <li class="d-flex justify-content-between align-items-center border-bottom pb-2">
+                <span class="text-muted fw-semibold"><i class="fa-solid fa-calendar-days text-success me-2"></i>প্রতিষ্ঠার সাল</span>
+                <strong class="text-dark">২০২০</strong>
+              </li>
+              <li class="d-flex justify-content-between align-items-center border-bottom pb-2">
+                <span class="text-muted fw-semibold"><i class="fa-solid fa-users text-success me-2"></i>মোট ছাত্র সংখ্যা</span>
+                <strong class="text-success">৫০০+</strong>
+              </li>
+              <li class="d-flex justify-content-between align-items-center border-bottom pb-2">
+                <span class="text-muted fw-semibold"><i class="fa-solid fa-chalkboard-user text-success me-2"></i>যোগ্য শিক্ষক</span>
+                <strong class="text-dark">৩০+</strong>
+              </li>
+              <li class="d-flex justify-content-between align-items-center">
+                <span class="text-muted fw-semibold"><i class="fa-solid fa-house-laptop text-success me-2"></i>আবাসিক ব্যবস্থা</span>
+                <strong class="badge bg-success fs-6 px-3 py-1">হ্যাঁ</strong>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ৬. বিভাগসমূহ সেকশন -->
+  <section class="py-5 bg-white border-top" id="deptSection">
     <div class="container py-3">
       <div class="text-center mb-5">
         <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill fw-semibold mb-2">পাঠ্যক্রম</span>
-        <h3 class="fw-bold text-dark">আমাদের শিক্ষা বিভাগসমূহ</h3>
-        <p class="text-muted">দক্ষ ও অভিজ্ঞ শিক্ষক মণ্ডলী দ্বারা নিয়মিত সুশৃঙ্খল পাঠদান</p>
+        <h2 class="fw-bold text-dark">আমাদের বিভাগসমূহ</h2>
+        <p class="text-muted">বহুমুখী শিক্ষার সমন্বয়ে গড়ে উঠুক আদর্শ জীবন</p>
       </div>
 
       <div class="row g-4">
-        <!-- মক্তব -->
-        <div class="col-md-6 col-lg-3">
-          <div class="card h-100 border-0 shadow-sm p-4 text-center bg-white rounded-3">
-            <div class="mb-3 text-success"><i class="fa-solid fa-book-quran fa-2x"></i></div>
-            <h5 class="fw-bold">মক্তব বিভাগ</h5>
-            <p class="small text-muted mb-0">বিশুদ্ধ উচ্চারণে কুরআন পাঠ, মাসয়ালা-মাসায়েল ও বুনিয়াদি ইসলামী শিক্ষার ভিত গঠন।</p>
+        <div class="col-md-4 col-lg">
+          <div class="card-dept h-100">
+            <i class="fa-solid fa-book-quran"></i>
+            <h5 class="fw-bold">হিফজুল কুরআন বিভাগ</h5>
+            <p class="small text-muted mb-3">কুরআন মুখস্থ ও তাজবীদ শিক্ষা</p>
+            <a href="admission-apply.html" class="btn btn-outline-success btn-sm rounded-pill px-3">ভর্তি তথ্য <i class="fa-solid fa-arrow-right ms-1"></i></a>
           </div>
         </div>
-
-        <!-- নূরানী -->
-        <div class="col-md-6 col-lg-3">
-          <div class="card h-100 border-0 shadow-sm p-4 text-center bg-white rounded-3">
-            <div class="mb-3 text-success"><i class="fa-solid fa-book-open-reader fa-2x"></i></div>
-            <h5 class="fw-bold">নূরানী বিভাগ</h5>
-            <p class="small text-muted mb-0">সহজ ও দ্রুত পদ্ধতিতে তাজবীদ সহকারে কুরআন শিক্ষা এবং জরুরি দোয়া ও আদব শিক্ষাদান।</p>
-          </div>
-        </div>
-
-        <!-- নাজেরা -->
-        <div class="col-md-6 col-lg-3">
-          <div class="card h-100 border-0 shadow-sm p-4 text-center bg-white rounded-3">
-            <div class="mb-3 text-success"><i class="fa-solid fa-lines-leaning fa-2x"></i></div>
+        <div class="col-md-4 col-lg">
+          <div class="card-dept h-100">
+            <i class="fa-solid fa-book-open-reader"></i>
             <h5 class="fw-bold">নাজেরা বিভাগ</h5>
-            <p class="small text-muted mb-0">হিফজ শুরু করার পূর্বে সম্পূর্ণ কুরআন শুদ্ধভাবে তরল কণ্ঠে তেলাওয়াত করার বিশেষ প্রস্তুতি।</p>
+            <p class="small text-muted mb-3">কুরআন তেলাওয়াত ও পাঠ</p>
+            <a href="admission-apply.html" class="btn btn-outline-success btn-sm rounded-pill px-3">ভর্তি তথ্য <i class="fa-solid fa-arrow-right ms-1"></i></a>
           </div>
         </div>
-
-        <!-- হিফজ -->
-        <div class="col-md-6 col-lg-3">
-          <div class="card h-100 border-0 shadow-sm p-4 text-center bg-white border-top border-success border-4 rounded-3">
-            <div class="mb-3 text-success"><i class="fa-solid fa-star-and-crescent fa-2x"></i></div>
-            <h5 class="fw-bold">হিফজ বিভাগ</h5>
-            <p class="small text-muted mb-0">পরিকল্পিত রুটিন অনুযায়ী সম্পূর্ণ কুরআন হিফজ এবং নিয়মিত সবক-শুনানি ও পুনরাবৃত্তি।</p>
+        <div class="col-md-4 col-lg">
+          <div class="card-dept h-100">
+            <i class="fa-solid fa-book"></i>
+            <h5 class="fw-bold">কিতাব বিভাগ</h5>
+            <p class="small text-muted mb-3">ইসলামী শরীয়াহ ও ফিকহ</p>
+            <a href="admission-apply.html" class="btn btn-outline-success btn-sm rounded-pill px-3">ভর্তি তথ্য <i class="fa-solid fa-arrow-right ms-1"></i></a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg">
+          <div class="card-dept h-100">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <h5 class="fw-bold">সাধারণ শিক্ষা বিভাগ</h5>
+            <p class="small text-muted mb-3">বাংলা, ইংরেজি, গণিত, বিজ্ঞান</p>
+            <a href="admission-apply.html" class="btn btn-outline-success btn-sm rounded-pill px-3">ভর্তি তথ্য <i class="fa-solid fa-arrow-right ms-1"></i></a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg">
+          <div class="card-dept h-100 border-success border-2">
+            <i class="fa-solid fa-house-chimney"></i>
+            <h5 class="fw-bold">আবাসিক ব্যবস্থা</h5>
+            <p class="small text-muted mb-3">নিরাপদ ও পরিবেশবান্ধব</p>
+            <a href="admission-apply.html" class="btn btn-success btn-sm rounded-pill px-3">ভর্তি তথ্য <i class="fa-solid fa-arrow-right ms-1"></i></a>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- মাদ্রাসার লক্ষ্য ও বৈশিষ্ট্য -->
-  <section class="py-5 bg-white border-top">
-    <div class="container">
-      <div class="row align-items-center g-4">
+  <!-- ৭. নোটিশ ও ভর্তি চলছে প্রমো -->
+  <section class="py-5">
+    <div class="container py-3">
+      <div class="row g-4 align-items-stretch">
+        
+        <!-- নোটিশ বোর্ড (লিংকযুক্ত) -->
         <div class="col-lg-6">
-          <span class="badge bg-success px-3 py-2 rounded-pill mb-3">কেন আমাদের মাদ্রাসা?</span>
-          <h3 class="fw-bold text-dark mb-3">কুরআন হিফজের পাশাপাশি চারিত্রিক ও দ্বীনি তরবিয়ত</h3>
-          <p class="text-muted">জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসায় ছাত্রদের শুধু মুখস্থ করানোই নয়, বরং তাদের সুন্দর চরিত্র, আদব-আখলাক এবং সুন্নাতি জিন্দেগি গঠনে বিশেষ গুরুত্ব দেওয়া হয়।</p>
-          <ul class="list-unstyled text-muted small">
-            <li class="mb-2"><i class="fa-solid fa-circle-check text-success me-2"></i>দৈনিক ৩ বেলা সবক শুনানির আধুনিক ও বৈজ্ঞানিক পদ্ধতি।</li>
-            <li class="mb-2"><i class="fa-solid fa-circle-check text-success me-2"></i>নিয়মিত মাসনুন দোয়া ও সুন্নতের বাস্তব অনুশীলন।</li>
-            <li class="mb-2"><i class="fa-solid fa-circle-check text-success me-2"></i>অভিভাবকদের সাথে নিয়মিত যোগাযোগ ও অগ্রগতি পর্যবেক্ষণ।</li>
+          <div class="card border-0 shadow-sm p-4 bg-white h-100 rounded-4">
+            <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
+              <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-bullhorn text-success me-2"></i>নোটিশ বোর্ড</h5>
+              <a href="notices.html" class="text-decoration-none text-success small fw-bold">সব নোটিশ দেখুন <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+            <div class="d-flex flex-column gap-3">
+              <div class="d-flex justify-content-between align-items-center p-2 border-bottom">
+                <div><span class="badge bg-success me-2">১৫ মে</span> ২০২৬ সালের ভর্তি কার্যক্রম শুরু হয়েছে</div>
+                <small class="text-muted">লাইভ</small>
+              </div>
+              <div class="d-flex justify-content-between align-items-center p-2 border-bottom">
+                <div><span class="badge bg-success me-2">১২ মে</span> মাসিক পরীক্ষার রুটিন প্রকাশ করা হয়েছে</div>
+                <small class="text-muted">নতুন</small>
+              </div>
+              <div class="d-flex justify-content-between align-items-center p-2">
+                <div><span class="badge bg-success me-2">০৩ মে</span> মাদ্রাসার বার্ষিক অনুষ্ঠান সংক্রান্ত বিজ্ঞপ্তি</div>
+                <small class="text-muted">জরুরি</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ভর্তি চলছে ব্যানার -->
+        <div class="col-lg-6">
+          <div class="admission-promo-card h-100 d-flex flex-column justify-content-center">
+            <span class="badge bg-warning text-dark px-3 py-1 rounded-pill mb-2 align-self-start">ভর্তি চলছে</span>
+            <h3 class="fw-bold mb-2">আপনার সন্তানের উজ্জ্বল ভবিষ্যৎ গড়তে আজই ভর্তি করুন।</h3>
+            <p class="small text-light mb-4">আমাদের আবাসিক ও অনাবাসিক কার্যক্রমে আসন সংখ্যা সীমিত। অনলাইনে আবেদন করুন।</p>
+            <div>
+              <a href="admission-apply.html" class="btn btn-warning fw-bold px-4 py-2 rounded-pill text-dark shadow-sm">
+                অনলাইন ভর্তি আবেদন করুন <i class="fa-solid fa-arrow-right ms-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ৮. ফুটার সেকশন (সম্পূর্ণ লিঙ্কযুক্ত) -->
+  <footer class="bg-dark text-white pt-5 pb-3" id="contactSection">
+    <div class="container">
+      <div class="row g-4 mb-4">
+        
+        <div class="col-lg-4">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 45px; height: 45px; font-size: 20px;">
+              <i class="fa-solid fa-mosque"></i>
+            </div>
+            <h5 class="fw-bold mb-0 text-white">জামিয়া তাসলিমুল কুরআন</h5>
+          </div>
+          <p class="small text-muted mb-0">কুরআন, সুন্নাহ ও উত্তম চরিত্র গঠনের অঙ্গীকারে পরিচালিত একটি আদর্শ দ্বীনি শিক্ষাপ্রতিষ্ঠান।</p>
+        </div>
+
+        <div class="col-lg-4">
+          <h6 class="fw-bold text-warning mb-3">গুরুত্বপূর্ণ পোর্টাল লিঙ্ক</h6>
+          <ul class="list-unstyled small d-flex flex-column gap-2">
+            <li><a href="index.html" class="text-decoration-none text-muted">হোম পেজ</a></li>
+            <li><a href="student-login.html" class="text-decoration-none text-muted">ছাত্র পোর্টাল লগইন</a></li>
+            <li><a href="teacher-login.html" class="text-decoration-none text-muted">শিক্ষক পোর্টাল লগইন</a></li>
+            <li><a href="admin-login.html" class="text-decoration-none text-muted">অ্যাডমিন কন্ট্রোল প্যানেল</a></li>
+            <li><a href="admission-apply.html" class="text-decoration-none text-muted">অনলাইন ভর্তি ফরম</a></li>
+            <li><a href="notices.html" class="text-decoration-none text-muted">অফিসিয়াল নোটিশ বোর্ড</a></li>
           </ul>
         </div>
-        <div class="col-lg-6 text-center">
-          <img src="https://images.unsplash.com/photo-1585036156171-384164a8c675?auto=format&fit=crop&w=700&q=80" class="img-fluid rounded-4 shadow" alt="Madrasa Environment">
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- ফুটার -->
-  <footer class="bg-dark text-white py-4">
-    <div class="container text-center small text-muted">
-      <p class="mb-1 text-white">জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা</p>
-      <p class="mb-0">&copy; ২০২৬ সর্বস্বত্ব সংরক্ষিত।</p>
+        <div class="col-lg-4">
+          <h6 class="fw-bold text-warning mb-3">যোগাযোগ</h6>
+          <p class="small text-muted mb-1"><i class="fa-solid fa-location-dot text-success me-2"></i> আশুলিয়া, সাভার, ঢাকা, বাংলাদেশ</p>
+          <p class="small text-muted mb-1"><i class="fa-solid fa-phone text-success me-2"></i> +880 1712 345678</p>
+          <p class="small text-muted mb-3"><i class="fa-solid fa-envelope text-success me-2"></i> info@taslimulquran.org</p>
+          <div class="d-flex gap-2">
+            <a href="#" class="btn btn-outline-light btn-sm rounded-circle"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="btn btn-outline-light btn-sm rounded-circle"><i class="fa-brands fa-youtube"></i></a>
+            <a href="#" class="btn btn-outline-light btn-sm rounded-circle"><i class="fa-brands fa-instagram"></i></a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="border-top border-secondary pt-3 text-center small text-muted">
+        <p class="mb-0">&copy; ২০২৬ জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা। সর্বস্বত্ব সংরক্ষিত।</p>
+      </div>
     </div>
   </footer>
 
