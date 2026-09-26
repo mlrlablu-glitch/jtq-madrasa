@@ -39,7 +39,7 @@
 </head>
 <body class="bg-light">
 
-  <!-- কমন ন্যাভবার -->
+  <!-- কমন ন্যাভবার (ডানপাশে অতিরিক্ত অপশন ড্রপডাউনসহ) -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
     <div class="container">
       <a class="navbar-brand fw-bold text-success" href="admin-dashboard.html">
@@ -57,13 +57,26 @@
           <li class="nav-item"><a class="nav-link" href="admin-teachers.html"><i class="fa-solid fa-chalkboard-user me-1"></i>শিক্ষক ও বেতন</a></li>
           <li class="nav-item"><a class="nav-link" href="admin-exams.html"><i class="fa-solid fa-square-poll-vertical me-1"></i>পরীক্ষার ফলাফল</a></li>
           <li class="nav-item"><a class="nav-link" href="id-admit-card.html"><i class="fa-solid fa-id-badge me-1"></i>আইডি ও প্রবেশপত্র</a></li>
-          <li class="nav-item"><a class="nav-link" href="id-admit-card.html"><i class="fa-solid fa-id-badge me-1"></i>নোটিশ</a></li>
         </ul>
-        <div class="d-flex gap-2">
-          <button class="btn btn-outline-danger btn-sm" id="adminLogout">
+        
+        <!-- ডান পাশের আলদা ন্যাভিগেটর (নোটিশ ও মেসেজ অপশনসহ) -->
+        <div class="d-flex align-items-center gap-2">
+          <div class="dropdown">
+            <button class="btn btn-outline-warning btn-sm dropdown-toggle fw-bold" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-bars-staggered me-1"></i> অতিরিক্ত অপশন
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow">
+              <li><a class="dropdown-item fw-semibold" href="admin-notices.html"><i class="fa-solid fa-bullhorn text-info me-2"></i>নোটিশ বোর্ড ম্যানেজমেন্ট</a></li>
+              <li><a class="dropdown-item fw-semibold" href="admin-messages.html"><i class="fa-solid fa-paper-plane text-success me-2"></i>ছাত্র ইনবক্স মেসেজ</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger fw-semibold" href="#" id="adminLogoutDrop"><i class="fa-solid fa-right-from-bracket me-2"></i>লগআউট</a></li>
+            </ul>
+          </div>
+          <button class="btn btn-outline-danger btn-sm d-none" id="adminLogout">
             <i class="fa-solid fa-right-from-bracket me-1"></i>লগআউট
           </button>
         </div>
+
       </div>
     </div>
   </nav>
@@ -72,7 +85,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
       <div>
         <h4 class="fw-bold text-dark mb-1">প্রশাসনিক কন্ট্রোল সেন্টার</h4>
-        <p class="text-muted small mb-0">মাদ্রাসার সকল বিভাগের কেন্দ্রীয় ওভারভিউ</p>
+        <p class="text-muted small mb-0">মাদ্রাসার সকল বিভাগের কেন্দ্রীয় ওভারভিউ</p>
       </div>
       <span class="badge bg-success px-3 py-2 fs-6" id="liveDate">...</span>
     </div>
@@ -81,23 +94,23 @@
     <div class="row g-3 mb-4">
       <div class="col-md-4">
         <div class="card border-0 shadow-sm p-3 bg-white border-start border-success border-4">
-          <small class="text-muted fw-semibold">মোট সক্রিয় শিক্ষার্থী</small>
+          <small class="text-muted fw-semibold">মোট সক্রিয় শিক্ষার্থী</small>
           <h3 class="text-success fw-bold my-1" id="statTotalStudents">০ জন</h3>
-          <small class="text-muted"><i class="fa-solid fa-circle-check text-success me-1"></i>ভর্তি রেজিস্টার অনুযায়ী</small>
+          <small class="text-muted"><i class="fa-solid fa-circle-check text-success me-1"></i>ভর্তি রেজিস্টার অনুযায়ী</small>
         </div>
       </div>
       <div class="col-md-4">
         <div class="card border-0 shadow-sm p-3 bg-white border-start border-primary border-4">
           <small class="text-muted fw-semibold">অনলাইন নতুন আবেদন</small>
           <h3 class="text-primary fw-bold my-1" id="statPendingApps">০ টি</h3>
-          <small class="text-muted"><i class="fa-solid fa-clock text-warning me-1"></i>যাচাইয়ের অপেক্ষায়</small>
+          <small class="text-muted"><i class="fa-solid fa-clock text-warning me-1"></i>যাচাইয়ের অপেক্ষায়</small>
         </div>
       </div>
       <div class="col-md-4">
         <div class="card border-0 shadow-sm p-3 bg-white border-start border-danger border-4">
           <small class="text-muted fw-semibold">ফি অনুমোদন অপেক্ষমান</small>
           <h3 class="text-danger fw-bold my-1" id="statPendingFees">০ টি</h3>
-          <small class="text-muted"><i class="fa-solid fa-bell text-danger me-1"></i>অনুমোদন প্রয়োজন</small>
+          <small class="text-muted"><i class="fa-solid fa-bell text-danger me-1"></i>অনুমোদন প্রয়োজন</small>
         </div>
       </div>
     </div>
@@ -118,7 +131,7 @@
         <a href="admin-admissions.html" class="module-card shadow-sm">
           <div class="icon-box bg-primary text-white"><i class="fa-solid fa-address-book"></i></div>
           <h5 class="fw-bold mb-1">২. অনলাইন ভর্তি আবেদন</h5>
-          <p class="text-muted small mb-0">অভিভাবকদের পাঠানো আবেদন যাচাই, ইন্টারভিউ ও সরাসরি ছাত্র তালিকায় এনরোল।</p>
+          <p class="text-muted small mb-0">অভিভাবকদের পাঠানো আবেদন যাচাই, ইন্টারভিউ ও সরাসরি ছাত্র তালিকায় এনরোল।</p>
         </a>
       </div>
 
@@ -126,7 +139,7 @@
         <a href="admin-fees.html" class="module-card shadow-sm">
           <div class="icon-box bg-danger text-white"><i class="fa-solid fa-money-check-dollar"></i></div>
           <h5 class="fw-bold mb-1">৩. অনলাইন ফি ও SMS অনুমোদন</h5>
-          <p class="text-muted small mb-0">শিক্ষার্থীদের পাঠানো বেতন ও ফি যাচাই, বকেয়া সমন্বয় এবং মোবাইলে SMS পাঠানো।</p>
+          <p class="text-muted small mb-0">শিক্ষার্থীদের পাঠানো বেতন ও ফি যাচাই, বকেয়া সমন্বয় এবং মোবাইলে SMS পাঠানো।</p>
         </a>
       </div>
 
@@ -150,7 +163,7 @@
         <a href="id-admit-card.html" class="module-card shadow-sm">
           <div class="icon-box bg-secondary text-white"><i class="fa-solid fa-id-badge"></i></div>
           <h5 class="fw-bold mb-1">৬. ডিজিটাল আইডি ও প্রবেশপত্র</h5>
-          <p class="text-muted small mb-0">ছবি ও কিউআর কোডসহ কালার আইডি কার্ড (উভয় পিঠ) ও পরীক্ষার প্রবেশপত্র প্রিন্ট।</p>
+          <p class="text-muted small mb-0">ছবি ও কিউআর কোডসহ কালার আইডি কার্ড (উভয় পিঠ) ও পরীক্ষার প্রবেশপত্র প্রিন্ট।</p>
         </a>
       </div>
     </div>
@@ -163,10 +176,13 @@
 
   <script>
     if (localStorage.getItem('adminSession') !== 'active') window.location.href = 'admin-login.html';
-    document.getElementById('adminLogout').addEventListener('click', () => {
+    
+    const logoutHandler = () => {
       localStorage.removeItem('adminSession');
       window.location.href = 'admin-login.html';
-    });
+    };
+    document.getElementById('adminLogout').addEventListener('click', logoutHandler);
+    document.getElementById('adminLogoutDrop').addEventListener('click', logoutHandler);
 
     document.getElementById('liveDate').innerText = new Date().toLocaleDateString('bn-BD', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
