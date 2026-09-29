@@ -156,18 +156,18 @@
       <h4 class="fw-bold text-dark mb-2">
         <i class="fa-solid fa-id-badge text-success me-2"></i>শিক্ষার্থী ও শিক্ষকের ডিজিটাল আইডি কার্ড ও প্রবেশপত্র জেনারেটর
       </h4>
-      <p class="text-muted small mb-3">ID বা নামের অংশবিশেষ (শেষের ২-৩ সংখ্যা লিখলেও) লিখে শিক্ষার্থী বা শিক্ষক নির্বাচন করে আইডি কার্ড বা অ্যাডমিট কার্ড প্রিন্ট করুন।</p>
+      <p class="text-muted small mb-3">ID লিখে বা নাম টাইপ করে ড্রপডাউন থেকে সিলেক্ট করে আইডি কার্ড বা অ্যাডমিট কার্ড জেনারেট করুন।</p>
 
       <form id="cardSearchForm" class="row g-2 align-items-center position-relative">
         <div class="col-md-5 position-relative">
-          <input type="text" class="form-control form-control-lg fw-bold" id="targetStudentId" placeholder="ID বা শেষ সংখ্যা লিখুন (যেমন: ...0001)" autocomplete="off" required>
+          <input type="text" class="form-control form-control-lg fw-bold" id="targetStudentId" placeholder="ID বা নাম লিখুন (যেমন: JTQ-M-20260001)" autocomplete="off" required>
           <!-- অটো-ফিল্টার ড্রপডাউন -->
           <div id="autocompleteResults" class="autocomplete-list" style="display: none;"></div>
         </div>
         <div class="col-md-4">
           <select class="form-select form-select-lg fw-semibold" id="cardTypeSelect">
-            <option value="idCard">১. ডিজিটাল স্টুডেন্ট আইডি কার্ড (Front & Back দুই পৃষ্ঠা)</option>
-            <option value="teacherIdCard">২. শিক্ষক আইডি কার্ড (Front & Back দুই পৃষ্ঠা)</option>
+            <option value="idCard">১. ডিজিটাল স্টুডেন্ট আইডি কার্ড (Front & Back)</option>
+            <option value="teacherIdCard">২. শিক্ষক আইডি কার্ড (Front & Back)</option>
             <option value="admitCard">৩. পরীক্ষার প্রবেশপত্র (Exam Admit Card)</option>
           </select>
         </div>
@@ -202,12 +202,12 @@
     <!-- প্রিন্ট ও ফলাফল কন্টেইনার -->
     <div id="printAreaContainer">
       
-      <!-- ================= ১. ডিজিটাল স্টুডেন্ট আইডি কার্ড ভিউ (১ম ও ২য় পৃষ্ঠা উভয় সহ) ================= -->
+      <!-- ================= ১. ডিজিটাল স্টুডেন্ট আইডি কার্ড ভিউ (Front & Back) ================= -->
       <div id="idCardDisplayArea" style="display: none;">
         <div class="d-flex justify-content-between align-items-center mb-3 no-print">
-          <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-id-card me-2 text-success"></i>প্রিন্ট প্রিভিউ: স্টুডেন্ট আইডি কার্ড (Front & Back Page)</h5>
+          <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-id-card me-2 text-success"></i>প্রিন্ট প্রিভিউ: স্টুডেন্ট আইডি কার্ড (Front & Back)</h5>
           <button class="btn btn-success fw-bold shadow-sm" onclick="window.print()">
-            <i class="fa-solid fa-print me-1"></i> উভয় পৃষ্ঠা কালার প্রিন্ট করুন
+            <i class="fa-solid fa-print me-1"></i> আইডি কার্ড কালার প্রিন্ট
           </button>
         </div>
 
@@ -216,9 +216,9 @@
           <!-- সামনের পিঠ (Front Part) -->
           <div class="id-card">
             <div class="id-card-front-header">
-              <div class="small fw-semibold text-warning" style="letter-spacing: 2px; font-size: 18px;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-              <h6 class="fw-bold mb-1 text-white" style="font-size: 15px;">জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা</h6>
-              <small style="font-size: 12px; color: #ffd700;">বাইপাইল, আশুলিয়া, সাভার, ঢাকা | ফোন: 01710-899108</small>
+              <div class="small fw-semibold text-warning" style="letter-spacing: 2px; font-size: 16px;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+              <h6 class="fw-bold mb-1 text-white" style="font-size: 14.5px;">জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা</h6>
+              <small style="font-size: 11px; color: #ffd700;">বাইপাইল, আশুলিয়া, সাভার, ঢাকা | ফোন: 01700-000000</small>
             </div>
 
             <div class="text-center my-2">
@@ -244,10 +244,10 @@
             </div>
           </div>
 
-          <!-- পেছনের পিঠ বা ২য় পৃষ্ঠা (Back Part) -->
+          <!-- পেছনের পিঠ (Back Part - আলাদা আলাদা ঠিকানাসহ) -->
           <div class="id-card">
             <div class="id-card-back-header">
-              <i class="fa-solid fa-address-book me-1"></i> অভিভাবক, ঠিকানা ও জরুরি যোগাযোগ
+              <i class="fa-solid fa-address-book me-1"></i> অভিভাবক ও ঠিকানার বিবরণ
             </div>
 
             <div class="p-2" style="font-size: 11px;">
@@ -265,7 +265,7 @@
 
               <!-- জরুরি নির্দেশনাবলী -->
               <div class="border rounded p-1 bg-light small mb-1" style="font-size: 9.5px; line-height: 1.3;">
-                <strong>নির্দেশনাবলী:</strong> কার্ডটি গলায় ঝুলিয়ে রাখা আবশ্যক। হারিয়ে গেলে ডুপ্লিকেটের জন্য আবেদন করুন।
+                <strong>নির্দেশনাবলী:</strong> কার্ডটি গলায় ঝুলিয়ে রাখা আবশ্যক। হারিয়ে গেলে অফিস কক্ষে জানাতে হবে।
               </div>
 
               <!-- সিল ও স্বাক্ষর -->
@@ -288,21 +288,21 @@
         </div>
       </div>
 
-      <!-- ================= ২. শিক্ষক আইডি কার্ড ভিউ (Front & Back দুই পৃষ্ঠা সহ) ================= -->
+      <!-- ================= ২. শিক্ষক আইডি কার্ড ভিউ (Front & Back - বর্তমান ঠিকানা মাদ্রাসা) ================= -->
       <div id="teacherIdCardDisplayArea" style="display: none;">
         <div class="d-flex justify-content-between align-items-center mb-3 no-print">
-          <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-chalkboard-user me-2 text-success"></i>প্রিন্ট প্রিভিউ: শিক্ষক আইডি কার্ড (Front & Back Page)</h5>
+          <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-chalkboard-user me-2 text-success"></i>প্রিন্ট প্রিভিউ: শিক্ষক আইডি কার্ড (Front & Back)</h5>
           <button class="btn btn-success fw-bold shadow-sm" onclick="window.print()">
-            <i class="fa-solid fa-print me-1"></i> শিক্ষক আইডি কার্ড উভয় পৃষ্ঠা প্রিন্ট
+            <i class="fa-solid fa-print me-1"></i> শিক্ষক আইডি কার্ড প্রিন্ট করুন
           </button>
         </div>
 
         <div class="id-card-wrapper mb-4" id="printableTeacherIdCard">
           
-          <!-- শিক্ষকের আইডি কার্ড - সামনের পিঠ (Front) -->
+          <!-- সামনের পিঠ -->
           <div class="id-card">
             <div class="id-card-front-header" style="background: linear-gradient(135deg, #0f5132, #198754);">
-              <div class="small fw-semibold text-warning" style="letter-spacing: 2px; font-size: 18px;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+              <div class="small fw-semibold text-warning" style="letter-spacing: 2px; font-size: 16px;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
               <h6 class="fw-bold mb-1 text-white" style="font-size: 15px;">জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা</h6>
               <small style="font-size: 12px; color: #ffd700;">শিক্ষক পরিচয়পত্র (TEACHER ID)</small>
             </div>
@@ -325,12 +325,12 @@
               </table>
             </div>
 
-            <div class="id-card-footer" style="font-size: 11px; padding: 7px;">
+            <div class="id-card-footer" style="font-size: 12px; padding: 7px;">
               <i class="fa-solid fa-phone me-1"></i>অফিস হেল্পলাইন: 01700-000000
             </div>
           </div>
 
-          <!-- শিক্ষকের আইডি কার্ড - পেছনের পিঠ (Back Page - মাদ্রাসার বর্তমান ঠিকানা, শিক্ষকের স্থায়ী ঠিকানা ও জরুরি যোগাযোগ সহ) -->
+          <!-- পেছনের পিঠ (বর্তমান ঠিকানা = মাদ্রাসা, স্থায়ী ঠিকানা = শিক্ষকের নিজ ঠিকানা) -->
           <div class="id-card">
             <div class="id-card-back-header">
               <i class="fa-solid fa-address-book me-1"></i> ঠিকানা ও জরুরি যোগাযোগ
@@ -346,12 +346,10 @@
                 </tbody>
               </table>
 
-              <!-- জরুরি নির্দেশনাবলী -->
               <div class="border rounded p-1 bg-light small mb-1" style="font-size: 9.5px; line-height: 1.3;">
-                <strong>বিশেষ নির্দেশাবলী:</strong> প্রতিষ্ঠান চলাকালীন সময়ে কার্ডটি দৃশ্যমান রাখতে হবে। জরুরি প্রয়োজনে উপরোক্ত নম্বরে যোগাযোগ করুন।
+                <strong>বিশেষ নির্দেশাবলী:</strong> প্রতিষ্ঠান চলাকালীন সময়ে কার্ডটি দৃশ্যমান রাখতে হবে।
               </div>
 
-              <!-- সিল ও স্বাক্ষর -->
               <div class="d-flex justify-content-between align-items-end mt-2 pt-1 px-1">
                 <div class="text-center" style="font-size: 9.5px;">
                   <i class="fa-solid fa-qrcode fa-2x text-muted d-block mb-1"></i>
@@ -371,7 +369,7 @@
         </div>
       </div>
 
-      <!-- ================= ৩. পরীক্ষার প্রবেশপত্র (Admit Card) ভিউ ================= -->
+      <!-- ================= ৩. পরীক্ষার প্রবেশপত্র (Admit Card) ================= -->
       <div id="admitCardDisplayArea" style="display: none;">
         <div class="d-flex justify-content-between align-items-center mb-3 no-print">
           <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-file-signature me-2 text-primary"></i>প্রিন্ট প্রিভিউ: পরীক্ষার প্রবেশপত্র (Admit Card)</h5>
@@ -383,42 +381,22 @@
         <div class="admit-card-box shadow-sm mb-4" id="printableAdmitCard">
           <div class="admit-watermark">JTQ ADMIT</div>
 
-          <!-- হেডার -->
           <div class="text-center border-bottom border-success border-2 pb-2 mb-3">
             <h3 class="fw-bold text-success mb-0">জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা</h3>
             <p class="text-muted small mb-1">বাইপাইল, আশুলিয়া, সাভার, ঢাকা | ফোন: 01700-000000</p>
             <span class="badge bg-primary px-3 py-1 fs-6" id="admitCardExamTitle">পরীক্ষার প্রবেশপত্র (ADMIT CARD)</span>
           </div>
 
-          <!-- ছাত্রের তথ্য ও ছবি -->
           <div class="row g-3 align-items-center mb-3">
             <div class="col-8">
               <table class="table table-bordered table-sm small mb-0">
                 <tbody>
-                  <tr>
-                    <th class="bg-light w-30">শিক্ষার্থীর নাম:</th>
-                    <td class="fw-bold fs-6 text-dark" id="admitName">...</td>
-                  </tr>
-                  <tr>
-                    <th class="bg-light">Student ID:</th>
-                    <td class="fw-bold text-success" id="admitStudentId">...</td>
-                  </tr>
-                  <tr>
-                    <th class="bg-light">বিভাগ / শ্রেণি:</th>
-                    <td class="fw-semibold" id="admitDept">...</td>
-                  </tr>
-                  <tr>
-                    <th class="bg-light">শ্রেণি রোল নম্বর:</th>
-                    <td class="fw-bold fs-6 text-danger" id="admitRoll">...</td>
-                  </tr>
-                  <tr>
-                    <th class="bg-light">পিতার নাম:</th>
-                    <td id="admitFather">...</td>
-                  </tr>
-                  <tr>
-                    <th class="bg-light">পরীক্ষার তারিখ ও হল:</th>
-                    <td class="fw-bold text-primary" id="admitSchedule">...</td>
-                  </tr>
+                  <tr><th class="bg-light w-30">শিক্ষার্থীর নাম:</th><td class="fw-bold fs-6 text-dark" id="admitName">...</td></tr>
+                  <tr><th class="bg-light">Student ID:</th><td class="fw-bold text-success" id="admitStudentId">...</td></tr>
+                  <tr><th class="bg-light">বিভাগ / শ্রেণি:</th><td class="fw-semibold" id="admitDept">...</td></tr>
+                  <tr><th class="bg-light">শ্রেণি রোল নম্বর:</th><td class="fw-bold fs-6 text-danger" id="admitRoll">...</td></tr>
+                  <tr><th class="bg-light">পিতার নাম:</th><td id="admitFather">...</td></tr>
+                  <tr><th class="bg-light">পরীক্ষার তারিখ ও হল:</th><td class="fw-bold text-primary" id="admitSchedule">...</td></tr>
                 </tbody>
               </table>
             </div>
@@ -428,18 +406,11 @@
             </div>
           </div>
 
-          <!-- পরীক্ষার রুটিন ছক -->
           <div class="mb-3">
             <h6 class="fw-bold text-dark small border-bottom pb-1 mb-2">পরীক্ষাসমূহের তালিকা ও পরিদর্শক স্বাক্ষর:</h6>
             <table class="table table-bordered table-sm text-center small mb-0">
               <thead class="table-light">
-                <tr>
-                  <th style="width: 60px;">ক্রমিক</th>
-                  <th>পরীক্ষার বিষয় / কিতাব / পারা</th>
-                  <th>পূর্ণমান</th>
-                  <th>পরীক্ষার তারিখ</th>
-                  <th style="width: 140px;">কক্ষ পরিদর্শকের স্বাক্ষর</th>
-                </tr>
+                <tr><th style="width: 60px;">ক্রমিক</th><th>পরীক্ষার বিষয় / কিতাব / পারা</th><th>পূর্ণমান</th><th>পরীক্ষার তারিখ</th><th style="width: 140px;">কক্ষ পরিদর্শকের স্বাক্ষর</th></tr>
               </thead>
               <tbody>
                 <tr><td>০১</td><td class="text-start ps-3">কুরআনুল কারীম হিফজ শুনানী (সবক ও সাত সবক)</td><td>১০০</td><td>প্রথম দিন</td><td></td></tr>
@@ -450,17 +421,14 @@
             </table>
           </div>
 
-          <!-- নির্দেশনাবলী -->
           <div class="border rounded p-2 bg-light small mb-4" style="font-size: 11px;">
             <strong>পরীক্ষার্থীদের জন্য জরুরি নির্দেশনাবলী:</strong>
             <ul class="mb-0 ps-3">
               <li>পরীক্ষা শুরুর অন্তত ১৫ মিনিট পূর্বে নির্ধারিত কক্ষে উপস্থিত হতে হবে।</li>
-              <li>এই প্রবেশপত্র (Admit Card) ছাড়া কোনোভাবেই পরীক্ষার হলে প্রবেশ করতে দেওয়া হবে না।</li>
-              <li>মাদ্রাসার নির্ধারিত পোশাক ও শৃঙ্খলা মেনে পরীক্ষায় অংশগ্রহণ করতে হবে।</li>
+              <li>এই প্রবেশপত্র (Admit Card) ছাড়া পরীক্ষার হলে প্রবেশ করা যাবে না।</li>
             </ul>
           </div>
 
-          <!-- স্বাক্ষর -->
           <div class="row text-center mt-5 pt-3">
             <div class="col-4"><div class="border-top border-dark pt-1 small fw-bold">শিক্ষার্থীর স্বাক্ষর</div></div>
             <div class="col-4"><div class="border-top border-dark pt-1 small fw-bold">পরীক্ষা সচিব</div></div>
@@ -470,7 +438,6 @@
       </div>
 
     </div>
-
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -479,16 +446,18 @@
   <script src="js/firebase-config.js"></script>
 
   <script>
+    if (localStorage.getItem('adminSession') !== 'active') window.location.href = 'admin-login.html';
+
     document.getElementById('cardTypeSelect').addEventListener('change', function() {
       const isAdmit = this.value === 'admitCard';
       document.getElementById('admitCardOptions').style.display = isAdmit ? 'flex' : 'none';
     });
 
-    // অটো-ফিল্টার এবং সাজেশান লজিক
     const searchInput = document.getElementById('targetStudentId');
     const autocompleteList = document.getElementById('autocompleteResults');
     let allRecords = [];
 
+    // ছাত্র এবং শিক্ষক উভয় ডাটা ফেচ করে সাজেশান লিস্টে রাখা
     function loadSearchRecords() {
       allRecords = [];
       db.collection("students").get().then((snapshot) => {
@@ -504,45 +473,31 @@
       }).catch(err => console.log(err));
 
       db.collection("teachers").get().then((snapshot) => {
-        if(snapshot.empty) {
-          return db.collection("staff").get();
-        }
-        return snapshot;
-      }).then((snapshot) => {
-        if(snapshot && !snapshot.empty) {
-          snapshot.forEach((doc) => {
-            let data = doc.data();
-            allRecords.push({
-              id: data.teacherId || data.id || data.empId || doc.id,
-              name: data.nameBn || data.name || "নাম নেই",
-              type: 'teacher',
-              raw: data
-            });
+        snapshot.forEach((doc) => {
+          let data = doc.data();
+          allRecords.push({
+            id: data.teacherId || doc.id,
+            name: data.name || "নাম নেই",
+            type: 'teacher',
+            raw: data
           });
-        }
+        });
       }).catch(err => console.log(err));
     }
 
     window.addEventListener('DOMContentLoaded', loadSearchRecords);
 
+    // টাইপ করার সাথে সাথে অটো-সাজেশন ড্রপডাউন দেখানো
     searchInput.addEventListener('input', function() {
       const val = this.value.trim().toLowerCase();
       autocompleteList.innerHTML = '';
-      if (!val) {
-        autocompleteList.style.display = 'none';
-        return;
-      }
+      if (!val) { autocompleteList.style.display = 'none'; return; }
 
       const filtered = allRecords.filter(item => {
-        const idStr = String(item.id).toLowerCase();
-        const nameStr = String(item.name).toLowerCase();
-        return idStr.includes(val) || nameStr.includes(val);
+        return String(item.id).toLowerCase().includes(val) || String(item.name).toLowerCase().includes(val);
       });
 
-      if (filtered.length === 0) {
-        autocompleteList.style.display = 'none';
-        return;
-      }
+      if (filtered.length === 0) { autocompleteList.style.display = 'none'; return; }
 
       filtered.forEach(item => {
         const div = document.createElement('div');
@@ -558,43 +513,34 @@
     });
 
     document.addEventListener('click', function(e) {
-      if (e.target !== searchInput) {
-        autocompleteList.style.display = 'none';
-      }
+      if (e.target !== searchInput) autocompleteList.style.display = 'none';
     });
 
+    // ফর্ম সাবমিট ও কার্ড জেনারেট
     document.getElementById('cardSearchForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      const sId = document.getElementById('targetStudentId').value.trim();
+      const sId = searchInput.value.trim();
       const cardType = document.getElementById('cardTypeSelect').value;
       const btn = document.getElementById('generateBtn');
 
-      btn.disabled = true;
-      btn.innerText = "জেনারেট হচ্ছে...";
+      btn.disabled = true; btn.innerText = "জেনারেট হচ্ছে...";
 
       if (cardType === 'teacherIdCard') {
         db.collection("teachers").doc(sId).get().then((doc) => {
           if (doc.exists) {
             renderTeacherCard(doc.data());
           } else {
-            return db.collection("teachers").where("teacherId", "==", sId).get()
-              .then((qSnap) => {
-                if (!qSnap.empty) { renderTeacherCard(qSnap.docs[0].data()); return; }
-                return db.collection("teachers").where("id", "==", sId).get();
-              })
-              .then((qSnap2) => {
-                if (qSnap2 && !qSnap2.empty) { renderTeacherCard(qSnap2.docs[0].data()); return; }
-                alert("এই Teacher ID (" + sId + ") দিয়ে কোনো শিক্ষক পাওয়া যায়নি!");
-                hideAllDisplays();
-              });
+            return db.collection("teachers").where("teacherId", "==", sId).get().then((qSnap) => {
+              if (!qSnap.empty) { renderTeacherCard(qSnap.docs[0].data()); return; }
+              alert("এই Teacher ID (" + sId + ") দিয়ে কোনো শিক্ষক পাওয়া যায়নি!");
+              hideAllDisplays();
+            });
           }
-        }).catch(err => {
-          alert("ত্রুটি: " + err.message);
-        }).finally(() => { resetBtn(btn); });
+        }).catch(err => alert("ত্রুটি: " + err.message)).finally(() => resetBtn(btn));
       } else {
         db.collection("students").doc(sId).get().then((doc) => {
           if (!doc.exists) {
-            db.collection("students").where("studentId", "==", sId).get().then((qSnap) => {
+            return db.collection("students").where("studentId", "==", sId).get().then((qSnap) => {
               if (qSnap.empty) {
                 alert("এই Student ID (" + sId + ") দিয়ে কোনো শিক্ষার্থী পাওয়া যায়নি!");
                 hideAllDisplays();
@@ -602,41 +548,28 @@
               }
               processStudentData(qSnap.docs[0].data(), cardType);
             });
-          } else {
-            processStudentData(doc.data(), cardType);
           }
-        }).catch(err => {
-          alert("ত্রুটি: " + err.message);
-        }).finally(() => { resetBtn(btn); });
+          processStudentData(doc.data(), cardType);
+        }).catch(err => alert("ত্রুটি: " + err.message)).finally(() => resetBtn(btn));
       }
     });
 
+    // শিক্ষক কার্ড রেন্ডার
     function renderTeacherCard(t) {
       document.getElementById('tIdPhoto').src = t.photo || 'https://via.placeholder.com/105';
-      document.getElementById('tIdNameBn').innerText = t.nameBn || t.name || "-";
+      document.getElementById('tIdNameBn').innerText = t.name || "-";
       document.getElementById('tIdNameEn').innerText = t.nameEn || "-";
-      document.getElementById('tIdDesignation').innerText = t.designation || t.post || "শিক্ষক";
-      document.getElementById('tIdCardNo').innerText = t.teacherId || t.id || "-";
+      document.getElementById('tIdDesignation').innerText = t.designation || "শিক্ষক";
+      document.getElementById('tIdCardNo').innerText = t.teacherId || "-";
       document.getElementById('tIdDept').innerText = t.department || "-";
-      document.getElementById('tIdPhone').innerText = t.phone || t.mobile || "-";
+      document.getElementById('tIdPhone').innerText = t.phone || "-";
       document.getElementById('tIdBlood').innerText = t.bloodGroup || "অজানা";
 
-      // শিক্ষকের ২য় পৃষ্ঠার ডাটা (ফোন, জরুরি নম্বর: নাম ও নম্বর সহ, বর্তমান ঠিকানা: মাদ্রাসা, স্থায়ী ঠিকানা: শিক্ষকের ঠিকানা)
-      document.getElementById('tIdPhoneBack').innerText = t.phone || t.mobile || "-";
-      
-      // জরুরি নম্বর (নাম ও নম্বর ফরম্যাট)
-      const emergName = t.emergencyName || t.guardianName || "নির্দেশিত ব্যক্তি";
-      const emergNum = t.emergencyPhone || t.altPhone || t.guardianPhone || "দেওয়া হয়নি";
-      document.getElementById('tIdEmergencyPhone').innerText = `${emergName} (${emergNum})`;
-      
-      // বর্তমান ঠিকানা (মাদ্রাসার ঠিকানা ফিক্সড বা ডাটা থেকে)
-      document.getElementById('tIdAddress').innerText = "জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা, বাইপাইল, আশুলিয়া, সাভার, ঢাকা। 
-        01710-899108";
+      document.getElementById('tIdPhoneBack').innerText = t.phone || "-";
+      document.getElementById('tIdEmergencyPhone').innerText = t.emergencyName ? `${t.emergencyName} (${t.emergencyPhone})` : "দেওয়া হয়নি";
 
-
-      // স্থায়ী ঠিকানা (শিক্ষকের নিজস্ব স্থায়ী ঠিকানা)
       const perm = t.permanentAddress || {};
-      const fullPermAddr = typeof perm === 'string' ? perm : `গ্রাম: ${perm.village || t.permVillage || '-'}, ডাক: ${perm.post || t.permPost || '-'}, থানা: ${perm.thana || t.permThana || '-'}, জেলা: ${perm.district || t.permDistrict || '-'}`;
+      const fullPermAddr = `গ্রাম: ${perm.village || '-'}, ডাক: ${perm.post || '-'}, থানা: ${perm.thana || '-'}, জেলা: ${perm.district || '-'}`;
       document.getElementById('tIdPermanentAddress').innerText = fullPermAddr;
 
       document.getElementById('teacherIdCardDisplayArea').style.display = 'block';
@@ -644,6 +577,7 @@
       document.getElementById('admitCardDisplayArea').style.display = 'none';
     }
 
+    // ছাত্র কার্ড ও অ্যাডমিট কার্ড রেন্ডার
     function processStudentData(s, cardType) {
       const photoUrl = s.photo || 'https://via.placeholder.com/110';
       const nameBn = s.nameBn || s.name || "-";
@@ -652,22 +586,17 @@
       const fatherOcc = s.fatherOccupation || "-";
       const motherName = s.motherBn || s.mother || "-";
       const phone = s.phone || "-";
-      
-      const emergName = s.emergencyName || s.guardianName || "অভিভাবক";
-      const emergNum = s.emergencyPhone || s.guardianPhone || s.altPhone || "দেওয়া হয়নি";
-      const emergencyPhoneStr = `${emergName}: ${emergNum}`;
+      const emergencyStr = s.emergencyName ? `${s.emergencyName}: ${s.emergencyPhone}` : (s.guardianPhone || "দেওয়া হয়নি");
 
       const roll = s.roll || "-";
       const dept = s.department || "-";
       const blood = s.bloodGroup || "অজানা";
 
-      // বর্তমান ঠিকানা ফরম্যাট
       const pre = s.presentAddress || {};
       const fullPresentAddr = `গ্রাম: ${pre.village || '-'}, ডাক: ${pre.post || '-'}, থানা: ${pre.thana || '-'}, জেলা: ${pre.district || '-'}`;
 
-      // স্থায়ী ঠিকানা আলাদাভাবে ফেচ করা
       const perm = s.permanentAddress || {};
-      const fullPermAddr = `গ্রাম: ${perm.village || s.permVillage || '-'}, ডাক: ${perm.post || s.permPost || '-'}, থানা: ${perm.thana || s.permThana || '-'}, জেলা: ${perm.district || s.permDistrict || '-'}`;
+      const fullPermAddr = `গ্রাম: ${perm.village || '-'}, ডাক: ${perm.post || '-'}, থানা: ${perm.thana || '-'}, জেলা: ${perm.district || '-'}`;
 
       if (cardType === 'idCard') {
         document.getElementById('idPhoto').src = photoUrl;
@@ -682,7 +611,7 @@
         document.getElementById('idFatherOcc').innerText = fatherOcc;
         document.getElementById('idMother').innerText = motherName;
         document.getElementById('idPhone').innerText = phone;
-        document.getElementById('idEmergencyPhone').innerText = emergencyPhoneStr;
+        document.getElementById('idEmergencyPhone').innerText = emergencyStr;
         document.getElementById('idAddress').innerText = fullPresentAddr;
         document.getElementById('idPermanentAddress').innerText = fullPermAddr;
 
