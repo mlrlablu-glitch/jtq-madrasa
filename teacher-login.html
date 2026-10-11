@@ -23,6 +23,32 @@
       width: 100%;
       padding: 30px;
     }
+    /* অটো-সাজেশন ড্রপডাউন স্টাইল */
+    .autocomplete-list {
+      position: absolute;
+      border: 1px solid #d4d4d4;
+      border-bottom: none;
+      border-top: none;
+      z-index: 99;
+      top: 100%;
+      left: 0;
+      right: 0;
+      max-height: 200px;
+      overflow-y: auto;
+      background-color: #fff;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      border-radius: 0 0 6px 6px;
+    }
+    .autocomplete-item {
+      padding: 8px 12px;
+      cursor: pointer;
+      border-bottom: 1px solid #d4d4d4;
+      font-size: 13.5px;
+      color: #212529;
+    }
+    .autocomplete-item:hover {
+      background-color: #e9ecef;
+    }
   </style>
 </head>
 <body>
@@ -37,12 +63,14 @@
     </div>
 
     <form id="teacherLoginForm">
-      <div class="mb-3">
+      <div class="mb-3 position-relative">
         <label class="form-label small fw-semibold">শিক্ষক আইডি (Teacher ID)</label>
         <div class="input-group">
           <span class="input-group-text"><i class="fa-solid fa-id-card"></i></span>
-          <input type="text" class="form-control fw-bold text-success" id="tId" placeholder="যেমন: TCH-01" required>
+          <input type="text" class="form-control fw-bold text-success" id="tId" placeholder="ID বা নাম লিখে খুঁজুন..." autocomplete="off" required>
         </div>
+        <!-- অটো-ফিল্টার ড্রপডাউন লিস্ট -->
+        <div id="autocompleteResults" class="autocomplete-list" style="display: none;"></div>
       </div>
 
       <div class="mb-3">
@@ -71,10 +99,59 @@
   <script src="js/firebase-config.js"></script>
 
   <script>
-    // ফায়ারবেস থেকে শিক্ষক আইডি ও পাসওয়ার্ড যাচাই লজিক
+    const tIdInput = document.getElementById('tId');
+    const autocompleteList = document.getElementById('autocompleteResults');
+    let allTeachers = [];
+
+    // ফায়ারবেস থেকে শিক্ষকদের তালিকা লোড করা
+    function loadTeachersForAutocomplete() {
+      allTeachers = [];
+      db.collection("teachers").get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          let data = doc.data();
+          allTeachers.push({
+            id: data.teacherId || doc.id,
+            name: data.nameBn || data.name || "নাম নেই"
+          });
+        });
+      }).catch(err => console.log(err));
+    }
+
+    window.addEventListener('DOMContentLoaded', loadTeachersForAutocomplete);
+
+    // টাইপ করার সাথে সাথে ফিল্টার করে সাজেশান দেখানো
+    tIdInput.addEventListener('input', function() {
+      const val = this.value.trim().toLowerCase();
+      autocompleteList.innerHTML = '';
+      if (!val) { autocompleteList.style.display = 'none'; return; }
+
+      const filtered = allTeachers.filter(item => {
+        return String(item.id).toLowerCase().includes(val) || String(item.name).toLowerCase().includes(val);
+      });
+
+      if (filtered.length === 0) { autocompleteList.style.display = 'none'; return; }
+
+      filtered.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'autocomplete-item';
+        div.innerHTML = `<strong>${item.id}</strong> - ${item.name}`;
+        div.addEventListener('click', function() {
+          tIdInput.value = item.id;
+          autocompleteList.style.display = 'none';
+        });
+        autocompleteList.appendChild(div);
+      });
+      autocompleteList.style.display = 'block';
+    });
+
+    document.addEventListener('click', function(e) {
+      if (e.target !== tIdInput) autocompleteList.style.display = 'none';
+    });
+
+    // ফায়ারবেস থেকে শিক্ষক আইডি ও পাসওয়ার্ড যাচাই লজিক
     document.getElementById('teacherLoginForm').addEventListener('submit', async function(e) {
       e.preventDefault();
-      const tId = document.getElementById('tId').value.trim();
+      const tId = tIdInput.value.trim();
       const pass = document.getElementById('tPass').value;
       const btn = document.getElementById('loginBtn');
 
@@ -83,20 +160,29 @@
 
       try {
         const docRef = await db.collection("teachers").doc(tId).get();
-        if (!docRef.exists) {
-          alert("এই শিক্ষক আইডি দিয়ে কোনো শিক্ষক নিবন্ধিত নেই!");
+        let teacherDoc = docRef;
+        let tData = docRef.exists ? docRef.data() : null;
+
+        if (!tData) {
+          const qSnap = await db.collection("teachers").where("teacherId", "==", tId).get();
+          if (!qSnap.empty) {
+            tData = qSnap.docs[0].data();
+          }
+        }
+
+        if (!tData) {
+          alert("এই শিক্ষক আইডি দিয়ে কোনো শিক্ষক নিবন্ধিত নেই!");
           btn.disabled = false;
           btn.innerHTML = `<i class="fa-solid fa-right-to-bracket me-1"></i> লগইন করুন`;
           return;
         }
 
-        const tData = docRef.data();
         const storedPass = tData.password || "teacher@123";
 
         if (pass === storedPass) {
           localStorage.setItem('teacherSession', 'active');
           localStorage.setItem('teacherId', tId);
-          localStorage.setItem('teacherName', tData.name);
+          localStorage.setItem('teacherName', tData.nameBn || tData.name || "");
           localStorage.setItem('teacherPhone', tData.phone || "");
           window.location.href = 'daily-sabak.html';
         } else {
