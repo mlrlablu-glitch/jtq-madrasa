@@ -665,4 +665,43 @@
         document.getElementById('idBloodGroup').innerText = blood;
 
         document.getElementById('idFather').innerText = fatherName;
-        document.getElementById('idFatherOcc').innerText = fatherOcc
+        document.getElementById('idFatherOcc').innerText = fatherOcc;
+        document.getElementById('idMother').innerText = motherName;
+        document.getElementById('idPhone').innerText = phone;
+        document.getElementById('idEmergencyPhone').innerText = emergencyStr;
+
+        document.getElementById('idCardDisplayArea').style.display = 'block';
+        document.getElementById('teacherIdCardDisplayArea').style.display = 'none';
+        document.getElementById('admitCardDisplayArea').style.display = 'none';
+      } else {
+        const examTerm = document.getElementById('admitExamTerm').value;
+        const examSchedule = `${document.getElementById('admitExamDate').value} (${document.getElementById('admitExamHall').value})`;
+
+        document.getElementById('admitCardExamTitle').innerText = examTerm + " - প্রবেশপত্র";
+        document.getElementById('admitPhoto').src = photoUrl;
+        document.getElementById('admitName').innerText = nameBn;
+        document.getElementById('admitStudentId').innerText = s.studentId || "-";
+        document.getElementById('admitDept').innerText = dept;
+        document.getElementById('admitRoll').innerText = roll;
+        document.getElementById('admitFather').innerText = fatherName;
+        document.getElementById('admitSchedule').innerText = examSchedule;
+
+        document.getElementById('admitCardDisplayArea').style.display = 'block';
+        document.getElementById('idCardDisplayArea').style.display = 'none';
+        document.getElementById('teacherIdCardDisplayArea').style.display = 'none';
+      }
+    }
+
+    function hideAllDisplays() {
+      document.getElementById('idCardDisplayArea').style.display = 'none';
+      document.getElementById('teacherIdCardDisplayArea').style.display = 'none';
+      document.getElementById('admitCardDisplayArea').style.display = 'none';
+    }
+
+    function resetBtn(btn) {
+      btn.disabled = false;
+      btn.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles me-1"></i> কার্ড জেনারেট করুন`;
+    }
+  </script>
+</body>
+</html>
