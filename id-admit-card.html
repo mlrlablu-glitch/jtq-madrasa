@@ -61,7 +61,7 @@
       margin-top: auto;
     }
 
-    /* ছবির মতো নিখুঁত দুই কলাম লেআউট স্টাইল */
+    /* প্রফেশনাল রো ও কলাম লেআউট স্টাইল */
     .card-address-box {
       border: 1px solid #cfe2ff;
       border-radius: 6px;
@@ -77,34 +77,48 @@
       padding: 1px 6px;
       border-radius: 3px;
       display: inline-block;
-      margin-bottom: 2px;
+      margin-bottom: 3px;
     }
     .card-address-title.green {
       background-color: #198754;
     }
-    .addr-row {
+    .prof-row {
       display: flex;
-      justify-content: space-between;
-      font-size: 8.5px;
+      font-size: 8px;
       border-bottom: 1px dotted #dee2e6;
-      padding: 1px 0;
+      padding: 2px 0;
     }
-    .addr-row:last-child {
+    .prof-row:last-child {
       border-bottom: none;
     }
-    .addr-label {
+    .prof-col-2 {
+      flex: 0 0 50%;
+      display: flex;
+    }
+    .col-lbl {
       color: #495057;
       font-weight: 600;
-      flex: 0 0 38%;
+      width: 38%;
     }
-    .addr-val {
+    .col-val {
       color: #212529;
       font-weight: 700;
-      flex: 0 0 62%;
-      text-align: right;
+      width: 62%;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+    .full-row {
+      display: flex;
+      font-size: 8px;
+      border-bottom: 1px dotted #dee2e6;
+      padding: 2px 0;
+    }
+    .full-row .col-lbl {
+      width: 19%;
+    }
+    .full-row .col-val {
+      width: 81%;
     }
 
     /* ================= অ্যাডমিট কার্ড স্টাইল ================= */
@@ -268,14 +282,14 @@
             </div>
           </div>
 
-          <!-- Back Page (বাড়িওয়ালা ও ফোন নম্বর আলাদা রো-তে এবং ঠিকানার বাকী ফিল্ডগুলো নিখুঁত দুই কলামে) -->
+          <!-- Back Page (প্রফেশনাল রো ও দুই-কলাম লেআউট) -->
           <div class="id-card">
             <div class="id-card-back-header">
               <i class="fa-solid fa-address-book me-1"></i> অভিভাবক ও ঠিকানার বিবরণ
             </div>
 
             <div class="p-2">
-              <table class="table table-sm table-borderless mb-1" style="font-size: 9px;">
+              <table class="table table-sm table-borderless mb-1" style="font-size: 8.5px;">
                 <tbody>
                   <tr><th class="text-secondary py-0 w-35">পিতার নাম:</th><td class="fw-semibold py-0 text-dark" id="idFather">...</td></tr>
                   <tr><th class="text-secondary py-0">পিতার পেশা:</th><td class="fw-semibold py-0" id="idFatherOcc">...</td></tr>
@@ -285,26 +299,42 @@
                 </tbody>
               </table>
 
-              <!-- বর্তমান ঠিকানা Box -->
+              <!-- বর্তমান ঠিকানা Box (প্রফেশনাল রো-ভিত্তিক দুই কলাম) -->
               <div class="card-address-box">
                 <div class="card-address-title green"><i class="fa-solid fa-location-dot me-1"></i>বর্তমান ঠিকানা</div>
-                <div class="addr-row"><span class="addr-label">বাড়িওয়ালা:</span><span class="addr-val" id="preLandlordName">-</span></div>
-                <div class="addr-row"><span class="addr-label">ফোন নম্বর:</span><span class="addr-val" id="preLandlordPhone">-</span></div>
-                <div class="addr-row"><span class="addr-label">গ্রাম:</span><span class="addr-val" id="preVillage">-</span></div>
-                <div class="addr-row"><span class="addr-label">ডাকঘর:</span><span class="addr-val" id="prePost">-</span></div>
-                <div class="addr-row"><span class="addr-label">ইউনিয়ন:</span><span class="addr-val" id="preUnion">-</span></div>
-                <div class="addr-row"><span class="addr-label">ওয়ার্ড:</span><span class="addr-val" id="preWard">-</span></div>
-                <div class="addr-row"><span class="addr-label">থানা / জেলা:</span><span class="addr-val" id="preThanaDist">-</span></div>
+                
+                <div class="full-row"><span class="col-lbl">বাড়িওয়ালা:</span><span class="col-val" id="preLandlordName">-</span></div>
+                <div class="full-row"><span class="col-lbl">ফোন নম্বর:</span><span class="col-val" id="preLandlordPhone">-</span></div>
+                
+                <div class="prof-row">
+                  <div class="prof-col-2"><span class="col-lbl">গ্রাম:</span><span class="col-val" id="preVillage">-</span></div>
+                  <div class="prof-col-2" style="padding-left: 4px;"><span class="col-lbl">ডাকঘর:</span><span class="col-val" id="prePost">-</span></div>
+                </div>
+                <div class="prof-row">
+                  <div class="prof-col-2"><span class="col-lbl">ইউনিয়ন:</span><span class="col-val" id="preUnion">-</span></div>
+                  <div class="prof-col-2" style="padding-left: 4px;"><span class="col-lbl">ওয়ার্ড:</span><span class="col-val" id="preWard">-</span></div>
+                </div>
+                <div class="prof-row">
+                  <div class="prof-col-2"><span class="col-lbl">থানা:</span><span class="col-val" id="preThana">-</span></div>
+                  <div class="prof-col-2" style="padding-left: 4px;"><span class="col-lbl">জেলা:</span><span class="col-val" id="preDistrict">-</span></div>
+                </div>
               </div>
 
-              <!-- স্থায়ী ঠিকানা Box -->
+              <!-- স্থায়ী ঠিকানা Box (প্রফেশনাল রো-ভিত্তিক দুই কলাম) -->
               <div class="card-address-box mb-1">
                 <div class="card-address-title"><i class="fa-solid fa-house-chimney me-1"></i>স্থায়ী ঠিকানা</div>
-                <div class="addr-row"><span class="addr-label">গ্রাম:</span><span class="addr-val" id="perVillage">-</span></div>
-                <div class="addr-row"><span class="addr-label">ডাকঘর:</span><span class="addr-val" id="perPost">-</span></div>
-                <div class="addr-row"><span class="addr-label">ইউনিয়ন:</span><span class="addr-val" id="perUnion">-</span></div>
-                <div class="addr-row"><span class="addr-label">ওয়ার্ড:</span><span class="addr-val" id="perWard">-</span></div>
-                <div class="addr-row"><span class="addr-label">থানা / জেলা:</span><span class="addr-val" id="perThanaDist">-</span></div>
+                <div class="prof-row">
+                  <div class="prof-col-2"><span class="col-lbl">গ্রাম:</span><span class="col-val" id="perVillage">-</span></div>
+                  <div class="prof-col-2" style="padding-left: 4px;"><span class="col-lbl">ডাকঘর:</span><span class="col-val" id="perPost">-</span></div>
+                </div>
+                <div class="prof-row">
+                  <div class="prof-col-2"><span class="col-lbl">ইউনিয়ন:</span><span class="col-val" id="perUnion">-</span></div>
+                  <div class="prof-col-2" style="padding-left: 4px;"><span class="col-lbl">ওয়ার্ড:</span><span class="col-val" id="perWard">-</span></div>
+                </div>
+                <div class="prof-row">
+                  <div class="prof-col-2"><span class="col-lbl">থানা:</span><span class="col-val" id="perThana">-</span></div>
+                  <div class="prof-col-2" style="padding-left: 4px;"><span class="col-lbl">জেলা:</span><span class="col-val" id="perDistrict">-</span></div>
+                </div>
               </div>
 
               <div class="d-flex justify-content-between align-items-end px-1">
@@ -371,7 +401,7 @@
             </div>
 
             <div class="p-2">
-              <table class="table table-sm table-borderless mb-1" style="font-size: 10px;">
+              <table class="table table-sm table-borderless mb-1" style="font-size: 9px;">
                 <tbody>
                   <tr><th class="text-secondary py-0 w-40">মোবাইল নম্বর:</th><td class="fw-bold text-success py-0" id="tIdPhoneBack">...</td></tr>
                   <tr><th class="text-secondary py-0 text-danger">জরুরি যোগাযোগ:</th><td class="fw-bold text-danger py-0" id="tIdEmergencyPhone">...</td></tr>
@@ -381,18 +411,25 @@
               <!-- বর্তমান ঠিকানা (মাদ্রাসা) -->
               <div class="card-address-box">
                 <div class="card-address-title green"><i class="fa-solid fa-location-dot me-1"></i>বর্তমান ঠিকানা (কর্মস্থল)</div>
-                <div class="addr-row"><span class="addr-label">প্রতিষ্ঠান:</span><span class="addr-val">জামিয়া তাসলিমুল কুরআন</span></div>
-                <div class="addr-row"><span class="addr-label">ঠিকানা:</span><span class="addr-val">বাইপাইল, আশুলিয়া, সাভার</span></div>
+                <div class="full-row"><span class="col-lbl">প্রতিষ্ঠান:</span><span class="col-val">জামিয়া তাসলিমুল কুরআন</span></div>
+                <div class="full-row"><span class="col-lbl">ঠিকানা:</span><span class="col-val">বাইপাইল, আশুলিয়া, সাভার</span></div>
               </div>
 
               <!-- স্থায়ী ঠিকানা Box -->
               <div class="card-address-box mb-1">
                 <div class="card-address-title"><i class="fa-solid fa-house-chimney me-1"></i>স্থায়ী ঠিকানা</div>
-                <div class="addr-row"><span class="addr-label">গ্রাম:</span><span class="addr-val" id="tPerVillage">-</span></div>
-                <div class="addr-row"><span class="addr-label">ডাকঘর:</span><span class="addr-val" id="tPerPost">-</span></div>
-                <div class="addr-row"><span class="addr-label">ইউনিয়ন:</span><span class="addr-val" id="tPerUnion">-</span></div>
-                <div class="addr-row"><span class="addr-label">ওয়ার্ড:</span><span class="addr-val" id="tPerWard">-</span></div>
-                <div class="addr-row"><span class="addr-label">থানা / জেলা:</span><span class="addr-val" id="tPerThanaDist">-</span></div>
+                <div class="prof-row">
+                  <div class="prof-col-2"><span class="col-lbl">গ্রাম:</span><span class="col-val" id="tPerVillage">-</span></div>
+                  <div class="prof-col-2" style="padding-left: 4px;"><span class="col-lbl">ডাকঘর:</span><span class="col-val" id="tPerPost">-</span></div>
+                </div>
+                <div class="prof-row">
+                  <div class="prof-col-2"><span class="col-lbl">ইউনিয়ন:</span><span class="col-val" id="tPerUnion">-</span></div>
+                  <div class="prof-col-2" style="padding-left: 4px;"><span class="col-lbl">ওয়ার্ড:</span><span class="col-val" id="tPerWard">-</span></div>
+                </div>
+                <div class="prof-row">
+                  <div class="prof-col-2"><span class="col-lbl">থানা:</span><span class="col-val" id="tPerThana">-</span></div>
+                  <div class="prof-col-2" style="padding-left: 4px;"><span class="col-lbl">জেলা:</span><span class="col-val" id="tPerDistrict">-</span></div>
+                </div>
               </div>
 
               <div class="d-flex justify-content-between align-items-end pt-1 px-1">
@@ -618,7 +655,8 @@
       document.getElementById('tPerPost').innerText = perm.post || '-';
       document.getElementById('tPerUnion').innerText = perm.union || '-';
       document.getElementById('tPerWard').innerText = perm.ward || '-';
-      document.getElementById('tPerThanaDist').innerText = `${perm.thana || '-'}, ${perm.district || '-'}`;
+      document.getElementById('tPerThana').innerText = perm.thana || '-';
+      document.getElementById('tPerDistrict').innerText = perm.district || '-';
 
       document.getElementById('teacherIdCardDisplayArea').style.display = 'block';
       document.getElementById('idCardDisplayArea').style.display = 'none';
@@ -646,14 +684,16 @@
       document.getElementById('prePost').innerText = pre.post || '-';
       document.getElementById('preUnion').innerText = pre.union || '-';
       document.getElementById('preWard').innerText = pre.ward || '-';
-      document.getElementById('preThanaDist').innerText = `${pre.thana || '-'}, ${pre.district || '-'}`;
+      document.getElementById('preThana').innerText = pre.thana || '-';
+      document.getElementById('preDistrict').innerText = pre.district || '-';
 
       const perm = s.permanentAddress || {};
       document.getElementById('perVillage').innerText = perm.village || '-';
       document.getElementById('perPost').innerText = perm.post || '-';
       document.getElementById('perUnion').innerText = perm.union || '-';
       document.getElementById('perWard').innerText = perm.ward || '-';
-      document.getElementById('perThanaDist').innerText = `${perm.thana || '-'}, ${perm.district || '-'}`;
+      document.getElementById('perThana').innerText = perm.thana || '-';
+      document.getElementById('perDistrict').innerText = perm.district || '-';
 
       if (cardType === 'idCard') {
         document.getElementById('idPhoto').src = photoUrl;
