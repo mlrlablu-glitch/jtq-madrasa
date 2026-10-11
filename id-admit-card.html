@@ -46,9 +46,9 @@
     .id-card-back-header {
       background: #062c19;
       color: #ffd700;
-      padding: 10px;
+      padding: 8px;
       text-align: center;
-      font-size: 13.5px;
+      font-size: 13px;
       font-weight: bold;
       border-bottom: 2px solid #ffc107;
     }
@@ -59,6 +59,13 @@
       text-align: center;
       padding: 6px;
       margin-top: auto;
+    }
+    .address-section-box {
+      border: 1px solid #dee2e6;
+      border-radius: 6px;
+      padding: 6px 8px;
+      margin-bottom: 6px;
+      background-color: #f8f9fa;
     }
 
     /* ================= অ্যাডমিট কার্ড স্টাইল ================= */
@@ -244,13 +251,13 @@
             </div>
           </div>
 
-          <!-- পেছনের পিঠ (Back Part - সারিওয়ারী আলাদা ঠিকানাসহ) -->
+          <!-- পেছনের পিঠ (Back Part - ছাত্র ভর্তির ফরমের ডিজাইনের আদলে সাজানো) -->
           <div class="id-card">
             <div class="id-card-back-header">
               <i class="fa-solid fa-address-book me-1"></i> অভিভাবক ও ঠিকানার বিবরণ
             </div>
 
-            <div class="p-2" style="font-size: 10.5px;">
+            <div class="p-2" style="font-size: 10px;">
               <table class="table table-sm table-borderless mb-1">
                 <tbody>
                   <tr><th class="text-secondary py-0 w-35">পিতার নাম:</th><td class="fw-semibold py-0 text-dark" id="idFather">...</td></tr>
@@ -258,27 +265,28 @@
                   <tr><th class="text-secondary py-0">মাতার নাম:</th><td class="fw-semibold py-0 text-dark" id="idMother">...</td></tr>
                   <tr><th class="text-secondary py-0 text-success">অভিভাবক ফোন:</th><td class="fw-bold text-success py-0" id="idPhone">...</td></tr>
                   <tr><th class="text-secondary py-0 text-danger">জরুরি নম্বর:</th><td class="fw-bold text-danger py-0" id="idEmergencyPhone">...</td></tr>
-                  
-                  <!-- বর্তমান ঠিকানা সারিওয়ারী -->
-                  <tr><th class="text-secondary py-0 fw-bold text-success" colspan="2">বর্তমান ঠিকানা:</th></tr>
-                  <tr><td class="py-0 ps-2 text-dark" colspan="2" id="idPreLandlord">বাড়িওয়ালা: -</td></tr>
-                  <tr><td class="py-0 ps-2 text-dark" colspan="2" id="idPreVillagePost">গ্রাম: -, ডাক: -</td></tr>
-                  <tr><td class="py-0 ps-2 text-dark" colspan="2" id="idPreThanaDist">থানা: -, জেলা: -</td></tr>
-
-                  <!-- স্থায়ী ঠিকানা সারিওয়ারী -->
-                  <tr><th class="text-secondary py-0 fw-bold text-primary" colspan="2">স্থায়ী ঠিকানা:</th></tr>
-                  <tr><td class="py-0 ps-2 text-dark" colspan="2" id="idPerVillagePost">গ্রাম: -, ডাক: -</td></tr>
-                  <tr><td class="py-0 ps-2 text-dark" colspan="2" id="idPerThanaDist">থানা: -, জেলা: -</td></tr>
                 </tbody>
               </table>
 
-              <!-- জরুরি নির্দেশনাবলী -->
-              <div class="border rounded p-1 bg-light small mb-1" style="font-size: 9px; line-height: 1.2;">
-                <strong>নির্দেশনাবলী:</strong> কার্ডটি গলায় ঝুলিয়ে রাখা আবশ্যক।
+              <!-- বর্তমান ঠিকানা বক্স (ভর্তি ফরম স্টাইল) -->
+              <div class="address-section-box">
+                <div class="fw-bold text-success mb-1" style="font-size: 10.5px;"><i class="fa-solid fa-location-dot me-1"></i>বর্তমান ঠিকানা:</div>
+                <div class="text-dark" id="idPreLandlord">বাড়িওয়ালা: -</div>
+                <div class="text-dark" id="idPreVillagePost">গ্রাম: -, ডাক: -</div>
+                <div class="text-dark" id="idPreUnionWard">ইউনিয়ন: -, ওয়ার্ড: -</div>
+                <div class="text-dark" id="idPreThanaDist">থানা: -, জেলা: -</div>
+              </div>
+
+              <!-- স্থায়ী ঠিকানা বক্স (ভর্তি ফরম স্টাইল) -->
+              <div class="address-section-box mb-1">
+                <div class="fw-bold text-primary mb-1" style="font-size: 10.5px;"><i class="fa-solid fa-house-chimney me-1"></i>স্থায়ী ঠিকানা:</div>
+                <div class="text-dark" id="idPerVillagePost">গ্রাম: -, ডাক: -</div>
+                <div class="text-dark" id="idPerUnionWard">ইউনিয়ন: -, ওয়ার্ড: -</div>
+                <div class="text-dark" id="idPerThanaDist">থানা: -, জেলা: -</div>
               </div>
 
               <!-- সিল ও স্বাক্ষর -->
-              <div class="d-flex justify-content-between align-items-end mt-1 pt-1 px-1">
+              <div class="d-flex justify-content-between align-items-end pt-1 px-1">
                 <div class="text-center" style="font-size: 9px;">
                   <i class="fa-solid fa-qrcode fa-2x text-muted d-block mb-1"></i>
                   <small>JTQ VERIFIED</small>
@@ -297,7 +305,7 @@
         </div>
       </div>
 
-      <!-- ================= ২. শিক্ষক আইডি কার্ড ভিউ (Front & Back - বর্তমান ঠিকানা মাদ্রাসা ও স্থায়ী ঠিকানা সারিওয়ারী) ================= -->
+      <!-- ================= ২. শিক্ষক আইডি কার্ড ভিউ (Front & Back - বর্তমান ঠিকানা মাদ্রাসা ও স্থায়ী ঠিকানা ফরম্যাট) ================= -->
       <div id="teacherIdCardDisplayArea" style="display: none;">
         <div class="d-flex justify-content-between align-items-center mb-3 no-print">
           <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-chalkboard-user me-2 text-success"></i>প্রিন্ট প্রিভিউ: শিক্ষক আইডি কার্ড (Front & Back)</h5>
@@ -339,7 +347,7 @@
             </div>
           </div>
 
-          <!-- পেছনের পিঠ (বর্তমান ঠিকানা = মাদ্রাসা, স্থায়ী ঠিকানা সারিওয়ারী) -->
+          <!-- পেছনের পিঠ (বর্তমান ঠিকানা = মাদ্রাসা, স্থায়ী ঠিকানা ফরম্যাট) -->
           <div class="id-card">
             <div class="id-card-back-header">
               <i class="fa-solid fa-address-book me-1"></i> ঠিকানা ও জরুরি যোগাযোগ
@@ -350,23 +358,25 @@
                 <tbody>
                   <tr><th class="text-secondary py-0 w-40">মোবাইল নম্বর:</th><td class="fw-bold text-success py-0" id="tIdPhoneBack">...</td></tr>
                   <tr><th class="text-secondary py-0 text-danger">জরুরি যোগাযোগ:</th><td class="fw-bold text-danger py-0" id="tIdEmergencyPhone">...</td></tr>
-                  
-                  <!-- বর্তমান ঠিকানা (মাদ্রাসা) -->
-                  <tr><th class="text-secondary py-0 fw-bold text-success" colspan="2">বর্তমান ঠিকানা (মাদ্রাসা):</th></tr>
-                  <tr><td class="py-0 ps-2 text-dark fw-semibold" colspan="2">জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা, বাইপাইল, আশুলিয়া, সাভার, ঢাকা।</td></tr>
-
-                  <!-- স্থায়ী ঠিকানা সারিওয়ারী -->
-                  <tr><th class="text-secondary py-0 fw-bold text-primary" colspan="2">স্থায়ী ঠিকানা:</th></tr>
-                  <tr><td class="py-0 ps-2 text-dark" colspan="2" id="tIdPerVillagePost">গ্রাম: -, ডাক: -</td></tr>
-                  <tr><td class="py-0 ps-2 text-dark" colspan="2" id="tIdPerThanaDist">থানা: -, জেলা: -</td></tr>
                 </tbody>
               </table>
 
-              <div class="border rounded p-1 bg-light small mb-1" style="font-size: 9.5px; line-height: 1.3;">
-                <strong>বিশেষ নির্দেশাবলী:</strong> প্রতিষ্ঠান চলাকালীন সময়ে কার্ডটি দৃশ্যমান রাখতে হবে।
+              <!-- বর্তমান ঠিকানা বক্স (মাদ্রাসা) -->
+              <div class="address-section-box">
+                <div class="fw-bold text-success mb-1" style="font-size: 10.5px;"><i class="fa-solid fa-location-dot me-1"></i>বর্তমান ঠিকানা (কর্মস্থল):</div>
+                <div class="text-dark fw-semibold">জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা</div>
+                <div class="text-dark">বাইপাইল, আশুলিয়া, সাভার, ঢাকা।</div>
               </div>
 
-              <div class="d-flex justify-content-between align-items-end mt-2 pt-1 px-1">
+              <!-- স্থায়ী ঠিকানা বক্স -->
+              <div class="address-section-box mb-1">
+                <div class="fw-bold text-primary mb-1" style="font-size: 10.5px;"><i class="fa-solid fa-house-chimney me-1"></i>স্থায়ী ঠিকানা:</div>
+                <div class="text-dark" id="tIdPerVillagePost">গ্রাম: -, ডাক: -</div>
+                <div class="text-dark" id="tIdPerUnionWard">ইউনিয়ন: -, ওয়ার্ড: -</div>
+                <div class="text-dark" id="tIdPerThanaDist">থানা: -, জেলা: -</div>
+              </div>
+
+              <div class="d-flex justify-content-between align-items-end pt-1 px-1">
                 <div class="text-center" style="font-size: 9.5px;">
                   <i class="fa-solid fa-qrcode fa-2x text-muted d-block mb-1"></i>
                   <small>JTQ VERIFIED</small>
@@ -582,6 +592,7 @@
 
       const perm = t.permanentAddress || {};
       document.getElementById('tIdPerVillagePost').innerText = `গ্রাম: ${perm.village || '-'}, ডাক: ${perm.post || '-'}`;
+      document.getElementById('tIdPerUnionWard').innerText = `ইউনিয়ন: ${perm.union || '-'}, ওয়ার্ড: ${perm.ward || '-'}`;
       document.getElementById('tIdPerThanaDist').innerText = `থানা: ${perm.thana || '-'}, জেলা: ${perm.district || '-'}`;
 
       document.getElementById('teacherIdCardDisplayArea').style.display = 'block';
@@ -604,13 +615,15 @@
       const blood = s.bloodGroup || "অজানা";
 
       const pre = s.presentAddress || {};
-      const landlordStr = pre.landlordName ? `বাড়িওয়ালা: ${pre.landlordName} (${pre.landlordPhone || ''})` : "বাড়িওয়ালা: -";
-      const preVillPost = `গ্রাম: ${pre.village || '-'}, ডাক: ${pre.post || '-'}`;
-      const preThanaDist = `থানা: ${pre.thana || '-'}, জেলা: ${pre.district || '-'}`;
+      document.getElementById('idPreLandlord').innerText = `বাড়িওয়ালা: ${pre.landlordName || '-'}`;
+      document.getElementById('idPreVillagePost').innerText = `গ্রাম: ${pre.village || '-'}, ডাক: ${pre.post || '-'}`;
+      document.getElementById('idPreUnionWard').innerText = `ইউনিয়ন: ${pre.union || '-'}, ওয়ার্ড: ${pre.ward || '-'}`;
+      document.getElementById('idPreThanaDist').innerText = `থানা: ${pre.thana || '-'}, জেলা: ${pre.district || '-'}`;
 
       const perm = s.permanentAddress || {};
-      const permVillPost = `গ্রাম: ${perm.village || '-'}, ডাক: ${perm.post || '-'}`;
-      const permThanaDist = `থানা: ${perm.thana || '-'}, জেলা: ${perm.district || '-'}`;
+      document.getElementById('idPerVillagePost').innerText = `গ্রাম: ${perm.village || '-'}, ডাক: ${perm.post || '-'}`;
+      document.getElementById('idPerUnionWard').innerText = `ইউনিয়ন: ${perm.union || '-'}, ওয়ার্ড: ${perm.ward || '-'}`;
+      document.getElementById('idPerThanaDist').innerText = `থানা: ${perm.thana || '-'}, জেলা: ${perm.district || '-'}`;
 
       if (cardType === 'idCard') {
         document.getElementById('idPhoto').src = photoUrl;
@@ -626,13 +639,6 @@
         document.getElementById('idMother').innerText = motherName;
         document.getElementById('idPhone').innerText = phone;
         document.getElementById('idEmergencyPhone').innerText = emergencyStr;
-        
-        document.getElementById('idPreLandlord').innerText = landlordStr;
-        document.getElementById('idPreVillagePost').innerText = preVillPost;
-        document.getElementById('idPreThanaDist').innerText = preThanaDist;
-        
-        document.getElementById('idPerVillagePost').innerText = permVillPost;
-        document.getElementById('idPerThanaDist').innerText = permThanaDist;
 
         document.getElementById('idCardDisplayArea').style.display = 'block';
         document.getElementById('teacherIdCardDisplayArea').style.display = 'none';
