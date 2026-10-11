@@ -60,13 +60,6 @@
       padding: 6px;
       margin-top: auto;
     }
-    .address-section-box {
-      border: 1px solid #dee2e6;
-      border-radius: 6px;
-      padding: 6px 8px;
-      margin-bottom: 6px;
-      background-color: #f8f9fa;
-    }
 
     /* ================= অ্যাডমিট কার্ড স্টাইল ================= */
     .admit-card-box {
@@ -251,13 +244,13 @@
             </div>
           </div>
 
-          <!-- পেছনের পিঠ (Back Part - ছাত্র ভর্তির ফরমের ডিজাইনের আদলে সাজানো) -->
+          <!-- পেছনের পিঠ (Back Part - idDeptBadge স্টাইলের আদলে নিখুঁত ফরম্যাট) -->
           <div class="id-card">
             <div class="id-card-back-header">
               <i class="fa-solid fa-address-book me-1"></i> অভিভাবক ও ঠিকানার বিবরণ
             </div>
 
-            <div class="p-2" style="font-size: 10px;">
+            <div class="p-2" style="font-size: 10.5px;">
               <table class="table table-sm table-borderless mb-1">
                 <tbody>
                   <tr><th class="text-secondary py-0 w-35">পিতার নাম:</th><td class="fw-semibold py-0 text-dark" id="idFather">...</td></tr>
@@ -268,21 +261,16 @@
                 </tbody>
               </table>
 
-              <!-- বর্তমান ঠিকানা বক্স (ভর্তি ফরম স্টাইল) -->
-              <div class="address-section-box">
-                <div class="fw-bold text-success mb-1" style="font-size: 10.5px;"><i class="fa-solid fa-location-dot me-1"></i>বর্তমান ঠিকানা:</div>
-                <div class="text-dark" id="idPreLandlord">বাড়িওয়ালা: -</div>
-                <div class="text-dark" id="idPreVillagePost">গ্রাম: -, ডাক: -</div>
-                <div class="text-dark" id="idPreUnionWard">ইউনিয়ন: -, ওয়ার্ড: -</div>
-                <div class="text-dark" id="idPreThanaDist">থানা: -, জেলা: -</div>
+              <!-- বর্তমান ঠিকানা (idDeptBadge স্টাইল) -->
+              <div class="mb-1 p-1 bg-light border rounded">
+                <span class="badge bg-success mb-1" style="font-size: 10px;">বর্তমান ঠিকানা</span>
+                <div class="text-dark" style="font-size: 10px; line-height: 1.3;" id="idPreAddressBlock">বাড়িওয়ালা: -, গ্রাম: -, ডাক: -, ইউনিয়ন: -, ওয়ার্ড: -, থানা: -, জেলা: -</div>
               </div>
 
-              <!-- স্থায়ী ঠিকানা বক্স (ভর্তি ফরম স্টাইল) -->
-              <div class="address-section-box mb-1">
-                <div class="fw-bold text-primary mb-1" style="font-size: 10.5px;"><i class="fa-solid fa-house-chimney me-1"></i>স্থায়ী ঠিকানা:</div>
-                <div class="text-dark" id="idPerVillagePost">গ্রাম: -, ডাক: -</div>
-                <div class="text-dark" id="idPerUnionWard">ইউনিয়ন: -, ওয়ার্ড: -</div>
-                <div class="text-dark" id="idPerThanaDist">থানা: -, জেলা: -</div>
+              <!-- স্থায়ী ঠিকানা (idDeptBadge স্টাইল) -->
+              <div class="mb-1 p-1 bg-light border rounded">
+                <span class="badge bg-primary mb-1" style="font-size: 10px;">স্থায়ী ঠিকানা</span>
+                <div class="text-dark" style="font-size: 10px; line-height: 1.3;" id="idPerAddressBlock">গ্রাম: -, ডাক: -, ইউনিয়ন: -, ওয়ার্ড: -, থানা: -, জেলা: -</div>
               </div>
 
               <!-- সিল ও স্বাক্ষর -->
@@ -305,7 +293,7 @@
         </div>
       </div>
 
-      <!-- ================= ২. শিক্ষক আইডি কার্ড ভিউ (Front & Back - বর্তমান ঠিকানা মাদ্রাসা ও স্থায়ী ঠিকানা ফরম্যাট) ================= -->
+      <!-- ================= ২. শিক্ষক আইডি কার্ড ভিউ (Front & Back) ================= -->
       <div id="teacherIdCardDisplayArea" style="display: none;">
         <div class="d-flex justify-content-between align-items-center mb-3 no-print">
           <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-chalkboard-user me-2 text-success"></i>প্রিন্ট প্রিভিউ: শিক্ষক আইডি কার্ড (Front & Back)</h5>
@@ -347,7 +335,7 @@
             </div>
           </div>
 
-          <!-- পেছনের পিঠ (বর্তমান ঠিকানা = মাদ্রাসা, স্থায়ী ঠিকানা ফরম্যাট) -->
+          <!-- পেছনের পিঠ (বর্তমান ঠিকানা = মাদ্রাসা, স্থায়ী ঠিকানা) -->
           <div class="id-card">
             <div class="id-card-back-header">
               <i class="fa-solid fa-address-book me-1"></i> ঠিকানা ও জরুরি যোগাযোগ
@@ -361,19 +349,16 @@
                 </tbody>
               </table>
 
-              <!-- বর্তমান ঠিকানা বক্স (মাদ্রাসা) -->
-              <div class="address-section-box">
-                <div class="fw-bold text-success mb-1" style="font-size: 10.5px;"><i class="fa-solid fa-location-dot me-1"></i>বর্তমান ঠিকানা (কর্মস্থল):</div>
-                <div class="text-dark fw-semibold">জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা</div>
-                <div class="text-dark">বাইপাইল, আশুলিয়া, সাভার, ঢাকা।</div>
+              <!-- বর্তমান ঠিকানা (মাদ্রাসা) -->
+              <div class="mb-1 p-1 bg-light border rounded">
+                <span class="badge bg-success mb-1" style="font-size: 10px;">বর্তমান ঠিকানা (কর্মস্থল)</span>
+                <div class="text-dark fw-semibold" style="font-size: 10px; line-height: 1.3;">জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা, বাইপাইল, আশুলিয়া, সাভার, ঢাকা।</div>
               </div>
 
-              <!-- স্থায়ী ঠিকানা বক্স -->
-              <div class="address-section-box mb-1">
-                <div class="fw-bold text-primary mb-1" style="font-size: 10.5px;"><i class="fa-solid fa-house-chimney me-1"></i>স্থায়ী ঠিকানা:</div>
-                <div class="text-dark" id="tIdPerVillagePost">গ্রাম: -, ডাক: -</div>
-                <div class="text-dark" id="tIdPerUnionWard">ইউনিয়ন: -, ওয়ার্ড: -</div>
-                <div class="text-dark" id="tIdPerThanaDist">থানা: -, জেলা: -</div>
+              <!-- স্থায়ী ঠিকানা -->
+              <div class="mb-1 p-1 bg-light border rounded">
+                <span class="badge bg-primary mb-1" style="font-size: 10px;">স্থায়ী ঠিকানা</span>
+                <div class="text-dark" style="font-size: 10px; line-height: 1.3;" id="tIdPerAddressBlock">গ্রাম: -, ডাক: -, ইউনিয়ন: -, ওয়ার্ড: -, থানা: -, জেলা: -</div>
               </div>
 
               <div class="d-flex justify-content-between align-items-end pt-1 px-1">
@@ -591,9 +576,7 @@
       document.getElementById('tIdEmergencyPhone').innerText = t.emergencyName ? `${t.emergencyName} (${t.emergencyPhone})` : "দেওয়া হয়নি";
 
       const perm = t.permanentAddress || {};
-      document.getElementById('tIdPerVillagePost').innerText = `গ্রাম: ${perm.village || '-'}, ডাক: ${perm.post || '-'}`;
-      document.getElementById('tIdPerUnionWard').innerText = `ইউনিয়ন: ${perm.union || '-'}, ওয়ার্ড: ${perm.ward || '-'}`;
-      document.getElementById('tIdPerThanaDist').innerText = `থানা: ${perm.thana || '-'}, জেলা: ${perm.district || '-'}`;
+      document.getElementById('tIdPerAddressBlock').innerText = `গ্রাম: ${perm.village || '-'}, ডাক: ${perm.post || '-'}, ইউনিয়ন: ${perm.union || '-'}, ওয়ার্ড: ${perm.ward || '-'}, থানা: ${perm.thana || '-'}, জেলা: ${perm.district || '-'}`;
 
       document.getElementById('teacherIdCardDisplayArea').style.display = 'block';
       document.getElementById('idCardDisplayArea').style.display = 'none';
@@ -615,15 +598,10 @@
       const blood = s.bloodGroup || "অজানা";
 
       const pre = s.presentAddress || {};
-      document.getElementById('idPreLandlord').innerText = `বাড়িওয়ালা: ${pre.landlordName || '-'}`;
-      document.getElementById('idPreVillagePost').innerText = `গ্রাম: ${pre.village || '-'}, ডাক: ${pre.post || '-'}`;
-      document.getElementById('idPreUnionWard').innerText = `ইউনিয়ন: ${pre.union || '-'}, ওয়ার্ড: ${pre.ward || '-'}`;
-      document.getElementById('idPreThanaDist').innerText = `থানা: ${pre.thana || '-'}, জেলা: ${pre.district || '-'}`;
+      document.getElementById('idPreAddressBlock').innerText = `বাড়িওয়ালা: ${pre.landlordName || '-'}, গ্রাম: ${pre.village || '-'}, ডাক: ${pre.post || '-'}, ইউনিয়ন: ${pre.union || '-'}, ওয়ার্ড: ${pre.ward || '-'}, থানা: ${pre.thana || '-'}, জেলা: ${pre.district || '-'}`;
 
       const perm = s.permanentAddress || {};
-      document.getElementById('idPerVillagePost').innerText = `গ্রাম: ${perm.village || '-'}, ডাক: ${perm.post || '-'}`;
-      document.getElementById('idPerUnionWard').innerText = `ইউনিয়ন: ${perm.union || '-'}, ওয়ার্ড: ${perm.ward || '-'}`;
-      document.getElementById('idPerThanaDist').innerText = `থানা: ${perm.thana || '-'}, জেলা: ${perm.district || '-'}`;
+      document.getElementById('idPerAddressBlock').innerText = `গ্রাম: ${perm.village || '-'}, ডাক: ${perm.post || '-'}, ইউনিয়ন: ${perm.union || '-'}, ওয়ার্ড: ${perm.ward || '-'}, থানা: ${perm.thana || '-'}, জেলা: ${perm.district || '-'}`;
 
       if (cardType === 'idCard') {
         document.getElementById('idPhoto').src = photoUrl;
