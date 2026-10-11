@@ -61,7 +61,7 @@
       margin-top: auto;
     }
 
-    /* Clean two-column clean address box */
+    /* ছবির মতো নিখুঁত দুই কলাম লেআউট স্টাইল */
     .card-address-box {
       border: 1px solid #cfe2ff;
       border-radius: 6px;
@@ -268,7 +268,7 @@
             </div>
           </div>
 
-          <!-- Back Page -->
+          <!-- Back Page (বাড়িওয়ালা ও ফোন নম্বর আলাদা রো-তে এবং ঠিকানার বাকী ফিল্ডগুলো নিখুঁত দুই কলামে) -->
           <div class="id-card">
             <div class="id-card-back-header">
               <i class="fa-solid fa-address-book me-1"></i> অভিভাবক ও ঠিকানার বিবরণ
@@ -285,7 +285,7 @@
                 </tbody>
               </table>
 
-              <!-- বর্তমান ঠিকানা Box (বাড়িওয়ালা ও ফোন নম্বর আলাদা রো-তে) -->
+              <!-- বর্তমান ঠিকানা Box -->
               <div class="card-address-box">
                 <div class="card-address-title green"><i class="fa-solid fa-location-dot me-1"></i>বর্তমান ঠিকানা</div>
                 <div class="addr-row"><span class="addr-label">বাড়িওয়ালা:</span><span class="addr-val" id="preLandlordName">-</span></div>
@@ -534,4 +534,135 @@
     searchInput.addEventListener('input', function() {
       const val = this.value.trim().toLowerCase();
       autocompleteList.innerHTML = '';
-      if (!val
+      if (!val) { autocompleteList.style.display = 'none'; return; }
+
+      const filtered = allRecords.filter(item => {
+        return String(item.id).toLowerCase().includes(val) || String(item.name).toLowerCase().includes(val);
+      });
+
+      if (filtered.length === 0) { autocompleteList.style.display = 'none'; return; }
+
+      filtered.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'autocomplete-item';
+        div.innerHTML = `<strong>${item.id}</strong> - ${item.name} <span class="badge bg-${item.type === 'student' ? 'success' : 'dark'} float-end">${item.type === 'student' ? 'শিক্ষার্থী' : 'শিক্ষক'}</span>`;
+        div.addEventListener('click', function() {
+          searchInput.value = item.id;
+          autocompleteList.style.display = 'none';
+        });
+        autocompleteList.appendChild(div);
+      });
+      autocompleteList.style.display = 'block';
+    });
+
+    document.addEventListener('click', function(e) {
+      if (e.target !== searchInput) autocompleteList.style.display = 'none';
+    });
+
+    document.getElementById('cardSearchForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const sId = searchInput.value.trim();
+      const cardType = document.getElementById('cardTypeSelect').value;
+      const btn = document.getElementById('generateBtn');
+
+      btn.disabled = true; btn.innerText = "জেনারেট হচ্ছে...";
+
+      if (cardType === 'teacherIdCard') {
+        db.collection("teachers").doc(sId).get().then((doc) => {
+          if (doc.exists) {
+            renderTeacherCard(doc.data());
+          } else {
+            return db.collection("teachers").where("teacherId", "==", sId).get().then((qSnap) => {
+              if (!qSnap.empty) { renderTeacherCard(qSnap.docs[0].data()); return; }
+              alert("এই Teacher ID (" + sId + ") দিয়ে কোনো শিক্ষক পাওয়া যায়নি!");
+              hideAllDisplays();
+            });
+          }
+        }).catch(err => {
+          alert("ত্রুটি: " + err.message);
+        }).finally(() => resetBtn(btn));
+      } else {
+        db.collection("students").doc(sId).get().then((doc) => {
+          if (!doc.exists) {
+            return db.collection("students").where("studentId", "==", sId).get().then((qSnap) => {
+              if (qSnap.empty) {
+                alert("এই Student ID (" + sId + ") দিয়ে কোনো শিক্ষার্থী পাওয়া যায়নি!");
+                hideAllDisplays();
+                return;
+              }
+              processStudentData(qSnap.docs[0].data(), cardType);
+            });
+          }
+          processStudentData(doc.data(), cardType);
+        }).catch(err => {
+          alert("ত্রুটি: " + err.message);
+        }).finally(() => resetBtn(btn));
+      }
+    });
+
+    function renderTeacherCard(t) {
+      document.getElementById('tIdPhoto').src = t.photo || 'https://via.placeholder.com/105';
+      document.getElementById('tIdNameBn').innerText = t.nameBn || t.name || "-";
+      document.getElementById('tIdNameEn').innerText = t.nameEn || "-";
+      document.getElementById('tIdDesignation').innerText = t.designation || "শিক্ষক";
+      document.getElementById('tIdCardNo').innerText = t.teacherId || t.id || "-";
+      document.getElementById('tIdDept').innerText = t.department || "-";
+      document.getElementById('tIdPhone').innerText = t.phone || t.mobile || "-";
+      document.getElementById('tIdBlood').innerText = t.bloodGroup || "অজানা";
+
+      document.getElementById('tIdPhoneBack').innerText = t.phone || t.mobile || "-";
+      document.getElementById('tIdEmergencyPhone').innerText = t.emergencyName ? `${t.emergencyName} (${t.emergencyPhone})` : "দেওয়া হয়নি";
+
+      const perm = t.permanentAddress || {};
+      document.getElementById('tPerVillage').innerText = perm.village || '-';
+      document.getElementById('tPerPost').innerText = perm.post || '-';
+      document.getElementById('tPerUnion').innerText = perm.union || '-';
+      document.getElementById('tPerWard').innerText = perm.ward || '-';
+      document.getElementById('tPerThanaDist').innerText = `${perm.thana || '-'}, ${perm.district || '-'}`;
+
+      document.getElementById('teacherIdCardDisplayArea').style.display = 'block';
+      document.getElementById('idCardDisplayArea').style.display = 'none';
+      document.getElementById('admitCardDisplayArea').style.display = 'none';
+    }
+
+    function processStudentData(s, cardType) {
+      const photoUrl = s.photo || 'https://via.placeholder.com/110';
+      const nameBn = s.nameBn || s.name || "-";
+      const nameEn = s.nameEn || "-";
+      const fatherName = s.fatherBn || s.father || "-";
+      const fatherOcc = s.fatherOccupation || "-";
+      const motherName = s.motherBn || s.mother || "-";
+      const phone = s.phone || "-";
+      const emergencyStr = s.emergencyName ? `${s.emergencyName} (${s.emergencyPhone})` : (s.guardianPhone || "দেওয়া হয়নি");
+
+      const roll = s.roll || "-";
+      const dept = s.department || "-";
+      const blood = s.bloodGroup || "অজানা";
+
+      const pre = s.presentAddress || {};
+      document.getElementById('preLandlordName').innerText = pre.landlordName || '-';
+      document.getElementById('preLandlordPhone').innerText = pre.landlordPhone || '-';
+      document.getElementById('preVillage').innerText = pre.village || '-';
+      document.getElementById('prePost').innerText = pre.post || '-';
+      document.getElementById('preUnion').innerText = pre.union || '-';
+      document.getElementById('preWard').innerText = pre.ward || '-';
+      document.getElementById('preThanaDist').innerText = `${pre.thana || '-'}, ${pre.district || '-'}`;
+
+      const perm = s.permanentAddress || {};
+      document.getElementById('perVillage').innerText = perm.village || '-';
+      document.getElementById('perPost').innerText = perm.post || '-';
+      document.getElementById('perUnion').innerText = perm.union || '-';
+      document.getElementById('perWard').innerText = perm.ward || '-';
+      document.getElementById('perThanaDist').innerText = `${perm.thana || '-'}, ${perm.district || '-'}`;
+
+      if (cardType === 'idCard') {
+        document.getElementById('idPhoto').src = photoUrl;
+        document.getElementById('idNameBn').innerText = nameBn;
+        document.getElementById('idNameEn').innerText = nameEn;
+        document.getElementById('idDeptBadge').innerText = dept;
+        document.getElementById('idCardStudentId').innerText = s.studentId || "-";
+        document.getElementById('idRoll').innerText = roll;
+        document.getElementById('idBloodGroup').innerText = blood;
+
+        document.getElementById('idFather').innerText = fatherName;
+        document.getElementById('idFatherOcc').innerText = fatherOcc
