@@ -60,48 +60,46 @@
       padding: 5px;
       margin-top: auto;
     }
-    /* Chobir moto box style */
+
+    /* দুই কলাম ও সুবিন্যস্ত ঠিকানা বক্স স্টাইল */
     .card-address-box {
-      border: 1px solid #cfe2ff;
+      border: 1px solid #b6d4fe;
       border-radius: 6px;
       padding: 5px 8px;
       margin-bottom: 5px;
       background-color: #f8f9fa;
     }
     .card-address-title {
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 700;
       color: #ffffff;
       background-color: #0d6efd;
-      padding: 2px 8px;
-      border-radius: 4px;
+      padding: 2px 6px;
+      border-radius: 3px;
       display: inline-block;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
     .card-address-title.green {
       background-color: #198754;
     }
-    .addr-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 3px;
-      font-size: 8.5px;
-      line-height: 1.2;
+    .addr-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 9px;
+      border-bottom: 1px dotted #dee2e6;
+      padding: 1.5px 0;
     }
-    .addr-item {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      padding: 2px 4px;
-      border-radius: 3px;
+    .addr-row:last-child {
+      border-bottom: none;
     }
-    .addr-item span {
-      display: block;
+    .addr-label {
       color: #6c757d;
-      font-size: 7.5px;
+      font-weight: 600;
     }
-    .addr-item strong {
+    .addr-val {
       color: #212529;
-      font-size: 8.5px;
+      font-weight: 700;
+      text-align: right;
     }
 
     /* ================= অ্যাডমিট কার্ড স্টাইল ================= */
@@ -188,7 +186,7 @@
 
       <form id="cardSearchForm" class="row g-2 align-items-center position-relative">
         <div class="col-md-5 position-relative">
-          <input type="text" class="form-control form-control-lg fw-bold" id="targetStudentId" placeholder="ID বা নাম লিখুন (যেমন: JTQIM-202610001)" autocomplete="off" required>
+          <input type="text" class="form-control form-control-lg fw-bold" id="targetStudentId" placeholder="ID বা নাম লিখুন..." autocomplete="off" required>
           <div id="autocompleteResults" class="autocomplete-list" style="display: none;"></div>
         </div>
         <div class="col-md-4">
@@ -265,14 +263,14 @@
             </div>
           </div>
 
-          <!-- Back Page (Chobir moto grid format) -->
+          <!-- Back Page (Two-column layout) -->
           <div class="id-card">
             <div class="id-card-back-header">
               <i class="fa-solid fa-address-book me-1"></i> অভিভাবক ও ঠিকানার বিবরণ
             </div>
 
             <div class="p-2">
-              <table class="table table-sm table-borderless mb-1" style="font-size: 10px;">
+              <table class="table table-sm table-borderless mb-1" style="font-size: 9.5px;">
                 <tbody>
                   <tr><th class="text-secondary py-0 w-35">পিতার নাম:</th><td class="fw-semibold py-0 text-dark" id="idFather">...</td></tr>
                   <tr><th class="text-secondary py-0">পিতার পেশা:</th><td class="fw-semibold py-0" id="idFatherOcc">...</td></tr>
@@ -285,44 +283,28 @@
               <!-- বর্তমান ঠিকানা Box -->
               <div class="card-address-box">
                 <div class="card-address-title green"><i class="fa-solid fa-location-dot me-1"></i>বর্তমান ঠিকানা</div>
-                <div class="addr-grid mb-1">
-                  <div class="addr-item" style="grid-column: span 2;"><span>বাড়িওয়ালার নাম</span><strong id="preLandlordName">-</strong></div>
-                  <div class="addr-item"><span>ফোন নম্বর</span><strong id="preLandlordPhone">-</strong></div>
-                </div>
-                <div class="addr-grid mb-1">
-                  <div class="addr-item"><span>গ্রাম (Village)</span><strong id="preVillage">-</strong></div>
-                  <div class="addr-item"><span>ডাকঘর</span><strong id="prePost">-</strong></div>
-                  <div class="addr-item"><span>ইউনিয়ন</span><strong id="preUnion">-</strong></div>
-                </div>
-                <div class="addr-grid">
-                  <div class="addr-item"><span>ওয়ার্ড</span><strong id="preWard">-</strong></div>
-                  <div class="addr-item"><span>থানা</span><strong id="preThana">-</strong></div>
-                  <div class="addr-item"><span>জেলা</span><strong id="preDistrict">-</strong></div>
-                </div>
+                <div class="addr-row"><span class="addr-label">বাড়িওয়ালা:</span><span class="addr-val" id="preLandlordName">-</span></div>
+                <div class="addr-row"><span class="addr-label">ফোন নম্বর:</span><span class="addr-val" id="preLandlordPhone">-</span></div>
+                <div class="addr-row"><span class="addr-label">গ্রাম / ডাক:</span><span class="addr-val" id="preVillPost">-</span></div>
+                <div class="addr-row"><span class="addr-label">ইউনিয়ন / ওয়ার্ড:</span><span class="addr-val" id="preUnionWard">-</span></div>
+                <div class="addr-row"><span class="addr-label">থানা / জেলা:</span><span class="addr-val" id="preThanaDist">-</span></div>
               </div>
 
               <!-- স্থায়ী ঠিকানা Box -->
               <div class="card-address-box mb-1">
                 <div class="card-address-title"><i class="fa-solid fa-house-chimney me-1"></i>স্থায়ী ঠিকানা</div>
-                <div class="addr-grid mb-1">
-                  <div class="addr-item"><span>গ্রাম (Village)</span><strong id="perVillage">-</strong></div>
-                  <div class="addr-item"><span>ডাকঘর</span><strong id="perPost">-</strong></div>
-                  <div class="addr-item"><span>ইউনিয়ন</span><strong id="perUnion">-</strong></div>
-                </div>
-                <div class="addr-grid">
-                  <div class="addr-item"><span>ওয়ার্ড</span><strong id="perWard">-</strong></div>
-                  <div class="addr-item"><span>থানা</span><strong id="perThana">-</strong></div>
-                  <div class="addr-item"><span>জেলা</span><strong id="perDistrict">-</strong></div>
-                </div>
+                <div class="addr-row"><span class="addr-label">গ্রাম / ডাক:</span><span class="addr-val" id="perVillPost">-</span></div>
+                <div class="addr-row"><span class="addr-label">ইউনিয়ন / ওয়ার্ড:</span><span class="addr-val" id="perUnionWard">-</span></div>
+                <div class="addr-row"><span class="addr-label">থানা / জেলা:</span><span class="addr-val" id="perThanaDist">-</span></div>
               </div>
 
               <div class="d-flex justify-content-between align-items-end px-1">
-                <div class="text-center" style="font-size: 8.5px;">
-                  <i class="fa-solid fa-qrcode fa-xl text-muted d-block mb-1"></i>
+                <div class="text-center" style="font-size: 8px;">
+                  <i class="fa-solid fa-qrcode fa-lg text-muted d-block mb-1"></i>
                   <small>JTQ VERIFIED</small>
                 </div>
                 <div class="text-center">
-                  <div class="border-top border-dark pt-1 fw-bold text-dark" style="font-size: 9px;">মুহতামিম / প্রিন্সিপাল</div>
+                  <div class="border-top border-dark pt-1 fw-bold text-dark" style="font-size: 8.5px;">মুহতামিম / প্রিন্সিপাল</div>
                 </div>
               </div>
             </div>
@@ -390,32 +372,25 @@
               <!-- বর্তমান ঠিকানা (মাদ্রাসা) -->
               <div class="card-address-box">
                 <div class="card-address-title green"><i class="fa-solid fa-location-dot me-1"></i>বর্তমান ঠিকানা (কর্মস্থল)</div>
-                <div class="text-dark fw-semibold" style="font-size: 9.5px;">জামিয়া তাসলিমুল কুরআন ইসলামিয়া মাদ্রাসা</div>
-                <div class="text-muted" style="font-size: 9px;">বাইপাইল, আশুলিয়া, সাভার, ঢাকা</div>
+                <div class="addr-row"><span class="addr-label">প্রতিষ্ঠান:</span><span class="addr-val">জামিয়া তাসলিমুল কুরআন ইসলামিয়া</span></div>
+                <div class="addr-row"><span class="addr-label">ঠিকানা:</span><span class="addr-val">বাইপাইল, আশুলিয়া, সাভার, ঢাকা</span></div>
               </div>
 
               <!-- স্থায়ী ঠিকানা Box -->
               <div class="card-address-box mb-1">
                 <div class="card-address-title"><i class="fa-solid fa-house-chimney me-1"></i>স্থায়ী ঠিকানা</div>
-                <div class="addr-grid mb-1">
-                  <div class="addr-item"><span>গ্রাম (Village)</span><strong id="tPerVillage">-</strong></div>
-                  <div class="addr-item"><span>ডাকঘর</span><strong id="tPerPost">-</strong></div>
-                  <div class="addr-item"><span>ইউনিয়ন</span><strong id="tPerUnion">-</strong></div>
-                </div>
-                <div class="addr-grid">
-                  <div class="addr-item"><span>ওয়ার্ড</span><strong id="tPerWard">-</strong></div>
-                  <div class="addr-item"><span>থানা</span><strong id="tPerThana">-</strong></div>
-                  <div class="addr-item"><span>জেলা</span><strong id="tPerDistrict">-</strong></div>
-                </div>
+                <div class="addr-row"><span class="addr-label">গ্রাম / ডাক:</span><span class="addr-val" id="tPerVillPost">-</span></div>
+                <div class="addr-row"><span class="addr-label">ইউনিয়ন / ওয়ার্ড:</span><span class="addr-val" id="tPerUnionWard">-</span></div>
+                <div class="addr-row"><span class="addr-label">থানা / জেলা:</span><span class="addr-val" id="tPerThanaDist">-</span></div>
               </div>
 
               <div class="d-flex justify-content-between align-items-end pt-1 px-1">
-                <div class="text-center" style="font-size: 8.5px;">
-                  <i class="fa-solid fa-qrcode fa-xl text-muted d-block mb-1"></i>
+                <div class="text-center" style="font-size: 8px;">
+                  <i class="fa-solid fa-qrcode fa-lg text-muted d-block mb-1"></i>
                   <small>JTQ VERIFIED</small>
                 </div>
                 <div class="text-center">
-                  <div class="border-top border-dark pt-1 fw-bold text-dark" style="font-size: 9px;">মুহতামিম / প্রিন্সিপাল</div>
+                  <div class="border-top border-dark pt-1 fw-bold text-dark" style="font-size: 8.5px;">মুহতামিম / প্রিন্সিপাল</div>
                 </div>
               </div>
             </div>
@@ -535,7 +510,7 @@
           let data = doc.data();
           allRecords.push({
             id: data.teacherId || doc.id,
-            name: data.name || "নাম নেই",
+            name: data.nameBn || data.name || "নাম নেই",
             type: 'teacher',
             raw: data
           });
@@ -592,7 +567,9 @@
               hideAllDisplays();
             });
           }
-        }).catch(err => alert("ত্রুটি: " + err.message)).finally(() => resetBtn(btn));
+        }).catch(err => {
+          alert("ত্রুটি: " + err.message);
+        }).finally(() => resetBtn(btn));
       } else {
         db.collection("students").doc(sId).get().then((doc) => {
           if (!doc.exists) {
@@ -606,30 +583,29 @@
             });
           }
           processStudentData(doc.data(), cardType);
-        }).catch(err => alert("ত্রুটি: " + err.message)).finally(() => resetBtn(btn));
+        }).catch(err => {
+          alert("ত্রুটি: " + err.message);
+        }).finally(() => resetBtn(btn));
       }
     });
 
     function renderTeacherCard(t) {
       document.getElementById('tIdPhoto').src = t.photo || 'https://via.placeholder.com/105';
-      document.getElementById('tIdNameBn').innerText = t.name || "-";
+      document.getElementById('tIdNameBn').innerText = t.nameBn || t.name || "-";
       document.getElementById('tIdNameEn').innerText = t.nameEn || "-";
       document.getElementById('tIdDesignation').innerText = t.designation || "শিক্ষক";
-      document.getElementById('tIdCardNo').innerText = t.teacherId || "-";
+      document.getElementById('tIdCardNo').innerText = t.teacherId || t.id || "-";
       document.getElementById('tIdDept').innerText = t.department || "-";
-      document.getElementById('tIdPhone').innerText = t.phone || "-";
+      document.getElementById('tIdPhone').innerText = t.phone || t.mobile || "-";
       document.getElementById('tIdBlood').innerText = t.bloodGroup || "অজানা";
 
-      document.getElementById('tIdPhoneBack').innerText = t.phone || "-";
+      document.getElementById('tIdPhoneBack').innerText = t.phone || t.mobile || "-";
       document.getElementById('tIdEmergencyPhone').innerText = t.emergencyName ? `${t.emergencyName} (${t.emergencyPhone})` : "দেওয়া হয়নি";
 
       const perm = t.permanentAddress || {};
-      document.getElementById('tPerVillage').innerText = perm.village || '-';
-      document.getElementById('tPerPost').innerText = perm.post || '-';
-      document.getElementById('tPerUnion').innerText = perm.union || '-';
-      document.getElementById('tPerWard').innerText = perm.ward || '-';
-      document.getElementById('tPerThana').innerText = perm.thana || '-';
-      document.getElementById('tPerDistrict').innerText = perm.district || '-';
+      document.getElementById('tPerVillPost').innerText = `গ্রাম: ${perm.village || '-'}, ডাক: ${perm.post || '-'}`;
+      document.getElementById('tPerUnionWard').innerText = `ইউনিয়ন: ${perm.union || '-'}, ওয়ার্ড: ${perm.ward || '-'}`;
+      document.getElementById('tPerThanaDist').innerText = `থানা: ${perm.thana || '-'}, জেলা: ${perm.district || '-'}`;
 
       document.getElementById('teacherIdCardDisplayArea').style.display = 'block';
       document.getElementById('idCardDisplayArea').style.display = 'none';
@@ -644,7 +620,7 @@
       const fatherOcc = s.fatherOccupation || "-";
       const motherName = s.motherBn || s.mother || "-";
       const phone = s.phone || "-";
-      const emergencyStr = s.emergencyName ? `${s.emergencyName}: ${s.emergencyPhone}` : (s.guardianPhone || "দেওয়া হয়নি");
+      const emergencyStr = s.emergencyName ? `${s.emergencyName} (${s.emergencyPhone})` : (s.guardianPhone || "দেওয়া হয়নি");
 
       const roll = s.roll || "-";
       const dept = s.department || "-";
@@ -653,20 +629,14 @@
       const pre = s.presentAddress || {};
       document.getElementById('preLandlordName').innerText = pre.landlordName || '-';
       document.getElementById('preLandlordPhone').innerText = pre.landlordPhone || '-';
-      document.getElementById('preVillage').innerText = pre.village || '-';
-      document.getElementById('prePost').innerText = pre.post || '-';
-      document.getElementById('preUnion').innerText = pre.union || '-';
-      document.getElementById('preWard').innerText = pre.ward || '-';
-      document.getElementById('preThana').innerText = pre.thana || '-';
-      document.getElementById('preDistrict').innerText = pre.district || '-';
+      document.getElementById('preVillPost').innerText = `গ্রাম: ${pre.village || '-'}, ডাক: ${pre.post || '-'}`;
+      document.getElementById('preUnionWard').innerText = `ইউনিয়ন: ${pre.union || '-'}, ওয়ার্ড: ${pre.ward || '-'}`;
+      document.getElementById('preThanaDist').innerText = `থানা: ${pre.thana || '-'}, জেলা: ${pre.district || '-'}`;
 
       const perm = s.permanentAddress || {};
-      document.getElementById('perVillage').innerText = perm.village || '-';
-      document.getElementById('perPost').innerText = perm.post || '-';
-      document.getElementById('perUnion').innerText = perm.union || '-';
-      document.getElementById('perWard').innerText = perm.ward || '-';
-      document.getElementById('perThana').innerText = perm.thana || '-';
-      document.getElementById('perDistrict').innerText = perm.district || '-';
+      document.getElementById('perVillPost').innerText = `গ্রাম: ${perm.village || '-'}, ডাক: ${perm.post || '-'}`;
+      document.getElementById('perUnionWard').innerText = `ইউনিয়ন: ${perm.union || '-'}, ওয়ার্ড: ${perm.ward || '-'}`;
+      document.getElementById('perThanaDist').innerText = `থানা: ${perm.thana || '-'}, জেলা: ${perm.district || '-'}`;
 
       if (cardType === 'idCard') {
         document.getElementById('idPhoto').src = photoUrl;
